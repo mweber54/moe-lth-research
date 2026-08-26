@@ -1,0 +1,33 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{times}
+\usepackage{textgreek}
+\usepackage{multirow}
+\setlength{\parskip}{5pt} 
+\setlength{\parindent}{0pt}
+\geometry{margin=1in}
+\title{The Route Makes the Ticket: Routing-Conditioned Sparse Subnetworks in Mixture-of-Experts Models}
+\author{
+Matthew Weber \\ Kent State University \\ \texttt{mweber54@kent.edu}
+\and
+Ruoming Jin \\ Kent State University \\ \texttt{rjin1@kent.edu}
+}
+\date{June 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Sparse Mixture-of-Experts models scale neural networks by routing each token to a small subset of expert modules. Although expert specialization is often treated as a central motivation for MoE architectures, it remains unclear whether specialization is encoded as persistent structure inside expert weights or whether it is primarily an artifact of router geometry, load balancing, and uneven expert usage. In this work, we study whether training-time routing trajectories induce stable sparse subnetworks inside MoE experts. We train small balanced decoder-only MoE language models and compare expert-local sparse masks across normal routing, counterfactual routing, random controls, reinitialization controls, and routing-replay settings. Our preliminary results show that moderate-sparsity expert masks can retain near-dense performance while random and reinitialized controls degrade, suggesting that expert-local sparse structure depends jointly on initialization and routing history. These findings support a routing-conditioned sparse subnetwork view of MoE specialization. Ongoing experiments test whether these subnetworks satisfy stricter lottery-ticket criteria under early-checkpoint rewinding at high sparsity across deeper, top-2, higher-capacity, and multi-domain settings.
+\end{abstract}
+
+\section{Introduction}
+
+\end{document}
+
