@@ -10,6 +10,10 @@ from torch import nn
 class RouteOverride:
     expert_ids: torch.Tensor
     gate_values: torch.Tensor | None = None
+    # Optional native-confidence scores used only to decide which assignments
+    # survive capacity truncation.  This lets confidence controls change gate
+    # amplitude without also changing the accepted-token subset.
+    capacity_scores: torch.Tensor | None = None
 
 
 @dataclass
@@ -31,7 +35,9 @@ class TopKRouter(nn.Module):
         self.top_k = top_k
         # Positive logit-temperature for confidence calibration (router-age experiment);
         # dividing by a positive scalar never changes the top-1/top-k assignment.
-        self.register_buffer("temperature", torch.tensor(1.0), persistent=False)
+        # Persist the calibrated temperature so confidence-matched recovery
+        # checkpoints reload to the state that was actually evaluated.
+        self.register_buffer("temperature", torch.tensor(1.0))
 
     def forward(
         self,

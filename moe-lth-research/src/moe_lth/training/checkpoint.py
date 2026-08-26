@@ -33,8 +33,19 @@ def load_checkpoint(
     map_location: str | torch.device = "cpu",
 ) -> dict:
     payload = torch.load(path, map_location=map_location, weights_only=False)
-    model.load_state_dict(payload["model"])
+    # Router temperature became persistent when the router-confidence control
+    # was added.  Older checkpoints legitimately omit only these buffers and
+    # should load at their native default temperature of 1.0.
+    incompatible = model.load_state_dict(payload["model"], strict=False)
+    unexpected = list(incompatible.unexpected_keys)
+    disallowed_missing = [
+        name for name in incompatible.missing_keys if not name.endswith(".moe.router.temperature")
+    ]
+    if unexpected or disallowed_missing:
+        raise RuntimeError(
+            "Checkpoint/model mismatch: "
+            f"missing={disallowed_missing}, unexpected={unexpected}"
+        )
     if optimizer is not None and "optimizer" in payload:
         optimizer.load_state_dict(payload["optimizer"])
     return payload
-

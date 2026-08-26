@@ -2,4 +2,6 @@ extends: multidomain_gpu.yaml
 seed: 17
 training:
   checkpoint_steps: [0, 250, 500, 1000, 1500, 2000, 2500]
-output_dir: results/router_age_reference_seed17
+# The original directory contains an interrupted, non-resumable reference run.
+# Use a fresh path so the trainer never deletes or rewrites those artifacts.
+output_dir: results/router_age_reference_seed17_v2

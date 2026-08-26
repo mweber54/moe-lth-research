@@ -51,9 +51,15 @@ class MoEFeedForward(nn.Module):
         flat_inputs = inputs.reshape(-1, d_model)
         flat_override = None
         flat_override_gate = None
+        flat_capacity_scores = None
         if isinstance(override_ids, RouteOverride):
-            flat_override = override_ids.expert_ids.reshape(-1)
+            flat_override = override_ids.expert_ids.reshape(-1, self.top_k)
             flat_override_gate = override_ids.gate_values.reshape(-1, self.top_k) if override_ids.gate_values is not None else None
+            flat_capacity_scores = (
+                override_ids.capacity_scores.reshape(-1, self.top_k)
+                if override_ids.capacity_scores is not None
+                else None
+            )
         elif override_ids is not None:
             flat_override = override_ids.reshape(-1)
         router_output = self.router(flat_inputs, flat_override, flat_override_gate)
@@ -76,7 +82,8 @@ class MoEFeedForward(nn.Module):
             if assignments.numel() == 0:
                 continue
             if assignments.shape[0] > capacity:
-                scores = selected_probability[assignments[:, 0], assignments[:, 1]]
+                priority = selected_probability if flat_capacity_scores is None else flat_capacity_scores
+                scores = priority[assignments[:, 0], assignments[:, 1]]
                 assignments = assignments[scores.topk(capacity).indices]
             token_positions = assignments[:, 0]
             route_slots = assignments[:, 1]
