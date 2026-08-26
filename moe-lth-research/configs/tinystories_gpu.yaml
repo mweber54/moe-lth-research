@@ -1,0 +1,37 @@
+seed: 7
+device: cuda
+data:
+  path: null
+  train_path: data/processed/tinystories_train_50k.txt
+  validation_path: data/processed/tinystories_validation_2k.txt
+  seq_len: 128
+  validation_blocks: 12
+model:
+  vocab_size: 256
+  num_layers: 4
+  num_heads: 4
+  d_model: 256
+  num_experts: 8
+  expert_hidden_size: 1024
+  dropout: 0.0
+  top_k: 1
+  capacity_factor: 1.25
+routing:
+  mode: learned
+  aux_loss_weight: 0.1
+training:
+  steps: 2500
+  batch_size: 128
+  learning_rate: 0.0003
+  weight_decay: 0.01
+  grad_clip: 1.0
+  eval_interval: 250
+  log_interval: 25
+  checkpoint_steps: [0, 25, 125, 250, 500, 1000, 2500]
+  save_optimizer: true
+  record_train_routes: true
+  precision: fp16
+pruning:
+  sparsities: [0.5, 0.7, 0.8, 0.9, 0.95]
+  rewind_fractions: [0.0, 0.01, 0.05, 0.1]
+output_dir: results/tinystories_gpu

@@ -1,0 +1,251 @@
+@misc{shazeer2017outrageouslylargeneuralnetworks,
+      title={Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer}, 
+      author={Noam Shazeer and Azalia Mirhoseini and Krzysztof Maziarz and Andy Davis and Quoc Le and Geoffrey Hinton and Jeff Dean},
+      year={2017},
+      eprint={1701.06538},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/1701.06538}, 
+}
+
+@misc{lepikhin2020gshardscalinggiantmodels,
+      title={GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding}, 
+      author={Dmitry Lepikhin and HyoukJoong Lee and Yuanzhong Xu and Dehao Chen and Orhan Firat and Yanping Huang and Maxim Krikun and Noam Shazeer and Zhifeng Chen},
+      year={2020},
+      eprint={2006.16668},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2006.16668}, 
+}
+
+@article{JMLR:v23:21-0998,
+  author  = {William Fedus and Barret Zoph and Noam Shazeer},
+  title   = {Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity},
+  journal = {Journal of Machine Learning Research},
+  year    = {2022},
+  volume  = {23},
+  number  = {120},
+  pages   = {1--39},
+  url     = {http://jmlr.org/papers/v23/21-0998.html}
+}
+
+@inproceedings{dai-etal-2022-stablemoe,
+    title = "{S}table{M}o{E}: Stable Routing Strategy for Mixture of Experts",
+    author = "Dai, Damai  and
+      Dong, Li  and
+      Ma, Shuming  and
+      Zheng, Bo  and
+      Sui, Zhifang  and
+      Chang, Baobao  and
+      Wei, Furu",
+    editor = "Muresan, Smaranda  and
+      Nakov, Preslav  and
+      Villavicencio, Aline",
+    booktitle = "Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = may,
+    year = "2022",
+    address = "Dublin, Ireland",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2022.acl-long.489/",
+    doi = "10.18653/v1/2022.acl-long.489",
+    pages = "7085--7095",
+    abstract = "The Mixture-of-Experts (MoE) technique can scale up the model size of Transformers with an affordable computational overhead. We point out that existing learning-to-route MoE methods suffer from the routing fluctuation issue, i.e., the target expert of the same input may change along with training, but only one expert will be activated for the input during inference. The routing fluctuation tends to harm sample efficiency because the same input updates different experts but only one is finally used. In this paper, we propose StableMoE with two training stages to address the routing fluctuation problem. In the first training stage, we learn a balanced and cohesive routing strategy and distill it into a lightweight router decoupled from the backbone model. In the second training stage, we utilize the distilled router to determine the token-to-expert assignment and freeze it for a stable routing strategy. We validate our method on language modeling and multilingual machine translation. The results show that StableMoE outperforms existing MoE methods in terms of both convergence speed and performance."
+}
+
+@misc{guo2026advancingexpertspecializationbetter,
+      title={Advancing Expert Specialization for Better MoE}, 
+      author={Hongcan Guo and Haolang Lu and Guoshun Nan and Bolun Chu and Jialin Zhuang and Yuan Yang and Wenhao Che and Xinye Cao and Sicong Leng and Qimei Cui and Xudong Jiang},
+      year={2026},
+      eprint={2505.22323},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2505.22323}, 
+}
+
+@misc{xie2024moeprunerpruningmixtureofexpertslarge,
+      title={MoE-Pruner: Pruning Mixture-of-Experts Large Language Model using the Hints from Its Router}, 
+      author={Yanyue Xie and Zhi Zhang and Ding Zhou and Cong Xie and Ziang Song and Xin Liu and Yanzhi Wang and Xue Lin and An Xu},
+      year={2024},
+      eprint={2410.12013},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2410.12013}, 
+}
+
+@misc{frankle2019lotterytickethypothesisfinding,
+      title={The Lottery Ticket Hypothesis: Finding Sparse, Trainable Neural Networks}, 
+      author={Jonathan Frankle and Michael Carbin},
+      year={2019},
+      eprint={1803.03635},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/1803.03635}, 
+}
+
+@InProceedings{pmlr-v119-frankle20a,
+  title = 	 {Linear Mode Connectivity and the Lottery Ticket Hypothesis},
+  author =       {Frankle, Jonathan and Dziugaite, Gintare Karolina and Roy, Daniel and Carbin, Michael},
+  booktitle = 	 {Proceedings of the 37th International Conference on Machine Learning},
+  pages = 	 {3259--3269},
+  year = 	 {2020},
+  editor = 	 {III, Hal Daumé and Singh, Aarti},
+  volume = 	 {119},
+  series = 	 {Proceedings of Machine Learning Research},
+  month = 	 {13--18 Jul},
+  publisher =    {PMLR},
+  pdf = 	 {http://proceedings.mlr.press/v119/frankle20a/frankle20a.pdf},
+  url = 	 {https://proceedings.mlr.press/v119/frankle20a.html},
+  abstract = 	 {We study whether a neural network optimizes to the same, linearly connected minimum under different samples of SGD noise (e.g., random data order and augmentation). We find that standard vision models become stable to SGD noise in this way early in training. From then on, the outcome of optimization is determined to a linearly connected region. We use this technique to study iterative magnitude pruning (IMP), the procedure used by work on the lottery ticket hypothesis to identify subnetworks that could have trained in isolation to full accuracy. We find that these subnetworks only reach full accuracy when they are stable to SGD noise, which either occurs at initialization for small-scale settings (MNIST) or early in training for large-scale settings (ResNet-50 and Inception-v3 on ImageNet).}
+}
+
+@misc{fedus2022switchtransformersscalingtrillion,
+      title={Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity}, 
+      author={William Fedus and Barret Zoph and Noam Shazeer},
+      year={2022},
+      eprint={2101.03961},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2101.03961}, 
+}
+
+@inproceedings{lo2025closer,
+  title     = {A Closer Look into Mixture-of-Experts in Large Language Models},
+  author    = {Lo, Ka Man and Huang, Zeyu and Qiu, Zihan and Wang, Zili and Fu, Jie},
+  booktitle = {Findings of the Association for Computational Linguistics: NAACL 2025},
+  pages     = {4427--4447},
+  year      = {2025},
+  publisher = {Association for Computational Linguistics},
+  doi       = {10.18653/v1/2025.findings-naacl.251},
+  url       = {https://aclanthology.org/2025.findings-naacl.251/}
+}
+
+@article{wang2026myth,
+  title   = {The Myth of Expert Specialization in MoEs: Why Routing Reflects Geometry, Not Necessarily Domain Expertise},
+  author  = {Wang, Xi and Hayou, Soufiane and Nalisnick, Eric},
+  journal = {arXiv preprint arXiv:2604.09780},
+  year    = {2026},
+  url     = {https://arxiv.org/abs/2604.09780}
+}
+
+@article{herbst2026expert,
+  title   = {The Expert Strikes Back: Interpreting Mixture-of-Experts Language Models at Expert Level},
+  author  = {Herbst, Jeremy and Lee, Jae Hee and Wermter, Stefan},
+  journal = {arXiv preprint arXiv:2604.02178},
+  year    = {2026},
+  url     = {https://arxiv.org/abs/2604.02178}
+}
+
+@article{ternovtsii2026geometric,
+  title   = {Geometric Routing Enables Causal Expert Control in Mixture of Experts},
+  author  = {Ternovtsii, Ivan and Bilak, Yurii},
+  journal = {arXiv preprint arXiv:2604.14434},
+  year    = {2026},
+  url     = {https://arxiv.org/abs/2604.14434}
+}
+
+@article{chen2022taskspecific,
+  title   = {Task-Specific Expert Pruning for Sparse Mixture-of-Experts},
+  author  = {Chen, Tianyu and Huang, Shaohan and Xie, Yuan and Jiao, Binxing and Jiang, Daxin and Zhou, Haoyi and Li, Jianxin and Wei, Furu},
+  journal = {arXiv preprint arXiv:2206.00277},
+  year    = {2022},
+  url     = {https://arxiv.org/abs/2206.00277}
+}
+
+@inproceedings{lu2024notall,
+  title     = {Not All Experts are Equal: Efficient Expert Pruning and Skipping for Mixture-of-Experts Large Language Models},
+  author    = {Lu, Xudong and Liu, Qi and Xu, Yuhui and Zhou, Aojun and Huang, Siyuan and Zhang, Bo and Yan, Junchi and Li, Hongsheng},
+  booktitle = {Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics},
+  pages     = {6159--6172},
+  year      = {2024},
+  publisher = {Association for Computational Linguistics},
+  doi       = {10.18653/v1/2024.acl-long.334},
+  url       = {https://aclanthology.org/2024.acl-long.334/}
+}
+
+@article{stefanski2026routing,
+  title   = {Routing the Lottery: Adaptive Subnetworks for Heterogeneous Data},
+  author  = {Stefa{\'n}ski, Grzegorz and Presta, Alberto and Byra, Micha{\l}},
+  journal = {arXiv preprint arXiv:2601.22141},
+  year    = {2026},
+  url     = {https://arxiv.org/abs/2601.22141}
+}
+
+@article{gan2025cdsp,
+  title   = {Mixture-of-Experts with Gradient Conflict-Driven Subspace Topology Pruning for Emergent Modularity},
+  author  = {Gan, Yuxing and Lei, Ziyu},
+  journal = {arXiv preprint arXiv:2512.20291},
+  year    = {2025},
+  url     = {https://arxiv.org/abs/2512.20291}
+}
+
+@inproceedings{paul2023unmasking,
+  title     = {Unmasking the Lottery Ticket Hypothesis: What's Encoded in a Winning Ticket's Mask?},
+  author    = {Paul, Mansheej and Chen, Feng and Larsen, Brett W. and Frankle, Jonathan and Ganguli, Surya and Dziugaite, Gintare Karolina},
+  booktitle = {International Conference on Learning Representations},
+  year      = {2023},
+  url       = {https://openreview.net/forum?id=xSsW2Am-ukZ}
+}
+
+@inproceedings{tang-etal-2026-specialization,
+    title = "Specialization through Collaboration: Understanding Expert Interaction in Mixture-of-Expert Large Language Models",
+    author = "Tang, Yuanbo  and
+      Zhang, Naifan  and
+      Tang, Yan  and
+      Chen, Meixuan  and
+      Huang, Shuhan  and
+      Cao, Tingyu  and
+      Li, Yang",
+    editor = "Demberg, Vera  and
+      Inui, Kentaro  and
+      Marquez, Llu{\'i}s",
+    booktitle = "Proceedings of the 19th Conference of the {E}uropean Chapter of the {A}ssociation for {C}omputational {L}inguistics (Volume 1: Long Papers)",
+    month = mar,
+    year = "2026",
+    address = "Rabat, Morocco",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2026.eacl-long.104/",
+    doi = "10.18653/v1/2026.eacl-long.104",
+    pages = "2326--2339",
+    ISBN = "979-8-89176-380-7",
+    abstract = "Mixture-of-Experts (MoE) based large language models (LLMs) have gained popularity due to their multi-task capability, where each input token activates only a subset of ``expert'' subnetworks. However, whether each expert can truly specialize to a certain task remains poorly understood, while activation analysis shows frequent cross-layer co-activation of experts for the same input, resembling a collaborative behavior. In this paper, we use a dictionary learning approach to show that experts in MoE LLMs form hierarchical and semantically coherent collaborative groups that correspond to specific linguistic and cognitive functions (e.g., mathematical reasoning, syntactic processing), mirroring specialized functional region observed in neuroscience. Furthermore, leveraging these discovered expert groups enables significant model compression with minimal performance degradation, outperforming existing methods by 2.5{\%} while enabling up to 50{\%} expert reduction. These findings provide the first systematic analysis of expert collaboration mechanisms in MoE LLMs, revealing that specialization emerges from joint activation of experts across all layers. We further developed an interactive visualization platform that enables researchers to explore expert collaboration patterns and their semantic associations."
+}
+
+@inproceedings{yoon-choi-2026-compel,
+    title = "{COMPEL}: Compensated Mixture-of-Experts Pruning with Expert-Layer distribution",
+    author = "Yoon, Seohee  and
+      Choi, Yong Suk",
+    editor = "Liakata, Maria  and
+      Moreira, Viviane P.  and
+      Zhang, Jiajun  and
+      Jurgens, David",
+    booktitle = "Findings of the {A}ssociation for {C}omputational {L}inguistics: {ACL} 2026",
+    month = jul,
+    year = "2026",
+    address = "San Diego, California, United States",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2026.findings-acl.1521/",
+    doi = "10.18653/v1/2026.findings-acl.1521",
+    pages = "30408--30423",
+    ISBN = "979-8-89176-395-1",
+    abstract = "Mixture-of-Experts (MoE) architectures have emerged as an effective approach for scaling Large Language Models (LLMs) by activating only a subset of experts during inference. Despite their computational efficiency, MoE models incur a substantial memory bottleneck from maintaining all expert parameters during inference. To address this challenge, numerous MoE pruning methods have been proposed. However, most existing methods adopt uniform pruning across layers, which fails to capture layer-wise variations in expert importance and redundancy. In this paper, we propose COmpensated MoE Pruning with Expert-Layer distribution (COMPEL). COMPEL performs layer-adaptive expert pruning by estimating expert importance using Fisher information and deriving layer importance from layer-wise outlier distributions, enabling pruning decisions that capture layer-wise heterogeneity. Furthermore, to mitigate performance degradation resulting from expert pruning, we propose a Fisher information guided expert weight compensation method. Experimental results on the Qwen1.5-MoE-A2.7B achieve near lossless performance at 25{\%} expert pruning and maintains performance within a 4{\%} margin even at 50{\%} pruning. Moreover, COMPEL consistently outperforms existing pruning methods while substantially reducing inference latency and peak GPU memory usage."
+}
+
+@misc{zhang2026shapecoalitionawareexpertpruning,
+      title={SHAPE: Coalition-Aware Expert Pruning for Sparse Mixture-of-Experts LLMs}, 
+      author={Yuhao Zhang},
+      year={2026},
+      eprint={2606.09886},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2606.09886}, 
+}
+
+@misc{lee2025stunstructuredthenunstructuredpruningscalable,
+      title={STUN: Structured-Then-Unstructured Pruning for Scalable MoE Pruning}, 
+      author={Jaeseong Lee and seung-won hwang and Aurick Qiao and Daniel F Campos and Zhewei Yao and Yuxiong He},
+      year={2025},
+      eprint={2409.06211},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2409.06211}, 
+}

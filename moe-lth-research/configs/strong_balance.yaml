@@ -1,0 +1,8 @@
+extends: baseline.yaml
+routing:
+  mode: learned
+  aux_loss_weight: 0.1
+training:
+  record_train_routes: false
+output_dir: results/runs/strong_balance
+

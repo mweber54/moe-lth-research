@@ -1,0 +1,36 @@
+seed: 7
+device: cpu
+data:
+  path: data/TinyStories
+  seq_len: 64
+  validation_blocks: 16
+  max_train_examples: 5000
+  max_validation_examples: 500
+model:
+  vocab_size: 256
+  num_layers: 2
+  num_heads: 4
+  d_model: 64
+  num_experts: 4
+  expert_hidden_size: 128
+  dropout: 0.0
+  top_k: 1
+  capacity_factor: 1.25
+routing:
+  mode: learned
+  aux_loss_weight: 0.01
+training:
+  steps: 500
+  batch_size: 8
+  learning_rate: 0.0005
+  weight_decay: 0.01
+  grad_clip: 1.0
+  eval_interval: 100
+  log_interval: 25
+  checkpoint_steps: [0, 50, 100, 250, 500]
+  save_optimizer: false
+  record_train_routes: true
+pruning:
+  sparsities: [0.5, 0.8, 0.9]
+  rewind_fractions: [0.0, 0.01, 0.05, 0.1]
+output_dir: results/tinystories_cpu

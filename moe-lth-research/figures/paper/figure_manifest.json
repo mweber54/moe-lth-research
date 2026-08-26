@@ -1,0 +1,197 @@
+{
+  "figures": {
+    "fig2a_direct_pruning": [
+      "figures/paper/fig2a_direct_pruning.pdf",
+      "figures/paper/fig2a_direct_pruning.png"
+    ],
+    "fig2b_rewind_80": [
+      "figures/paper/fig2b_rewind_80.pdf",
+      "figures/paper/fig2b_rewind_80.png"
+    ],
+    "fig3a_routing_mask_advantage": [
+      "figures/paper/fig3a_routing_mask_advantage.pdf",
+      "figures/paper/fig3a_routing_mask_advantage.png"
+    ],
+    "fig3b_route_mask_association": [
+      "figures/paper/fig3b_route_mask_association.pdf",
+      "figures/paper/fig3b_route_mask_association.png"
+    ],
+    "fig3c_cross_init": [
+      "figures/paper/fig3c_cross_init.pdf",
+      "figures/paper/fig3c_cross_init.png"
+    ],
+    "fig4a_architecture_robustness": [
+      "figures/paper/fig4a_architecture_robustness.pdf",
+      "figures/paper/fig4a_architecture_robustness.png"
+    ],
+    "fig4b_dataset_robustness": [
+      "figures/paper/fig4b_dataset_robustness.pdf",
+      "figures/paper/fig4b_dataset_robustness.png"
+    ],
+    "fig4c_phase4_rewinds": [
+      "figures/paper/fig4c_phase4_rewinds.pdf",
+      "figures/paper/fig4c_phase4_rewinds.png"
+    ],
+    "figA1_dense_routing": [
+      "figures/paper/figA1_dense_routing.pdf",
+      "figures/paper/figA1_dense_routing.png"
+    ],
+    "figA2_routing_pruning_curves": [
+      "figures/paper/figA2_routing_pruning_curves.pdf",
+      "figures/paper/figA2_routing_pruning_curves.png"
+    ]
+  },
+  "formats": [
+    "pdf",
+    "png"
+  ],
+  "generator": "scripts/generate_paper_figures.py",
+  "generator_sha256": "246391953d60de0d8b467af51e81b0a68aa1d62814180dc1a6d11681394c9092",
+  "notes": [
+    "All loss ratios and control advantages are paired within seed before aggregation.",
+    "The route-mask correlation includes all 15 unordered routing-condition pairs, including the exact learned-routing/replay positive control.",
+    "The transfer condition is the implemented expert-0-to-expert-1 replacement, not an all-expert cyclic transfer."
+  ],
+  "outputs": [
+    {
+      "path": "figures/paper/fig2a_direct_pruning.pdf",
+      "sha256": "c9e6ce445ec0aa2bca968d431b21a3da2d1065f798f383283f44003f68dcfbe5"
+    },
+    {
+      "path": "figures/paper/fig2a_direct_pruning.png",
+      "sha256": "0589a722741cb3a51b4b6f54357b3a73557871af54c40ab3b610fd0bcdf97ff9"
+    },
+    {
+      "path": "figures/paper/fig2b_rewind_80.pdf",
+      "sha256": "2150255bd3e10b6b8b1362d8441dbe60863c064aae42c12ec9831fb9083f90b4"
+    },
+    {
+      "path": "figures/paper/fig2b_rewind_80.png",
+      "sha256": "51385f25582026884e693c549b1b28b94384beeea46ad11bd81056e53923004b"
+    },
+    {
+      "path": "figures/paper/fig3a_routing_mask_advantage.pdf",
+      "sha256": "de87c63adb3ff3ce54d5af2806f08aebe8ec412e03b4d8af81b5bd58ad646df6"
+    },
+    {
+      "path": "figures/paper/fig3a_routing_mask_advantage.png",
+      "sha256": "8aa85f8d0a28e0be3283fdb1200e8e55ee148d16b70a909ee37349728e379820"
+    },
+    {
+      "path": "figures/paper/fig3b_route_mask_association.pdf",
+      "sha256": "6b8fb9daa19a6856f51093fa878fbc4079fc8ba2a4b8b46bbdbb3f5e26133a22"
+    },
+    {
+      "path": "figures/paper/fig3b_route_mask_association.png",
+      "sha256": "a29f35aecb730db0931c32505d787cb109f1cde54d7ca765031a97aeb4840f47"
+    },
+    {
+      "path": "figures/paper/fig3c_cross_init.pdf",
+      "sha256": "b0d6ccd6412062a07db2bcbe31136927d5322aa41ef5a743a50a400ebe42ce5f"
+    },
+    {
+      "path": "figures/paper/fig3c_cross_init.png",
+      "sha256": "447bce05f170a373d401a7ec0eda11739643d905722d29f991e8f3f1e4eb15db"
+    },
+    {
+      "path": "figures/paper/fig4a_architecture_robustness.pdf",
+      "sha256": "fd27f3964602a763a3c74f5b0ec477fb250504cedeef14f71f63c81bce31a5fa"
+    },
+    {
+      "path": "figures/paper/fig4a_architecture_robustness.png",
+      "sha256": "fedae52d442184b39cd741934e98618d3b8289a0c74d5a6af91e474bb670dcae"
+    },
+    {
+      "path": "figures/paper/fig4b_dataset_robustness.pdf",
+      "sha256": "2a6773703703cfc42a29968120981ef387ebc0b21d26af476da50700eb39baa1"
+    },
+    {
+      "path": "figures/paper/fig4b_dataset_robustness.png",
+      "sha256": "11d61889c9f966c80dedcabf9b7216273e44949e43d2838c09b7601063b8dd31"
+    },
+    {
+      "path": "figures/paper/fig4c_phase4_rewinds.pdf",
+      "sha256": "0fa884dd8adaacfb220d33d00238a910d5c45ab29ad6bb236a535c2f5799a313"
+    },
+    {
+      "path": "figures/paper/fig4c_phase4_rewinds.png",
+      "sha256": "3251ec388741289c371fab99516b7f192b55627092b3951d7606265bddef8e5b"
+    },
+    {
+      "path": "figures/paper/figA1_dense_routing.pdf",
+      "sha256": "cb80b86444f416d39e85e2d1091d2592860939e6845bcd3ab6dfc1a46f975aa3"
+    },
+    {
+      "path": "figures/paper/figA1_dense_routing.png",
+      "sha256": "5431dcee75519f5aab6fc6b086c2c794dd25636567421b04126f4a519263dd97"
+    },
+    {
+      "path": "figures/paper/figA2_routing_pruning_curves.pdf",
+      "sha256": "50b2ec4c669e6787eeb35dd7d66ddb0c43076333259f5f75cdda4c6641c6ed92"
+    },
+    {
+      "path": "figures/paper/figA2_routing_pruning_curves.png",
+      "sha256": "f8f4686101cb032664390e4e0630841d4aa7cf7e3546cc1bff9995be15045616"
+    }
+  ],
+  "png_dpi": 300,
+  "sources": [
+    {
+      "path": "results/phase4_rewinds/phase4_rewind_summary.json",
+      "sha256": "dc87fb14201a03607dc44be76b6131f06d63f4412deae33ec1607486afa44c3f"
+    },
+    {
+      "path": "results/phase4_robustness/phase4_summary.json",
+      "sha256": "bff168a43512aceb41378208822e9420594d0da0dbd19b12c8fa8cc15eacee39"
+    },
+    {
+      "path": "results/wikitext103_cross_init_replay/cross_init_replay_summary.json",
+      "sha256": "d821cb2097f707ab44f38855fb09c1a2bb52a8de29eaeef4b6b8f7b8e23b654e"
+    },
+    {
+      "path": "results/wikitext103_gpu_multiseed/multiseed_summary.json",
+      "sha256": "20303d504b5de247793ec67d6cdae4a7c211e008e4fce909ef36361dc7f3deee"
+    },
+    {
+      "path": "results/wikitext103_gpu_seed17_suite/normal/resolved_config.yaml",
+      "sha256": "a55b057650ba2696b07254a9350e7498cdf7d3219565dd4994d6c2acf2b239f8"
+    },
+    {
+      "path": "results/wikitext103_gpu_seed17_suite/normal/tables/rewind_suite_sparsity_0.8.json",
+      "sha256": "476a8f0595dbbcd9f97a0d451f26273ef574845ef86e834370502acb42bb5f0b"
+    },
+    {
+      "path": "results/wikitext103_gpu_seed17_suite/suite_summary.json",
+      "sha256": "c226d9586c57ad24baf245ef8742cb418893a15cacff25fbfd964ba4d73b4417"
+    },
+    {
+      "path": "results/wikitext103_gpu_seed29_suite/normal/resolved_config.yaml",
+      "sha256": "d20ad9569e8c28ac9831fa08d9c4a3de6fc383b4504072d0b34263a7a1662fa5"
+    },
+    {
+      "path": "results/wikitext103_gpu_seed29_suite/normal/tables/rewind_suite_sparsity_0.8.json",
+      "sha256": "cd0b7f4b112f977ed84e920a4bb3b5bb9a7ed9d8972346936b96afc244ee4e43"
+    },
+    {
+      "path": "results/wikitext103_gpu_seed29_suite/suite_summary.json",
+      "sha256": "ba47cff826c737dd3d8d30642a07a82c8998cc2f910de10eb84ce32ae79a0a6c"
+    },
+    {
+      "path": "results/wikitext103_gpu_suite/normal/resolved_config.yaml",
+      "sha256": "be1561805ca2ff174808b6e6df79804bd86c695c6223c37e360a0d1b41fc906d"
+    },
+    {
+      "path": "results/wikitext103_gpu_suite/normal/tables/rewind_suite_sparsity_0.8.json",
+      "sha256": "d7e3ad53642bdb79a080e47836d076407df5d39ceee148897093336da6a1a8d2"
+    },
+    {
+      "path": "results/wikitext103_gpu_suite/suite_summary.json",
+      "sha256": "ab83e797405abc2b1f7de50c0fb6f6c2df1195a8ded3830cc40740aee2f76af1"
+    }
+  ],
+  "uncertainty": {
+    "cross_initialization": "individual target seeds 17 and 29; no error-bar estimate",
+    "phase4_rewinds": "population SD over seeds 7, 17, and 29, matching the archived follow-up",
+    "wiki_multiseed_and_phase4_robustness": "sample SD over seeds 7, 17, and 29"
+  }
+}

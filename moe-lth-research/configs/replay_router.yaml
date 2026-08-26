@@ -1,0 +1,8 @@
+extends: baseline.yaml
+routing:
+  mode: replay
+  replay_path: results/runs/baseline/logs/train_route_history.npz
+training:
+  record_train_routes: false
+output_dir: results/runs/replay
+

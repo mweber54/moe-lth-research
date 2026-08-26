@@ -1,0 +1,398 @@
+# Canonical Experiment Registry for ICLR 2027 Revision
+# This file is the single source of truth for all manuscript figures/tables.
+#
+# Each experiment has:
+#   - id: unique identifier
+#   - question: scientific question
+#   - manipulated: what variable is changed
+#   - controlled: what is held fixed
+#   - seeds: list of random seeds
+#   - dataset: dataset identifier
+#   - architecture: model config reference
+#   - routing_condition: which routing mode
+#   - sparsity: pruning sparsity levels
+#   - rewind_point: rewind fractions
+#   - training_budget: total training steps
+#   - output_paths: where results are stored
+#   - expected_metrics: what metrics to report
+#   - status: DONE | IMPLEMENTED | RUNNING | BLOCKED | NOT_STARTED
+#   - trace_schema_version: 1 (legacy) or 2 (rich)
+#   - rewind_protocol: full_budget_restart | compute_matched | both
+#   - figure_table: which manuscript figure/table uses this
+
+schema_version: 1
+revision: "iclr_2027_r1"
+
+# =============================================================================
+# EXISTING EXPERIMENTS (from original submission)
+# =============================================================================
+
+existing_experiments:
+
+  - id: "wikitext103_learned_baseline"
+    question: "What is the dense baseline performance with learned routing on WikiText-103?"
+    manipulated: "none (baseline)"
+    controlled: "initialization, data order, architecture"
+    seeds: [7, 17, 29]
+    dataset: "wikitext103_subset"
+    architecture: "configs/wikitext103_gpu.yaml"
+    routing_condition: "learned"
+    sparsity: [0.5, 0.7, 0.8, 0.9, 0.95]
+    rewind_point: [0.0, 0.01, 0.05, 0.1]
+    training_budget: 2500
+    output_paths:
+      seed7: "results/wikitext103_gpu_suite"
+      seed17: "results/wikitext103_gpu_seed17_suite"
+      seed29: "results/wikitext103_gpu_seed29_suite"
+    expected_metrics: [loss, perplexity, mask_jaccard, expert_usage, route_agreement]
+    status: "DONE"
+    trace_schema_version: 1
+    rewind_protocol: "full_budget_restart"
+    figure_table: ["fig2a", "fig2b", "fig3a"]
+
+  - id: "tinystories_learned_baseline"
+    question: "What is the dense baseline performance with learned routing on TinyStories?"
+    manipulated: "none (baseline)"
+    controlled: "initialization, data order, architecture"
+    seeds: [7, 17, 29]
+    dataset: "tinystories_50k"
+    architecture: "configs/tinystories_gpu.yaml"
+    routing_condition: "learned"
+    sparsity: [0.5, 0.7, 0.8, 0.9, 0.95]
+    rewind_point: [0.0, 0.01, 0.05, 0.1]
+    training_budget: 2500
+    output_paths:
+      seed7: "results/tinystories_gpu_suite"
+      seed17: "results/tinystories_gpu_seed17_suite"
+      seed29: "results/tinystories_gpu_seed29_suite"
+    expected_metrics: [loss, perplexity, mask_jaccard, expert_usage, route_agreement]
+    status: "DONE"
+    trace_schema_version: 1
+    rewind_protocol: "full_budget_restart"
+    figure_table: ["fig2a", "fig2b", "fig3a"]
+
+  - id: "wikitext103_cross_init_replay"
+    question: "Does imposing source routing on target initialization reproduce sparse support?"
+    manipulated: "initialization (different seed)"
+    controlled: "routing trajectory, data order, architecture"
+    seeds:
+      source: [7]
+      target: [17, 29]
+    dataset: "wikitext103_subset"
+    architecture: "configs/wikitext103_gpu.yaml"
+    routing_condition: "replay"
+    sparsity: [0.5, 0.8]
+    rewind_point: [0.0, 0.05, 0.1]
+    training_budget: 2500
+    output_paths:
+      base: "results/wikitext103_cross_init_replay"
+    expected_metrics: [loss, mask_jaccard, route_agreement, aligned_jaccard]
+    status: "DONE"
+    trace_schema_version: 1
+    rewind_protocol: "full_budget_restart"
+    figure_table: ["fig3c"]
+    notes: "n=2 targets only - needs replication per P0.4"
+
+  - id: "wikitext103_expert_transfer_limited"
+    question: "Does expert 0 mask transfer to expert 1?"
+    manipulated: "which expert's mask is applied"
+    controlled: "sparsity, architecture, training"
+    seeds: [7, 17, 29]
+    dataset: "wikitext103_subset"
+    architecture: "configs/wikitext103_gpu.yaml"
+    routing_condition: "learned"
+    sparsity: [0.5, 0.7, 0.8, 0.9, 0.95]
+    training_budget: 2500
+    output_paths:
+      base: "results/wikitext103_gpu_suite"
+    expected_metrics: [loss_with_own_mask, loss_with_other_expert_mask]
+    status: "DONE"
+    trace_schema_version: 1
+    figure_table: ["table_expert_transfer"]
+    notes: "Only expert 0->1 transfer tested. Needs full matrix per P0.6"
+
+# =============================================================================
+# NEW EXPERIMENTS (ICLR revision)
+# =============================================================================
+
+revision_experiments:
+
+  # --- P0.1: Compute-Matched Rewind ---
+  - id: "p01_compute_matched_rewind_wikitext"
+    question: "Does the rewind result hold under compute-matched training budget?"
+    manipulated: "rewind protocol (full_budget vs compute_matched)"
+    controlled: "initialization, routing, data order, architecture, masks"
+    seeds: [7, 17, 29]
+    dataset: "wikitext103_subset"
+    architecture: "configs/wikitext103_gpu.yaml"
+    routing_condition: "learned"
+    sparsity: [0.5, 0.8]
+    rewind_point: [0.0, 0.01, 0.05, 0.1]
+    training_budget: 2500
+    rewind_protocol: "both"
+    conditions:
+      - "learned_magnitude_mask"
+      - "matched_random_mask"
+      - "learned_mask_random_reinit"
+      - "dense_reference"
+    output_paths:
+      base: "results/revision/p01_compute_matched_rewind/wikitext103"
+    expected_metrics: [loss, perplexity, mask_advantage, protocol_comparison]
+    status: "IMPLEMENTED"
+    trace_schema_version: 1
+    figure_table: ["fig2_revised", "table_compute_matched"]
+
+  - id: "p01_compute_matched_rewind_tinystories"
+    question: "Does the compute-matched rewind result replicate on TinyStories?"
+    manipulated: "rewind protocol"
+    controlled: "initialization, routing, data order, architecture, masks"
+    seeds: [7, 17, 29]
+    dataset: "tinystories_50k"
+    architecture: "configs/tinystories_gpu.yaml"
+    routing_condition: "learned"
+    sparsity: [0.5, 0.8]
+    rewind_point: [0.0, 0.01, 0.05, 0.1]
+    training_budget: 2500
+    rewind_protocol: "both"
+    conditions:
+      - "learned_magnitude_mask"
+      - "matched_random_mask"
+      - "learned_mask_random_reinit"
+      - "dense_reference"
+    output_paths:
+      base: "results/revision/p01_compute_matched_rewind/tinystories"
+    expected_metrics: [loss, perplexity, mask_advantage, protocol_comparison]
+    status: "IMPLEMENTED"
+    trace_schema_version: 1
+    figure_table: ["fig2_revised", "table_compute_matched"]
+
+  # --- P0.2: Deconfounded Routing Shuffle ---
+  - id: "p02_deconfounded_shuffle_wikitext"
+    question: "Does routing effect persist when gate/capacity are controlled?"
+    manipulated: "token-to-expert-slot identity (fixed gate/acceptance)"
+    controlled: "gate values, acceptance status, expert-slot counts, initialization, data"
+    seeds: [7, 17, 29]
+    dataset: "wikitext103_subset"
+    architecture: "configs/wikitext103_gpu.yaml"
+    routing_condition: "deconfounded_shuffle"
+    sparsity: [0.5, 0.8]
+    rewind_point: [0.0, 0.05, 0.1]
+    training_budget: 2500
+    rewind_protocol: "both"
+    output_paths:
+      base: "results/revision/p02_deconfounded_shuffle/wikitext103"
+    expected_metrics:
+      - dense_loss
+      - expert_utilization
+      - accepted_counts
+      - dropped_fraction
+      - gate_distribution_distance
+      - route_agreement
+      - mask_jaccard
+      - magnitude_pruning_loss
+      - random_mask_pruning_loss
+      - mask_advantage
+      - rewind_performance
+    status: "IMPLEMENTED"
+    trace_schema_version: 2
+    figure_table: ["fig3a_revised"]
+
+  # --- P0.3: Graded Routing Corruption ---
+  - id: "p03_graded_corruption_wikitext"
+    question: "Does support change monotonically with routing disruption?"
+    manipulated: "corruption fraction of routing assignments"
+    controlled: "gate distribution (as much as feasible), initialization, data"
+    seeds: [7, 17, 29]
+    dataset: "wikitext103_subset"
+    architecture: "configs/wikitext103_gpu.yaml"
+    routing_condition: "graded_corruption"
+    corruption_fractions: [0.00, 0.10, 0.25, 0.50, 0.75, 1.00]
+    sparsity: [0.5, 0.8]
+    rewind_point: [0.0, 0.05]
+    training_budget: 2500
+    output_paths:
+      base: "results/revision/p03_graded_corruption/wikitext103"
+    expected_metrics:
+      - corruption_fraction
+      - dense_loss
+      - route_disagreement
+      - accepted_count_difference
+      - gate_distribution_divergence
+      - mask_jaccard
+      - magnitude_vs_random_advantage
+      - rewind_loss
+    status: "IMPLEMENTED"
+    trace_schema_version: 2
+    figure_table: ["fig3b_revised", "table_graded_corruption"]
+
+  # --- P0.4: Replicated Cross-Init Replay ---
+  - id: "p04_cross_init_replicated"
+    question: "How much support variation is explained by route history vs initialization?"
+    manipulated: "source routing trajectory × target initialization"
+    controlled: "data order per target, architecture, training budget"
+    seeds:
+      source: [7, 17, 29]
+      target: [7, 17, 29, 37, 41]
+    dataset: "wikitext103_subset"
+    architecture: "configs/wikitext103_gpu.yaml"
+    routing_condition: "replay"
+    sparsity: [0.5, 0.8]
+    rewind_point: [0.0, 0.05]
+    training_budget: 2500
+    output_paths:
+      base: "results/revision/p04_cross_init_replicated"
+    expected_metrics:
+      - dense_loss
+      - mask_jaccard_50
+      - mask_jaccard_80
+      - aligned_jaccard
+      - pruning_loss
+      - rewind_loss
+    status: "NOT_STARTED"
+    trace_schema_version: 2
+    figure_table: ["fig3c_revised", "table_cross_init_matrix"]
+
+  # --- P0.5: Routing × Initialization Factorial ---
+  - id: "p05_factorial_analysis"
+    question: "What are the routing, initialization, and interaction effect sizes?"
+    manipulated: "routing trajectory × initialization (factorial)"
+    controlled: "architecture, training budget, data within each init"
+    seeds:
+      routes: [7, 17, 29]
+      inits: [7, 17, 29, 37, 41]
+    dataset: "wikitext103_subset"
+    architecture: "configs/wikitext103_gpu.yaml"
+    sparsity: [0.5, 0.8]
+    training_budget: 2500
+    output_paths:
+      base: "results/revision/p05_factorial"
+    expected_metrics:
+      - dense_loss
+      - mask_jaccard
+      - magnitude_mask_advantage
+      - rewind_loss_50
+      - rewind_loss_80
+      - route_effect_variance
+      - init_effect_variance
+      - interaction_variance
+    status: "NOT_STARTED"
+    trace_schema_version: 2
+    figure_table: ["fig3c_revised", "table_factorial"]
+
+  # --- P0.6: Full Expert Mask Transfer Matrix ---
+  - id: "p06_expert_transfer_matrix"
+    question: "Are expert supports genuinely expert-specific?"
+    manipulated: "which expert's mask is applied to which expert"
+    controlled: "sparsity, architecture, training"
+    seeds: [7, 17, 29]
+    dataset: "wikitext103_subset"
+    architecture: "configs/wikitext103_gpu.yaml"
+    routing_condition: "learned"
+    sparsity: [0.5, 0.8]
+    training_budget: 2500
+    output_paths:
+      base: "results/revision/p06_expert_transfer_matrix"
+    expected_metrics:
+      - diagonal_self_performance
+      - off_diagonal_transfer_performance
+      - transfer_penalty
+      - layer_wise_means
+    status: "IMPLEMENTED"
+    trace_schema_version: 1
+    figure_table: ["table_expert_transfer_full", "heatmap_transfer"]
+
+  # --- P0.7: Fresh Epoch Reshuffling ---
+  - id: "p07_fresh_epoch_shuffle"
+    question: "Does the result depend on repeated data ordering?"
+    manipulated: "epoch reshuffling strategy"
+    controlled: "initialization, routing, architecture, total training steps"
+    seeds: [7, 17, 29]
+    dataset: "wikitext103_subset"
+    architecture: "configs/wikitext103_gpu.yaml"
+    routing_condition: "learned"
+    sparsity: [0.5, 0.8]
+    rewind_point: [0.0, 0.05]
+    training_budget: 2500
+    conditions:
+      - "cached_order (current behavior)"
+      - "fresh_epoch_shuffle"
+    output_paths:
+      base: "results/revision/p07_fresh_epoch"
+    expected_metrics:
+      - dense_loss
+      - mask_jaccard
+      - mask_advantage
+      - rewind_loss
+      - epoch_count
+      - unique_examples_seen
+    status: "IMPLEMENTED"
+    trace_schema_version: 2
+    figure_table: ["table_data_order"]
+
+  # --- P0.8: Larger Scale Validation ---
+  - id: "p08_larger_scale"
+    question: "Does the phenomenon replicate at meaningfully larger scale?"
+    manipulated: "model scale"
+    controlled: "experimental protocol"
+    seeds: [7]
+    dataset: "wikitext103_full_or_larger"
+    architecture: "configs/revision_larger_scale.yaml"
+    routing_condition: "learned"
+    sparsity: [0.5, 0.8]
+    rewind_point: [0.0, 0.05]
+    training_budget: 10000
+    conditions:
+      - "learned_routing_dense_baseline"
+      - "deconfounded_shuffle"
+      - "magnitude_vs_random_50"
+      - "initialization_rewind_50"
+      - "best_rewind_80"
+    output_paths:
+      base: "results/revision/p08_larger_scale"
+    expected_metrics: [loss, mask_jaccard, mask_advantage, rewind_loss]
+    status: "NOT_STARTED"
+    trace_schema_version: 2
+    figure_table: ["fig4_revised"]
+    notes: "Config TODO - depends on compute availability"
+
+  # --- P1.1: Increased Seeds ---
+  - id: "p11_increased_seeds"
+    question: "Are core results stable across 8-10 seeds?"
+    manipulated: "random seed"
+    controlled: "everything else"
+    seeds: [7, 17, 29, 37, 41, 53, 59, 67, 71, 79]
+    dataset: "wikitext103_subset"
+    architecture: "configs/wikitext103_gpu.yaml"
+    routing_condition: ["learned", "replay", "deconfounded_shuffle", "graded_corruption_0.25"]
+    sparsity: [0.5, 0.8]
+    rewind_point: [0.0, 0.05]
+    training_budget: 2500
+    output_paths:
+      base: "results/revision/p11_increased_seeds"
+    expected_metrics: [loss, mask_jaccard, mask_advantage, rewind_loss]
+    status: "NOT_STARTED"
+    trace_schema_version: 2
+    figure_table: ["table_seed_stability"]
+
+  # --- P1.4: Focused IMP Comparison ---
+  - id: "p14_imp_comparison"
+    question: "Is the 50%/80% boundary pruning-protocol dependent?"
+    manipulated: "pruning protocol (one-shot vs IMP)"
+    controlled: "initialization, routing, architecture, data"
+    seeds: [7, 17, 29]
+    dataset: "wikitext103_subset"
+    architecture: "configs/wikitext103_gpu.yaml"
+    routing_condition: "learned"
+    sparsity: [0.5, 0.8]
+    rewind_point: [0.0, 0.05, 0.1]
+    training_budget: 2500
+    imp_rounds: 5
+    conditions:
+      - "one_shot_magnitude"
+      - "iterative_magnitude_pruning"
+    output_paths:
+      base: "results/revision/p14_imp_comparison"
+    expected_metrics: [loss, rewind_loss, mask_jaccard_vs_oneshot]
+    status: "NOT_STARTED"
+    trace_schema_version: 1
+    figure_table: ["table_imp_comparison"]

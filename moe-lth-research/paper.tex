@@ -1,0 +1,2044 @@
+\documentclass{article}
+
+% Use the official ICLR 2027 style when it is present. The fallback keeps this
+% source readable and locally compilable while the official style bundle is
+% unavailable.
+\IfFileExists{iclr2027_conference.sty}{
+  \usepackage{iclr2027_conference,times}
+}{
+  \usepackage[margin=1in]{geometry}
+  \usepackage{times}
+}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{natbib}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\newcommand{\resultpanel}[1]{%
+  \IfFileExists{#1}{%
+    \includegraphics[width=\linewidth]{#1}%
+  }{%
+    \fbox{\parbox[c][1.05in][c]{0.92\linewidth}{%
+      \centering\small Figure asset not present in this source bundle.}}%
+  }%
+}
+
+\title{Routing-Conditioned Optimization Shapes Sparse Supports in
+Mixture-of-Experts Models}
+\author{Anonymous Authors\\Paper under double-blind review}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Token routing in sparse Mixture-of-Experts (MoE) models determines which
+gradients each expert receives, so some routing dependence of expert parameters
+is expected. We ask whether this dependence persists as structured,
+optimization-relevant support within expert weights. We use expert-local
+magnitude masks as a probe in balanced decoder-only MoEs trained on a
+50k-story TinyStories subset, a WikiText-103 subset exported from the first
+10k source rows, and a
+character-balanced mixture, and test the masks with matched controls,
+rewinding, and interventions on routed-token history. First, conventionally
+trained experts contain non-random, expert-specific sparse structure: in the
+reference WikiText setting, 50\%-sparse learned masks increase validation loss
+by 3.1\%, versus more than 140\% for matched random masks. Second, 50\%-sparse
+supports retrain successfully from initialization in the evaluated settings,
+whereas 80\%-sparse supports generally require early rewinding, showing that
+topology at aggressive sparsity is not sufficient. Third, exact primary-ID
+replay, random routing, and utilization-preserving token shuffling show that routed-token
+history---including token identity and gate/capacity effects---affects support
+formation beyond the logged primary-selection counts.
+Under a new initialization, the recorded source primary-expert trajectory is
+reproduced exactly but does not act as a portable sparse blueprint. These
+findings support a bounded conclusion:
+routing history makes a causal contribution within the tested regimes, while
+expert-local sparse subnetworks emerge through the interaction of routing,
+initialization, and optimization.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:introduction}
+
+Sparse Mixture-of-Experts (MoE) models expand parameter capacity while routing
+each token through only a small subset of expert modules
+\citep{shazeer2017outrageouslylargeneuralnetworks,
+lepikhin2020gshardscalinggiantmodels,
+fedus2022switchtransformersscalingtrillion}. Conditional computation also
+changes training: a routing decision determines which expert receives the
+gradient associated with a token. Experts with identical architectures can
+therefore experience different ordered sequences of optimization signals as
+the router and experts co-adapt.
+
+Because routing determines which gradients each expert receives, some
+dependence of expert parameters on routing is expected by construction. Our
+question is not whether routing changes expert weights, but whether it produces
+persistent, structured, and optimization-relevant sparse supports that remain
+detectable under controlled interventions and rewind-and-retrain tests.
+
+Prior work has characterized routing stability, load balancing, expert
+function, and redundancy, while MoE pruning shows that trained experts contain
+removable parameters
+\citep{dai-etal-2022-stablemoe,
+guo2026advancingexpertspecializationbetter,
+xie2024moeprunerpruningmixtureofexpertslarge}. Neither structured routing nor
+successful final-checkpoint pruning, however, establishes that routed
+optimization leaves expert-specific sparse structure with continued
+optimization significance. Post-training compression can preserve a trained
+function without identifying a subnetwork that remains trainable after its
+weights are rewound.
+
+We use expert-local sparse supports as a probe of this unresolved mechanism.
+Within each expert, we extract magnitude masks and compare them with matched
+random masks, masks transferred from other experts, and randomly reinitialized
+surviving weights. We then rewind the masked models to initialization or early
+checkpoints and retrain them, following the distinction between classical
+initialization-rewind tickets and early-rewind behavior
+\citep{frankle2019lotterytickethypothesisfinding,pmlr-v119-frankle20a}.
+Finally, we intervene on routing through replay, random assignment,
+selection-count-preserving token shuffling, and cross-initialization replay.
+These tests contrast realized routed-token histories at matched logged
+primary-selection counts and test whether routing alone determines the
+resulting support. Because the
+archive does not store which tokens survive the capacity filter or their
+gate-weighted gradient mass, the shuffle is not an exact match of realized
+expert updates.
+
+The evidence supports three claims. First, conventionally trained MoE experts
+contain non-random, expert-specific sparse subnetworks. Second, these supports
+retain optimization significance: moderate-sparsity supports satisfy the
+initialization-rewind criterion in the evaluated settings, whereas aggressive
+sparsity generally requires early optimization. Third, routing history makes a
+causal contribution to support formation beyond utilization alone, but the same
+routing trajectory need not produce the same sparse outcome under another
+initialization. We therefore interpret sparse-support formation as an
+interaction among routing history, initialization, and optimization, not as a
+consequence of routing alone. Our claims are restricted to the small, balanced
+decoder-only MoEs and interventions studied here.
+
+\paragraph{Contributions.}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Structural.} We show that conventionally trained MoE experts
+  contain non-random, expert-specific sparse supports that preserve global and
+  routed-token performance substantially better than matched random,
+  transferred, and reinitialized controls.
+
+  \item \textbf{Optimization.} We distinguish final-checkpoint compression
+  from lottery-ticket behavior through rewind-and-retrain tests. At 50\%
+  sparsity, learned supports satisfy the initialization-rewind criterion in the
+  evaluated settings; at 80\%, they generally require an early rewind and
+  continue to outperform matched sparse controls.
+
+  \item \textbf{Routing conditioning.} Through controlled routing
+  interventions, we show that routed-token history contributes to
+  sparse-support formation beyond logged primary-selection counts.
+  Cross-initialization
+  replay further rejects the hypothesis that routing independently determines
+  the support, supporting an interaction among routing, initialization, and
+  optimization.
+\end{itemize}
+
+\section{Related Work}
+\label{sec:related_work}
+
+\paragraph{MoE routing and expert specialization.}
+Sparse MoEs use learned routing to allocate tokens to a small subset of experts
+\citep{shazeer2017outrageouslylargeneuralnetworks,
+lepikhin2020gshardscalinggiantmodels,
+fedus2022switchtransformersscalingtrillion}. Work on routing fluctuation and
+load balancing shows that assignments alter experts' training exposure
+\citep{dai-etal-2022-stablemoe,
+guo2026advancingexpertspecializationbetter}. Analyses of expert function and
+representation geometry further caution that structured routing need not imply
+a human-interpretable semantic role
+\citep{lo2025closer,wang2026myth,tang-etal-2026-specialization}. We therefore
+study expert-local parameter differentiation rather than claiming semantic
+specialization.
+
+\paragraph{MoE pruning and learned modular structure.}
+MoE compression removes complete experts or prunes weights within surviving
+experts using parameter, activation, or routing-derived importance
+\citep{chen2022taskspecific,lu2024notall,
+xie2024moeprunerpruningmixtureofexpertslarge,
+lee2025stunstructuredthenunstructuredpruningscalable}. Related approaches
+construct conditional sparse subnetworks from predefined data partitions or
+learn modular topology from gradient conflict
+\citep{stefanski2026routing,gan2025cdsp}. These results establish redundancy
+and the usefulness of sparse modularity, but they do not test whether ordinary
+MoE routing histories shape expert-local supports or whether those supports
+remain trainable after rewinding.
+
+\paragraph{Lottery tickets and the remaining gap.}
+The Lottery Ticket Hypothesis identifies sparse supports that train from their
+original initialization, while later work shows that difficult settings may
+require rewinding to an early checkpoint
+\citep{frankle2019lotterytickethypothesisfinding,pmlr-v119-frankle20a}.
+Mask identity can contain optimization-relevant information beyond sparsity
+alone \citep{paul2023unmasking}. We retain these criteria: routing history is a
+candidate mechanism of ticket formation, not an added component of the formal
+ticket definition. Prior work studies routing behavior, expert function, or
+MoE compression; we test whether training-time routing shapes expert-local
+sparse supports that retain optimization significance under rewinding.
+
+\section{Routing-Conditioned Sparse-Subnetwork Formation}
+\label{sec:formation}
+
+\subsection{Problem and Hypotheses}
+\label{sec:problem}
+
+Let $\Theta_0$ be the initialization of the complete MoE and let
+$a_{s,b,t,e}^{(\ell)}\in\{0,1\}$ indicate that expert $e$ is the recorded
+primary pre-capacity selection for token $(b,t)$ in layer $\ell$ at training
+step $s$. The archived routing trajectory, ordered selected-token history, and
+aggregate primary-selection count are
+\begin{equation}
+\mathcal{A}
+=
+\left(a_{s,b,t,e}^{(\ell)}\right)_{\ell,s,b,t,e},
+\qquad
+\mathcal{H}_{\ell,e}
+=
+\operatorname{seq}
+\left\{
+(s,b,t,x_{s,b,t}):a_{s,b,t,e}^{(\ell)}=1
+\right\},
+\qquad
+U_{\ell,e}
+=
+\sum_{s,b,t}a_{s,b,t,e}^{(\ell)}.
+\label{eq:routing_objects}
+\end{equation}
+Two conditions can therefore match $U_{\ell,e}$ while assigning different
+token identities and ordered histories. Capacity acceptance and raw gate values
+mediate which selected tokens actually contribute to an expert update and are
+not part of the archived trajectory.
+
+After dense training, expert-local magnitude pruning extracts
+\begin{equation}
+m_{\ell,e}^{(\rho)}
+=
+\mathcal{P}_{\rho}\!\left(\theta_{\ell,e,T}\right),
+\label{eq:expert_mask}
+\end{equation}
+where $\mathcal{P}_{\rho}$ retains the largest $1-\rho$ fraction of prunable
+weights independently within each expert. Let $M^{(\rho)}$ be the corresponding
+full-model mask, equal to one outside the prunable expert weight matrices. At
+rewind point $t_0$, we retrain
+\begin{equation}
+\Theta'_{T;t_0}
+=
+\operatorname{Retrain}
+\left(
+M^{(\rho)}\odot\Theta_{t_0},
+M^{(\rho)},
+\mathcal{A}^{\mathrm{ret}}
+\right),
+\qquad
+\Delta_{\mathrm{ret}}
+=
+\frac{
+\mathcal{L}_{\mathrm{val}}(\Theta'_{T;t_0})
+-
+\mathcal{L}_{\mathrm{dense}}
+}{
+\mathcal{L}_{\mathrm{dense}}
+}.
+\label{eq:rewind_criterion}
+\end{equation}
+We describe a support as near dense when
+$\Delta_{\mathrm{ret}}\leq\varepsilon=0.05$ and report its continuous gap and
+gaps to matched random-mask, random-reinitialization, and randomized-routing
+controls. The case $t_0=0$ tests the classical initialization-rewind criterion;
+$t_0>0$ tests early-rewind behavior.
+
+The experiments distinguish two hypotheses:
+\begin{align}
+\mathcal{H}_{\mathrm{route}}:\quad
+m_{\ell,e}^{(\rho)}
+&=
+g_{\ell,e}(\mathcal{A}),
+\label{eq:routing_only}\\
+\mathcal{H}_{\mathrm{int}}:\quad
+m_{\ell,e}^{(\rho)}
+&=
+g_{\ell,e}(\mathcal{A},\Theta_0,\mathcal{O}),
+\label{eq:interaction}
+\end{align}
+where $\mathcal{O}$ collects the ordered data, optimizer, schedule, objective,
+model interactions, and remaining optimization stochasticity. The routing-only
+hypothesis predicts that an imposed trajectory determines support independently
+of initialization. The interaction hypothesis predicts that changing routing
+at fixed initialization changes support formation, while replaying the same
+trajectory under another initialization need not reproduce the same outcome.
+
+\subsection{Routing-Conditioned Optimization}
+\label{sec:routing_framework}
+
+Our working mechanism is narrower than a general theory of expert
+specialization. Routing determines which token losses contribute to an
+expert's updates; the resulting gradient trajectory interacts with current
+parameters and optimization to shape the final weights and sparse support:
+\begin{equation}
+(\mathcal{A},\Theta_0,\mathcal{O})
+\longrightarrow
+\underbrace{
+\left(\nabla_{\theta_{\ell,e}}\mathcal{L}_s\right)_{s=1}^{T}
+}_{\substack{\text{capacity- and gate-mediated}\\\text{gradient trajectory}}}
+\longrightarrow
+\underbrace{
+\left(\Theta_s\right)_{s=1}^{T}
+}_{\text{parameter trajectory}}
+\longrightarrow
+m^{(\rho)}
+\overset{\text{rewind/retrain}}{\longrightarrow}
+\Delta_{\mathrm{ret}}.
+\label{eq:mechanistic_chain}
+\end{equation}
+Primary-selection counts alone cannot specify this trajectory because gradient
+values depend on token identity, order, gate values, capacity acceptance, and
+the contemporaneous model state. Conversely,
+routing alone need not specify it because gradients also depend on $\Theta_0$
+and subsequent optimization. Sparse masks are therefore a probe of persistent
+routing-conditioned structure, and rewindability tests whether that structure
+retains optimization significance.
+
+\subsection{Experimental Design}
+\label{sec:experimental_design}
+
+We study decoder-only Transformer MoEs trained by next-token prediction on a
+50k-story TinyStories subset \citep{eldan2023tinystories}, a WikiText-103 subset
+exported from the first 10k source rows \citep{merity2017pointer}, and a character-balanced mixture
+of the two. The reference
+model has four layers, four attention heads, width 256, eight experts per layer,
+expert hidden width 1024, and top-1 routing with capacity factor 1.25. Runs use
+sequences of 128 tokens, batches of 128 sequences, 2,500 updates, a
+load-balancing coefficient of 0.1, and seeds 7, 17, and 29. The robustness suite
+varies experts, routing width, depth, dataset, tokenizer, balancing strength,
+and budget (\cref{fig:design}).
+
+\begin{figure*}[t]
+\centering
+\begin{minipage}[t]{0.56\textwidth}
+\centering
+\small
+\textbf{Mechanistic chain}\\[3pt]
+\fbox{\parbox{0.94\linewidth}{\centering
+$\mathcal{A}$ (routed-token history)
+$\longrightarrow$ gradient trajectory
+$\longrightarrow$ parameter trajectory
+$\longrightarrow m^{(\rho)}
+\longrightarrow$ rewindability}}
+\vspace{5pt}
+
+\begin{tabular}{@{}p{0.28\linewidth}p{0.65\linewidth}@{}}
+\toprule
+Test & Question isolated \\
+\midrule
+Sparse controls & Is the learned support non-random and expert-specific? \\
+Rewind/retrain & Does the support retain optimization significance? \\
+Primary-ID replay & Is the intervention faithful at fixed initialization? \\
+Shuffled usage & Does realized routing matter beyond assignment count? \\
+Cross-init replay & Does routing determine support independently of initialization? \\
+\bottomrule
+\end{tabular}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.40\textwidth}
+\centering
+\small
+\textbf{Reference setting and extensions}\\[3pt]
+\begin{tabular}{@{}p{0.28\linewidth}p{0.67\linewidth}@{}}
+\toprule
+Reference & 4 layers, 4 heads, $d=256$ \\
+Experts & $E=8$, top-1, hidden 1024 \\
+Data & TinyStories subset; WikiText-103 subset; mixture \\
+Sequence / batch & 128 / 128 \\
+Training & 2,500 steps; $\lambda_{\rm bal}=0.1$ \\
+Seeds & 7, 17, 29 \\
+Sparsity & 50\%, 80\% principal \\
+Rewinds & 0\%, 1\%, 5\%, 10\% \\
+\midrule
+Extensions & $E\in\{4,8,16\}$; top-1/2 \\
+ & 4/8 layers; byte-ngram tokenizer \\
+ & representative 10,000-step suite \\
+\bottomrule
+\end{tabular}
+\end{minipage}
+\caption{\textbf{Question, mechanism, and design.} Sparse masks are used as a
+probe of persistent structure rather than as a definition of expert function.
+The intervention suite separates non-random support and rewindability, and
+contrasts realized routing histories at matched utilization and initialization.
+Full implementation and metric
+definitions appear in \cref{app:setup,app:metrics}.}
+\label{fig:design}
+\end{figure*}
+
+We jointly rank the two expert weight matrices within every expert and prune
+the resulting expert-local vector; routers, attention, embeddings,
+normalization parameters, output parameters, and expert biases remain dense.
+Direct evaluation compares learned magnitude masks with matched random masks, a
+limited transfer control that replaces expert 1's mask with expert 0's mask in
+each layer, and learned masks applied to randomly reinitialized weights. The
+primary metric is global validation loss relative to the dense model from the
+same routing condition. Recorded expert-local losses use each evaluated
+model's own selected routes; they are secondary diagnostics, not
+fixed-assignment comparisons.
+
+Rewind experiments evaluate 50\% and 80\% sparsity from initialization and
+early checkpoints, keep pruned coordinates at zero, and run every condition for
+a fresh full training budget from the same deterministically restarted data
+order. The routing suite comprises same-initialization primary-ID replay,
+random-every-step routing, selection-count-preserving shuffled routing, a
+frozen random router, expert-trajectory permutations, and cross-initialization
+replay. Except when initialization is the explicit intervention, paired
+conditions share architecture, initialization, ordered token stream,
+optimization settings, and training budget. Results are paired by training seed
+and summarized as mean $\pm$ one standard deviation.
+\Cref{app:setup,app:metrics,app:interventions} provide the complete protocol
+available in the experimental record.
+
+\section{Results}
+\label{sec:results}
+
+Unless otherwise noted, results are averaged over seeds 7, 17, and 29, with
+variability reported as one standard deviation. Pruning comparisons use the
+dense model trained under the same routing condition as their reference.
+
+\subsection{Experts Contain Non-Random Sparse Supports}
+\label{sec:results_sparse_structure}
+
+Expert-local magnitude masks preserve substantially more of the trained model's
+performance than matched sparse controls. On the WikiText-103 subset, pruning 50\% of each
+expert's weights increased validation loss by 3.1\%, compared with increases
+exceeding 140\% for random masks and 540\% when the surviving weights were
+randomly reinitialized (\cref{fig:direct_pruning}). The corresponding
+learned-mask increase on TinyStories was 4.6\%. Across the reported datasets and
+architecture variants, 50\% magnitude pruning increased validation loss by at
+most approximately 8\%. Learned masks also outperformed masks transferred
+between experts in the limited expert-0-to-expert-1 control at the principal
+50\% and 80\% sparsities in the original suites.
+
+The separation from controls persists at 80\% sparsity, but direct pruning at
+this level no longer retains near-dense performance. Thus, final checkpoints
+contain non-random, expert-specific sparse organization, but direct-pruning
+performance alone establishes neither rewindability nor semantic
+specialization. The learned-routing architecture-grid aggregates also finished
+with zero dead experts and normalized selected-route usage entropy between
+0.9846 and 0.9952. These diagnostics rule
+out gross utilization collapse, not functional similarity among experts.
+
+\begin{figure*}[t]
+\centering
+\begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \resultpanel{figures/paper/fig2a_direct_pruning.pdf}
+  \caption{Paired direct-pruning loss ratios on the WikiText-103 subset.}
+  \label{fig:direct_pruning}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \resultpanel{figures/paper/fig2b_rewind_80.pdf}
+  \caption{Paired 80\%-sparse rewind gaps on the WikiText-103 subset.}
+  \label{fig:rewind_pruning}
+\end{subfigure}
+\caption{\textbf{Sparse structure and optimization significance.}
+(a) Per-seed loss is divided by the paired dense loss; the base-2 log scale
+keeps the magnitude/control separation visible. Faint points are individual
+seeds. Learned magnitude masks retain substantially more final-checkpoint
+performance than matched random, limited 0-to-1 transfer, and reinitialization
+controls. (b) At 80\% sparsity, rewinding to the 5--10\% checkpoints reduces
+the learned-mask gap to the paired dense model and remains better than the
+sparse controls. The dotted
+line marks the 5\% ticket tolerance. Large points and curves are three-seed
+means; error bars denote $\pm1$ sample standard deviation.}
+\label{fig:structure_rewind}
+\end{figure*}
+
+\subsection{Sparse Supports Retain Optimization Significance Under Rewinding}
+\label{sec:results_rewinding}
+
+At 50\% sparsity, learned expert-local supports retrained successfully from
+initialization on both the WikiText-103 and TinyStories subsets and outperformed matched
+random-mask, random-reinitialization, and randomized-routing controls. These
+experiments satisfy the initialization-rewind lottery-ticket criterion in the
+evaluated settings. We reserve the term \emph{lottery ticket} for this
+rewind-and-retrain evidence rather than for direct final-checkpoint pruning.
+
+At 80\% sparsity, initialization rewind was generally insufficient, while early
+rewinding substantially improved retraining (\cref{fig:rewind_pruning}).
+In the three-seed TinyStories aggregate, a learned mask rewound to 10\% of
+training reached validation loss $1.0413\pm0.0138$, 2.03\% above the dense loss
+of $1.0206\pm0.0096$. At the same rewind point, the random-mask,
+random-reinitialization, and randomized-routing controls reached
+$1.1606\pm0.0035$, $1.1534\pm0.0115$, and $1.4579\pm0.0209$, respectively;
+direct evaluation of the final mask without retraining yielded
+$3.5043\pm0.3249$. These
+results distinguish the learned support from a post-training compression
+artifact: moderate-sparsity supports can remain trainable from initialization,
+whereas the reported high-sparsity behavior requires a compatible early
+parameter state and optimization trajectory.
+
+\subsection{Routed-Token History Shapes Sparse-Support Formation}
+\label{sec:results_routing}
+
+We intervene on routing while matching initialization, data order,
+architecture, and optimization settings. Same-initialization replay is the
+positive control: the recorded result reports route agreement and mask
+similarity of 1.0/1.0 and dense performance within experimental variability.
+
+Disrupting the token-to-expert trajectory weakens the functional advantage of
+learned masks. Random-every-step routing removes a coherent assignment history,
+while shuffled-usage routing preserves the logged number of primary selections
+for each expert at every layer and training step but permutes the assigned token
+identities (\cref{fig:routing_pruning}). The learned-mask advantage is
+substantially reduced under both interventions. Because pruning is normalized
+to the condition-specific dense baseline, this is not solely a consequence of
+different dense-model quality. In particular, shuffled usage rejects the
+explanation that primary-selection count alone accounts for the effect. It does
+not match which token positions survive the capacity filter, their raw gates,
+or their gate-weighted gradient mass. In the principal top-1 setting, however,
+preserving each expert's selected count also preserves its accepted count and
+the aggregate dropped fraction because capacity is fixed. The intervention
+therefore identifies an effect of the realized route beyond counts; it does not
+isolate token identity from the accompanying gate and capacity-ranking changes.
+
+\begin{figure*}[t]
+\centering
+\begin{subfigure}[t]{0.32\textwidth}
+  \centering
+  \resultpanel{figures/paper/fig3a_routing_mask_advantage.pdf}
+  \caption{Magnitude-mask advantage by routing condition.}
+  \label{fig:routing_pruning}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.32\textwidth}
+  \centering
+  \resultpanel{figures/paper/fig3b_route_mask_association.pdf}
+  \caption{Final-route agreement versus 80\%-mask overlap.}
+  \label{fig:route_mask}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.32\textwidth}
+  \centering
+  \resultpanel{figures/paper/fig3c_cross_init.pdf}
+  \caption{Cross-initialization overlap for two target seeds.}
+  \label{fig:cross_init}
+\end{subfigure}
+\caption{\textbf{Routing interventions and sparse-support formation on the
+WikiText-103 subset.}
+(a) Advantage is $100(L_{\rm random}-L_{\rm magnitude})/L_{\rm random}$;
+shuffling primary IDs across token positions while preserving per-expert
+selection counts nearly eliminates it. (b) All 15 unordered routing-condition
+pairs are shown; colored labels mark comparisons with learned routing and the
+exact learned-routing/replay point at $(1,1)$ is the positive control. This is
+supporting association, not standalone causal evidence. (c) Tick marks are
+the individual target seeds 17 and 29 and larger symbols are their means.
+Cross-initialization replay reproduces the archived primary route exactly but
+yields a different sparse outcome and a 6.54\% loss gap. Panels (a--b)
+summarize three seeds with $\pm1$ sample standard deviation; no uncertainty
+estimate is inferred from the two cross-initialization targets.}
+\label{fig:routing_centerpiece}
+\end{figure*}
+
+Across routing-condition comparisons, agreement on the fixed final-checkpoint
+validation routing set is associated with 80\%-sparse mask similarity
+(\cref{fig:route_mask}).
+The per-seed Pearson correlations between validation-route agreement and mask
+Jaccard similarity are $r=0.7785\pm0.0275$ on WikiText-103 and
+$r=0.7559\pm0.0122$ on TinyStories. This association supports the intervention
+results but is not itself causal evidence, and coordinate overlap does not
+imply functional equivalence.
+
+Cross-initialization replay tests whether a recorded route is a portable sparse
+blueprint. Imposing a source primary-ID trajectory on an independently
+initialized target reproduces the archived IDs exactly, but increases
+validation loss by
+6.54\% relative to learned routing under the same target initialization and
+produces a different sparse outcome (\cref{fig:cross_init}). Within
+the evaluated setting, this is inconsistent with routing alone uniquely
+determining the support. Together, the fixed-initialization interventions and
+cross-initialization replay support the narrower conclusion that routed-token
+history makes a causal contribution to support formation, while the resulting
+support depends jointly on routing, initialization, and optimization.
+
+\subsection{Robustness Across Architectures, Data, and Training Budget}
+\label{sec:results_robustness}
+
+Magnitude masks outperform matched random masks across models with 4, 8, and
+16 experts; top-1 and top-2 routing; and 4 and 8 Transformer layers
+(\cref{fig:robustness}). The same principal ordering is recorded for the
+50k-story TinyStories subset, the WikiText-103 subset, a character-balanced
+mixture, and a separate 1,024-token byte-ngram causal-control suite. Each
+evaluated aggregate uses seeds 7, 17, and 29.
+
+\begin{figure*}[t]
+\centering
+\begin{subfigure}[t]{0.32\textwidth}
+  \centering
+  \resultpanel{figures/paper/fig4a_architecture_robustness.pdf}
+  \caption{80\%-mask advantage across 12 architectures.}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.32\textwidth}
+  \centering
+  \resultpanel{figures/paper/fig4b_dataset_robustness.pdf}
+  \caption{Mask advantage across byte-tokenized datasets.}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.32\textwidth}
+  \centering
+  \resultpanel{figures/paper/fig4c_phase4_rewinds.pdf}
+  \caption{Representative 80\%-sparse 10\% rewinds.}
+\end{subfigure}
+\caption{\textbf{Robustness summary.} In (a--b), advantage is the paired-seed
+percentage reduction in pruning loss from replacing a random mask with the
+magnitude mask; positive values favor magnitude. (a) Annotated means cover the
+full $E\times k\times L$ grid, with the reference architecture outlined.
+(b) The ordering holds at 50\% and 80\% sparsity on all three byte-tokenized
+datasets. (c) Loss gaps relative to the paired dense model are shown for every
+80\%-sparse control at the 10\% rewind point in three representative
+2,500-step configurations; the dashed and dotted lines mark dense performance
+and the 5\% tolerance. Panels (a--b) use three-seed paired means and panel (b)
+shows sample standard deviations; panel (c) shows population standard
+deviations of the paired seedwise percentage gaps, matching the follow-up's
+population-SD convention.}
+\label{fig:robustness}
+\end{figure*}
+
+A separate longer-budget suite trains the balanced-mixture 8-expert, top-1,
+4-layer configuration for 10,000 steps, or approximately
+$1.64\times10^8$ tokens per run. Its final checkpoints obscure the comparison:
+normal routing reaches mean loss 1.5236 at step 10,000 but 1.3072 at the best
+saved checkpoint (step 5,000 in every seed). At condition-specific best saved
+checkpoints, normal routing again outperforms fixed-random,
+random-every-step, and shuffled-usage routing. An 80\%-sparse normal-routing
+mask extracted at the best saved checkpoint retrains from initialization to
+$1.2984\pm0.0055$, versus $1.3072\pm0.0238$ for the best-saved dense model,
+$1.3110\pm0.0070$ for a random mask, $1.3088\pm0.0074$ for random
+reinitialization, and $1.5011\pm0.0129$ with randomized routing. The margins to
+the mask controls are small, and this one-architecture result is a
+checkpoint-selection case study rather than a factorial long-budget
+replication.
+
+\section{Discussion and Limitations}
+\label{sec:discussion}
+
+\paragraph{What the result means.}
+Routing is not only an inference-time selector. During training it determines
+the sequence of gradients received by each expert, and the experiments indicate
+that this routed optimization leaves persistent sparse structure inside expert
+parameters. The evidence goes beyond the expected observation that routing
+changes weights: it identifies non-random expert-local supports, shows that a
+subset remains trainable after rewinding, and demonstrates under controlled
+interventions that realized routing history matters beyond logged
+primary-selection counts. The shuffled control does not isolate token identity
+from gate and capacity-ranking effects.
+
+\paragraph{What the result does not mean.}
+Sparse masks are a structural probe, not a complete characterization of expert
+function or evidence of semantic specialization. The experiments do not show
+that routing alone determines experts: cross-initialization replay gives the
+opposite result. They also do not make route--mask correlation causal; the
+causal claim comes from routing interventions at fixed training conditions.
+
+\paragraph{Lottery-ticket interpretation.}
+The reported 50\%-sparse supports that succeed after initialization rewind meet
+the classical criterion in the original dataset suites. At 80\%, the original
+and representative 2,500-step suites generally show early-rewind behavior; the
+single 10,000-step best-checkpoint suite is an exception in which the learned
+mask succeeds from initialization. Routing history conditions the process that
+forms these supports; it need not be added to the formal definition of a
+winning ticket. The supported picture is therefore support plus compatible
+initialization, formed through routing-conditioned optimization.
+
+\paragraph{Limitations.}
+The experiments concern small decoder-only MoEs and corpus subsets rather than
+production-scale systems. Principal masks use one-shot magnitude pruning; a
+four-round representative IMP run improved on one-shot initialization rewind
+at 80\% but was worse than the one-shot 10\%-rewind result; other pruning rules
+may expose different structure. The transfer control replaces only expert 1's
+mask with expert 0's mask, and learned-routing expert-local losses are evaluated
+after rerouting rather than on frozen dense assignments. Route archives contain
+pre-capacity primary expert IDs only, so the shuffled condition matches logged
+selection and accepted counts under top-1, but not accepted-token identities,
+raw gates, or gate-weighted gradient mass.
+Principal results use three seeds and recorded standard deviations rather than
+confidence intervals; follow-up aggregators historically mix sample and
+population standard-deviation conventions. The long-budget experiment covers
+one architecture, and the larger-validation follow-up is still modest. Finally,
+coordinate-level mask overlap is sensitive to hidden-unit and expert-permutation
+symmetries and should not be equated with functional equivalence.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+Conventionally trained MoE experts contain non-random sparse supports, and the
+reported 50\%-sparse supports retain optimization significance under
+initialization rewinding. Routing interventions show that routed-token history
+contributes to support formation beyond logged primary-selection counts, while
+cross-initialization replay shows that routing does not uniquely determine the
+outcome. Within the evaluated small-model regimes, the evidence therefore
+supports expert-local sparse structure as a product of the interaction among
+routing history, initialization, and optimization.
+
+\section*{Reproducibility Statement}
+The main paper defines the hypotheses, controls, normalization, and principal
+training settings. Appendices~\ref{app:setup}--\ref{app:additional_controls}
+record the implementation details, metrics, intervention construction,
+statistical protocol, and completed extensions available in the repository.
+The repository contains per-run resolved configurations, saved primary-route
+archives, checkpoints, stored dataset text, and JSON result tables.
+The publication panels are deterministically regenerated from those artifacts
+by \path{scripts/generate_paper_figures.py};
+\path{figures/paper/figure_manifest.json} records input and output hashes and
+the uncertainty conventions. Dependencies
+are not version pinned; upstream dataset revisions and exported-text checksums
+are not recorded; and run summaries do not record a git revision, wall time, GPU
+identity, or peak memory. These remain reproducibility gaps.
+
+\section*{AI Use Statement}
+A generative AI system assisted with this manuscript's restructuring, title and
+prose drafting, LaTeX refactoring, and calibration of claims against existing
+repository code and result artifacts. During this manuscript edit, it did not
+generate new experimental data or launch new experiment runs. This statement
+does not document possible AI use elsewhere in the research workflow, which the
+authors must verify before submission. The authors retain responsibility for
+all scientific claims, citations, numerical results, and final content.
+
+\IfFileExists{references.bib}{%
+  \IfFileExists{iclr2027_conference.bst}{%
+    \bibliographystyle{iclr2027_conference}%
+  }{%
+    \bibliographystyle{plainnat}%
+  }%
+  \bibliography{references}%
+}{%
+  \typeout{references.bib is absent; bibliography omitted.}%
+}
+
+\appendix
+
+\section{Full Experimental Setup}
+\label{app:setup}
+
+\subsection{Model and Routing}
+
+The model is a pre-LayerNorm decoder with learned token and absolute-position
+embeddings, causal multi-head self-attention, residual MoE blocks, a final
+LayerNorm, and a bias-free language-model head tied to the token embedding.
+Each expert is a two-layer feed-forward network
+\begin{equation}
+f_{\ell,e}(h;\theta_{\ell,e})
+=
+W_{\ell,e}^{(2)}
+\operatorname{GELU}\!\left(W_{\ell,e}^{(1)}h+b_{\ell,e}^{(1)}\right)
++
+b_{\ell,e}^{(2)},
+\label{eq:app_expert}
+\end{equation}
+with dropout zero in every reported GPU run. For token representation
+$h_{s,b,t}^{(\ell)}$, the bias-free learned router computes
+\begin{equation}
+p_{s,b,t}^{(\ell)}
+=
+\operatorname{softmax}\!\left(W_r^{(\ell)}h_{s,b,t}^{(\ell)}\right).
+\label{eq:app_router}
+\end{equation}
+There is no routing noise. Let $S_{s,b,t}^{(\ell)}$ be the top-$k$ selected
+expert set before capacity. For a batch of $B$ length-$T_{\rm seq}$ sequences,
+the per-expert capacity is
+\begin{equation}
+C
+=
+\left\lceil
+\alpha\frac{BT_{\rm seq}k}{E}
+\right\rceil,
+\qquad \alpha=1.25.
+\label{eq:app_capacity}
+\end{equation}
+If an expert has more than $C$ selected assignments, the implementation accepts
+the $C$ assignments with the largest current selected probabilities and drops
+the rest. Writing $A_{s,b,t}^{(\ell)}\subseteq S_{s,b,t}^{(\ell)}$ for accepted
+assignments, the MoE contribution is
+\begin{equation}
+y_{s,b,t}^{(\ell)}
+=
+\sum_{e\in A_{s,b,t}^{(\ell)}}
+p_{s,b,t}^{(\ell)}(e)
+f_{\ell,e}\!\left(h_{s,b,t}^{(\ell)};\theta_{\ell,e}\right).
+\label{eq:app_moe_output}
+\end{equation}
+Selected probabilities are used raw: they are not renormalized over the top-$k$
+set, so a top-1 gate is generally smaller than one. A dropped MoE contribution
+is zero and the block residual remains.
+
+The in-memory trace contains selected IDs, selected probabilities, pre-capacity
+usage, and a dropped fraction. The compressed training and validation archives,
+however, store only the first (primary) selected expert ID before capacity. They
+do not store secondary top-$k$ IDs, accepted/drop status, or gate values. All
+reported route-agreement and replay results therefore concern this archived
+primary-ID trajectory.
+
+Ignoring optimizer-state terms for notation, the expert update can be written
+\begin{equation}
+\theta_{\ell,e}^{s+1}
+=
+\theta_{\ell,e}^{s}
+-
+\eta_s
+\sum_{x_i\in R_{\ell,e}(s)}
+\nabla_{\theta_{\ell,e}}
+\mathcal{L}(x_i;\Theta^s),
+\label{eq:app_expert_update}
+\end{equation}
+where $R_{\ell,e}(s)$ is the accepted, gate-weighted routed set. Equal primary
+selection counts need not give equal $R_{\ell,e}(s)$ or equal gradients: token
+identity, gates, capacity, order, and the full model state all matter.
+
+\subsection{Reference Configuration}
+
+\begin{table}[t]
+\centering
+\scriptsize
+\caption{Reference configuration for the principal pruning, routing, and
+rewind experiments. AdamW $\beta$ and $\epsilon$ values are PyTorch defaults.}
+\label{tab:app_reference_configuration}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Configuration & Value \\
+\midrule
+Architecture & 4 layers; 4 heads; $d_{\rm model}=256$ \\
+Experts & 8 per layer; hidden width 1024; GELU \\
+Router & Bias-free linear; top-1; no routing noise \\
+Capacity / dropout & 1.25 / 0 \\
+Vocabulary / positions & 256 UTF-8 byte IDs / 128 learned positions \\
+Parameters & 17,981,952 \\
+Sequence / batch & 128 tokens / 128 sequences \\
+Updates / processed tokens & 2,500 / 40,960,000 \\
+Optimizer & AdamW; constant learning rate $3\times10^{-4}$ \\
+$\beta_1,\beta_2,\epsilon$ & $0.9,0.999,10^{-8}$ \\
+Weight decay / gradient clip & 0.01 / global norm 1.0 \\
+Balancing coefficient & 0.1 \\
+Precision & FP16 autocast and gradient scaling; TF32 enabled \\
+Evaluation cadence & Every 250 updates \\
+Saved steps & 0, 25, 125, 250, 500, 1000, 2500 \\
+Validation-batch cap & 12 (single-domain); 32 (mixture) \\
+Random seeds & 7, 17, 29 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Models are trained by next-token prediction with
+\begin{equation}
+\mathcal{L}
+=
+\mathcal{L}_{\mathrm{LM}}
++
+\lambda_{\mathrm{bal}}\mathcal{L}_{\mathrm{bal}},
+\qquad
+\lambda_{\mathrm{bal}}=0.1.
+\label{eq:app_training_objective}
+\end{equation}
+If $f_{\ell,e}$ is the fraction of pre-capacity selected slots assigned to
+expert $e$ and $\bar p_{\ell,e}$ is its mean router probability, the
+layer-averaged balancing term is
+\begin{equation}
+\mathcal{L}_{\mathrm{bal}}
+=
+\frac{1}{L}
+\sum_{\ell=1}^{L}
+E\sum_{e=1}^{E}
+f_{\ell,e}\bar p_{\ell,e}.
+\label{eq:app_balance}
+\end{equation}
+The selected fraction is detached in this auxiliary term.
+
+\subsection{Data, Optimization, and Checkpoints}
+
+The TinyStories subset contains the first 50,000 training stories and 2,000
+validation stories exported from the local dataset. For WikiText-103-raw-v1,
+the exporter selects the first 10,000 training and 1,000 validation source rows
+from \texttt{Salesforce/wikitext}, then omits blank rows before joining the
+retained text. The corresponding
+stored UTF-8 files contain approximately 45.2 MB/1.62 MB (TinyStories train/val)
+and 2.94 MB/0.247 MB (WikiText train/val).
+
+The balanced corpus uses equal character budgets up to chunk rounding and
+interleaves 16,384-character chunks from the two sources. Its recorded training
+contributions are 2,916,352 TinyStories characters and 2,931,378 WikiText
+characters; validation contributions are 245,760 and 246,050 characters. Thus
+``balanced'' means approximately character-balanced and interleaved, not an
+independent 50/50 draw at every batch.
+
+Principal suites encode UTF-8 bytes directly as IDs 0--255. Text is divided
+into contiguous, non-overlapping 128-token inputs with one-position-shifted
+targets; the incomplete tail is discarded. Training blocks are shuffled with a
+seeded generator and incomplete training batches are dropped; validation blocks
+are ordered. Both dense and ticket trainers wrap the training loader in
+\texttt{itertools.cycle}; after the first traversal, that iterator repeats the
+same cached shuffled batch sequence rather than drawing a new epoch order. The
+stored datasets yield 2,729 TinyStories, 179 WikiText, 357 byte-mixture, and 162
+byte-ngram-mixture full training batches. Thus the 2,500-step runs traverse
+approximately 0.92, 13.97, 7.00, and 15.43 such fixed orders respectively, and
+the 10,000-step byte-mixture run traverses it about 28.01 times. The byte-ngram
+robustness condition greedily longest-matches a
+1,024-ID vocabulary learned from the first 750,000 training bytes, with maximum
+ngram length 8, minimum frequency 3, and single-byte fallback. It produces
+2,659,291 training and 223,471 validation tokens from 5,857,322 raw training
+bytes.
+
+Reference runs process $128\times128$ tokens per update for 2,500 updates,
+approximately $4.10\times10^7$ tokens. Training uses AdamW at a constant
+learning rate; there is no scheduler or warmup. CUDA runs use FP16 autocast,
+gradient scaling, and TF32 matrix operations. Python, NumPy, CPU Torch, and CUDA
+Torch RNGs are seeded, although deterministic-algorithm mode is not enabled.
+Within a matched cell, architecture, initialization, deterministically generated
+mini-batch order, optimizer, training budget, and evaluation set are fixed. The
+routing regime is the manipulated variable except in the explicit
+cross-initialization experiment.
+
+Principal single-domain runs save checkpoints at the steps in
+\cref{tab:app_reference_configuration}. A checkpoint contains model state,
+configuration, step, validation loss, and optimizer state only when
+\texttt{save\_optimizer} is enabled. Utilization JSONL logs, validation-route
+NPZ files, and the optional training-route archive are separate artifacts.
+Multi-domain and Phase-4 configs do not save optimizer state. Random pruning and
+reinitialization controls use deterministic streams derived from the training
+seed.
+
+Run-specific suite configurations record the optimizer, learning rate, weight
+decay, dropout, clipping, capacity factor, precision, checkpoint cadence,
+routing mode, and preprocessing paths. The documented GPU environment is
+PyTorch 2.5.1 with CUDA 12.4 on a 16 GB NVIDIA GeForce RTX 3080 Laptop GPU; a
+reference benchmark records 1.1 GB peak allocation and approximately 25,100
+tokens/s. Individual run summaries do not persist software versions, GPU
+identity, wall time, peak memory, or a git revision, and project dependencies
+are unpinned. The WikiText download does not pin a dataset revision, and the
+TinyStories export does not pin an upstream revision or save an exported-text
+checksum (although the local dataset state contains a Hugging Face
+fingerprint). The
+stored text files reproduce these runs locally, but regenerating them exactly
+from upstream sources is not guaranteed. These are gaps for exact environment
+reconstruction.
+
+\section{Metrics and Statistical Protocol}
+\label{app:metrics}
+
+\subsection{Functional Metrics}
+
+The primary metric is token-level cross entropy, summed over evaluated target
+tokens and divided by their count, on a fixed held-out validation set. Reported
+perplexity is $\exp(\min\{20,\mathcal L\})$. Because routing interventions can
+change dense performance, each pruning
+result is normalized to the dense model trained under the same condition. For
+routing condition $c$, pruning method $a$, and sparsity $\rho$,
+\begin{equation}
+\Delta_{c,a}^{(\rho)}
+=
+\frac{
+\mathcal{L}_{c,a}^{(\rho)}
+-
+\mathcal{L}_{c,\mathrm{dense}}
+}{
+\mathcal{L}_{c,\mathrm{dense}}
+}.
+\label{eq:app_relative_gap}
+\end{equation}
+The absolute learned-mask advantage over control $j$ is
+\begin{equation}
+G_{c,j}^{(\rho)}
+=
+\mathcal{L}_{c,j}^{(\rho)}
+-
+\mathcal{L}_{c,\mathrm{mag}}^{(\rho)}.
+\label{eq:app_control_gap}
+\end{equation}
+The threshold $\varepsilon=0.05$ matches the generated Phase-4 full-loss flag
+and is not a substitute for reporting continuous losses and control gaps.
+
+For an evaluated model $q$, the logged expert-local diagnostic defines
+\begin{equation}
+\mathcal{V}_{q,\ell,e}
+=
+\{(x_i,y_i):e\text{ appears in model }q\text{'s selected top-}k\text{ IDs}\}.
+\label{eq:app_local_set}
+\end{equation}
+Loss is restricted to the corresponding token subset. Under top-2 routing, a
+token belongs to both selected experts' subsets. For learned-routing direct
+pruning, each pruned model routes afresh; dense assignments are not frozen.
+These expert-local values therefore combine functional change with possible
+changes in the conditional token subset and are treated as secondary. Replay,
+swap, and shuffle evaluation can use archived validation-ID overrides.
+
+\subsection{Structural and Routing Metrics}
+
+For binary masks $m_a$ and $m_b$, support similarity is Jaccard overlap:
+\begin{equation}
+J(m_a,m_b)
+=
+\frac{
+|\operatorname{supp}(m_a)\cap\operatorname{supp}(m_b)|
+}{
+|\operatorname{supp}(m_a)\cup\operatorname{supp}(m_b)|
+}.
+\label{eq:app_jaccard}
+\end{equation}
+The standard aggregate helper sums intersections and unions over every common
+expert weight tensor before dividing (a micro-aggregate), rather than averaging
+layer--expert Jaccards. Functional-alignment analyses additionally report
+Jaccard after expert and hidden-unit matching.
+
+Route agreement is measured on the fixed final-checkpoint validation routing
+set, not over the complete training trace. Let $r_i^{(\ell,c)}$ be the archived
+primary expert ID.
+\begin{equation}
+R_{\mathrm{val}}(c,c')
+=
+\frac{1}{LN}
+\sum_{\ell=1}^{L}
+\sum_{i=1}^{N}
+\mathbf{1}\!\left[r_i^{(\ell,c)}=r_i^{(\ell,c')}\right].
+\label{eq:app_route_agreement}
+\end{equation}
+This is the fraction of validation token--layer positions with equal primary
+IDs. Even for top-2 models it is not top-$k$ set overlap, because secondary IDs
+are not archived. Its association with mask Jaccard is descriptive; causal
+evidence comes from interventions on training-time routing.
+
+For layer $\ell$, normalized expert-usage entropy is
+\begin{equation}
+\widetilde H_{\mathrm{use}}^{(\ell)}
+=
+-
+\frac{1}{\log E}
+\sum_{e=1}^{E}q_{\ell,e}\log q_{\ell,e},
+\label{eq:app_usage_entropy}
+\end{equation}
+where $q_{\ell,e}$ is the pre-capacity selected-slot fraction assigned to expert
+$e$. The analysis computes this entropy, coefficient of variation, max/min
+ratio, and dead-expert count per logged step and layer. The run logs also record
+router entropy, router margin, and dropped-assignment fraction; validation-route
+archives support checkpoint-to-checkpoint primary-ID stability.
+
+\subsection{Replication and Uncertainty}
+
+The independent unit of replication is the training seed. Principal experiments
+use seeds 7, 17, and 29 and report their mean and one recorded standard
+deviation; error bars are not confidence intervals. Comparisons are paired by
+seed. Experts, layers, tokens, sparsity levels, and checkpoints are not treated
+as independent replicates. The original multi-seed, load-balance, architecture,
+multi-domain, and swap aggregators use sample standard deviation. Several
+follow-up rewind, IMP, and long-budget aggregators use population standard
+deviation. Tables below preserve the recorded values and identify two-target
+cross-initialization summaries separately; no inferential tests are claimed.
+
+For validation-route-agreement/mask-similarity analyses, Pearson correlation is
+computed separately for each seed over all 15 unordered pairs among the six
+routing conditions using final-checkpoint validation routes and 80\% final
+magnitude masks, then summarized across seeds. This
+construction includes
+the exact normal--replay positive-control point $(R,J)=(1,1)$, which can have
+substantial leverage, and the 15 within-seed pairs are not independent. The
+reported values are
+$r=0.7785\pm0.0275$ on the WikiText-103 subset and
+$r=0.7559\pm0.0122$ on the TinyStories subset. These correlations do not replace
+intervention-based evidence and do not imply that mask overlap is functional
+equivalence.
+
+\section{Full Direct-Pruning Protocol and Results}
+\label{app:direct_pruning}
+
+\subsection{Mask Extraction}
+
+Only expert weight matrices are pruned. Router, attention, embedding,
+normalization, output, and expert-bias parameters remain dense. Let
+\begin{equation}
+\vartheta_{\ell,e,T}
+=
+\operatorname{vec}
+\left(
+W_{\ell,e,T}^{(1)},W_{\ell,e,T}^{(2)}
+\right)
+\label{eq:app_vectorized_expert}
+\end{equation}
+be the concatenated prunable weights of expert $(\ell,e)$. Expert-local
+magnitude pruning retains an exact-count largest-$1-\rho$ subset by absolute
+value. Let $n_{\ell,e}=\dim(\vartheta_{\ell,e,T})$. With
+\begin{equation}
+K_{\ell,e}^{(\rho)}
+=
+\max\!\left\{1,\operatorname{round}\!\left((1-\rho)n_{\ell,e}\right)\right\},
+\end{equation}
+the implemented mask is
+\begin{equation}
+m_{\ell,e}^{(\rho)}(j)
+=
+\mathbf{1}\!\left[
+j\in\operatorname{TopK}_{K_{\ell,e}^{(\rho)}}
+\!\left(|\vartheta_{\ell,e,T}|\right)
+\right].
+\label{eq:app_mask_threshold}
+\end{equation}
+Selection is joint across both weight matrices within an expert. The retained
+count is therefore exact, and \texttt{torch.topk(sorted=False)} selects those
+coordinates. There is no
+explicit deterministic tie-break rule beyond the backend top-$k$
+implementation. The joint expert-local rank gives each expert the requested
+overall sparsity even when tensor or expert scales differ.
+
+The original single-domain direct-pruning grid is
+\begin{equation}
+\rho\in\{0.50,0.70,0.80,0.90,0.95\},
+\label{eq:app_sparsity_grid}
+\end{equation}
+while the architecture, multi-domain, and rewind extensions use 50\% and 80\%.
+Principal claims emphasize those two sparsities.
+
+\paragraph{Controls.}
+A random mask samples surviving coordinates uniformly within each prunable
+tensor while exactly matching that tensor's learned-mask count. The recorded
+``other expert'' control is limited: in every layer it copies expert 0's two
+masks onto expert 1 and leaves every other expert's learned mask unchanged. It
+is not an all-expert cyclic transfer. Random reinitialization calls the PyTorch
+default reset routine on every expert Linear module, thereby resampling expert
+weights and biases, and then reapplies the learned weight mask. In direct
+pruning, this separates learned final values from sparse topology; it is not an
+initialization-rewind test. All direct-pruning masks are evaluated without
+additional optimization, and learned-routing models may reroute after pruning.
+
+\subsection{Extended Outcome Summary}
+
+At the principal 50\% and 80\% sparsities, learned masks outperform random,
+limited-transfer, and random-reinitialization controls on both original data
+subsets. At 50\%, the learned-mask increase is 3.1\% on WikiText versus 140.6\%
+for a random mask and 545.0\% for random reinitialization; the TinyStories
+learned-mask increase is 4.6\%. At 80\%, learned masks retain an advantage but
+direct pruning is far from dense. At 90--95\%, all methods approach destructive
+saturation and the ordering is not uniform: for example, WikiText 95\%
+magnitude loss is slightly above both random and limited-transfer loss.
+\Cref{tab:app_direct_pruning_full} gives every recorded three-seed mean and
+sample standard deviation in the original direct-pruning grid.
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\caption{Full normal-routing direct-pruning grid. Entries are validation loss,
+mean $\pm$ sample SD over seeds 7, 17, and 29. ``0$\to$1 transfer'' changes only
+expert 1's mask in each layer.}
+\label{tab:app_direct_pruning_full}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llcccc@{}}
+\toprule
+Dataset & Sparsity & Magnitude & Random mask & 0$\to$1 transfer & Random reinit \\
+\midrule
+TinyStories & 50\% & $1.0676\pm0.0168$ & $3.2700\pm0.0873$ & $1.3590\pm0.0282$ & $5.5725\pm0.1793$ \\
+ & 70\% & $1.7285\pm0.0222$ & $4.7171\pm0.1398$ & $2.3025\pm0.0692$ & $5.5820\pm0.2175$ \\
+ & 80\% & $3.5043\pm0.3249$ & $5.1919\pm0.1427$ & $3.9594\pm0.4261$ & $5.5691\pm0.2084$ \\
+ & 90\% & $5.2208\pm0.3144$ & $5.4524\pm0.1795$ & $5.3101\pm0.3236$ & $5.5843\pm0.2109$ \\
+ & 95\% & $5.5092\pm0.2397$ & $5.4989\pm0.1897$ & $5.5150\pm0.2226$ & $5.5780\pm0.1950$ \\
+\midrule
+WikiText-103 & 50\% & $1.7388\pm0.0205$ & $4.0564\pm0.4725$ & $1.9418\pm0.1086$ & $10.8751\pm4.1653$ \\
+ & 70\% & $2.4129\pm0.1115$ & $7.4999\pm2.0359$ & $2.7653\pm0.1519$ & $10.9116\pm4.1331$ \\
+ & 80\% & $4.5586\pm0.5000$ & $9.3660\pm3.2425$ & $4.9161\pm0.5673$ & $10.9424\pm4.1958$ \\
+ & 90\% & $9.4493\pm1.9800$ & $10.4422\pm3.9551$ & $9.3411\pm2.1794$ & $10.9860\pm4.2031$ \\
+ & 95\% & $10.8825\pm3.4328$ & $10.6401\pm4.0744$ & $10.7710\pm3.5516$ & $10.9704\pm4.1709$ \\
+\bottomrule
+\end{tabular}}
+\end{table*}
+
+These results establish non-random final-weight structure at the principal
+sparsities. The stronger optimization-significance claim depends on
+\cref{app:rewind}.
+
+\section{Full Rewind-and-Retrain Suite}
+\label{app:rewind}
+
+Let $M^{(\rho)}$ be one on all unpruned parameters and equal to the expert masks
+on prunable weights. At rewind point $t_0$, the complete model is restored and
+masked:
+\begin{equation}
+\widetilde\Theta_{t_0}^{(\rho)}
+=
+M^{(\rho)}\odot\Theta_{t_0}.
+\label{eq:app_rewind_state}
+\end{equation}
+Embeddings, attention, normalization, routers, expert biases, and surviving
+expert weights are therefore rewound to the same checkpoint. During retraining,
+pruned expert coordinates remain zero:
+\begin{equation}
+\nabla_\Theta\mathcal{L}
+\leftarrow
+M^{(\rho)}\odot\nabla_\Theta\mathcal{L}.
+\label{eq:app_gradient_mask}
+\end{equation}
+Gradient hooks apply this operation, and the weight mask is reapplied after
+every optimizer step so masked coordinates cannot regrow through optimizer
+updates or weight decay.
+A fresh AdamW optimizer uses the original constant learning rate and other
+hyperparameters. Every condition rebuilds the seeded loader at the beginning of
+its deterministic order and retrains for the full original $T$ updates,
+regardless of $t_0$; it does not consume only the suffix or resume optimizer
+state. Surviving parameters rewound to $t_0>0$ therefore receive $T$ additional
+updates, so these early-rewind comparisons are full-budget restart experiments,
+not compute-matched $T-t_0$ continuations.
+
+Principal rewind fractions are
+\begin{equation}
+t_0/T\in\{0,0.01,0.05,0.10\},
+\label{eq:app_rewind_points}
+\end{equation}
+with 0.25 additionally evaluated in the reduced long-budget suite. The principal
+fractions map to checkpoints 0, 25, 125, and 250. Experiments evaluate
+50\% and 80\% sparsity and compare (i) the learned mask, (ii) a matched random
+mask, (iii) the learned mask with randomly reinitialized expert parameters,
+(iv) the learned mask retrained under random-every-step routing, and (v) the
+corresponding dense reference where a lottery-ticket classification is made.
+
+The discovery trace $\mathcal{A}^{\mathrm{disc}}$, which produces the mask, is
+distinguished from the retraining trace $\mathcal{A}^{\mathrm{ret}}$. The
+default retraining condition matches the discovery routing regime; the
+randomized-routing control changes the sparse retraining trajectory. Routing
+conditions ticket formation and retraining, but it is not added to the formal
+definition of a winning ticket.
+
+\Cref{tab:app_rewind_original} enumerates the original two-dataset suite. At
+50\% sparsity, learned supports retrain from initialization on both subsets and
+outperform the sparse controls. At 80\%, initialization rewind is worse than
+dense, while a 10\% checkpoint plus a full retraining budget reaches
+$1.0413\pm0.0138$ on TinyStories and $1.6882\pm0.0297$ on WikiText, within
+2.03\% and 0.13\% of their respective dense means. Cells without a matched
+dense reference are described by continuous loss and control gaps rather than
+assigned a binary label.
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\caption{Complete original rewind aggregates. Entries are validation loss,
+mean $\pm$ sample SD over seeds 7, 17, and 29. Dense reference means are
+$1.0206\pm0.0096$ (TinyStories) and $1.6859\pm0.0160$ (WikiText-103). Every
+row uses a fresh optimizer and a full 2,500-update retraining budget.}
+\label{tab:app_rewind_original}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llrcccc@{}}
+\toprule
+Dataset & Sparsity & Rewind & Learned mask & Random mask & Random reinit & Randomized routing \\
+\midrule
+TinyStories & 50\% & 0\% & $1.0365\pm0.0068$ & $1.0915\pm0.0109$ & $1.0785\pm0.0055$ & $1.5506\pm0.0122$ \\
+ & & 1\% & $1.0212\pm0.0076$ & $1.0955\pm0.0096$ & $1.1126\pm0.0230$ & $1.5482\pm0.0381$ \\
+ & & 5\% & $0.9734\pm0.0237$ & $1.0474\pm0.0142$ & $1.0460\pm0.0092$ & $1.4542\pm0.0149$ \\
+ & & 10\% & $0.9544\pm0.0070$ & $1.0353\pm0.0149$ & $1.0356\pm0.0115$ & $1.4321\pm0.0324$ \\
+ & 80\% & 0\% & $1.1492\pm0.0034$ & $1.2488\pm0.0096$ & $1.2369\pm0.0256$ & $1.5998\pm0.0168$ \\
+ & & 1\% & $1.1629\pm0.0101$ & $1.2510\pm0.0150$ & $1.2233\pm0.0141$ & $1.5821\pm0.0218$ \\
+ & & 5\% & $1.0780\pm0.0240$ & $1.1748\pm0.0013$ & $1.1656\pm0.0030$ & $1.4899\pm0.0319$ \\
+ & & 10\% & $1.0413\pm0.0138$ & $1.1606\pm0.0035$ & $1.1534\pm0.0115$ & $1.4579\pm0.0209$ \\
+\midrule
+WikiText-103 & 50\% & 0\% & $1.6593\pm0.0103$ & $1.7330\pm0.0334$ & $1.7558\pm0.0190$ & $2.1470\pm0.0109$ \\
+ & & 1\% & $1.6441\pm0.0235$ & $1.7348\pm0.0442$ & $1.7397\pm0.0449$ & $2.1388\pm0.0188$ \\
+ & & 5\% & $1.6062\pm0.0103$ & $1.6891\pm0.0530$ & $1.6966\pm0.0653$ & $2.0953\pm0.0144$ \\
+ & & 10\% & $1.5999\pm0.0103$ & $1.6590\pm0.0263$ & $1.6817\pm0.0615$ & $2.0693\pm0.0043$ \\
+ & 80\% & 0\% & $1.8399\pm0.0254$ & $1.9203\pm0.0193$ & $1.9168\pm0.0149$ & $2.1743\pm0.0157$ \\
+ & & 1\% & $1.8294\pm0.0335$ & $1.9234\pm0.0372$ & $1.8814\pm0.0113$ & $2.1592\pm0.0080$ \\
+ & & 5\% & $1.7162\pm0.0356$ & $1.8490\pm0.0486$ & $1.8353\pm0.0442$ & $2.1154\pm0.0054$ \\
+ & & 10\% & $1.6882\pm0.0297$ & $1.8301\pm0.0540$ & $1.8245\pm0.0515$ & $2.0905\pm0.0143$ \\
+\bottomrule
+\end{tabular}}
+\end{table*}
+
+\section{Routing Interventions}
+\label{app:interventions}
+
+\subsection{Trace Construction}
+
+For every layer, the saved assignment trace is the primary pre-capacity ID
+$r_{s,b,t}^{(\ell)}$. Equivalently,
+\begin{equation}
+\mathcal{A}^{(\ell)}
+=
+\left(a_{s,b,t,e}^{(\ell)}\right)_{s,b,t,e},
+\qquad
+a_{s,b,t,e}^{(\ell)}
+=
+\mathbf{1}\!\left[e=r_{s,b,t}^{(\ell)}\right].
+\label{eq:app_assignment_trace}
+\end{equation}
+The archive stores this ID tensor for each training step and layer. It stores no
+gate values, secondary top-$k$ IDs, or capacity acceptance. Replay is indexed by
+training step, batch index, and sequence position, so source and target require
+the same tensor shapes and ordered token stream. Archived primary utilization is
+\begin{equation}
+U_{\ell,e}
+=
+\sum_{s,b,t}a_{s,b,t,e}^{(\ell)}.
+\label{eq:app_utilization}
+\end{equation}
+
+\subsection{Intervention Definitions}
+
+\paragraph{Learned routing.}
+The router and experts are jointly optimized under the language-model and
+load-balancing objectives.
+
+\paragraph{Same-initialization replay.}
+Primary IDs from a source run are imposed on a target with the source
+initialization and ordered data. The target router recomputes its current
+softmax probability for the imposed ID. This positive control tests ID-replay
+fidelity. Empirically it reproduces archived IDs and extracted masks with
+agreement 1.0/1.0 and exactly matches the normal dense loss in all three
+original-suite seeds.
+
+\paragraph{Random-every-step routing.}
+In the principal top-1 experiments, a vector formed by
+$0,1,\ldots,E-1$ modulo $E$ is deterministically permuted across the $BT$
+positions using seed $s_0+1009s+9176\ell$. Primary selection counts are
+therefore balanced to within one assignment per expert in each layer and step.
+Capacity and current gate weights are then applied normally. In top-2 code paths
+this override fixes only the primary ID; the remaining selected ID is recomputed
+from current router probabilities.
+
+\paragraph{Frozen random router.}
+The router is randomly initialized and frozen before training. Its parameter
+partition is fixed, but assignments may change as hidden representations
+evolve. This is not a fixed assignment table; it tests stable but untrained
+routing geometry.
+
+\paragraph{Shuffled-usage routing.}
+For each layer and training step, the source primary-ID tensor is deterministically
+permuted across token positions using the same seed formula. Consequently,
+\begin{equation}
+U_{\ell,e,s}^{\mathrm{shuffled}}
+=
+U_{\ell,e,s}^{\mathrm{source}}.
+\label{eq:app_shuffled_usage}
+\end{equation}
+This exactly matches archived primary-selection counts at the layer-and-step
+level, not merely in aggregate, while generally changing the ordered token
+history $\mathcal H_{\ell,e}$. In the principal top-1 setting, fixed capacity
+therefore also preserves each expert's accepted count and the total dropped
+fraction. The current gates and capacity ranking are nevertheless recomputed,
+so the accepted-token identities, acceptance mask over positions, and
+gate-weighted gradients need not match. Raw top-1 gates are not unit-valued.
+
+\paragraph{Swapped and cyclic routing.}
+A fixed expert permutation $\pi$ is applied to a recorded trace:
+\begin{equation}
+a_{s,b,t,\pi(e)}^{(\ell),\mathrm{swap}}
+=
+a_{s,b,t,e}^{(\ell),\mathrm{source}}.
+\label{eq:app_swap}
+\end{equation}
+Only archived IDs are permuted; the current router probability of the substituted
+ID supplies the gate. Pairwise swaps are used in the principal suite, while the
+multi-domain extension includes several global, layer-specific, and cyclic ID
+permutations.
+
+Except for cross-initialization replay, interventions use the same model
+initialization and ordered data. Pruning results are normalized to the dense
+model from the same routing condition. Only the frozen-random condition freezes
+router parameters. In random-every-step, replay, shuffled, swapped, and
+cross-initialization replay, the router projection remains trainable; an
+imposed primary ID gathers that expert's current softmax probability, and
+accepted assignments receive language-model gradients through that gate. The
+router also remains coupled to the auxiliary balancing objective.
+
+\subsection{Fidelity and Secondary Results}
+
+\begin{figure*}[t]
+\centering
+\begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \resultpanel{figures/paper/figA1_dense_routing.pdf}
+  \caption{Dense performance under routing interventions.}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \resultpanel{figures/paper/figA2_routing_pruning_curves.pdf}
+  \caption{Dense-normalized magnitude-pruning curves.}
+\end{subfigure}
+\caption{Secondary routing controls. Replay reproduces the learned-routing
+baseline within the reported variability. Random-every-step and shuffled-usage
+routing degrade dense performance and reduce the learned-mask advantage;
+condition-specific dense normalization separates these effects. Points are
+three-seed means, error bars are sample standard deviations, and the pruning
+axis in (b) is base-2 logarithmic.}
+\label{fig:app_routing_controls}
+\end{figure*}
+
+\Cref{fig:app_routing_controls,tab:app_dense_causal} summarize the recorded
+dense intervention aggregates and their pruning consequences.
+The shuffled-usage result is the critical selected-count control: primary-ID
+counts are preserved while dense performance and the learned-mask advantage are
+substantially weakened. Because gate and acceptance information is absent, it
+is not an exact realized-update control: accepted counts are matched under
+top-1, but accepted-token identities and gate-weighted gradients are not. The
+validation-route/mask association
+in \cref{sec:results_routing} is supporting evidence only.
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\caption{Dense routing-condition validation loss, mean $\pm$ sample SD. Dashes
+denote conditions not included in that aggregate. All rows use seeds 7, 17, and
+29. Losses are comparable within, not across, tokenizer rows.}
+\label{tab:app_dense_causal}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+Dataset / tokenizer & Learned & Fixed random & Random/step & Replay & Swap 0$\leftrightarrow$1 & Shuffled usage \\
+\midrule
+TinyStories / byte & $1.0206\pm0.0096$ & $1.1105\pm0.0184$ & $1.4586\pm0.0153$ & $1.0206\pm0.0096$ & $1.0491\pm0.0111$ & $1.5316\pm0.0151$ \\
+WikiText-103 / byte & $1.6859\pm0.0160$ & $1.7386\pm0.0252$ & $2.1121\pm0.0080$ & $1.6859\pm0.0160$ & $1.7081\pm0.0151$ & $2.1337\pm0.0191$ \\
+Balanced mixture / byte & $1.4801\pm0.0425$ & $1.5810\pm0.0207$ & $1.9564\pm0.0120$ & -- & -- & $1.9791\pm0.0189$ \\
+Balanced mixture / byte-ngram & $3.2753\pm0.0307$ & $3.5037\pm0.0876$ & $4.3504\pm0.0323$ & -- & -- & $4.3574\pm0.0156$ \\
+\bottomrule
+\end{tabular}}
+\end{table*}
+
+The corresponding single-domain pruning results are reported numerically in
+\cref{tab:app_single_domain_causal_pruning}. Under learned and frozen-random
+routing, mask identity has a large effect. Under shuffled routing, magnitude,
+random, limited-transfer, and reinitialized masks cluster much more closely.
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\caption{Single-domain direct pruning by routing condition, mean loss over
+seeds 7, 17, and 29. Sample SD is omitted for table width; transfer is the
+limited expert-0-to-expert-1 control.}
+\label{tab:app_single_domain_causal_pruning}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llrrrrrrrrr@{}}
+\toprule
+Dataset & Routing & Dense & 50\% mag. & 50\% random & 50\% transfer & 50\% reinit & 80\% mag. & 80\% random & 80\% transfer & 80\% reinit \\
+\midrule
+TinyStories & Learned & 1.0206 & 1.0676 & 3.2700 & 1.3590 & 5.5725 & 3.5043 & 5.1919 & 3.9594 & 5.5691 \\
+ & Fixed random & 1.1105 & 1.1551 & 2.6055 & 1.3393 & 4.8932 & 4.1013 & 4.4096 & 3.3602 & 4.8813 \\
+ & Random/step & 1.4586 & 1.4844 & 2.1112 & 1.5522 & 2.8181 & 2.0078 & 2.7004 & 2.0925 & 2.8181 \\
+ & Shuffled usage & 1.5316 & 1.5349 & 1.5969 & 1.5423 & 1.6377 & 1.5743 & 1.6318 & 1.5825 & 1.6376 \\
+\midrule
+WikiText-103 & Learned & 1.6859 & 1.7388 & 4.0564 & 1.9418 & 10.8751 & 4.5586 & 9.3660 & 4.9161 & 10.9424 \\
+ & Fixed random & 1.7386 & 1.7803 & 3.1131 & 1.9566 & 7.2169 & 4.0933 & 6.1239 & 4.3324 & 7.2072 \\
+ & Random/step & 2.1121 & 2.1257 & 2.4422 & 2.1562 & 2.9099 & 2.3651 & 2.8214 & 2.4090 & 2.9096 \\
+ & Shuffled usage & 2.1337 & 2.1352 & 2.1645 & 2.1368 & 2.1863 & 2.1529 & 2.1835 & 2.1547 & 2.1864 \\
+\bottomrule
+\end{tabular}}
+\end{table*}
+
+In the byte mixture, shuffled usage is 33.72\% worse than learned routing; in
+the byte-ngram suite it is 33.04\% worse. The stored count check compares 3,232
+layer/step/expert records per seed and reports zero mismatches for all three
+seeds in both suites. The corresponding route-agreement/mask-Jaccard
+correlations are much smaller than in the original single-domain suites:
+$0.1804\pm0.0424$ for the byte mixture and $0.1237\pm0.1610$ for byte-ngram,
+showing that the simple pairwise association is not universal.
+
+\begin{table}[t]
+\centering
+\scriptsize
+\caption{Balanced-mixture ID-permutation interventions. Loss, route agreement
+with normal, and 80\% mask Jaccard are mean $\pm$ sample SD over three seeds.}
+\label{tab:app_swap_controls}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Condition & Loss & $\Delta$ vs normal & Primary-route agreement & Mask Jaccard \\
+\midrule
+Global 0$\leftrightarrow$1 & $1.5111\pm0.0248$ & $+2.10\%$ & $0.7461\pm0.0084$ & $0.5679\pm0.0561$ \\
+Global 0$\leftrightarrow$4 & $1.5068\pm0.0115$ & $+1.80\%$ & $0.7453\pm0.0115$ & $0.5405\pm0.0375$ \\
+Global 2$\leftrightarrow$6 & $1.5027\pm0.0149$ & $+1.53\%$ & $0.7509\pm0.0224$ & $0.5616\pm0.0278$ \\
+Layer 0, 0$\leftrightarrow$1 & $1.5026\pm0.0156$ & $+1.52\%$ & $0.9317\pm0.0080$ & $0.5869\pm0.0462$ \\
+Layer 3, 0$\leftrightarrow$1 & $1.4897\pm0.0239$ & $+0.65\%$ & $0.9378\pm0.0081$ & $0.6822\pm0.0484$ \\
+Global cyclic $+1$ & $1.5358\pm0.0099$ & $+3.77\%$ & $0.0000\pm0.0000$ & $0.4267\pm0.0160$ \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+Swap comparisons must be interpreted with the applied permutation in mind:
+unaffected IDs mechanically inflate aggregate route agreement in the pairwise
+and layer-specific cases.
+
+\section{Cross-Initialization Replay}
+\label{app:cross_initialization}
+
+Same-initialization replay validates the ID-override mechanism but does not
+separate routing from initialization. The completed WikiText experiment uses
+source seed 7 and independently initialized target seeds 17 and 29. Every target
+uses the source seed's data order. Learned target routing and imposed source
+routing therefore share target initialization, architecture, data order,
+optimizer settings, and budget; they differ in the archived primary IDs imposed
+during training.
+
+\begin{table}[t]
+\centering
+\scriptsize
+\caption{Cross-initialization replay performance and primary-route fidelity.
+The source seed is 7; the two target rows are not a three-seed aggregate.}
+\label{tab:app_cross_init_performance}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{}rccccc@{}}
+\toprule
+Target & Source loss & Target learned & Cross-init replay & Source--learned route & Source--replay route \\
+\midrule
+17 & 1.6817 & 1.7130 & 1.8093 & 0.1083 & 1.0000 \\
+29 & 1.6817 & 1.6418 & 1.7648 & 0.1137 & 1.0000 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+The imposed archive reproduces the source primary IDs exactly, while replay
+loss is 6.54\% above matched-data learned routing when averaged over the two
+targets. The within-target learned and replay masks also differ substantially.
+
+\begin{table}[t]
+\centering
+\scriptsize
+\caption{Cross-initialization mask Jaccard. ``Same init'' compares learned and
+replay masks inside the target coordinate system.}
+\label{tab:app_cross_init_masks}
+\begin{tabular}{@{}rcrrr@{}}
+\toprule
+Target & Sparsity & Source--learned & Source--replay & Same-init learned--replay \\
+\midrule
+17 & 50\% & 0.3752 & 0.3732 & 0.5897 \\
+17 & 80\% & 0.1945 & 0.1872 & 0.4741 \\
+29 & 50\% & 0.3743 & 0.3734 & 0.5833 \\
+29 & 80\% & 0.1916 & 0.1876 & 0.4627 \\
+\midrule
+Mean & 50\% & 0.3747 & 0.3733 & 0.5865 \\
+Mean & 80\% & 0.1931 & 0.1874 & 0.4684 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+To test coordinate symmetries directly, the completed functional-alignment
+analysis evaluates both models on the same 512 validation-token positions,
+matches experts within each layer by output linear CKA, and then matches hidden
+units by absolute activation correlation. As
+\cref{tab:app_functional_alignment} shows,
+alignment changes Jaccard by only 0.0001--0.0007 in the aggregate. This reduces,
+but does not eliminate, the concern that raw overlap is dominated by a trivial
+expert or neuron permutation.
+
+\begin{table}[t]
+\centering
+\scriptsize
+\caption{Mean cross-initialization functional alignment over targets 17 and
+29.}
+\label{tab:app_functional_alignment}
+\begin{tabular}{@{}lcrrrr@{}}
+\toprule
+Condition & Sparsity & Raw $J$ & Aligned $J$ & Expert CKA & Abs. neuron corr. \\
+\midrule
+Matched-data learned & 50\% & 0.3747 & 0.3750 & 0.5125 & 0.4041 \\
+Matched-data learned & 80\% & 0.1931 & 0.1938 & 0.5125 & 0.4041 \\
+Cross-init replay & 50\% & 0.3733 & 0.3735 & 0.4146 & 0.3989 \\
+Cross-init replay & 80\% & 0.1874 & 0.1875 & 0.4146 & 0.3989 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The same two-target aggregate also contains the direct-pruning comparison in
+\cref{tab:app_cross_init_pruning}. Cross-init replay has worse dense and 50\%
+magnitude loss than matched-data routing, but its 80\% mask is less fragile in
+absolute terms. Both conditions retain a learned-mask advantage over random
+and limited-transfer masks.
+
+\begin{table}[t]
+\centering
+\scriptsize
+\caption{Cross-initialization direct pruning, mean over target seeds 17 and
+29. Transfer is the limited expert-0-to-expert-1 control.}
+\label{tab:app_cross_init_pruning}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Condition & Sparsity & Magnitude & Random mask & Transfer \\
+\midrule
+Matched-data learned & 50\% & 1.7256 & 3.7363 & 1.9281 \\
+Matched-data learned & 80\% & 4.1736 & 7.5181 & 4.4492 \\
+Cross-init replay & 50\% & 1.8151 & 2.6971 & 1.9772 \\
+Cross-init replay & 80\% & 2.5127 & 3.9254 & 2.6936 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The follow-up rewind suite uses the same two target seeds. Every learned-mask
+curve is best at the tested 10\% rewind; \cref{tab:app_cross_init_rewind}
+includes all matched controls at that point. Relative to each condition's own
+dense mean, the cross-init gaps are $-4.78\%$ and $+0.59\%$ at 50\% and 80\%,
+while the matched-data gaps are $-4.95\%$ and $+0.42\%$. The complete artifact
+contains all 64 aggregate cells across four rewind points.
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\caption{Cross-initialization full-budget retraining at the 10\% rewind. Values
+are two-target means $\pm$ population SD.}
+\label{tab:app_cross_init_rewind}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llccccc@{}}
+\toprule
+Condition & Sparsity & Dense & Learned mask & Random mask & Random reinit & Randomized routing \\
+\midrule
+Matched-data learned & 50\% & $1.6774\pm0.0356$ & $1.5944\pm0.0235$ & $1.6597\pm0.0131$ & $1.6736\pm0.0613$ & $2.0703\pm0.0092$ \\
+Matched-data learned & 80\% & $1.6774\pm0.0356$ & $1.6844\pm0.0393$ & $1.8304\pm0.0579$ & $1.8107\pm0.0660$ & $2.0918\pm0.0063$ \\
+Cross-init replay & 50\% & $1.7871\pm0.0223$ & $1.7018\pm0.0322$ & $1.8282\pm0.0340$ & $1.8361\pm0.0435$ & $2.0780\pm0.0043$ \\
+Cross-init replay & 80\% & $1.7871\pm0.0223$ & $1.7977\pm0.0370$ & $1.9651\pm0.0082$ & $1.9825\pm0.0060$ & $2.1006\pm0.0040$ \\
+\bottomrule
+\end{tabular}}
+\end{table*}
+
+Thus a foreign ID history can form a rewindable mask, but it does not match the
+route that co-adapts with the target initialization. The bounded conclusion is
+that routing changes support within an initialization, while the recorded route
+is not a portable coordinate-level blueprint.
+
+\section{Architecture and Dataset Robustness}
+\label{app:robustness}
+
+Evaluated architecture cells draw from
+\begin{equation}
+E\in\{4,8,16\},
+\qquad
+k\in\{1,2\},
+\qquad
+L\in\{4,8\},
+\label{eq:app_architecture_grid}
+\end{equation}
+using seeds 7, 17, and 29. The full factorial contains 36 WikiText training
+runs. \Cref{tab:app_architecture_grid} records every aggregate architecture
+cell. Magnitude masks beat random masks at 50\% and 80\% in all 12 cells, but
+one-shot 80\% pruning is often catastrophic. No aggregate cell has a dead
+expert; mean selected-route entropy spans 0.9846--0.9952, and mean dropped
+fraction spans 0--0.0156.
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\caption{Full WikiText architecture grid, mean over seeds 7, 17, and 29.
+Dense uncertainty is sample SD. $H$ and dropped-assignment fraction $D$ are
+final logged-step values averaged over layers within each run and then seeds.
+M/R denote magnitude/random-mask loss.}
+\label{tab:app_architecture_grid}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}rrrrrcccccc@{}}
+\toprule
+$E$ & $k$ & $L$ & Params (M) & Dense loss & $H$ & $D$ & 50\% M & 50\% R & 80\% M & 80\% R \\
+\midrule
+4 & 1 & 4 & 9.57 & $1.7127\pm0.0304$ & 0.9882 & 0.0000 & 1.7954 & 5.0349 & 8.8331 & 9.9675 \\
+4 & 1 & 8 & 19.04 & $1.5808\pm0.0110$ & 0.9846 & 0.0065 & 1.6445 & 5.2285 & 6.2745 & 8.7848 \\
+4 & 2 & 4 & 9.57 & $1.6716\pm0.0183$ & 0.9913 & 0.0074 & 1.8004 & 12.3798 & 17.8248 & 28.3398 \\
+4 & 2 & 8 & 19.04 & $1.5606\pm0.0102$ & 0.9952 & 0.0013 & 1.6357 & 7.8873 & 9.3844 & 14.5287 \\
+8 & 1 & 4 & 17.98 & $1.6859\pm0.0160$ & 0.9932 & 0.0057 & 1.7388 & 4.0564 & 4.5586 & 9.3660 \\
+8 & 1 & 8 & 35.87 & $1.5721\pm0.0070$ & 0.9913 & 0.0091 & 1.6115 & 4.3213 & 4.6839 & 7.5686 \\
+8 & 2 & 4 & 17.98 & $1.6499\pm0.0154$ & 0.9913 & 0.0110 & 1.7407 & 8.0455 & 12.9197 & 16.5732 \\
+8 & 2 & 8 & 35.87 & $1.5608\pm0.0061$ & 0.9927 & 0.0089 & 1.6042 & 6.1661 & 6.7442 & 10.2038 \\
+16 & 1 & 4 & 34.81 & $1.6397\pm0.0436$ & 0.9925 & 0.0135 & 1.6852 & 3.4922 & 3.7368 & 5.5875 \\
+16 & 1 & 8 & 69.52 & $1.5915\pm0.0058$ & 0.9925 & 0.0122 & 1.6161 & 4.0661 & 4.1889 & 8.8301 \\
+16 & 2 & 4 & 34.81 & $1.5903\pm0.0045$ & 0.9927 & 0.0116 & 1.6448 & 5.5960 & 7.4676 & 12.5932 \\
+16 & 2 & 8 & 69.52 & $1.5765\pm0.0172$ & 0.9919 & 0.0156 & 1.6064 & 5.9542 & 6.7282 & 10.2379 \\
+\bottomrule
+\end{tabular}}
+\end{table*}
+
+Top-2 improves dense loss in all six matched comparisons (mean paired change
+$-1.75\%$), and eight layers improve all six depth comparisons (mean
+$-5.05\%$). The best dense cell is 4 experts, top-2, and 8 layers at
+$1.5606\pm0.0102$. These are fixed-budget comparisons, not scaling laws.
+
+\begin{table}[t]
+\centering
+\scriptsize
+\caption{Byte-tokenized dataset robustness for the 8-expert/top-1/4-layer
+reference architecture. Dense uncertainty is sample SD; losses are not
+comparable across corpora.}
+\label{tab:app_dataset_grid}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Dataset & Dense & 50\% mag. & 50\% random & 80\% mag. & 80\% random \\
+\midrule
+TinyStories & $1.0206\pm0.0096$ & 1.0676 & 3.2700 & 3.5043 & 5.1919 \\
+WikiText-103 & $1.6859\pm0.0160$ & 1.7388 & 4.0564 & 4.5586 & 9.3660 \\
+Balanced mixture & $1.4801\pm0.0425$ & 1.5360 & 3.7565 & 5.5286 & 7.1896 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+The completed representative Phase-4 rewind suite contains 288 retrainings:
+three architecture/data representatives, three seeds, two sparsities, four
+rewind points, and four conditions (a learned mask plus three controls). Each
+retraining runs the full 2,500 updates.
+\Cref{tab:app_phase4_rewind} reports the best learned-mask point per cell; its
+``criterion'' column uses the manuscript's 5\% dense-loss tolerance.
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\caption{Representative Phase-4 rewind summary. Recorded SDs are population
+SDs. ``Controls'' means the learned mask beats random mask, random reinit, and
+randomized routing at that rewind.}
+\label{tab:app_phase4_rewind}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lrrrrcc@{}}
+\toprule
+Representative & Dense & Sparsity & Best rewind & Learned loss & Beats controls & $\leq5\%$ \\
+\midrule
+4E/top-2/8L WikiText & $1.5606\pm0.0083$ & 50\% & 1\% & $1.5654\pm0.0113$ & No & Yes \\
+4E/top-2/8L WikiText & $1.5606\pm0.0083$ & 80\% & 10\% & $1.6385\pm0.0067$ & Yes & Yes \\
+16E/top-1/8L WikiText & $1.5915\pm0.0047$ & 50\% & 0\% & $1.5846\pm0.0175$ & No & Yes \\
+16E/top-1/8L WikiText & $1.5915\pm0.0047$ & 80\% & 10\% & $1.5710\pm0.0085$ & Yes & Yes \\
+8E/top-1/4L mixture & $1.4801\pm0.0347$ & 50\% & 10\% & $1.4007\pm0.0253$ & Yes & Yes \\
+8E/top-1/4L mixture & $1.4801\pm0.0347$ & 80\% & 10\% & $1.4792\pm0.0200$ & Yes & Yes \\
+\bottomrule
+\end{tabular}}
+\end{table*}
+
+The 50\% top-2 and high-capacity learned masks preserve dense loss but do not
+beat every control at their selected points. All three 80\% representative
+cells satisfy the 5\% loss criterion and beat the controls. Because archived
+top-2 traces contain only primary IDs, these architecture results do not provide
+a full top-2 replay analysis.
+
+\section{Long-Budget Suite}
+\label{app:long_budget}
+
+The only completed 10,000-step family is the balanced-mixture, byte-tokenized,
+8-expert/top-1/4-layer configuration with seeds 7, 17, and 29. Batch size 128
+and sequence length 128 correspond to approximately $1.64\times10^8$ processed
+tokens per run. The validation-batch cap is 64, but the original validation file
+contains only about 31 batches and is exhausted. Saved checkpoints are
+\begin{equation}
+t\in\{0,100,500,1000,2500,5000,10000\}.
+\label{eq:app_long_checkpoints}
+\end{equation}
+Validation is also logged every 500 steps. The final-step dense comparison is
+misleading: learned routing improves through the middle of training and then
+finishes worse on the same validation stream. \Cref{tab:app_long_checkpoint}
+separates final, best observed, and best saved losses. ``Best'' is selected on
+the same original validation stream and is therefore model-selection biased.
+
+\begin{table}[t]
+\centering
+\scriptsize
+\caption{Long-budget checkpoint comparison. Final uncertainty is sample SD;
+best-observed and best-saved columns are three-seed means.}
+\label{tab:app_long_checkpoint}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Routing & Final 10k & Best observed & Best saved & $\Delta$ vs normal best saved \\
+\midrule
+Learned & $1.5236\pm0.0415$ & 1.3050 & 1.3072 & -- \\
+Fixed random & $1.4175\pm0.0517$ & 1.3037 & 1.3289 & $+1.65\%$ \\
+Random/step & $1.4313\pm0.0174$ & 1.4313 & 1.4313 & $+9.49\%$ \\
+Shuffled usage & $1.4417\pm0.0086$ & 1.4417 & 1.4417 & $+10.29\%$ \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+The learned-routing best saved checkpoint is step 5,000 for every seed, with
+per-seed losses 1.3046, 1.3376, and 1.2795. Fixed random also uses step 5,000;
+random/step and shuffled usage use step 10,000. Direct pruning at these selected
+checkpoints is reported in \cref{tab:app_long_pruning}.
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\caption{Long-budget direct pruning at each condition's best saved checkpoint.
+Entries are three-seed means; uncertainty is omitted for table width.}
+\label{tab:app_long_pruning}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lrrrrrrrrr@{}}
+\toprule
+Routing & Dense & 50\% mag. & 50\% random & 50\% transfer & 50\% reinit & 80\% mag. & 80\% random & 80\% transfer & 80\% reinit \\
+\midrule
+Learned & 1.3072 & 1.3905 & 5.7336 & 1.8534 & 19.8493 & 7.7513 & 15.5672 & 9.0382 & 19.7335 \\
+Fixed random & 1.3289 & 1.4003 & 5.3759 & 1.7121 & 24.3530 & 7.8883 & 19.9285 & 8.4725 & 24.6300 \\
+Random/step & 1.4313 & 1.4835 & 3.0754 & 1.6340 & 5.6137 & 2.6843 & 5.0693 & 2.9500 & 5.6110 \\
+Shuffled usage & 1.4417 & 1.4593 & 1.9987 & 1.5046 & 2.8512 & 1.7413 & 2.6652 & 1.8273 & 2.8424 \\
+\bottomrule
+\end{tabular}}
+\end{table*}
+
+At the final 10,000-step checkpoints, the per-seed Pearson correlation between
+final validation-route agreement and 80\% mask Jaccard over the six unordered
+pairs among four routing conditions is $0.4288\pm0.0486$. This descriptive
+association is weaker than in the original single-domain suites and is not used
+for checkpoint selection.
+
+The reduced rewind follow-up extracts only 80\% masks from each seed's best
+saved learned-routing checkpoint. It evaluates the learned mask at 0\%, 10\%,
+and 25\% rewind; matched controls were run only at the winning initialization
+point. Every lane retrains for a full 10,000 updates. Contrary to the
+2,500-step suites, initialization is best here.
+
+\begin{table}[t]
+\centering
+\scriptsize
+\caption{Reduced long-budget 80\% rewind suite, mean $\pm$ population SD. The
+best-saved dense reference is $1.3072\pm0.0238$.}
+\label{tab:app_long_rewind}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Condition & Rewind & Loss & $\Delta$ vs dense \\
+\midrule
+Learned mask & 0\% & $1.2984\pm0.0055$ & $-0.68\%$ \\
+Learned mask & 10\% & $1.3552\pm0.0087$ & $+3.67\%$ \\
+Learned mask & 25\% & $1.4125\pm0.0650$ & $+8.05\%$ \\
+Random mask & 0\% & $1.3110\pm0.0070$ & $+0.29\%$ \\
+Random reinit & 0\% & $1.3088\pm0.0074$ & $+0.12\%$ \\
+Randomized routing & 0\% & $1.5011\pm0.0129$ & $+14.83\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The learned mask's margins over the random mask and random reinitialization are
+small; the randomized-routing gap is much larger. An expanded validation pass
+uses 8,740 sequences (about 69 batches) assembled from the existing TinyStories
+validation source plus WikiText validation and test text. It overlaps the
+original validation sources and is not an independent selection split, but it
+increases coverage. On this pass, dense, learned-mask, random-mask, and
+random-reinit losses are respectively $1.3213\pm0.0203$,
+$1.3096\pm0.0044$, $1.3242\pm0.0080$, and $1.3225\pm0.0099$. The narrow
+learned-mask advantage remains, with the same caveat about checkpoint and mask
+selection. Uncertainty in this expanded-validation comparison is population SD.
+
+\section{Additional Completed Controls}
+\label{app:additional_controls}
+
+\subsection{Load-Balancing Sweep}
+
+The load-balancing sweep varies only
+$\lambda_{\mathrm{bal}}\in\{0,0.01,0.03,0.1,0.3\}$ within each dataset and
+seed. \Cref{tab:app_load_balance} shows that the principal 0.1 setting avoids
+the collapse seen at zero, while 0.3 gives the best dense mean. Magnitude masks
+beat random masks at every tested coefficient, although one-shot 80\% pruning
+becomes more brittle as balancing strengthens.
+
+An earlier single-seed, two-layer CPU pilot is retained only as motivation for
+this sweep. At coefficient 0.01 its two layers ended with normalized usage
+entropy 0.506 and 0.194 and one dead expert each; at coefficient 0.1 entropy
+rose to 0.968 and 0.979 with no dead experts. Because its architecture and
+replication differ from the GPU suites, these pilot values are not pooled with
+the principal results.
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\caption{Load-balance sweep, mean over three seeds. Dense uncertainty is sample
+SD. Selected-route entropy $H$ and dead experts are final logged-step values
+averaged over layers within each run and then seeds; direct-pruning losses are
+also recorded.}
+\label{tab:app_load_balance}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llrrrrrrr@{}}
+\toprule
+Dataset & $\lambda$ & Dense & $H$ & Dead & 50\% mag. & 50\% random & 80\% mag. & 80\% random \\
+\midrule
+TinyStories & 0 & $1.2427\pm0.0142$ & 0.5112 & 1.08 & 1.2747 & 1.9416 & 1.7854 & 2.4443 \\
+ & 0.01 & $1.0634\pm0.0117$ & 0.9610 & 0 & 1.1073 & 2.4795 & 2.2598 & 3.6078 \\
+ & 0.03 & $1.0439\pm0.0166$ & 0.9856 & 0 & 1.0882 & 2.7105 & 2.5058 & 4.0400 \\
+ & 0.1 & $1.0206\pm0.0096$ & 0.9957 & 0 & 1.0676 & 3.2700 & 3.5043 & 5.1919 \\
+ & 0.3 & $1.0146\pm0.0145$ & 0.9971 & 0 & 1.0647 & 4.2315 & 5.7921 & 8.8968 \\
+\midrule
+WikiText-103 & 0 & $1.9252\pm0.0087$ & 0.2535 & 3.83 & 1.9439 & 2.3248 & 2.2530 & 2.6468 \\
+ & 0.01 & $1.7231\pm0.0249$ & 0.9582 & 0 & 1.7622 & 2.7096 & 2.7351 & 3.4988 \\
+ & 0.03 & $1.7040\pm0.0280$ & 0.9760 & 0 & 1.7474 & 3.0594 & 3.8592 & 5.1037 \\
+ & 0.1 & $1.6859\pm0.0160$ & 0.9932 & 0 & 1.7388 & 4.0564 & 4.5586 & 9.3660 \\
+ & 0.3 & $1.6502\pm0.0234$ & 0.9970 & 0 & 1.7128 & 5.4444 & 7.1457 & 15.6605 \\
+\bottomrule
+\end{tabular}}
+\end{table*}
+
+\subsection{Routing-Condition Pruning and Fixed-Router Rewind}
+
+\Cref{tab:app_multidomain_pruning} supplies the full numeric pruning comparison
+behind the byte and byte-ngram causal-control discussion. Coherent learned and
+fixed-random routing yield a large magnitude--random-mask gap; random/step and
+shuffled routing are much less sensitive to mask identity.
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\caption{Balanced-mixture direct pruning by tokenizer and routing condition,
+mean loss over three seeds. Sample SD is omitted for table width.}
+\label{tab:app_multidomain_pruning}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llrrrrrrrrr@{}}
+\toprule
+Tokenizer & Routing & Dense & 50\% mag. & 50\% random & 50\% transfer & 50\% reinit & 80\% mag. & 80\% random & 80\% transfer & 80\% reinit \\
+\midrule
+Byte & Learned & 1.4801 & 1.5360 & 3.7565 & 1.8653 & 8.2341 & 5.5286 & 7.1896 & 5.9469 & 8.3213 \\
+ & Fixed random & 1.5810 & 1.6244 & 3.1311 & 1.8658 & 8.3148 & 4.8987 & 6.4320 & 5.5288 & 8.3894 \\
+ & Random/step & 1.9564 & 1.9788 & 2.3928 & 2.0219 & 2.8853 & 2.3164 & 2.7988 & 2.3687 & 2.8852 \\
+ & Shuffled usage & 1.9791 & 1.9819 & 2.0373 & 1.9877 & 2.0841 & 2.0142 & 2.0775 & 2.0212 & 2.0841 \\
+\midrule
+Byte-ngram & Learned & 3.2753 & 3.3992 & 11.9938 & 3.7630 & 39.4429 & 14.0545 & 35.6571 & 17.4116 & 39.6119 \\
+ & Fixed random & 3.5037 & 3.6076 & 14.8263 & 4.1261 & 34.2940 & 17.3239 & 31.3733 & 21.4662 & 34.7452 \\
+ & Random/step & 4.3504 & 4.3601 & 4.5309 & 4.3778 & 4.8031 & 4.4818 & 4.7644 & 4.5099 & 4.8030 \\
+ & Shuffled usage & 4.3574 & 4.3623 & 4.4146 & 4.3675 & 4.4898 & 4.4112 & 4.4794 & 4.4161 & 4.4898 \\
+\bottomrule
+\end{tabular}}
+\end{table*}
+
+Fixed-random routing freezes only the router projection; its assignments can
+still change as hidden states evolve. On WikiText its dense loss is
+$1.7386\pm0.0206$ (population SD in this follow-up). Both learned-mask curves
+are best at the full-budget 10\% rewind; \cref{tab:app_fixed_router_rewind}
+reports all matched controls there.
+
+\begin{table}[t]
+\centering
+\scriptsize
+\caption{Fixed-random-router full-budget retraining at the 10\% rewind, mean
+$\pm$ population SD over three seeds.}
+\label{tab:app_fixed_router_rewind}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{}rrrrrr@{}}
+\toprule
+Sparsity & Dense & Learned mask & Random mask & Random reinit & Randomized routing \\
+\midrule
+50\% & $1.7386\pm0.0206$ & $1.6315\pm0.0167$ & $1.7334\pm0.0206$ & $1.7390\pm0.0394$ & $2.0863\pm0.0158$ \\
+80\% & $1.7386\pm0.0206$ & $1.7165\pm0.0042$ & $1.8899\pm0.0452$ & $1.8653\pm0.0317$ & $2.1022\pm0.0081$ \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+The learned-mask gaps are $-6.16\%$ and $-1.27\%$ at 50\% and 80\%,
+respectively. Thus learned router adaptation is useful
+for the best dense performance but is not required for a rewindable sparse
+support under this protocol.
+
+\subsection{Temporal Stability and Expert Diagnostics}
+
+The repository also contains representative seed-7 checkpoint analyses that
+are not treated as independent replications. Step-25-to-step-2,500 same-token
+primary-route agreement is low overall but above the $1/8$ uniform baseline,
+with the first layer most stable (\cref{tab:app_temporal_routes}).
+
+\begin{table}[t]
+\centering
+\scriptsize
+\caption{Representative seed-7 learned-routing step-25-to-step-2,500
+validation-route agreement.}
+\label{tab:app_temporal_routes}
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Dataset & Layer 0 & Layer 1 & Layer 2 & Layer 3 & Overall \\
+\midrule
+TinyStories & 0.3112 & 0.1226 & 0.1383 & 0.1380 & 0.1776 \\
+WikiText-103 & 0.3394 & 0.0890 & 0.1604 & 0.1420 & 0.1827 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The WikiText checkpoint analysis additionally compares each checkpoint's
+80\%-sparse expert-local magnitude mask with its own final support. Jaccard
+increases gradually under both routing regimes (\cref{tab:app_temporal_masks});
+the support is not fully fixed at initialization. Random-routing masks become
+more similar to their final mask earlier, but those runs have worse dense and
+rewind performance, so temporal stability alone is not evidence of a useful
+ticket.
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\caption{Representative seed-7 WikiText 80\% mask Jaccard with the final mask.}
+\label{tab:app_temporal_masks}
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+Routing & Step 0 & 25 & 125 & 250 & 500 & 1,000 & 2,500 \\
+\midrule
+Learned & 0.5795 & 0.5969 & 0.6023 & 0.6076 & 0.6199 & 0.6518 & 1.0000 \\
+Random/step & 0.5147 & 0.5637 & 0.6840 & 0.6964 & 0.7267 & 0.7883 & 1.0000 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+Final-checkpoint expert diagnostics are summarized in
+\cref{tab:app_expert_diagnostics}. A linear probe predicts the selected primary
+expert from pre-router hidden states, while the silhouette score measures
+geometric cluster separation. The probe uses at most 5,000 positions, a
+stratified 75/25 train/test split, and logistic regression with
+\texttt{max\_iter=200} and \texttt{random\_state=0}. The substitution analysis
+reroutes the token positions selected for each source expert to each candidate
+expert one layer at a time and compares token cross entropy; the reported
+column counts source-expert subsets for which their own expert has the lowest
+substituted loss.
+Prediction is strong, especially in early layers, but low or negative
+silhouette scores and weaker late-layer substitution diagonals caution against
+equating route predictability with clean clusters or semantic specialization.
+Moreover, the router itself selects the argmax of a linear projection of these
+same hidden states, so high linear-probe accuracy is structurally expected and
+is not independent evidence of specialization. The WikiText probe emitted
+logistic-regression convergence warnings at the recorded iteration limit, so
+its accuracies are approximate.
+
+\begin{table}[t]
+\centering
+\scriptsize
+\caption{Representative seed-7 final learned-routing checkpoint diagnostics.
+``Own best'' is out of eight experts.}
+\label{tab:app_expert_diagnostics}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Dataset & Layer & Probe accuracy & Silhouette & Own best \\
+\midrule
+TinyStories & 0 & 0.9936 & 0.0514 & 8/8 \\
+TinyStories & 1 & 0.9544 & 0.0451 & 8/8 \\
+TinyStories & 2 & 0.8664 & $-0.0149$ & 7/8 \\
+TinyStories & 3 & 0.7952 & $-0.0198$ & 3/8 \\
+WikiText-103 & 0 & 0.9960 & 0.0563 & 8/8 \\
+WikiText-103 & 1 & 0.9176 & 0.0103 & 8/8 \\
+WikiText-103 & 2 & 0.8208 & $-0.0516$ & 4/8 \\
+WikiText-103 & 3 & 0.7936 & $-0.0235$ & 2/8 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Representative Iterative Magnitude Pruning}
+
+The completed IMP check uses the balanced-mixture 8E/top-1/4L cell, seeds 7,
+17, and 29, and initialization rewind. Each of four rounds prunes currently
+surviving expert weights, rewinds the survivors, and retrains for a full 2,500
+updates. Results are in \cref{tab:app_imp}.
+
+\begin{table}[t]
+\centering
+\scriptsize
+\caption{Representative initialization-rewind IMP, mean $\pm$ population SD.
+The dense reference is $1.4801\pm0.0347$.}
+\label{tab:app_imp}
+\begin{tabular}{@{}rrrr@{}}
+\toprule
+Round & Sparsity & Loss & $\Delta$ vs dense \\
+\midrule
+1 & 33.13\% & $1.4938\pm0.0060$ & $+0.93\%$ \\
+2 & 55.28\% & $1.5013\pm0.0312$ & $+1.44\%$ \\
+3 & 70.09\% & $1.5168\pm0.0445$ & $+2.48\%$ \\
+4 & 80.00\% & $1.5687\pm0.0365$ & $+5.99\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+At 80\%, IMP improves over the one-shot initialization-restart result
+$1.6549\pm0.0177$ in this cell, but it is worse than the one-shot mask with a
+10\% rewind, $1.4792\pm0.0200$. This negative comparison supports using the
+simpler one-shot-plus-early-rewind protocol for the principal high-sparsity
+claim; it does not establish that IMP is generally inferior.
+
+\end{document}

@@ -1,0 +1,38 @@
+seed: 7
+device: cuda
+data:
+  train_path: data/wikitext103_subset/wikitext103_train.txt
+  validation_path: data/wikitext103_subset/wikitext103_validation.txt
+  seq_len: 128
+  validation_blocks: 12
+  reshuffle_each_epoch: true
+model:
+  vocab_size: 256
+  num_layers: 8
+  num_heads: 8
+  d_model: 512
+  num_experts: 16
+  expert_hidden_size: 2048
+  dropout: 0.0
+  top_k: 1
+  capacity_factor: 1.25
+routing:
+  mode: learned
+  aux_loss_weight: 0.1
+  replay_path: null
+training:
+  steps: 2500
+  batch_size: 64
+  learning_rate: 0.0003
+  weight_decay: 0.01
+  grad_clip: 1.0
+  eval_interval: 250
+  log_interval: 25
+  checkpoint_steps: [0, 1250, 2000, 2500]
+  save_optimizer: false
+  record_train_routes: true
+  precision: fp16
+pruning:
+  sparsities: [0.5, 0.8]
+  rewind_fractions: [0.0, 0.5, 0.8]
+output_dir: results/revision/p08_larger_scale

@@ -1,0 +1,11 @@
+extends: multidomain_gpu.yaml
+data:
+  tokenizer: byte_ngram
+  tokenizer_vocab_size: 1024
+  tokenizer_cache_path: data/multidomain_balanced/byte_ngram_vocab_1024.json
+  tokenizer_train_bytes: 750000
+  tokenizer_max_ngram: 8
+  tokenizer_min_frequency: 3
+model:
+  vocab_size: 1024
+output_dir: results/multidomain_subword_gpu

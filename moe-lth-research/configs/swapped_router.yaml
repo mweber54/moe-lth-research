@@ -1,0 +1,9 @@
+extends: baseline.yaml
+routing:
+  mode: swapped
+  replay_path: results/runs/baseline/logs/train_route_history.npz
+  swap_pairs: [[0, 1]]
+training:
+  record_train_routes: false
+output_dir: results/runs/swapped
+

@@ -1,0 +1,5 @@
+extends: multidomain_gpu.yaml
+seed: 29
+training:
+  checkpoint_steps: [0, 250, 500, 1000, 1500, 2000, 2500]
+output_dir: results/router_age_reference_seed29

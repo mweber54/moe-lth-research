@@ -1,0 +1,9 @@
+extends: multidomain_gpu.yaml
+data:
+  validation_blocks: 64
+training:
+  steps: 10000
+  eval_interval: 500
+  log_interval: 100
+  checkpoint_steps: [0, 100, 500, 1000, 2500, 5000, 10000]
+output_dir: results/multidomain_long_gpu
