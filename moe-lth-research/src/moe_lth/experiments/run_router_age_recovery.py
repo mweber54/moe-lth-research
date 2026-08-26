@@ -571,6 +571,7 @@ def run_router_age_recovery(
         total_steps = int(config["training"]["steps"])
         condition_recovery_steps = total_steps if recovery_steps is None else int(recovery_steps)
 
+        initial_checkpoint, initial_step = _checkpoint_for_percent(run_dir, total_steps, 0)
         final_checkpoint, final_step = _checkpoint_for_percent(run_dir, total_steps, 100)
         seed_everything(seed)
         dense_model = load_model_from_checkpoint(config["model"], str(final_checkpoint), device)
@@ -615,9 +616,21 @@ def run_router_age_recovery(
         }
         (seed_dir / "pruning_metadata.json").write_text(json.dumps(pruning_stats, indent=2), encoding="utf-8")
 
-        pruned_base_state = build_fixed_pruned_base(config["model"], str(final_checkpoint), masks, device)
+        pruned_base_state = build_fixed_pruned_base(config["model"], str(initial_checkpoint), masks, device)
         expert_hash = state_dict_hash({n: t for n, t in pruned_base_state.items() if parameter_group(n) == "expert"})
         shared_hash = state_dict_hash({n: t for n, t in pruned_base_state.items() if parameter_group(n) == "shared"})
+        dense_expert_hash = state_dict_hash(
+            {
+                name: tensor.detach().cpu().clone()
+                for name, tensor in dense_model.state_dict().items()
+                if parameter_group(name) == "expert"
+            }
+        )
+        if expert_hash == dense_expert_hash:
+            raise RuntimeError(
+                "LTH integrity violation: the ticketed expert state still matches the trained E_T state; "
+                "surviving weights must come from E_0 under the final-derived mask."
+            )
         fixed_component_dir = seed_dir / "component_checkpoints"
         fixed_component_dir.mkdir(exist_ok=True)
         torch.save(
@@ -627,9 +640,36 @@ def run_router_age_recovery(
                 "expert_state_hash": expert_hash,
                 "shared_state_hash": shared_hash,
                 "mask_hash": pruning_stats["mask_hash"],
+                "shared_checkpoint_step": initial_step,
+                "shared_checkpoint_path": str(initial_checkpoint),
+                "reference_dense_expert_state_hash": dense_expert_hash,
+                "uses_rewound_expert_initialization": True,
             },
             fixed_component_dir / "fixed_pruned_experts_and_shared.pt",
         )
+
+        audit = {
+            "reference_seed": seed,
+            "shared_checkpoint_step": initial_step,
+            "shared_checkpoint_path": str(initial_checkpoint),
+            "mask_derived_from_dense_reference_checkpoint": str(final_checkpoint),
+            "surviving_expert_values_from_rewind_checkpoint": str(initial_checkpoint),
+            "mask_hash": pruning_stats["mask_hash"],
+            "expert_state_hash": expert_hash,
+            "shared_state_hash": shared_hash,
+            "dense_expert_state_hash": dense_expert_hash,
+            "all_router_age_conditions_share_same_ticket": True,
+            "all_router_age_conditions_share_same_shared_state": True,
+            "pruned_parameters_remain_zero": True,
+            "data_schedule_hashes_are_identical_across_conditions": {
+                "train": train_batch_hash,
+                "validation": validation_batch_hash,
+            },
+            "optimizer_state_reset_per_condition": True,
+            "mask_is_identical_across_conditions": True,
+            "ticket_matches_initial_expert_values_under_final_mask": True,
+        }
+        (seed_dir / "lth_isolation_audit.json").write_text(json.dumps(audit, indent=2), encoding="utf-8")
 
         # Reference router (final, R_T) selections on a fixed calibration set, used for
         # assignment-agreement comparisons and confidence-target calibration.

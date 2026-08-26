@@ -162,6 +162,34 @@ def test_fixed_base_swaps_only_router(tmp_path):
     )
 
 
+def test_ticket_uses_initial_expert_values_under_trained_mask(tmp_path):
+    config = _tiny_config(tmp_path)["model"]
+    initial_model = TinyMoELanguageModel(config)
+    final_model = TinyMoELanguageModel(config)
+
+    initial_path = tmp_path / "initial.pt"
+    final_path = tmp_path / "final.pt"
+    save_checkpoint(initial_path, initial_model, None, 0, None, {"model": config})
+
+    with torch.no_grad():
+        for block in final_model.blocks:
+            for expert in block.moe.experts:
+                for parameter in expert.parameters():
+                    parameter.add_(7.0)
+    save_checkpoint(final_path, final_model, None, 2, None, {"model": config})
+
+    masks = expert_local_magnitude_masks(final_model, 0.8)
+    ticket_state = build_fixed_pruned_base(config, str(initial_path), masks, torch.device("cpu"))
+
+    reloaded_initial = TinyMoELanguageModel(config)
+    load_checkpoint(initial_path, reloaded_initial, map_location="cpu")
+    for name, mask in masks.items():
+        expected = reloaded_initial.state_dict()[name]
+        actual = ticket_state[name]
+        assert torch.equal(actual[mask], expected[mask])
+        assert torch.all(actual[~mask] == 0)
+
+
 def test_partial_reference_and_nonempty_output_fail_loudly(tmp_path):
     config = _tiny_config(tmp_path)
     config_path = tmp_path / "partial.yaml"

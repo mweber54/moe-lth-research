@@ -59,16 +59,18 @@ def load_model_from_checkpoint(model_config: dict, checkpoint_path: str, device:
 
 def build_fixed_pruned_base(
     model_config: dict,
-    final_checkpoint: str,
+    rewind_checkpoint: str,
     masks: MaskDict,
     device: torch.device,
 ) -> dict[str, torch.Tensor]:
-    """Load the final (T) checkpoint and apply the pruning mask once.
+    """Build the fixed LTH ticket state.
 
-    Returns the full pruned state dict (shared + expert weights pruned,
-    router weights present but to be overwritten per router-age condition).
+    The expert pruning mask is derived from the fully trained experts (E_T), but
+    the surviving values are taken from the original initialization (E_0). This
+    produces the fixed sparse ticket m_80 ⊙ E_0 while preserving the same shared
+    parameters and router checkpoint across age conditions.
     """
-    model = load_model_from_checkpoint(model_config, final_checkpoint, device)
+    model = load_model_from_checkpoint(model_config, rewind_checkpoint, device)
     apply_masks_(model, masks)
     return {name: tensor.detach().cpu().clone() for name, tensor in model.state_dict().items()}
 
