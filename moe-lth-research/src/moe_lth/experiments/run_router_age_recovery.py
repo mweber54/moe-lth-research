@@ -74,6 +74,13 @@ RECOVERY_EVAL_INTERVAL = 50
 GRADIENT_DETAIL_INTERVAL = 10
 EARLY_AUC_WINDOW_FRACTION = 0.5
 THRESHOLDS = {"within_5pct": 1.05, "within_10pct": 1.10}
+EXACT_ROUTER_STEPS_BY_AGE = {0: 0, 10: 250, 20: 500, 40: 1000, 60: 1500, 80: 2000, 100: 2500}
+
+
+def _expected_router_step_for_percent(total_steps: int, percent: int) -> int:
+    if total_steps >= 2500 and percent in EXACT_ROUTER_STEPS_BY_AGE:
+        return EXACT_ROUTER_STEPS_BY_AGE[percent]
+    return round(total_steps * percent / 100)
 
 
 def _checkpoint_for_percent(run_dir: Path, total_steps: int, percent: int) -> tuple[Path, int]:
@@ -83,8 +90,54 @@ def _checkpoint_for_percent(run_dir: Path, total_steps: int, percent: int) -> tu
     }
     if not available:
         raise FileNotFoundError(f"No checkpoints found in {run_dir}/checkpoints")
-    closest_step = min(available, key=lambda step: abs(step - target_step))
-    return available[closest_step], closest_step
+    expected_step = _expected_router_step_for_percent(total_steps, percent)
+    if total_steps >= 2500 and percent in EXACT_ROUTER_STEPS_BY_AGE:
+        if expected_step not in available:
+            raise FileNotFoundError(
+                f"Missing required router checkpoint for age {percent}%: expected step {expected_step}, "
+                f"available={sorted(available)}"
+            )
+        return available[expected_step], expected_step
+    if expected_step not in available:
+        closest_step = min(available, key=lambda step: abs(step - target_step))
+        return available[closest_step], closest_step
+    return available[expected_step], expected_step
+
+
+def _router_checkpoint_audit(run_dir: Path, total_steps: int, router_ages_percent: tuple[int, ...], config: dict) -> dict:
+    audit_rows = []
+    hashes = {}
+    for age in router_ages_percent:
+        expected_step = _expected_router_step_for_percent(total_steps, age)
+        path, loaded_step = _checkpoint_for_percent(run_dir, total_steps, age)
+        model = load_model_from_checkpoint(config["model"], str(path), torch.device("cpu"))
+        router_hash = state_dict_hash(component_state_dict(model, "router"))
+        if total_steps >= 2500 and age in EXACT_ROUTER_STEPS_BY_AGE and loaded_step != expected_step:
+            raise RuntimeError(
+                f"Router-age integrity violation: age {age}% expected router step {expected_step}, "
+                f"but loaded {loaded_step} from {path}."
+            )
+        if age == 0:
+            hashes[age] = router_hash
+        elif router_hash in hashes.values() and total_steps >= 2500 and age in EXACT_ROUTER_STEPS_BY_AGE:
+            raise RuntimeError(
+                f"Router-age integrity violation: {age}% loaded a duplicate router hash at step {loaded_step}; "
+                f"expected unique checkpoint step {expected_step}."
+            )
+        hashes[age] = router_hash
+        stats = routing_statistics(model, [], torch.device("cpu"), max_batches=1)
+        audit_rows.append({
+            "requested_age_percent": age,
+            "expected_step": expected_step,
+            "loaded_step": loaded_step,
+            "checkpoint_path": str(path),
+            "router_hash": router_hash,
+            "mean_selected_probability": stats["mean_selected_probability"],
+            "routing_entropy": stats["routing_entropy"],
+            "router_logit_norm": stats["router_logit_norm"],
+            "pass": True,
+        })
+    return {"router_age_audit": audit_rows, "all_pass": True}
 
 
 def _calibration_batches(validation_batches, max_batches: int = 8) -> list[torch.Tensor]:
@@ -231,12 +284,13 @@ def _run_recovery_condition(
         raise RuntimeError(
             f"Integrity violation: shared weights differ from the fixed reference state in {condition_name}."
         )
-    for name in masks:
-        if parameter_group(name) != "expert":
-            raise RuntimeError(f"Integrity violation: non-expert parameter {name} present in mask dict.")
-    observed_mask_hash = _mask_hash(masks)
-    if observed_mask_hash != mask_hash:
-        raise RuntimeError(f"Integrity violation: pruning mask changed in {condition_name}.")
+    if masks:
+        for name in masks:
+            if parameter_group(name) != "expert":
+                raise RuntimeError(f"Integrity violation: non-expert parameter {name} present in mask dict.")
+        observed_mask_hash = _mask_hash(masks)
+        if observed_mask_hash != mask_hash:
+            raise RuntimeError(f"Integrity violation: pruning mask changed in {condition_name}.")
     if len(train_batches) != recovery_steps:
         raise RuntimeError(
             f"Integrity violation: {len(train_batches)} paired batches for {recovery_steps} recovery steps."
@@ -573,6 +627,10 @@ def run_router_age_recovery(
 
         initial_checkpoint, initial_step = _checkpoint_for_percent(run_dir, total_steps, 0)
         final_checkpoint, final_step = _checkpoint_for_percent(run_dir, total_steps, 100)
+        seed_dir = root / f"seed_{seed}"
+        seed_dir.mkdir(parents=True, exist_ok=True)
+        router_audit = _router_checkpoint_audit(run_dir, total_steps, router_ages_percent, config)
+        (seed_dir / "router_checkpoint_audit.json").write_text(json.dumps(router_audit, indent=2), encoding="utf-8")
         seed_everything(seed)
         dense_model = load_model_from_checkpoint(config["model"], str(final_checkpoint), device)
         train_loader, validation_loader_for_dense = build_dataloaders(
@@ -590,7 +648,6 @@ def run_router_age_recovery(
         dense_loss = dense_metrics["loss"]
 
         masks = expert_local_magnitude_masks(dense_model, sparsity)
-        seed_dir = root / f"seed_{seed}"
         mask_path = seed_dir / "pruning_mask.pt"
         save_masks(masks, mask_path)
 
@@ -617,6 +674,10 @@ def run_router_age_recovery(
         (seed_dir / "pruning_metadata.json").write_text(json.dumps(pruning_stats, indent=2), encoding="utf-8")
 
         pruned_base_state = build_fixed_pruned_base(config["model"], str(initial_checkpoint), masks, device)
+        dense_base_state = {
+            name: tensor.detach().cpu().clone()
+            for name, tensor in load_model_from_checkpoint(config["model"], str(initial_checkpoint), device).state_dict().items()
+        }
         expert_hash = state_dict_hash({n: t for n, t in pruned_base_state.items() if parameter_group(n) == "expert"})
         shared_hash = state_dict_hash({n: t for n, t in pruned_base_state.items() if parameter_group(n) == "shared"})
         dense_expert_hash = state_dict_hash(
@@ -726,9 +787,9 @@ def run_router_age_recovery(
         for percent in router_ages_percent:
             router_checkpoint, router_step = _checkpoint_for_percent(run_dir, total_steps, percent)
             condition_dir = seed_dir / f"age_{percent:03d}pct_native"
-            record = _run_recovery_condition(
+            sparse_record = _run_recovery_condition(
                 config=config,
-                condition_name=f"seed{seed}_age{percent}_native",
+                condition_name=f"seed{seed}_age{percent}_native_sparse",
                 pruned_base_state=pruned_base_state,
                 router_checkpoint=str(router_checkpoint),
                 router_age_percent=percent,
@@ -752,15 +813,46 @@ def run_router_age_recovery(
                 seed=seed,
                 sparsity=sparsity,
             )
-            record.update({"reference_seed": seed, "final_step": final_step})
-            all_records.append(record)
+            sparse_record.update({"reference_seed": seed, "final_step": final_step, "condition_type": "sparse_ticket"})
+            all_records.append(sparse_record)
+            _write_partial_csv(all_records, root)
+
+            dense_dir = seed_dir / f"age_{percent:03d}pct_native_dense"
+            dense_record = _run_recovery_condition(
+                config=config,
+                condition_name=f"seed{seed}_age{percent}_native_dense",
+                pruned_base_state=dense_base_state,
+                router_checkpoint=str(router_checkpoint),
+                router_age_percent=percent,
+                router_step=router_step,
+                masks={},
+                expert_hash=state_dict_hash({n: t for n, t in dense_base_state.items() if parameter_group(n) == "expert"}),
+                shared_hash=state_dict_hash({n: t for n, t in dense_base_state.items() if parameter_group(n) == "shared"}),
+                mask_hash="dense_no_mask",
+                reference_selected=reference_selected,
+                calibration_batches=calibration_batches,
+                train_batches=train_batches,
+                validation_batches=validation_batches,
+                train_batch_hash=train_batch_hash,
+                validation_batch_hash=validation_batch_hash,
+                device=device,
+                recovery_steps=condition_recovery_steps,
+                dense_loss=dense_loss,
+                output_dir=dense_dir,
+                confidence_control=False,
+                target_confidence=None,
+                seed=seed,
+                sparsity=0.0,
+            )
+            dense_record.update({"reference_seed": seed, "final_step": final_step, "condition_type": "dense_control"})
+            all_records.append(dense_record)
             _write_partial_csv(all_records, root)
 
             if percent in confidence_control_ages and config_index in confidence_control_seed_indices:
                 condition_dir = seed_dir / f"age_{percent:03d}pct_confmatched"
                 record = _run_recovery_condition(
                     config=config,
-                    condition_name=f"seed{seed}_age{percent}_confmatched",
+                    condition_name=f"seed{seed}_age{percent}_confmatched_sparse",
                     pruned_base_state=pruned_base_state,
                     router_checkpoint=str(router_checkpoint),
                     router_age_percent=percent,
@@ -784,8 +876,39 @@ def run_router_age_recovery(
                     seed=seed,
                     sparsity=sparsity,
                 )
-                record.update({"reference_seed": seed, "final_step": final_step})
+                record.update({"reference_seed": seed, "final_step": final_step, "condition_type": "sparse_confmatched"})
                 all_records.append(record)
+                _write_partial_csv(all_records, root)
+
+                dense_conf_dir = seed_dir / f"age_{percent:03d}pct_confmatched_dense"
+                dense_conf_record = _run_recovery_condition(
+                    config=config,
+                    condition_name=f"seed{seed}_age{percent}_confmatched_dense",
+                    pruned_base_state=dense_base_state,
+                    router_checkpoint=str(router_checkpoint),
+                    router_age_percent=percent,
+                    router_step=router_step,
+                    masks={},
+                    expert_hash=state_dict_hash({n: t for n, t in dense_base_state.items() if parameter_group(n) == "expert"}),
+                    shared_hash=state_dict_hash({n: t for n, t in dense_base_state.items() if parameter_group(n) == "shared"}),
+                    mask_hash="dense_no_mask",
+                    reference_selected=reference_selected,
+                    calibration_batches=calibration_batches,
+                    train_batches=train_batches,
+                    validation_batches=validation_batches,
+                    train_batch_hash=train_batch_hash,
+                    validation_batch_hash=validation_batch_hash,
+                    device=device,
+                    recovery_steps=condition_recovery_steps,
+                    dense_loss=dense_loss,
+                    output_dir=dense_conf_dir,
+                    confidence_control=True,
+                    target_confidence=target_confidence,
+                    seed=seed,
+                    sparsity=0.0,
+                )
+                dense_conf_record.update({"reference_seed": seed, "final_step": final_step, "condition_type": "dense_confmatched"})
+                all_records.append(dense_conf_record)
                 _write_partial_csv(all_records, root)
 
     _write_partial_csv(all_records, root)

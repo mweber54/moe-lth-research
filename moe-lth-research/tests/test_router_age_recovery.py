@@ -224,16 +224,17 @@ def test_tiny_end_to_end_router_age_run(tmp_path):
         confidence_control_seed_indices=(0,),
     )
 
-    assert len(result["records"]) == 4
+    assert len(result["records"]) == 8
     assert (output_dir / "router_age_recovery_aggregate.csv").exists()
     assert (output_dir / "router_age_recovery_paired.csv").exists()
     assert (output_dir / "router_age_recovery_results.md").exists()
     assert (output_dir / "router_age_recovery_curves.svg").exists()
 
     native = [record for record in result["records"] if not record["confidence_control"]]
-    assert len({record["expert_state_hash"] for record in native}) == 1
+    assert len(native) == 4
+    assert len({record["expert_state_hash"] for record in native}) == 2
     assert len({record["shared_state_hash"] for record in native}) == 1
-    assert len({record["mask_hash"] for record in native}) == 1
+    assert len({record["mask_hash"] for record in native if record["condition_type"].startswith("sparse")}) == 1
     assert len({record["training_batch_sequence_hash"] for record in native}) == 1
     assert len({record["validation_batch_sequence_hash"] for record in native}) == 1
     for record in result["records"]:
