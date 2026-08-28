@@ -1362,6 +1362,8 @@ def _write_recovery_plot(records: list[dict], root: Path) -> None:
 
 def _condition_dir_from_record(root: Path, record: dict) -> Path:
     suffix = "confmatched" if record["confidence_control"] else "native"
+    if record.get("condition_type", "").startswith("dense"):
+        suffix += "_dense"
     return root / f"seed_{record['reference_seed']}" / f"age_{record['router_age_percent']:03d}pct_{suffix}"
 
 

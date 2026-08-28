@@ -238,13 +238,13 @@ def test_tiny_end_to_end_router_age_run(tmp_path):
     assert len({record["training_batch_sequence_hash"] for record in native}) == 1
     assert len({record["validation_batch_sequence_hash"] for record in native}) == 1
     for record in result["records"]:
+        suffix = "confmatched" if record["confidence_control"] else "native"
+        if record["condition_type"].startswith("dense"):
+            suffix += "_dense"
         metrics_path = (
             output_dir
             / "seed_13"
-            / (
-                f"age_{record['router_age_percent']:03d}pct_"
-                f"{'confmatched' if record['confidence_control'] else 'native'}"
-            )
+            / f"age_{record['router_age_percent']:03d}pct_{suffix}"
             / "metrics.jsonl"
         )
         steps = [
