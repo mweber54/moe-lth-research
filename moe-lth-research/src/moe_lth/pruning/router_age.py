@@ -323,9 +323,9 @@ def calibrate_temperature(
     calibration_batches: list[torch.Tensor],
     device: torch.device,
     target_confidence: float,
-    max_temperature: float = 1000.0,
-    grid_points: int = 25,
-    refinement_rounds: int = 3,
+    max_temperature: float = 1_000_000.0,
+    grid_points: int = 31,
+    refinement_rounds: int = 4,
 ) -> tuple[float, float, float, float]:
     """Match selected confidence while preserving routes and capacity decisions.
 
