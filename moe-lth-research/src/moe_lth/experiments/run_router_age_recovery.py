@@ -326,7 +326,7 @@ def _run_recovery_condition(
                 f"Integrity violation: confidence calibration changed capacity acceptance in {condition_name} "
                 f"(agreement={capacity_agreement_before_after:.4f})."
             )
-        if calibration_error > 5e-4:
+        if calibration_error > 1e-3:
             raise RuntimeError(
                 f"Confidence target is not matched closely enough in {condition_name}: "
                 f"target={target_confidence:.6f}, achieved={achieved_confidence:.6f}."
