@@ -155,6 +155,7 @@ def _run_sparse(
         "loaded_router_step": step, "dense_baseline_reused": bool(dense_record.get("dense_baseline_reused", False)),
         "dense_baseline_record_id": dense_record["dense_baseline_record_id"],
         "dense_baseline_final_loss": dense_record["final_validation_loss"],
+        "dense_baseline_early_auc": dense_record["early_auc"],
         "ticket_gap": record["final_validation_loss"] - dense_record["final_validation_loss"],
     })
     _annotate_gradient_diagnostics(record, output_dir)
@@ -202,7 +203,7 @@ def _aggregate_rows(records: list[dict]) -> list[dict]:
         sparse_losses = [row["final_validation_loss"] for row in group]
         dense_losses = [row["dense_baseline_final_loss"] for row in group]
         gaps = [row["ticket_gap"] for row in group]
-        auc_gaps = [row["early_auc"] - row.get("dense_baseline_early_auc", 0.0) for row in group]
+        auc_gaps = [row["early_auc"] - row["dense_baseline_early_auc"] for row in group]
         gradients = [row["mean_expert_gradient_norm"] for row in group if _finite(row.get("mean_expert_gradient_norm"))]
         rows.append({
             "sparsity": sparsity, "router_age": age, "mean_sparse_final_loss": mean(sparse_losses),
@@ -260,6 +261,7 @@ def _import_compatible_80(existing_root: Path, existing_records: list[dict], aud
             "dense_baseline_reused": True,
             "dense_baseline_record_id": f"existing_80:{_record_id(dense)}",
             "dense_baseline_final_loss": dense["final_validation_loss"],
+            "dense_baseline_early_auc": dense["early_auc"],
             "ticket_gap": row["final_validation_loss"] - dense["final_validation_loss"],
             "imported_from_existing_80": True,
             "mean_expert_gradient_norm": None,
@@ -420,6 +422,7 @@ def run_sparsity_sweep(
                 "number_retained": retained, "realized_sparsity": (prunable - retained) / prunable,
                 "mask_sha256": mask_hash, "pruning_method": "expert_local_magnitude", "mask_source": "ET",
             }, indent=2), encoding="utf-8")
+            sparse_by_age: dict[int, dict] = {}
             for age in ROUTER_AGES_PERCENT_ENDPOINTS:
                 checkpoint, step = recovery._checkpoint_for_percent(run_dir, total_steps, age)
                 dense = dense_cache[(seed, age)]
@@ -434,6 +437,17 @@ def run_sparsity_sweep(
                     recovery_steps=condition_steps, dense_loss=dense["final_validation_loss"],
                     output_dir=level_dir / f"age_{age:03d}_sparse", seed=seed, sparsity=sparsity, dense_record=dense_for_ticket)
                 new_records.append(sparse)
+                sparse_by_age[age] = sparse
+            r0, r100 = sparse_by_age[0], sparse_by_age[100]
+            if (
+                r0["expert_state_hash"] != r100["expert_state_hash"]
+                or r0["shared_state_hash"] != r100["shared_state_hash"]
+                or r0["mask_hash"] != r100["mask_hash"]
+                or r0["training_batch_sequence_hash"] != r100["training_batch_sequence_hash"]
+                or r0["validation_batch_sequence_hash"] != r100["validation_batch_sequence_hash"]
+                or r0["initial_router_state_hash"] == r100["initial_router_state_hash"]
+            ):
+                raise RuntimeError(f"Endpoint isolation assertion failed for seed {seed}, sparsity {sparsity}.")
 
     imported_80 = _import_compatible_80(Path(existing_80_dir), existing_records, audit) if existing_80_dir else []
     all_records = new_records + imported_80
