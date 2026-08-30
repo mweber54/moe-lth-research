@@ -245,7 +245,12 @@ def _statistics(long_rows: list[dict]) -> dict:
     residual = [value - sum(weight * coefficient for weight, coefficient in zip(row, coefficients)) for row, value in zip(design, y)]
     dof = len(y) - parameter_count
     mse = sum(value * value for value in residual) / dof
-    return {"model": "ticket_gap ~ categorical_sparsity + categorical_router_age + interaction + seed_fixed_effect", "n_observations": len(y), "residual_df": dof, "residual_mse": mse, "coefficients": [{"term": name, "estimate": value, "ci95": [value - 1.96 * math.sqrt(max(mse * inverse[index][index], 0)), value + 1.96 * math.sqrt(max(mse * inverse[index][index], 0))]} for index, (name, value) in enumerate(zip(names, coefficients))], "interpretation": "Seed fixed effects account for repeated measurements; inspect interaction coefficients and confidence intervals rather than significance alone."}
+    coefficient_rows = [{"term": name, "estimate": value, "ci95": [value - 1.96 * math.sqrt(max(mse * inverse[index][index], 0)), value + 1.96 * math.sqrt(max(mse * inverse[index][index], 0))]} for index, (name, value) in enumerate(zip(names, coefficients))]
+    interaction_rows = [row for row in coefficient_rows if row["term"].startswith("interaction[")]
+    sparsity_means = {str(sparsity): mean(float(row["ticket_gap"]) for row in long_rows if row["sparsity"] == sparsity) for sparsity in SPARSITIES}
+    router_means = {f"R{age}": mean(float(row["ticket_gap"]) for row in long_rows if row["router_age"] == age) for age in ROUTER_AGES}
+    largest_interaction = max(interaction_rows, key=lambda row: abs(row["estimate"]))
+    return {"model": "ticket_gap ~ categorical_sparsity + categorical_router_age + interaction + seed_fixed_effect", "n_observations": len(y), "residual_df": dof, "residual_mse": mse, "coefficients": coefficient_rows, "effects": {"sparsity_means": sparsity_means, "sparsity_range": max(sparsity_means.values()) - min(sparsity_means.values()), "router_age_means": router_means, "router_age_range": max(router_means.values()) - min(router_means.values()), "largest_interaction": {**largest_interaction, "ci95_excludes_zero": largest_interaction["ci95"][0] > 0 or largest_interaction["ci95"][1] < 0}}, "interpretation": "Seed fixed effects account for repeated measurements; report observed ranges and interaction confidence intervals rather than significance alone."}
 
 
 def run_matrix_completion(config_paths: list[str], output_dir: str, endpoint_records: str, router_age_records: str, recovery_steps: int | None = None) -> dict:
