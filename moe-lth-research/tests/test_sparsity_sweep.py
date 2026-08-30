@@ -20,7 +20,7 @@ def test_sparsity_sweep_tiny_protocol():
     """Test sparsity sweep with minimal budget to verify protocol correctness.
     
     Runs:
-    - 2 sparsities (60%, 90%)
+    - 4 sparsities (60%, 70%, 90%, 95%)
     - 1 seed
     - 2 router ages (0%, 100%)
     - 2-step recovery budget
@@ -66,20 +66,19 @@ def test_sparsity_sweep_tiny_protocol():
         # Check records
         records = result["records"]
         
-        # Should have sparse and dense conditions for each sparsity and router age
-        # 2 sparsities × 2 router ages × 2 condition types (sparse + dense) = 8 records
-        assert len(records) == 8, f"Expected 8 records, got {len(records)}"
+        # Sparse conditions: 4 sparsities × 2 router ages. Dense E_0 controls are
+        # deliberately run once per router age and reused across sparsities.
+        assert len(records) == 10, f"Expected 10 records, got {len(records)}"
         
-        sparse_records = [r for r in records if r["condition_type"] == "sparse_control"]
+        sparse_records = [r for r in records if r["condition_type"] == "sparse_ticket"]
         dense_records = [r for r in records if r["condition_type"] == "dense_control"]
         
-        assert len(sparse_records) == 4, "Expected 4 sparse conditions"
-        assert len(dense_records) == 4, "Expected 4 dense conditions"
+        assert len(sparse_records) == 8, "Expected 8 sparse conditions"
+        assert len(dense_records) == 2, "Expected 2 reusable dense conditions"
         
         # Validate sparsity coverage
         sparsities_in_records = sorted(set(r["sparsity"] for r in sparse_records))
-        # Note: will be [0.6, 0.9] from SPARSITIES_TO_SWEEP
-        assert len(sparsities_in_records) >= 2, f"Expected ≥2 sparsities, got {sparsities_in_records}"
+        assert sparsities_in_records == list(SPARSITIES_TO_SWEEP)
         
         # Validate router age endpoints
         router_ages_in_records = sorted(set(r["router_age_percent"] for r in records))
@@ -88,12 +87,14 @@ def test_sparsity_sweep_tiny_protocol():
         # Validate protocol fields
         for sparse_rec in sparse_records:
             # Rewind assertion: surviving weights from E_0 under learned mask
-            assert sparse_rec.get("expert_surviving_weight_source") == "E_0"
-            assert sparse_rec.get("mask_source") == "E_T"
+            assert sparse_rec.get("expert_surviving_weight_source") == "E0"
+            assert sparse_rec.get("mask_source") == "ET"
             assert sparse_rec["sparsity"] > 0
             assert sparse_rec["mask_hash"] != "dense_no_mask"
             # Integrity checks must pass
             assert sparse_rec["integrity_checks_passed"] is True
+            assert sparse_rec["dense_baseline_record_id"]
+            assert sparse_rec["dense_baseline_final_loss"] > 0
         
         for dense_rec in dense_records:
             # Dense should have no mask
@@ -152,6 +153,13 @@ def test_sparsity_sweep_tiny_protocol():
         assert records_json.exists(), f"Missing {records_json}"
         loaded_records = json.loads(records_json.read_text())
         assert len(loaded_records) == len(records)
+        assert (sweep_output_dir / "sparsity_sweep_aggregate.csv").exists()
+        assert (sweep_output_dir / "sparsity_sweep_paired.csv").exists()
+        assert (sweep_output_dir / "sparsity_sweep_audit.json").exists()
+        assert (sweep_output_dir / "sparsity_sweep_summary.md").exists()
+        assert (sweep_output_dir / "sparsity_ticket_gap.svg").exists()
+        assert (sweep_output_dir / "sparsity_final_loss.svg").exists()
+        assert (sweep_output_dir / "sparsity_router_benefit.svg").exists()
         
         print(f"✓ Sparsity sweep protocol test passed with {len(records)} records")
 
