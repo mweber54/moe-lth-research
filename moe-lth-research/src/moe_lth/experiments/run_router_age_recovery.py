@@ -261,7 +261,10 @@ def _run_recovery_condition(
     target_confidence: float | None,
     seed: int,
     sparsity: float,
+    router_mode: str = "trainable",
 ) -> dict:
+    if router_mode not in {"trainable", "frozen"}:
+        raise ValueError(f"router_mode must be 'trainable' or 'frozen', got {router_mode!r}.")
     if output_dir.exists() and any(output_dir.iterdir()):
         raise FileExistsError(f"Refusing to mix or overwrite recovery artifacts in {output_dir}")
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -338,11 +341,25 @@ def _run_recovery_condition(
     torch.save(initial_router_state, output_dir / "component_checkpoints" / "initial_router.pt")
 
     handles = register_mask_gradient_hooks(model, masks)
+    router_parameters = [parameter for name, parameter in model.named_parameters() if parameter_group(name) == "router"]
+    if router_mode == "frozen":
+        for parameter in router_parameters:
+            parameter.requires_grad_(False)
+        if any(parameter.requires_grad for parameter in router_parameters):
+            raise RuntimeError(f"Integrity violation: router remains trainable in frozen condition {condition_name}.")
+    elif not all(parameter.requires_grad for parameter in router_parameters):
+        raise RuntimeError(f"Integrity violation: router is not fully trainable in {condition_name}.")
+    optimizer_parameters = [parameter for parameter in model.parameters() if parameter.requires_grad]
     optimizer = torch.optim.AdamW(
-        model.parameters(),
+        optimizer_parameters,
         lr=float(config["training"]["learning_rate"]),
         weight_decay=float(config["training"]["weight_decay"]),
     )
+    optimizer_parameter_ids = {id(parameter) for group in optimizer.param_groups for parameter in group["params"]}
+    if router_mode == "frozen" and any(id(parameter) in optimizer_parameter_ids for parameter in router_parameters):
+        raise RuntimeError(f"Integrity violation: frozen router is included in optimizer for {condition_name}.")
+    if router_mode == "trainable" and not all(id(parameter) in optimizer_parameter_ids for parameter in router_parameters):
+        raise RuntimeError(f"Integrity violation: trainable router is missing from optimizer for {condition_name}.")
     if optimizer.state:
         raise RuntimeError(f"Integrity violation: optimizer state is not fresh in {condition_name}.")
     autocast_dtype = resolve_autocast_dtype(
@@ -378,10 +395,18 @@ def _run_recovery_condition(
             preserve_routing=confidence_control,
         )
         stats["assignment_agreement_with_final_router"] = assignment_agreement(reference_selected, candidate_selected)
+        stats["assignment_agreement_with_initial_recovery_router"] = assignment_agreement(initial_probe_selected, candidate_selected)
         return stats
 
     recovery_curve: list[dict] = []
     initial_metrics = evaluate()
+    initial_probe_selected = selected_experts_per_batch(
+        model,
+        calibration_batches,
+        device,
+        confidence_temperature=temperature if confidence_control else 1.0,
+        preserve_routing=confidence_control,
+    )
     initial_routing = routing_snapshot()
     recovery_curve.append({"step": 0, "loss": initial_metrics["loss"]})
     append_jsonl(output_dir / "routing_stats" / "routing_stats.jsonl", {"step": 0, **initial_routing})
@@ -419,7 +444,7 @@ def _run_recovery_condition(
         assigned_counts, accepted_counts = _expert_token_counts(output)
         global_grad_norm = float(
             torch.nn.utils.clip_grad_norm_(
-                model.parameters(), float(config["training"]["grad_clip"])
+                optimizer_parameters, float(config["training"]["grad_clip"])
             ).detach().cpu()
         )
         scaler.step(optimizer)
@@ -488,6 +513,16 @@ def _run_recovery_condition(
         time_to_threshold[name] = reached if reached is not None else "unreached"
 
     final_router_state = component_state_dict(model, "router")
+    final_router_hash = state_dict_hash(final_router_state)
+    squared_difference = 0.0
+    squared_initial = 0.0
+    for name, initial in initial_router_state.items():
+        final = final_router_state[name].detach().cpu()
+        squared_difference += float((final - initial).square().sum())
+        squared_initial += float(initial.square().sum())
+    router_parameter_drift = math.sqrt(squared_difference)
+    if router_mode == "frozen" and (final_router_hash != initial_router_hash or router_parameter_drift != 0.0):
+        raise RuntimeError(f"Integrity violation: frozen router changed during recovery in {condition_name}.")
     final_confidence = routing_snapshot()
     torch.save(final_router_state, output_dir / "component_checkpoints" / "final_router.pt")
 
@@ -507,6 +542,7 @@ def _run_recovery_condition(
         "router_checkpoint": str(router_checkpoint),
         "router_step": router_step,
         "sparsity": sparsity,
+        "router_mode": router_mode,
         "pruning_method": "expert_local_magnitude",
         "confidence_control": confidence_control,
         "temperature": temperature,
@@ -523,7 +559,14 @@ def _run_recovery_condition(
         "shared_state_hash": observed_shared_hash,
         "mask_hash": mask_hash,
         "initial_router_state_hash": initial_router_hash,
-        "final_router_state_hash": state_dict_hash(final_router_state),
+        "final_router_state_hash": final_router_hash,
+        "router_hash_before_recovery": initial_router_hash,
+        "router_hash_after_recovery": final_router_hash,
+        "router_hash_unchanged": final_router_hash == initial_router_hash,
+        "router_parameter_drift_final": router_parameter_drift,
+        "router_parameter_drift_normalized_final": router_parameter_drift / math.sqrt(squared_initial) if squared_initial else 0.0,
+        "probe_sequence_hash": state_dict_hash({f"probe_{index}": batch for index, batch in enumerate(calibration_batches)}),
+        "router_trainable_parameter_count": sum(parameter.numel() for parameter in router_parameters if parameter.requires_grad),
         "training_batch_sequence_hash": train_batch_hash,
         "validation_batch_sequence_hash": validation_batch_hash,
         "optimizer": "fresh_AdamW",
