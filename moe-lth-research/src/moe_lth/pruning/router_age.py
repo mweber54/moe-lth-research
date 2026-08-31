@@ -387,28 +387,57 @@ def calibrate_temperature(
     )
 
 
-def grad_norms_by_group(model: torch.nn.Module) -> dict[str, float]:
-    device = next(model.parameters()).device
+def _safe_fp32_l2_norm(gradients: list[torch.Tensor]) -> float | None:
+    """Return an FP32 L2 norm, or ``None`` when a gradient is nonfinite.
+
+    Casting the scalar returned by ``torch._foreach_norm`` is too late: its
+    reduction has already happened in the gradient dtype.  Casting each input
+    first prevents half-precision accumulation overflow.  A genuine AMP
+    overflow is kept distinct from a numerical reduction bug and is never
+    serialized as a misleading finite value.
+    """
+    if not gradients:
+        return 0.0
+    fp32 = [gradient.detach().float() for gradient in gradients]
+    if not all(bool(torch.isfinite(gradient).all()) for gradient in fp32):
+        return None
+    individual = [torch.linalg.vector_norm(gradient) for gradient in fp32]
+    return float(torch.linalg.vector_norm(torch.stack(individual).float()).detach().cpu())
+
+
+def grad_norms_by_group(model: torch.nn.Module) -> dict[str, float | None]:
     grouped: dict[str, list[torch.Tensor]] = {"expert": [], "router": [], "shared": []}
     for name, parameter in model.named_parameters():
         if parameter.grad is not None:
-            grouped[parameter_group(name)].append(parameter.grad.detach())
-    totals = []
-    for group in ("expert", "router", "shared"):
-        gradients = grouped[group]
-        if gradients:
-            individual = torch._foreach_norm(gradients, 2.0)
-            totals.append(torch.linalg.vector_norm(torch.stack([value.float() for value in individual])))
-        else:
-            totals.append(torch.tensor(0.0, device=device))
-    values = torch.stack(totals).detach().cpu().tolist()
-    return dict(zip(("expert", "router", "shared"), values))
+            grouped[parameter_group(name)].append(parameter.grad)
+    return {group: _safe_fp32_l2_norm(grouped[group]) for group in ("expert", "router", "shared")}
 
 
-def per_expert_grad_norms(model: torch.nn.Module) -> dict[str, float]:
-    device = next(model.parameters()).device
+def grad_norms_by_layer(model: torch.nn.Module) -> dict[str, dict[str, float | None]]:
+    """Return diagnostic FP32 expert/router/shared norms for each MoE block."""
+    result: dict[str, dict[str, float | None]] = {}
+    for layer_id, block in enumerate(model.blocks):
+        grouped: dict[str, list[torch.Tensor]] = {"expert": [], "router": [], "shared": []}
+        for name, parameter in block.named_parameters():
+            if parameter.grad is None:
+                continue
+            if ".experts." in f".{name}":
+                group = "expert"
+            elif ".router." in f".{name}":
+                group = "router"
+            else:
+                group = "shared"
+            grouped[group].append(parameter.grad)
+        result[f"layer_{layer_id}"] = {
+            group: _safe_fp32_l2_norm(grouped[group])
+            for group in ("expert", "router", "shared")
+        }
+    return result
+
+
+def per_expert_grad_norms(model: torch.nn.Module) -> dict[str, float | None]:
     keys: list[str] = []
-    norm_tensors: list[torch.Tensor] = []
+    values: list[float | None] = []
     for block_id, block in enumerate(model.blocks):
         for expert_id, expert in enumerate(block.moe.experts):
             gradients = [
@@ -416,12 +445,6 @@ def per_expert_grad_norms(model: torch.nn.Module) -> dict[str, float]:
                 for parameter in expert.parameters()
                 if parameter.grad is not None
             ]
-            if gradients:
-                individual = torch._foreach_norm(gradients, 2.0)
-                total = torch.linalg.vector_norm(torch.stack([value.float() for value in individual]))
-            else:
-                total = torch.tensor(0.0, device=device)
             keys.append(f"layer_{block_id}_expert_{expert_id}")
-            norm_tensors.append(total)
-    values = torch.stack(norm_tensors).detach().cpu().tolist()
+            values.append(_safe_fp32_l2_norm(gradients))
     return dict(zip(keys, values))

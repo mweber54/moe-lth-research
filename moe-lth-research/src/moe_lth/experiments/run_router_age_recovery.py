@@ -46,6 +46,7 @@ from moe_lth.pruning.router_age import (
     component_state_dict,
     forward_with_preserved_routing,
     grad_norms_by_group,
+    grad_norms_by_layer,
     load_model_from_checkpoint,
     mean_selected_probability,
     parameter_group,
@@ -235,6 +236,74 @@ def _expert_token_counts(output) -> tuple[dict[str, int], dict[str, int]]:
     return assigned, accepted
 
 
+def _flatten_probe_assignments(selected: list[torch.Tensor]) -> torch.Tensor:
+    """Flatten deterministic probe assignments as [layer, routed-token]."""
+    if not selected:
+        raise ValueError("The deterministic probe set is empty.")
+    return torch.cat([batch.reshape(batch.shape[0], -1) for batch in selected], dim=1)
+
+
+def _router_drift(
+    initial: dict[str, torch.Tensor],
+    current: dict[str, torch.Tensor],
+    parameter_names: set[str] | None = None,
+) -> tuple[float, float]:
+    squared_difference = 0.0
+    squared_initial = 0.0
+    for name, initial_tensor in initial.items():
+        if parameter_names is not None and name not in parameter_names:
+            continue
+        current_tensor = current[name].detach().cpu()
+        squared_difference += float((current_tensor.float() - initial_tensor.float()).square().sum())
+        squared_initial += float(initial_tensor.float().square().sum())
+    absolute = math.sqrt(squared_difference)
+    return absolute, absolute / math.sqrt(squared_initial) if squared_initial else 0.0
+
+
+def _with_utilization_summaries(stats: dict) -> dict:
+    """Add explicitly defined per-layer and model-level load summaries."""
+    layers = []
+    for layer_id, (counts, utilization, dropped) in enumerate(
+        zip(
+            stats["top1_assignment_counts_by_layer"],
+            stats["top1_assignment_distribution_by_layer"],
+            stats["dropped_fraction_by_layer"],
+        )
+    ):
+        values = torch.tensor(utilization, dtype=torch.float64)
+        mean_load = float(values.mean()) if values.numel() else 0.0
+        std_load = float(values.std(unbiased=False)) if values.numel() else 0.0
+        maximum = float(values.max()) if values.numel() else 0.0
+        minimum = float(values.min()) if values.numel() else 0.0
+        layers.append(
+            {
+                "layer": layer_id,
+                "expert_token_counts": counts,
+                "expert_utilization_fraction": utilization,
+                "utilization_cv": std_load / mean_load if mean_load else 0.0,
+                "maximum_expert_load": maximum,
+                "minimum_expert_load": minimum,
+                "routing_imbalance": (maximum - minimum) / mean_load if mean_load else 0.0,
+                # For top-k=1, an overflowed route is also a token drop.
+                "capacity_overflow_rate": float(dropped),
+                "token_drop_rate": float(dropped),
+            }
+        )
+    stats["utilization_by_layer"] = layers
+    for field in (
+        "utilization_cv",
+        "maximum_expert_load",
+        "minimum_expert_load",
+        "routing_imbalance",
+        "capacity_overflow_rate",
+        "token_drop_rate",
+    ):
+        stats[f"model_mean_{field}"] = (
+            sum(float(layer[field]) for layer in layers) / len(layers) if layers else 0.0
+        )
+    return stats
+
+
 def _run_recovery_condition(
     *,
     config: dict,
@@ -262,6 +331,9 @@ def _run_recovery_condition(
     seed: int,
     sparsity: float,
     router_mode: str = "trainable",
+    diagnostic_steps: tuple[int, ...] | None = None,
+    reference_selected_by_age: dict[int, list[torch.Tensor]] | None = None,
+    save_assignment_snapshots: bool = False,
 ) -> dict:
     if router_mode not in {"trainable", "frozen"}:
         raise ValueError(f"router_mode must be 'trainable' or 'frozen', got {router_mode!r}.")
@@ -272,6 +344,16 @@ def _run_recovery_condition(
     (output_dir / "gradient_stats").mkdir(exist_ok=True)
     (output_dir / "checkpoints").mkdir(exist_ok=True)
     (output_dir / "component_checkpoints").mkdir(exist_ok=True)
+    if save_assignment_snapshots:
+        (output_dir / "assignment_snapshots").mkdir(exist_ok=True)
+
+    requested_diagnostic_steps = None
+    if diagnostic_steps is not None:
+        requested_diagnostic_steps = {int(step) for step in diagnostic_steps}
+        if 0 not in requested_diagnostic_steps or recovery_steps not in requested_diagnostic_steps:
+            raise ValueError("diagnostic_steps must contain step 0 and the final recovery step.")
+        if min(requested_diagnostic_steps) < 0 or max(requested_diagnostic_steps) > recovery_steps:
+            raise ValueError("diagnostic_steps contains a step outside the recovery budget.")
 
     seed_everything(seed)
     model = assemble_router_age_model(config["model"], pruned_base_state, router_checkpoint, masks, device)
@@ -338,10 +420,15 @@ def _run_recovery_condition(
 
     initial_router_state = component_state_dict(model, "router")
     initial_router_hash = state_dict_hash(initial_router_state)
+    router_parameter_state_names = {
+        name for name, _ in model.named_parameters() if parameter_group(name) == "router"
+    }
     torch.save(initial_router_state, output_dir / "component_checkpoints" / "initial_router.pt")
 
     handles = register_mask_gradient_hooks(model, masks)
     router_parameters = [parameter for name, parameter in model.named_parameters() if parameter_group(name) == "router"]
+    if not router_parameters or not router_parameter_state_names:
+        raise RuntimeError(f"No router parameters found in {condition_name}.")
     if router_mode == "frozen":
         for parameter in router_parameters:
             parameter.requires_grad_(False)
@@ -379,7 +466,11 @@ def _run_recovery_condition(
             )
         }
 
-    def routing_snapshot() -> dict:
+    probe_sequence_hash = state_dict_hash(
+        {f"probe_{index}": batch for index, batch in enumerate(calibration_batches)}
+    )
+
+    def routing_snapshot(step: int) -> dict:
         stats = routing_statistics(
             model,
             calibration_batches,
@@ -396,9 +487,40 @@ def _run_recovery_condition(
         )
         stats["assignment_agreement_with_final_router"] = assignment_agreement(reference_selected, candidate_selected)
         stats["assignment_agreement_with_initial_recovery_router"] = assignment_agreement(initial_probe_selected, candidate_selected)
-        return stats
+        for age, selected in sorted((reference_selected_by_age or {}).items()):
+            stats[f"agreement_with_R{age}_reference"] = assignment_agreement(selected, candidate_selected)
+        current_router_state = component_state_dict(model, "router")
+        absolute_drift, normalized_drift = _router_drift(
+            initial_router_state, current_router_state, router_parameter_state_names
+        )
+        current_router_hash = state_dict_hash(current_router_state)
+        stats.update(
+            {
+                "probe_sequence_hash": probe_sequence_hash,
+                "router_state_hash": current_router_hash,
+                "router_parameter_drift_absolute": absolute_drift,
+                "router_parameter_drift_normalized": normalized_drift,
+            }
+        )
+        if router_mode == "frozen" and (
+            current_router_hash != initial_router_hash or absolute_drift != 0.0 or normalized_drift != 0.0
+        ):
+            raise RuntimeError(
+                f"Integrity violation: frozen router changed at diagnostic step {step} in {condition_name}."
+            )
+        if save_assignment_snapshots:
+            torch.save(
+                {
+                    "step": step,
+                    "probe_sequence_hash": probe_sequence_hash,
+                    "top1_assignments": _flatten_probe_assignments(candidate_selected).to(torch.uint8),
+                },
+                output_dir / "assignment_snapshots" / f"step_{step:04d}.pt",
+            )
+        return _with_utilization_summaries(stats)
 
     recovery_curve: list[dict] = []
+    routing_by_step: dict[int, dict] = {}
     initial_metrics = evaluate()
     initial_probe_selected = selected_experts_per_batch(
         model,
@@ -407,7 +529,8 @@ def _run_recovery_condition(
         confidence_temperature=temperature if confidence_control else 1.0,
         preserve_routing=confidence_control,
     )
-    initial_routing = routing_snapshot()
+    initial_routing = routing_snapshot(0)
+    routing_by_step[0] = initial_routing
     recovery_curve.append({"step": 0, "loss": initial_metrics["loss"]})
     append_jsonl(output_dir / "routing_stats" / "routing_stats.jsonl", {"step": 0, **initial_routing})
 
@@ -418,8 +541,28 @@ def _run_recovery_condition(
         if step % RECOVERY_EVAL_INTERVAL == 0
     }
     evaluation_steps.update({early_window_step, recovery_steps})
+    trajectory_steps = evaluation_steps if requested_diagnostic_steps is None else requested_diagnostic_steps - {0}
+    if requested_diagnostic_steps is not None:
+        append_jsonl(
+            output_dir / "gradient_stats" / "gradient_stats.jsonl",
+            {
+                "step": 0,
+                "expert_grad_norm": None,
+                "router_grad_norm": 0.0 if router_mode == "frozen" else None,
+                "shared_grad_norm": None,
+                "expert_to_router_grad_norm_ratio": None,
+                "gradient_valid": False,
+                "measurement_status": "no_backward_at_initialization",
+                "optimizer_step_applied": False,
+                "router_gradient_applicable": router_mode == "trainable",
+            },
+        )
 
     model.train()
+    trainable_router_gradient_observed = False
+    amp_overflow_steps = 0
+    optimizer_steps_applied = 0
+    loss_scales = []
     for step, (token_ids, targets) in enumerate(train_batches, start=1):
         token_ids, targets = token_ids.to(device), targets.to(device)
         optimizer.zero_grad(set_to_none=True)
@@ -436,19 +579,45 @@ def _run_recovery_condition(
         scaler.scale(loss).backward()
         scaler.unscale_(optimizer)
         grad_norms = grad_norms_by_group(model)
+        gradient_valid = all(value is not None for value in grad_norms.values())
+        if router_mode == "frozen" and grad_norms["router"] != 0.0:
+            raise RuntimeError(f"Frozen router has a nonzero gradient in {condition_name} at step {step}.")
+        if router_mode == "trainable" and grad_norms["router"] is not None and float(grad_norms["router"]) > 0.0:
+            trainable_router_gradient_observed = True
         expert_grad_norms = (
             per_expert_grad_norms(model)
-            if step == 1 or step % GRADIENT_DETAIL_INTERVAL == 0
+            if step == 1 or step % GRADIENT_DETAIL_INTERVAL == 0 or step in trajectory_steps
             else None
         )
+        per_layer_grad_norms = grad_norms_by_layer(model) if step in trajectory_steps else None
         assigned_counts, accepted_counts = _expert_token_counts(output)
-        global_grad_norm = float(
-            torch.nn.utils.clip_grad_norm_(
-                optimizer_parameters, float(config["training"]["grad_clip"])
-            ).detach().cpu()
+        if gradient_valid:
+            global_grad_norm = math.sqrt(sum(float(value) ** 2 for value in grad_norms.values()))
+        else:
+            global_grad_norm = None
+            if not use_scaler:
+                raise FloatingPointError(
+                    f"Nonfinite unscaled gradient without GradScaler in {condition_name} at step {step}."
+                )
+        # Keep the historical clipping/update protocol byte-for-byte.  Its
+        # FP32 return is ignored when AMP has found a genuine overflow; the
+        # safe diagnostic norm above is what is serialized.
+        torch.nn.utils.clip_grad_norm_(
+            optimizer_parameters, float(config["training"]["grad_clip"])
         )
+        loss_scale_before = float(scaler.get_scale())
         scaler.step(optimizer)
         scaler.update()
+        loss_scale_after = float(scaler.get_scale())
+        if not gradient_valid:
+            amp_overflow_steps += 1
+            if use_scaler and not loss_scale_after < loss_scale_before:
+                raise RuntimeError(
+                    f"GradScaler did not back off after nonfinite gradients in {condition_name} at step {step}."
+                )
+        else:
+            optimizer_steps_applied += 1
+        loss_scales.extend((loss_scale_before, loss_scale_after))
         apply_masks_(model, masks)
 
         append_jsonl(
@@ -458,18 +627,41 @@ def _run_recovery_condition(
                 "expert_grad_norm": grad_norms["expert"],
                 "router_grad_norm": grad_norms["router"],
                 "shared_grad_norm": grad_norms["shared"],
+                "expert_to_router_grad_norm_ratio": (
+                    float(grad_norms["expert"]) / float(grad_norms["router"])
+                    if grad_norms["expert"] is not None
+                    and grad_norms["router"] is not None
+                    and float(grad_norms["router"]) > 0.0
+                    else None
+                ),
+                "per_layer_grad_norm": per_layer_grad_norms,
                 "per_expert_grad_norm": expert_grad_norms,
                 "expert_token_counts": assigned_counts,
                 "accepted_expert_token_counts": accepted_counts,
                 "global_grad_norm_pre_clip": global_grad_norm,
-                "train_loss": float(loss.detach().cpu()),
+                "train_loss": (
+                    float(loss.detach().cpu())
+                    if bool(torch.isfinite(loss.detach()).all())
+                    else None
+                ),
+                "gradient_valid": gradient_valid,
+                "measurement_status": "finite_unscaled" if gradient_valid else "amp_overflow_skipped",
+                "optimizer_step_applied": gradient_valid,
+                "loss_scale_before": loss_scale_before,
+                "loss_scale_after": loss_scale_after,
+                "router_gradient_applicable": router_mode == "trainable",
             },
         )
 
         if step in evaluation_steps:
             metrics = evaluate()
             recovery_curve.append({"step": step, "loss": metrics["loss"]})
-            append_jsonl(output_dir / "routing_stats" / "routing_stats.jsonl", {"step": step, **routing_snapshot()})
+            if step in trajectory_steps:
+                routing_by_step[step] = routing_snapshot(step)
+                append_jsonl(
+                    output_dir / "routing_stats" / "routing_stats.jsonl",
+                    {"step": step, **routing_by_step[step]},
+                )
             print(
                 f"[{condition_name}] step {step}/{recovery_steps} validation_loss={metrics['loss']:.6f}",
                 flush=True,
@@ -514,16 +706,20 @@ def _run_recovery_condition(
 
     final_router_state = component_state_dict(model, "router")
     final_router_hash = state_dict_hash(final_router_state)
-    squared_difference = 0.0
-    squared_initial = 0.0
-    for name, initial in initial_router_state.items():
-        final = final_router_state[name].detach().cpu()
-        squared_difference += float((final - initial).square().sum())
-        squared_initial += float(initial.square().sum())
-    router_parameter_drift = math.sqrt(squared_difference)
+    router_parameter_drift, router_parameter_drift_normalized = _router_drift(
+        initial_router_state, final_router_state, router_parameter_state_names
+    )
     if router_mode == "frozen" and (final_router_hash != initial_router_hash or router_parameter_drift != 0.0):
         raise RuntimeError(f"Integrity violation: frozen router changed during recovery in {condition_name}.")
-    final_confidence = routing_snapshot()
+    if router_mode == "trainable" and (
+        final_router_hash == initial_router_hash
+        or router_parameter_drift <= 0.0
+        or not trainable_router_gradient_observed
+    ):
+        raise RuntimeError(f"Integrity violation: trainable router did not adapt in {condition_name}.")
+    final_confidence = routing_by_step.get(recovery_steps)
+    if final_confidence is None:
+        final_confidence = routing_snapshot(recovery_steps)
     torch.save(final_router_state, output_dir / "component_checkpoints" / "final_router.pt")
 
     save_checkpoint(
@@ -564,9 +760,17 @@ def _run_recovery_condition(
         "router_hash_after_recovery": final_router_hash,
         "router_hash_unchanged": final_router_hash == initial_router_hash,
         "router_parameter_drift_final": router_parameter_drift,
-        "router_parameter_drift_normalized_final": router_parameter_drift / math.sqrt(squared_initial) if squared_initial else 0.0,
-        "probe_sequence_hash": state_dict_hash({f"probe_{index}": batch for index, batch in enumerate(calibration_batches)}),
+        "router_parameter_drift_normalized_final": router_parameter_drift_normalized,
+        "probe_sequence_hash": probe_sequence_hash,
         "router_trainable_parameter_count": sum(parameter.numel() for parameter in router_parameters if parameter.requires_grad),
+        "trainable_router_gradient_observed": trainable_router_gradient_observed,
+        "amp_overflow_step_count": amp_overflow_steps,
+        "optimizer_step_attempts": recovery_steps,
+        "optimizer_steps_applied": optimizer_steps_applied,
+        "loss_scale_initial": loss_scales[0] if loss_scales else 1.0,
+        "loss_scale_final": loss_scales[-1] if loss_scales else 1.0,
+        "loss_scale_minimum": min(loss_scales) if loss_scales else 1.0,
+        "gradient_diagnostic_version": "fp32_unscaled_v2",
         "training_batch_sequence_hash": train_batch_hash,
         "validation_batch_sequence_hash": validation_batch_hash,
         "optimizer": "fresh_AdamW",
@@ -1160,11 +1364,35 @@ def _mean_gradient_norms(condition_dir: Path) -> dict[str, float]:
     rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
     if not rows:
         return {"expert": 0.0, "router": 0.0, "shared": 0.0}
-    return {
-        "expert": sum(row["expert_grad_norm"] for row in rows) / len(rows),
-        "router": sum(row["router_grad_norm"] for row in rows) / len(rows),
-        "shared": sum(row["shared_grad_norm"] for row in rows) / len(rows),
-    }
+    result = {}
+    valid_rows = []
+    skipped_rows = 0
+    for row in rows:
+        if int(row.get("step", 0)) == 0:
+            continue
+        finite_fallback = all(
+            row.get(field) is not None and math.isfinite(float(row[field]))
+            for field in ("expert_grad_norm", "router_grad_norm", "shared_grad_norm")
+        )
+        valid = bool(row.get("gradient_valid", finite_fallback))
+        if valid and finite_fallback:
+            valid_rows.append(row)
+        else:
+            skipped_rows += 1
+    for output_name, field in (
+        ("expert", "expert_grad_norm"),
+        ("router", "router_grad_norm"),
+        ("shared", "shared_grad_norm"),
+    ):
+        finite = [
+            float(row[field])
+            for row in valid_rows
+            if row.get(field) is not None and math.isfinite(float(row[field]))
+        ]
+        result[output_name] = sum(finite) / len(finite) if finite else 0.0
+    result["valid_step_count"] = float(len(valid_rows))
+    result["skipped_step_count"] = float(skipped_rows)
+    return result
 
 
 def _write_partial_csv(records: list[dict], root: Path) -> None:

@@ -9,6 +9,7 @@ import torch
 from moe_lth.config import DEFAULT_CONFIG, save_config
 from moe_lth.experiments.run_router_age_recovery import (
     _ensure_reference,
+    _router_drift,
     run_router_age_recovery,
 )
 from moe_lth.models import TinyMoELanguageModel
@@ -19,6 +20,8 @@ from moe_lth.pruning.router_age import (
     calibrate_temperature,
     component_state_dict,
     forward_with_preserved_routing,
+    grad_norms_by_group,
+    per_expert_grad_norms,
     set_router_temperature,
     state_dict_hash,
 )
@@ -108,6 +111,66 @@ def test_preserved_routing_keeps_assignments_capacity_and_router_gradients():
         for block in model.blocks
     ]
     assert all(gradient is not None and torch.isfinite(gradient).all() for gradient in router_gradients)
+
+
+def test_gradient_norms_cast_inputs_before_reduction():
+    """Finite fp16 entries must not overflow merely because their L2 norm exceeds 65504."""
+    config = deepcopy(DEFAULT_CONFIG["model"])
+    config.update(
+        {
+            "vocab_size": 256,
+            "max_seq_len": 8,
+            "num_layers": 1,
+            "num_heads": 2,
+            "d_model": 16,
+            "num_experts": 2,
+            "expert_hidden_size": 32,
+            "dropout": 0.0,
+            "top_k": 1,
+        }
+    )
+    model = TinyMoELanguageModel(config).half()
+    for parameter in model.parameters():
+        parameter.grad = torch.full_like(parameter, 60_000.0)
+
+    grouped = grad_norms_by_group(model)
+    detailed = per_expert_grad_norms(model)
+    assert all(value is not None and torch.isfinite(torch.tensor(value)) for value in grouped.values())
+    assert all(value is not None and torch.isfinite(torch.tensor(value)) for value in detailed.values())
+    assert grouped["router"] > torch.finfo(torch.float16).max
+
+    first_parameter = next(model.parameters())
+    first_parameter.grad.flatten()[0] = float("inf")
+    invalid = grad_norms_by_group(model)
+    assert any(value is None for value in invalid.values())
+
+    first_parameter.grad.flatten()[0] = 60_000.0
+    for name, parameter in model.named_parameters():
+        if ".moe.router." in name:
+            parameter.grad = None
+    assert grad_norms_by_group(model)["router"] == 0.0
+
+
+def test_router_drift_excludes_temperature_buffers():
+    config = deepcopy(DEFAULT_CONFIG["model"])
+    config.update({"num_layers": 1, "d_model": 16, "num_heads": 2, "num_experts": 2, "expert_hidden_size": 32})
+    model = TinyMoELanguageModel(config)
+    initial = component_state_dict(model, "router")
+    parameter_names = {
+        name for name, _ in model.named_parameters() if ".moe.router." in name
+    }
+    with torch.no_grad():
+        model.blocks[0].moe.router.temperature.fill_(2.0)
+    buffer_only = component_state_dict(model, "router")
+    assert state_dict_hash(buffer_only) != state_dict_hash(initial)
+    assert _router_drift(initial, buffer_only, parameter_names) == (0.0, 0.0)
+
+    with torch.no_grad():
+        model.blocks[0].moe.router.projection.weight[0, 0].add_(1.0)
+    changed = component_state_dict(model, "router")
+    absolute, normalized = _router_drift(initial, changed, parameter_names)
+    assert absolute == pytest.approx(1.0)
+    assert normalized > 0.0
 
 
 def test_temperature_checkpoint_round_trip_and_legacy_loading(tmp_path):
