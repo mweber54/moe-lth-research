@@ -1,0 +1,7 @@
+extends: ../multidomain_gpu.yaml
+seed: 7
+model:
+  num_experts: 8
+training:
+  checkpoint_steps: [0, 500, 2500]
+output_dir: results/expert_count_replication/e8/reference/seed_7

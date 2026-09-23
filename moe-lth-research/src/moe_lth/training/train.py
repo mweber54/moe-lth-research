@@ -155,6 +155,7 @@ def train_from_config(config: dict) -> dict:
     else:
         rich_train_history = None
     checkpoint_steps = set(int(step) for step in config["training"]["checkpoint_steps"])
+    checkpoint_only_steps = set(int(step) for step in config["training"].get("checkpoint_only_steps", []))
     total_steps = int(config["training"]["steps"])
     aux_weight = float(config["routing"]["aux_loss_weight"])
     if config["data"].get("reshuffle_each_epoch", False):
@@ -199,8 +200,29 @@ def train_from_config(config: dict) -> dict:
         scaler.scale(loss).backward()
         scaler.unscale_(optimizer)
         torch.nn.utils.clip_grad_norm_(model.parameters(), float(config["training"]["grad_clip"]))
+        exposure_enabled = bool(config["training"].get("record_exposure", False))
+        exposure_scale_before = float(scaler.get_scale()) if exposure_enabled else None
         scaler.step(optimizer)
         scaler.update()
+        if exposure_enabled:
+            # Passive post-update integer diagnostics; no RNG, model mutation or extra forward.
+            applied = not use_scaler or float(scaler.get_scale()) >= exposure_scale_before
+            proposed, accepted = {}, {}
+            for layer_id, trace in enumerate(output.routes):
+                ids = trace.selected_expert_indices.detach().reshape(-1)
+                keep = trace.accepted_mask.detach().reshape(-1)
+                n = int(config["model"]["num_experts"])
+                pp = torch.bincount(ids, minlength=n).cpu().tolist()
+                aa = torch.bincount(ids[keep], minlength=n).cpu().tolist()
+                for expert_id in range(n):
+                    key = f"layer_{layer_id}_expert_{expert_id}"
+                    proposed[key], accepted[key] = pp[expert_id], aa[expert_id]
+            append_jsonl(output_dir / "logs" / "training_exposure.jsonl", {
+                "step": step, "proposed": proposed, "accepted": accepted,
+                "optimizer_step_applied": applied,
+                "loss_scale_before": exposure_scale_before,
+                "loss_scale_after": float(scaler.get_scale()),
+            })
 
         if config["training"].get("record_train_routes"):
             for layer_id, trace in enumerate(output.routes):
@@ -248,7 +270,7 @@ def train_from_config(config: dict) -> dict:
             )
             model.train()
 
-        if step in checkpoint_steps or step == total_steps:
+        if step in checkpoint_steps or step in checkpoint_only_steps or step == total_steps:
             save_checkpoint(
                 output_dir / "checkpoints" / f"step_{step}.pt",
                 model,

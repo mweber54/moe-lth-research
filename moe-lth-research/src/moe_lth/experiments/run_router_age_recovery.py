@@ -29,6 +29,7 @@ import json
 import math
 from itertools import cycle, islice
 from pathlib import Path
+from typing import Callable
 
 import torch
 import torch.nn.functional as F
@@ -202,13 +203,19 @@ def _evaluate_condition_loss(
     device: torch.device,
     confidence_control: bool,
     temperature: float,
+    forward_callback: Callable | None = None,
+    recovery_step: int = 0,
 ) -> float:
     model.eval()
     total_loss = 0.0
     total_tokens = 0
-    for token_ids, targets in validation_batches:
+    for batch_index, (token_ids, targets) in enumerate(validation_batches):
         token_ids, targets = token_ids.to(device), targets.to(device)
-        output = _condition_forward(model, token_ids, confidence_control, temperature)
+        output = (
+            _condition_forward(model, token_ids, confidence_control, temperature)
+            if forward_callback is None
+            else forward_callback(model, token_ids, recovery_step, batch_index)
+        )
         token_loss = F.cross_entropy(
             output.logits.reshape(-1, output.logits.shape[-1]),
             targets.reshape(-1),
@@ -334,6 +341,11 @@ def _run_recovery_condition(
     diagnostic_steps: tuple[int, ...] | None = None,
     reference_selected_by_age: dict[int, list[torch.Tensor]] | None = None,
     save_assignment_snapshots: bool = False,
+    highres_probe_callback: Callable[[torch.nn.Module, int], None] | None = None,
+    save_router_checkpoints: bool = False,
+    state_snapshot_callback: Callable | None = None,
+    training_forward_callback: Callable | None = None,
+    validation_forward_callback: Callable | None = None,
 ) -> dict:
     if router_mode not in {"trainable", "frozen"}:
         raise ValueError(f"router_mode must be 'trainable' or 'frozen', got {router_mode!r}.")
@@ -346,6 +358,8 @@ def _run_recovery_condition(
     (output_dir / "component_checkpoints").mkdir(exist_ok=True)
     if save_assignment_snapshots:
         (output_dir / "assignment_snapshots").mkdir(exist_ok=True)
+    if save_router_checkpoints:
+        (output_dir / "router_checkpoints").mkdir(exist_ok=True)
 
     requested_diagnostic_steps = None
     if diagnostic_steps is not None:
@@ -455,6 +469,8 @@ def _run_recovery_condition(
     use_scaler = device.type == "cuda" and autocast_dtype == torch.float16
     scaler = create_grad_scaler(use_scaler)
 
+    current_recovery_step = 0
+
     def evaluate() -> dict:
         return {
             "loss": _evaluate_condition_loss(
@@ -463,6 +479,8 @@ def _run_recovery_condition(
                 device,
                 confidence_control,
                 temperature,
+                validation_forward_callback,
+                current_recovery_step,
             )
         }
 
@@ -517,6 +535,10 @@ def _run_recovery_condition(
                 },
                 output_dir / "assignment_snapshots" / f"step_{step:04d}.pt",
             )
+        if save_router_checkpoints:
+            torch.save(current_router_state, output_dir / "router_checkpoints" / f"step_{step:04d}.pt")
+        if highres_probe_callback is not None:
+            highres_probe_callback(model, step)
         return _with_utilization_summaries(stats)
 
     recovery_curve: list[dict] = []
@@ -558,12 +580,16 @@ def _run_recovery_condition(
             },
         )
 
+    if state_snapshot_callback is not None:
+        state_snapshot_callback(model, optimizer, scaler, 0)
+
     model.train()
     trainable_router_gradient_observed = False
     amp_overflow_steps = 0
     optimizer_steps_applied = 0
     loss_scales = []
     for step, (token_ids, targets) in enumerate(train_batches, start=1):
+        current_recovery_step = step
         token_ids, targets = token_ids.to(device), targets.to(device)
         optimizer.zero_grad(set_to_none=True)
         with torch.autocast(
@@ -571,7 +597,11 @@ def _run_recovery_condition(
             dtype=autocast_dtype,
             enabled=autocast_dtype is not None,
         ):
-            output = _condition_forward(model, token_ids, confidence_control, temperature)
+            output = (
+                _condition_forward(model, token_ids, confidence_control, temperature)
+                if training_forward_callback is None
+                else training_forward_callback(model, token_ids, step)
+            )
             language_loss = F.cross_entropy(
                 output.logits.reshape(-1, output.logits.shape[-1]), targets.reshape(-1)
             )
@@ -666,6 +696,9 @@ def _run_recovery_condition(
                 f"[{condition_name}] step {step}/{recovery_steps} validation_loss={metrics['loss']:.6f}",
                 flush=True,
             )
+
+        if state_snapshot_callback is not None:
+            state_snapshot_callback(model, optimizer, scaler, step)
 
     for handle in handles:
         handle.remove()

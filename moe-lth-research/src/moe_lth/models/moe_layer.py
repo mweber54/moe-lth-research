@@ -14,6 +14,7 @@ from .router import RouteOverride, TopKRouter
 class RouteTrace:
     selected_experts: torch.Tensor
     selected_probability: torch.Tensor
+    probabilities: torch.Tensor
     selected_expert_indices: torch.Tensor
     selected_probabilities: torch.Tensor
     entropy: torch.Tensor
@@ -99,6 +100,7 @@ class MoEFeedForward(nn.Module):
         trace = RouteTrace(
             selected_experts=selected[:, 0].reshape(batch_size, seq_len),
             selected_probability=selected_probability[:, 0].reshape(batch_size, seq_len),
+            probabilities=router_output.probabilities.reshape(batch_size, seq_len, self.num_experts),
             selected_expert_indices=selected.reshape(batch_size, seq_len, self.top_k),
             selected_probabilities=selected_probability.reshape(batch_size, seq_len, self.top_k),
             entropy=router_output.entropy.reshape(batch_size, seq_len),
