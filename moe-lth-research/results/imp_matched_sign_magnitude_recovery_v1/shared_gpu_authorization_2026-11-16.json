@@ -1,0 +1,9 @@
+{
+  "experiment": "imp_matched_sign_magnitude_recovery_v1",
+  "preregistration_commit": "b4e9451bd9de867bdca8e6f996bf93f62955de33",
+  "cluster_gpu_sharing_authorized": true,
+  "preregistration_amended_for_shared_gpu": true,
+  "cluster_authorization_reference": "Researcher confirmation in this session on 2026-11-16: 'I am explicitly confirming that shared-GPU execution is permitted on our Kent State research servers, Adder and Viper. We have used this configuration throughout our previous experiments.' No separate cluster-policy document was provided.",
+  "protocol_amendment_text": "The researcher prospectively authorizes shared-GPU execution for this experiment on Adder and Viper, replacing the idle-GPU requirement with the prior study's provisional shared-GPU resource admission: at least 53248 MiB available across five samples two seconds apart, mean utilization at most 60%, and maximum sample utilization at most 90%. The threshold is an operational reference, not a measured peak for this workload. All scientific inputs, masks, seeds, architecture, optimization, evaluation, 108-run and 270000-attempt caps, STOP behavior, and no-retry/no-resume guarantees remain unchanged. Other users' processes must not be terminated, suspended, or modified.",
+  "hosts": ["adder.cs.kent.edu", "viper.cs.kent.edu"]
+}
