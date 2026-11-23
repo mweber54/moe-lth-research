@@ -1,0 +1,14 @@
+{
+  "probe_sequence_hashes": {
+    "7": "cc6266511a6115f43139500ac935201b64f8ffbb8f991aeb55ff426b89a3a98d",
+    "17": "cc6266511a6115f43139500ac935201b64f8ffbb8f991aeb55ff426b89a3a98d",
+    "29": "cc6266511a6115f43139500ac935201b64f8ffbb8f991aeb55ff426b89a3a98d"
+  },
+  "source_implementation": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/scripts/analyze_r20_8_vs_r60_12.py",
+  "source_sha256": "a589d0c1082531806b04343c21e7f96e204cb299c7f14023d6f9fe44435b1898",
+  "certainty_load_specialization_probe": "first 8 deterministic validation batches, full reference model",
+  "maturity_probe": "first validation batch per layer, exactly as historical implementation; not silently expanded to all eight",
+  "specialization": "token-ID/expert mutual information; normalized by log(experts) for developmental vector",
+  "exposure": "sum of historical logged train assignment counts at step 1 and every 25 steps, averaged over layers/experts; NOT complete cumulative accepted updates",
+  "distance_normalization": "Equal-weight root mean square of feature differences divided by historical 8E/12E pooled feature ranges. Frozen historical ranges preserve the prior coordinate system."
+}

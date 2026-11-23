@@ -1,0 +1,47 @@
+{
+  "passed": true,
+  "model": "single Ridge alpha1",
+  "future_interval_exposure_features_used": false,
+  "preprocessing_training_seeds_only": true,
+  "seeds_disjoint": true,
+  "all_feature_end_steps_at_or_before_outcome_start": true,
+  "baseline_columns": [
+    "mean_absolute_magnitude_start",
+    "initial_mean_absolute_magnitude",
+    "current_low_half_mean_magnitude",
+    "prior_growth_rate",
+    "prior_late_fraction",
+    "prior_top_turnover",
+    "start_step",
+    "interval_attempts",
+    "prior_applied_updates"
+  ],
+  "extension_columns": [
+    "prior_log_applied_rate",
+    "prior_log_cumulative_accepted",
+    "prior_log_rate_change",
+    "prior_drop_fraction",
+    "prior_probe_turnover"
+  ],
+  "categorical_columns": [
+    "layer",
+    "unit"
+  ],
+  "adjacent_prediction_intervals": [
+    [
+      500,
+      1000
+    ],
+    [
+      1000,
+      1750
+    ],
+    [
+      1750,
+      2500
+    ]
+  ],
+  "outcome": "expert low-half to later top20 fraction",
+  "n_source_seeds": 5,
+  "no_model_search": true
+}

@@ -1,0 +1,38 @@
+{
+  "config_path": "configs/wikitext103_gpu.yaml",
+  "reference_run_dir": "results/wikitext103_gpu",
+  "reference_seed": 7,
+  "final_step": 2500,
+  "checkpoints": {
+    "0": {
+      "step": 0,
+      "path": "results/wikitext103_gpu/checkpoints/step_0.pt"
+    },
+    "10": {
+      "step": 250,
+      "path": "results/wikitext103_gpu/checkpoints/step_250.pt"
+    },
+    "20": {
+      "step": 500,
+      "path": "results/wikitext103_gpu/checkpoints/step_500.pt"
+    },
+    "40": {
+      "step": 1000,
+      "path": "results/wikitext103_gpu/checkpoints/step_1000.pt"
+    },
+    "60": {
+      "step": 1000,
+      "path": "results/wikitext103_gpu/checkpoints/step_1000.pt"
+    },
+    "80": {
+      "step": 2500,
+      "path": "results/wikitext103_gpu/checkpoints/step_2500.pt"
+    },
+    "100": {
+      "step": 2500,
+      "path": "results/wikitext103_gpu/checkpoints/step_2500.pt"
+    }
+  },
+  "training_batch_sequence_hash": "d7e1e3ca23a93bea4a03fc6a0ccf0bae4f36e3d3b8dd783274db07138383bb41",
+  "validation_batch_sequence_hash": "c7c1af3aee7f535d94efa60e1ca4afcd1990198f3193b5016e5a5c8bcf1bcb56"
+}

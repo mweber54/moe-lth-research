@@ -1,0 +1,63 @@
+{
+  "initial_validation_loss": 167.49527054487467,
+  "final_validation_loss": 1.5849650062955694,
+  "early_auc": 7337.913047774661,
+  "early_auc_window_steps": 1250,
+  "early_mean_validation_loss": 5.870330438219729,
+  "recovery_fraction": 0.999411684249867,
+  "time_to_threshold": {
+    "within_5pct": "unreached",
+    "within_10pct": 2250
+  },
+  "dense_reference_loss": 1.4872999025190654,
+  "mean_selected_probability_initial": 0.2504604822024703,
+  "mean_selected_probability_final": 0.5354646984487772,
+  "routing_entropy_initial": 1.9462937600910664,
+  "routing_entropy_final": 1.2000718852505088,
+  "top1_top2_margin_initial": 0.0711425100453198,
+  "top1_top2_margin_final": 0.4217534945491934,
+  "router_logit_norm_initial": 1.5819238759577274,
+  "router_logit_norm_final": 5.120533384382725,
+  "expert_utilization_initial": [
+    0.13217926025390625,
+    0.10339927673339844,
+    0.1473865509033203,
+    0.12063026428222656,
+    0.1327972412109375,
+    0.11171531677246094,
+    0.08047676086425781,
+    0.1714153289794922
+  ],
+  "expert_utilization_final": [
+    0.12070655822753906,
+    0.12161445617675781,
+    0.1275482177734375,
+    0.13396072387695312,
+    0.13343429565429688,
+    0.10463905334472656,
+    0.1277313232421875,
+    0.13036537170410156
+  ],
+  "accepted_expert_distribution_initial": [
+    0.1412593275308609,
+    0.1119939312338829,
+    0.12357737869024277,
+    0.12879787385463715,
+    0.13255366683006287,
+    0.1210012137889862,
+    0.08716607838869095,
+    0.15365053713321686
+  ],
+  "accepted_expert_distribution_final": [
+    0.1247306540608406,
+    0.1245291456580162,
+    0.12187959253787994,
+    0.13355518877506256,
+    0.13721230626106262,
+    0.10124576836824417,
+    0.12049894779920578,
+    0.1363483965396881
+  ],
+  "assignment_agreement_with_final_router_initial": 0.5644302368164062,
+  "assignment_agreement_with_final_router_final": 0.19993019104003906
+}

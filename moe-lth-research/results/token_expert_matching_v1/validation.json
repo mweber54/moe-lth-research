@@ -1,0 +1,91 @@
+{
+  "production_ready": true,
+  "hosts": [
+    {
+      "passed": true,
+      "host": "viper.cs.kent.edu",
+      "torch": "2.7.0",
+      "checks": [
+        {
+          "step": 1,
+          "exact_identity_forward": true,
+          "exact_acceptance": true,
+          "gradients": true,
+          "rng_preserved": true
+        },
+        {
+          "step": 2,
+          "exact_identity_forward": true,
+          "exact_acceptance": true,
+          "gradients": true,
+          "rng_preserved": true
+        },
+        {
+          "step": 3,
+          "exact_identity_forward": true,
+          "exact_acceptance": true,
+          "gradients": true,
+          "rng_preserved": true
+        }
+      ],
+      "passive_trace_exact_state_rng_optimizer_scaler": true,
+      "replay_resume_exact": true,
+      "segment_reset": {
+        "hash": "ef18b88fdaebbd0c9883244ef25e3c8c01ffde6fc84cae9733e12c1f96df74a4",
+        "optimizer_entries": 0,
+        "scaler": {
+          "scale": 65536.0,
+          "growth_factor": 2.0,
+          "backoff_factor": 0.5,
+          "growth_interval": 2000,
+          "_growth_tracker": 0
+        }
+      },
+      "attempt": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/token_expert_matching_v1/validation/viper.cs.kent.edu/attempt_1792707274119826153"
+    },
+    {
+      "passed": true,
+      "host": "adder.cs.kent.edu",
+      "torch": "2.7.0",
+      "checks": [
+        {
+          "step": 1,
+          "exact_identity_forward": true,
+          "exact_acceptance": true,
+          "gradients": true,
+          "rng_preserved": true
+        },
+        {
+          "step": 2,
+          "exact_identity_forward": true,
+          "exact_acceptance": true,
+          "gradients": true,
+          "rng_preserved": true
+        },
+        {
+          "step": 3,
+          "exact_identity_forward": true,
+          "exact_acceptance": true,
+          "gradients": true,
+          "rng_preserved": true
+        }
+      ],
+      "passive_trace_exact_state_rng_optimizer_scaler": true,
+      "replay_resume_exact": true,
+      "segment_reset": {
+        "hash": "ef18b88fdaebbd0c9883244ef25e3c8c01ffde6fc84cae9733e12c1f96df74a4",
+        "optimizer_entries": 0,
+        "scaler": {
+          "scale": 65536.0,
+          "growth_factor": 2.0,
+          "backoff_factor": 0.5,
+          "growth_interval": 2000,
+          "_growth_tracker": 0
+        }
+      },
+      "attempt": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/token_expert_matching_v1/validation/adder.cs.kent.edu/attempt_1792707380585167917"
+    }
+  ],
+  "cpu_tests": "7 passed; test_token_expert_matching.py",
+  "limitations": "Short canonical GPU equivalence; full donor trajectory validation remains mandatory per donor"
+}

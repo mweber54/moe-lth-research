@@ -1,0 +1,14 @@
+{
+  "status": "fixed before inspecting pilot gradient values",
+  "checkpoints": [250, 500],
+  "seeds": [7, 17, 29],
+  "orders": ["A", "B"],
+  "batch_selection": "Traverse archived batches strictly before each checkpoint in order; keep a batch only when none of its sequence indices has appeared in an earlier retained batch. Retained batches are pairwise disjoint in training sequence indices.",
+  "gradient": "FP32 task cross-entropy averaged over target positions in each source domain, multiplied by number of domain targets and divided by number of accepted final-layer expert occurrences in that domain/batch. No auxiliary loss or optimizer.",
+  "resolution": "Per-weight batch mean is resolved if finite and absolute value > 1e-12. Count only resolved batch signs; a domain estimate requires at least 8 accepted contributing batches, 32 accepted routed occurrences, and 8 resolved batch signs.",
+  "sensitivity_thresholds": [[4, 16, 4], [8, 32, 8], [16, 64, 16]],
+  "threshold_order": ["contributing_batches", "accepted_occurrences", "resolved_batch_signs"],
+  "group_aggregation": "minimum across the two domains of abs(sum(resolved batch signs)/count(resolved batch signs)); unknown unless both domain estimates meet thresholds",
+  "precision": "FP32 with TF32 disabled and deterministic PyTorch algorithms; sign/count accumulation integer and magnitude sums FP32",
+  "context_crossing": "included in primary; full exclusion sensitivity still outstanding"
+}

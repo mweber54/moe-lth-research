@@ -1,0 +1,3871 @@
+{
+  "step": 2500,
+  "batch_hash": "4ff6066b29a590175ea870ac3369b1754bc386ca186e582ca78bc07588e52421",
+  "parameters": [
+    {
+      "parameter": "token_embedding.weight",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.30672663598853567
+    },
+    {
+      "parameter": "position_embedding.weight",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00971379679284398
+    },
+    {
+      "parameter": "blocks.0.attention_norm.weight",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.012203678118534386
+    },
+    {
+      "parameter": "blocks.0.attention_norm.bias",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.013423984892651902
+    },
+    {
+      "parameter": "blocks.0.attention.in_proj_weight",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.14586538511800368
+    },
+    {
+      "parameter": "blocks.0.attention.in_proj_bias",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.010307062776685387
+    },
+    {
+      "parameter": "blocks.0.attention.out_proj.weight",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.14428679357466562
+    },
+    {
+      "parameter": "blocks.0.attention.out_proj.bias",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.01079932279970985
+    },
+    {
+      "parameter": "blocks.0.moe_norm.weight",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.005245527633473262
+    },
+    {
+      "parameter": "blocks.0.moe_norm.bias",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00855840690427686
+    },
+    {
+      "parameter": "blocks.0.moe.router.projection.weight",
+      "group": "R",
+      "trainable": false,
+      "missing_gradient": true,
+      "task_l2": null
+    },
+    {
+      "parameter": "blocks.0.moe.experts.0.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.009441073389981677
+    },
+    {
+      "parameter": "blocks.0.moe.experts.0.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0010291815179652543
+    },
+    {
+      "parameter": "blocks.0.moe.experts.0.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.012908313573952274
+    },
+    {
+      "parameter": "blocks.0.moe.experts.0.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0014996802399252157
+    },
+    {
+      "parameter": "blocks.0.moe.experts.1.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0016414046793581524
+    },
+    {
+      "parameter": "blocks.0.moe.experts.1.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00015816022575993726
+    },
+    {
+      "parameter": "blocks.0.moe.experts.1.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.002798447963765165
+    },
+    {
+      "parameter": "blocks.0.moe.experts.1.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00028924830957783416
+    },
+    {
+      "parameter": "blocks.0.moe.experts.2.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.004190901302989676
+    },
+    {
+      "parameter": "blocks.0.moe.experts.2.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00035039095751458987
+    },
+    {
+      "parameter": "blocks.0.moe.experts.2.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.007181320673976524
+    },
+    {
+      "parameter": "blocks.0.moe.experts.2.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0005279278443421681
+    },
+    {
+      "parameter": "blocks.0.moe.experts.3.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0076470670900128206
+    },
+    {
+      "parameter": "blocks.0.moe.experts.3.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0007651404325102549
+    },
+    {
+      "parameter": "blocks.0.moe.experts.3.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.009988309391635638
+    },
+    {
+      "parameter": "blocks.0.moe.experts.3.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.000998276929599204
+    },
+    {
+      "parameter": "blocks.0.moe.experts.4.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.005231592748952578
+    },
+    {
+      "parameter": "blocks.0.moe.experts.4.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0006113407393711711
+    },
+    {
+      "parameter": "blocks.0.moe.experts.4.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.009273945660052364
+    },
+    {
+      "parameter": "blocks.0.moe.experts.4.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0009084272537666906
+    },
+    {
+      "parameter": "blocks.0.moe.experts.5.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0014946858704848072
+    },
+    {
+      "parameter": "blocks.0.moe.experts.5.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00013417302102531592
+    },
+    {
+      "parameter": "blocks.0.moe.experts.5.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.002453333420347017
+    },
+    {
+      "parameter": "blocks.0.moe.experts.5.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00025716288428690327
+    },
+    {
+      "parameter": "blocks.0.moe.experts.6.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0014926285424876112
+    },
+    {
+      "parameter": "blocks.0.moe.experts.6.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00013246410522386038
+    },
+    {
+      "parameter": "blocks.0.moe.experts.6.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0026421851566346723
+    },
+    {
+      "parameter": "blocks.0.moe.experts.6.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00022132544184169406
+    },
+    {
+      "parameter": "blocks.0.moe.experts.7.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0065768792209811525
+    },
+    {
+      "parameter": "blocks.0.moe.experts.7.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0005721022904363675
+    },
+    {
+      "parameter": "blocks.0.moe.experts.7.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.009310334208601131
+    },
+    {
+      "parameter": "blocks.0.moe.experts.7.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0008630506587903152
+    },
+    {
+      "parameter": "blocks.0.moe.experts.8.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.008307554445363987
+    },
+    {
+      "parameter": "blocks.0.moe.experts.8.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.001071015410305236
+    },
+    {
+      "parameter": "blocks.0.moe.experts.8.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.013920682415377342
+    },
+    {
+      "parameter": "blocks.0.moe.experts.8.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0016149042387340442
+    },
+    {
+      "parameter": "blocks.0.moe.experts.9.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.006624671284401194
+    },
+    {
+      "parameter": "blocks.0.moe.experts.9.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0006857222491173359
+    },
+    {
+      "parameter": "blocks.0.moe.experts.9.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0099692547105369
+    },
+    {
+      "parameter": "blocks.0.moe.experts.9.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0011076508735485564
+    },
+    {
+      "parameter": "blocks.0.moe.experts.10.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0014756695451560533
+    },
+    {
+      "parameter": "blocks.0.moe.experts.10.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00013658599107686792
+    },
+    {
+      "parameter": "blocks.0.moe.experts.10.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.002770615279116403
+    },
+    {
+      "parameter": "blocks.0.moe.experts.10.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.000247927588793985
+    },
+    {
+      "parameter": "blocks.0.moe.experts.11.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.005384501237084347
+    },
+    {
+      "parameter": "blocks.0.moe.experts.11.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0005287205682033248
+    },
+    {
+      "parameter": "blocks.0.moe.experts.11.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.009510019463282995
+    },
+    {
+      "parameter": "blocks.0.moe.experts.11.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0009580206661019209
+    },
+    {
+      "parameter": "blocks.0.moe.experts.12.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.007080200127457009
+    },
+    {
+      "parameter": "blocks.0.moe.experts.12.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0007690915226620995
+    },
+    {
+      "parameter": "blocks.0.moe.experts.12.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.012025889995521899
+    },
+    {
+      "parameter": "blocks.0.moe.experts.12.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0013524390727184506
+    },
+    {
+      "parameter": "blocks.0.moe.experts.13.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.007469928584422287
+    },
+    {
+      "parameter": "blocks.0.moe.experts.13.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0007392075816349485
+    },
+    {
+      "parameter": "blocks.0.moe.experts.13.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.010609934358176474
+    },
+    {
+      "parameter": "blocks.0.moe.experts.13.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.001137926931727908
+    },
+    {
+      "parameter": "blocks.0.moe.experts.14.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.004661496052972288
+    },
+    {
+      "parameter": "blocks.0.moe.experts.14.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0003992211874207723
+    },
+    {
+      "parameter": "blocks.0.moe.experts.14.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.007490297789047253
+    },
+    {
+      "parameter": "blocks.0.moe.experts.14.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0006573698803990793
+    },
+    {
+      "parameter": "blocks.0.moe.experts.15.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.010283704408263178
+    },
+    {
+      "parameter": "blocks.0.moe.experts.15.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0009650431724440689
+    },
+    {
+      "parameter": "blocks.0.moe.experts.15.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.011546351941389732
+    },
+    {
+      "parameter": "blocks.0.moe.experts.15.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0011841826551784915
+    },
+    {
+      "parameter": "blocks.0.moe.experts.16.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0075814187090873985
+    },
+    {
+      "parameter": "blocks.0.moe.experts.16.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0008275376589358418
+    },
+    {
+      "parameter": "blocks.0.moe.experts.16.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.011144685901881847
+    },
+    {
+      "parameter": "blocks.0.moe.experts.16.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0013619918789506543
+    },
+    {
+      "parameter": "blocks.0.moe.experts.17.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0012255447376593315
+    },
+    {
+      "parameter": "blocks.0.moe.experts.17.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00010094424504075212
+    },
+    {
+      "parameter": "blocks.0.moe.experts.17.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0020379557299097044
+    },
+    {
+      "parameter": "blocks.0.moe.experts.17.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00018652491487223814
+    },
+    {
+      "parameter": "blocks.0.moe.experts.18.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.006059022131129248
+    },
+    {
+      "parameter": "blocks.0.moe.experts.18.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0006406297737390692
+    },
+    {
+      "parameter": "blocks.0.moe.experts.18.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.009126132977136651
+    },
+    {
+      "parameter": "blocks.0.moe.experts.18.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0008708920417859609
+    },
+    {
+      "parameter": "blocks.0.moe.experts.19.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.006471681253876731
+    },
+    {
+      "parameter": "blocks.0.moe.experts.19.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0006587430726485453
+    },
+    {
+      "parameter": "blocks.0.moe.experts.19.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.011642095437156752
+    },
+    {
+      "parameter": "blocks.0.moe.experts.19.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.001174936660632559
+    },
+    {
+      "parameter": "blocks.0.moe.experts.20.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0067599866558332045
+    },
+    {
+      "parameter": "blocks.0.moe.experts.20.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0006208277224269284
+    },
+    {
+      "parameter": "blocks.0.moe.experts.20.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.01161171473348995
+    },
+    {
+      "parameter": "blocks.0.moe.experts.20.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.001123163689865338
+    },
+    {
+      "parameter": "blocks.0.moe.experts.21.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.009101485057318047
+    },
+    {
+      "parameter": "blocks.0.moe.experts.21.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0009484868694456042
+    },
+    {
+      "parameter": "blocks.0.moe.experts.21.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.01209720898478215
+    },
+    {
+      "parameter": "blocks.0.moe.experts.21.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.001399713002225453
+    },
+    {
+      "parameter": "blocks.0.moe.experts.22.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.001309461569787287
+    },
+    {
+      "parameter": "blocks.0.moe.experts.22.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00011251173638544768
+    },
+    {
+      "parameter": "blocks.0.moe.experts.22.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0026622402024775913
+    },
+    {
+      "parameter": "blocks.0.moe.experts.22.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00022820902976863701
+    },
+    {
+      "parameter": "blocks.0.moe.experts.23.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0013920850605542172
+    },
+    {
+      "parameter": "blocks.0.moe.experts.23.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0001242885480027602
+    },
+    {
+      "parameter": "blocks.0.moe.experts.23.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.002183301189867379
+    },
+    {
+      "parameter": "blocks.0.moe.experts.23.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0002036447098089008
+    },
+    {
+      "parameter": "blocks.0.moe.experts.24.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.007991049669301739
+    },
+    {
+      "parameter": "blocks.0.moe.experts.24.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0009006477519998921
+    },
+    {
+      "parameter": "blocks.0.moe.experts.24.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.01243635418762476
+    },
+    {
+      "parameter": "blocks.0.moe.experts.24.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0014279345110027252
+    },
+    {
+      "parameter": "blocks.0.moe.experts.25.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.006203706333776359
+    },
+    {
+      "parameter": "blocks.0.moe.experts.25.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0005799041908179992
+    },
+    {
+      "parameter": "blocks.0.moe.experts.25.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00918698190449361
+    },
+    {
+      "parameter": "blocks.0.moe.experts.25.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0008026910729178812
+    },
+    {
+      "parameter": "blocks.0.moe.experts.26.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00927225938044683
+    },
+    {
+      "parameter": "blocks.0.moe.experts.26.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0010526148136128758
+    },
+    {
+      "parameter": "blocks.0.moe.experts.26.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.011743921469231406
+    },
+    {
+      "parameter": "blocks.0.moe.experts.26.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0014040218162611872
+    },
+    {
+      "parameter": "blocks.0.moe.experts.27.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0029587775750984477
+    },
+    {
+      "parameter": "blocks.0.moe.experts.27.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0003121048891478815
+    },
+    {
+      "parameter": "blocks.0.moe.experts.27.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0046934229861415365
+    },
+    {
+      "parameter": "blocks.0.moe.experts.27.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0004836396465810933
+    },
+    {
+      "parameter": "blocks.0.moe.experts.28.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0071045631272425
+    },
+    {
+      "parameter": "blocks.0.moe.experts.28.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.000723377208880796
+    },
+    {
+      "parameter": "blocks.0.moe.experts.28.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.011459219436118832
+    },
+    {
+      "parameter": "blocks.0.moe.experts.28.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0010747562314806411
+    },
+    {
+      "parameter": "blocks.0.moe.experts.29.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.001900572834609199
+    },
+    {
+      "parameter": "blocks.0.moe.experts.29.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0001815319026051965
+    },
+    {
+      "parameter": "blocks.0.moe.experts.29.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00284445536595648
+    },
+    {
+      "parameter": "blocks.0.moe.experts.29.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00029359434774005766
+    },
+    {
+      "parameter": "blocks.0.moe.experts.30.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0012856647171688605
+    },
+    {
+      "parameter": "blocks.0.moe.experts.30.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.000112384711832959
+    },
+    {
+      "parameter": "blocks.0.moe.experts.30.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0024957288300155563
+    },
+    {
+      "parameter": "blocks.0.moe.experts.30.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0002261116556631352
+    },
+    {
+      "parameter": "blocks.0.moe.experts.31.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.008140847696879115
+    },
+    {
+      "parameter": "blocks.0.moe.experts.31.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.000888521839457361
+    },
+    {
+      "parameter": "blocks.0.moe.experts.31.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.013360077843147774
+    },
+    {
+      "parameter": "blocks.0.moe.experts.31.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0014904529941760513
+    },
+    {
+      "parameter": "blocks.1.attention_norm.weight",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.009349090508144694
+    },
+    {
+      "parameter": "blocks.1.attention_norm.bias",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.012301802298312115
+    },
+    {
+      "parameter": "blocks.1.attention.in_proj_weight",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.10683585234585333
+    },
+    {
+      "parameter": "blocks.1.attention.in_proj_bias",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.010302721148535067
+    },
+    {
+      "parameter": "blocks.1.attention.out_proj.weight",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.08856425924003701
+    },
+    {
+      "parameter": "blocks.1.attention.out_proj.bias",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.012020445941361646
+    },
+    {
+      "parameter": "blocks.1.moe_norm.weight",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.003619153130746262
+    },
+    {
+      "parameter": "blocks.1.moe_norm.bias",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.004176377421145475
+    },
+    {
+      "parameter": "blocks.1.moe.router.projection.weight",
+      "group": "R",
+      "trainable": false,
+      "missing_gradient": true,
+      "task_l2": null
+    },
+    {
+      "parameter": "blocks.1.moe.experts.0.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0014617576941786628
+    },
+    {
+      "parameter": "blocks.1.moe.experts.0.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0001557296794647507
+    },
+    {
+      "parameter": "blocks.1.moe.experts.0.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0036160226420526827
+    },
+    {
+      "parameter": "blocks.1.moe.experts.0.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00031068923804971406
+    },
+    {
+      "parameter": "blocks.1.moe.experts.1.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0022906039589665073
+    },
+    {
+      "parameter": "blocks.1.moe.experts.1.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00021036489794063964
+    },
+    {
+      "parameter": "blocks.1.moe.experts.1.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0025386689188527786
+    },
+    {
+      "parameter": "blocks.1.moe.experts.1.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.000355246923099052
+    },
+    {
+      "parameter": "blocks.1.moe.experts.2.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0016368740899095182
+    },
+    {
+      "parameter": "blocks.1.moe.experts.2.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0001567004184025232
+    },
+    {
+      "parameter": "blocks.1.moe.experts.2.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.005784519607268256
+    },
+    {
+      "parameter": "blocks.1.moe.experts.2.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00037384587716076046
+    },
+    {
+      "parameter": "blocks.1.moe.experts.3.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.002757213227219911
+    },
+    {
+      "parameter": "blocks.1.moe.experts.3.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00029269215098605173
+    },
+    {
+      "parameter": "blocks.1.moe.experts.3.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.004647823410701565
+    },
+    {
+      "parameter": "blocks.1.moe.experts.3.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00035152727503346055
+    },
+    {
+      "parameter": "blocks.1.moe.experts.4.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0028382782926993323
+    },
+    {
+      "parameter": "blocks.1.moe.experts.4.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00029524026522657665
+    },
+    {
+      "parameter": "blocks.1.moe.experts.4.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0034231651741620087
+    },
+    {
+      "parameter": "blocks.1.moe.experts.4.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0004614094686742929
+    },
+    {
+      "parameter": "blocks.1.moe.experts.5.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0031802815900927794
+    },
+    {
+      "parameter": "blocks.1.moe.experts.5.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00036330119406939853
+    },
+    {
+      "parameter": "blocks.1.moe.experts.5.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.004382327197943541
+    },
+    {
+      "parameter": "blocks.1.moe.experts.5.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0005764801012909371
+    },
+    {
+      "parameter": "blocks.1.moe.experts.6.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0031308077911749344
+    },
+    {
+      "parameter": "blocks.1.moe.experts.6.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00035324821333746425
+    },
+    {
+      "parameter": "blocks.1.moe.experts.6.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.004569888664175045
+    },
+    {
+      "parameter": "blocks.1.moe.experts.6.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0006294804544383752
+    },
+    {
+      "parameter": "blocks.1.moe.experts.7.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.003323921960544731
+    },
+    {
+      "parameter": "blocks.1.moe.experts.7.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00038936263723739125
+    },
+    {
+      "parameter": "blocks.1.moe.experts.7.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.004309910732868428
+    },
+    {
+      "parameter": "blocks.1.moe.experts.7.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0008090387863760875
+    },
+    {
+      "parameter": "blocks.1.moe.experts.8.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.003173569567232223
+    },
+    {
+      "parameter": "blocks.1.moe.experts.8.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0003031470142209757
+    },
+    {
+      "parameter": "blocks.1.moe.experts.8.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.005897767696034613
+    },
+    {
+      "parameter": "blocks.1.moe.experts.8.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.000647034412838834
+    },
+    {
+      "parameter": "blocks.1.moe.experts.9.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.004557191121524578
+    },
+    {
+      "parameter": "blocks.1.moe.experts.9.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0005413888703748992
+    },
+    {
+      "parameter": "blocks.1.moe.experts.9.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00473388936883629
+    },
+    {
+      "parameter": "blocks.1.moe.experts.9.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0007285171678932288
+    },
+    {
+      "parameter": "blocks.1.moe.experts.10.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0051858592696820425
+    },
+    {
+      "parameter": "blocks.1.moe.experts.10.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0006620991232361221
+    },
+    {
+      "parameter": "blocks.1.moe.experts.10.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.006233029244562495
+    },
+    {
+      "parameter": "blocks.1.moe.experts.10.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0010009512703129332
+    },
+    {
+      "parameter": "blocks.1.moe.experts.11.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.003731080812039691
+    },
+    {
+      "parameter": "blocks.1.moe.experts.11.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00040066220493617207
+    },
+    {
+      "parameter": "blocks.1.moe.experts.11.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.004818467373285927
+    },
+    {
+      "parameter": "blocks.1.moe.experts.11.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0007531847866855595
+    },
+    {
+      "parameter": "blocks.1.moe.experts.12.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.001799971634769839
+    },
+    {
+      "parameter": "blocks.1.moe.experts.12.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00021405850359169302
+    },
+    {
+      "parameter": "blocks.1.moe.experts.12.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.004007908213740841
+    },
+    {
+      "parameter": "blocks.1.moe.experts.12.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00032675521231842643
+    },
+    {
+      "parameter": "blocks.1.moe.experts.13.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.003373227564379455
+    },
+    {
+      "parameter": "blocks.1.moe.experts.13.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00037471061407755166
+    },
+    {
+      "parameter": "blocks.1.moe.experts.13.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00395458510006712
+    },
+    {
+      "parameter": "blocks.1.moe.experts.13.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0005177379668682467
+    },
+    {
+      "parameter": "blocks.1.moe.experts.14.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0029881494697521346
+    },
+    {
+      "parameter": "blocks.1.moe.experts.14.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00028141524919484973
+    },
+    {
+      "parameter": "blocks.1.moe.experts.14.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.002905374105807633
+    },
+    {
+      "parameter": "blocks.1.moe.experts.14.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0003512213492612476
+    },
+    {
+      "parameter": "blocks.1.moe.experts.15.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0021947280575863363
+    },
+    {
+      "parameter": "blocks.1.moe.experts.15.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00023135183342429163
+    },
+    {
+      "parameter": "blocks.1.moe.experts.15.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.006001215930544182
+    },
+    {
+      "parameter": "blocks.1.moe.experts.15.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0003960684782521566
+    },
+    {
+      "parameter": "blocks.1.moe.experts.16.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0015631844206702807
+    },
+    {
+      "parameter": "blocks.1.moe.experts.16.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00015603544302376807
+    },
+    {
+      "parameter": "blocks.1.moe.experts.16.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0032396761246190693
+    },
+    {
+      "parameter": "blocks.1.moe.experts.16.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0002728272643423408
+    },
+    {
+      "parameter": "blocks.1.moe.experts.17.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0049368133384557035
+    },
+    {
+      "parameter": "blocks.1.moe.experts.17.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00045826723265700634
+    },
+    {
+      "parameter": "blocks.1.moe.experts.17.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.005184377932620228
+    },
+    {
+      "parameter": "blocks.1.moe.experts.17.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0006970078522154644
+    },
+    {
+      "parameter": "blocks.1.moe.experts.18.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0038004908417455384
+    },
+    {
+      "parameter": "blocks.1.moe.experts.18.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0003894208787057951
+    },
+    {
+      "parameter": "blocks.1.moe.experts.18.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.004131018021946391
+    },
+    {
+      "parameter": "blocks.1.moe.experts.18.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0005769003691158734
+    },
+    {
+      "parameter": "blocks.1.moe.experts.19.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0042030538449217775
+    },
+    {
+      "parameter": "blocks.1.moe.experts.19.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00041827307100863087
+    },
+    {
+      "parameter": "blocks.1.moe.experts.19.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.008512555101761623
+    },
+    {
+      "parameter": "blocks.1.moe.experts.19.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0008011372211649713
+    },
+    {
+      "parameter": "blocks.1.moe.experts.20.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0033457081713649485
+    },
+    {
+      "parameter": "blocks.1.moe.experts.20.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0004105773358793678
+    },
+    {
+      "parameter": "blocks.1.moe.experts.20.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.004261079336406007
+    },
+    {
+      "parameter": "blocks.1.moe.experts.20.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0006917196760887202
+    },
+    {
+      "parameter": "blocks.1.moe.experts.21.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.002925579871335734
+    },
+    {
+      "parameter": "blocks.1.moe.experts.21.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00034431447361448115
+    },
+    {
+      "parameter": "blocks.1.moe.experts.21.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.003792936376942166
+    },
+    {
+      "parameter": "blocks.1.moe.experts.21.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0005223328806140782
+    },
+    {
+      "parameter": "blocks.1.moe.experts.22.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.004082987231345682
+    },
+    {
+      "parameter": "blocks.1.moe.experts.22.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00040596164786475955
+    },
+    {
+      "parameter": "blocks.1.moe.experts.22.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.004192148784559527
+    },
+    {
+      "parameter": "blocks.1.moe.experts.22.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.000591614052974735
+    },
+    {
+      "parameter": "blocks.1.moe.experts.23.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0021091018025102344
+    },
+    {
+      "parameter": "blocks.1.moe.experts.23.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00021746959467382456
+    },
+    {
+      "parameter": "blocks.1.moe.experts.23.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0050400884863197526
+    },
+    {
+      "parameter": "blocks.1.moe.experts.23.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00042816910177243103
+    },
+    {
+      "parameter": "blocks.1.moe.experts.24.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0021440807394118994
+    },
+    {
+      "parameter": "blocks.1.moe.experts.24.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00029458158591369514
+    },
+    {
+      "parameter": "blocks.1.moe.experts.24.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0033837099721717736
+    },
+    {
+      "parameter": "blocks.1.moe.experts.24.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0004530583591866498
+    },
+    {
+      "parameter": "blocks.1.moe.experts.25.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00406681900802873
+    },
+    {
+      "parameter": "blocks.1.moe.experts.25.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0004966938915515133
+    },
+    {
+      "parameter": "blocks.1.moe.experts.25.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.005059139273230441
+    },
+    {
+      "parameter": "blocks.1.moe.experts.25.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0006521590830452759
+    },
+    {
+      "parameter": "blocks.1.moe.experts.26.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0027214944057105074
+    },
+    {
+      "parameter": "blocks.1.moe.experts.26.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00029658066186158806
+    },
+    {
+      "parameter": "blocks.1.moe.experts.26.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.004837936866300417
+    },
+    {
+      "parameter": "blocks.1.moe.experts.26.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0004348205858006409
+    },
+    {
+      "parameter": "blocks.1.moe.experts.27.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.004094956090420467
+    },
+    {
+      "parameter": "blocks.1.moe.experts.27.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00046844412026576684
+    },
+    {
+      "parameter": "blocks.1.moe.experts.27.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.006405136153336425
+    },
+    {
+      "parameter": "blocks.1.moe.experts.27.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0008762397373911487
+    },
+    {
+      "parameter": "blocks.1.moe.experts.28.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0038726682781313106
+    },
+    {
+      "parameter": "blocks.1.moe.experts.28.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00042698927088340345
+    },
+    {
+      "parameter": "blocks.1.moe.experts.28.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.004208993361810278
+    },
+    {
+      "parameter": "blocks.1.moe.experts.28.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.000587417690919311
+    },
+    {
+      "parameter": "blocks.1.moe.experts.29.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0031286305575877445
+    },
+    {
+      "parameter": "blocks.1.moe.experts.29.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00039964566293263534
+    },
+    {
+      "parameter": "blocks.1.moe.experts.29.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.003317196837721135
+    },
+    {
+      "parameter": "blocks.1.moe.experts.29.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0005537430453765039
+    },
+    {
+      "parameter": "blocks.1.moe.experts.30.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0025060682237615156
+    },
+    {
+      "parameter": "blocks.1.moe.experts.30.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00029627665495718424
+    },
+    {
+      "parameter": "blocks.1.moe.experts.30.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.004310945411129524
+    },
+    {
+      "parameter": "blocks.1.moe.experts.30.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0003302282853629465
+    },
+    {
+      "parameter": "blocks.1.moe.experts.31.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0043319153887604505
+    },
+    {
+      "parameter": "blocks.1.moe.experts.31.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0004986686272738975
+    },
+    {
+      "parameter": "blocks.1.moe.experts.31.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.006345078751815853
+    },
+    {
+      "parameter": "blocks.1.moe.experts.31.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0006405033535351566
+    },
+    {
+      "parameter": "blocks.2.attention_norm.weight",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.003906705484149471
+    },
+    {
+      "parameter": "blocks.2.attention_norm.bias",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.007267198747246278
+    },
+    {
+      "parameter": "blocks.2.attention.in_proj_weight",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.06601774472503949
+    },
+    {
+      "parameter": "blocks.2.attention.in_proj_bias",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.007925778769882432
+    },
+    {
+      "parameter": "blocks.2.attention.out_proj.weight",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.30405178821819706
+    },
+    {
+      "parameter": "blocks.2.attention.out_proj.bias",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.012564677981896555
+    },
+    {
+      "parameter": "blocks.2.moe_norm.weight",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0014478334875642049
+    },
+    {
+      "parameter": "blocks.2.moe_norm.bias",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0017643392413343438
+    },
+    {
+      "parameter": "blocks.2.moe.router.projection.weight",
+      "group": "R",
+      "trainable": false,
+      "missing_gradient": true,
+      "task_l2": null
+    },
+    {
+      "parameter": "blocks.2.moe.experts.0.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0010534849763641197
+    },
+    {
+      "parameter": "blocks.2.moe.experts.0.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00011835526982414743
+    },
+    {
+      "parameter": "blocks.2.moe.experts.0.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0015405106943115335
+    },
+    {
+      "parameter": "blocks.2.moe.experts.0.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.000201360537494782
+    },
+    {
+      "parameter": "blocks.2.moe.experts.1.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00026434323965644627
+    },
+    {
+      "parameter": "blocks.2.moe.experts.1.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.8422854692127663e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.1.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0014377448617139347
+    },
+    {
+      "parameter": "blocks.2.moe.experts.1.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 4.716972402524888e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.2.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0017539462826631537
+    },
+    {
+      "parameter": "blocks.2.moe.experts.2.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00021380525062007115
+    },
+    {
+      "parameter": "blocks.2.moe.experts.2.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.001975430942096048
+    },
+    {
+      "parameter": "blocks.2.moe.experts.2.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00017063460678109872
+    },
+    {
+      "parameter": "blocks.2.moe.experts.3.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00023947397230374037
+    },
+    {
+      "parameter": "blocks.2.moe.experts.3.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.5812527607022182e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.3.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.001303818666859534
+    },
+    {
+      "parameter": "blocks.2.moe.experts.3.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 4.34927296140582e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.4.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00013917776450562402
+    },
+    {
+      "parameter": "blocks.2.moe.experts.4.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 1.5727835048532346e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.4.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0003330243256384565
+    },
+    {
+      "parameter": "blocks.2.moe.experts.4.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 4.481076242822788e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.5.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0009574907371736541
+    },
+    {
+      "parameter": "blocks.2.moe.experts.5.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00011002223098782062
+    },
+    {
+      "parameter": "blocks.2.moe.experts.5.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0018052985095537756
+    },
+    {
+      "parameter": "blocks.2.moe.experts.5.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00020353115932784225
+    },
+    {
+      "parameter": "blocks.2.moe.experts.6.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0017647892890341023
+    },
+    {
+      "parameter": "blocks.2.moe.experts.6.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00021563547747367506
+    },
+    {
+      "parameter": "blocks.2.moe.experts.6.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.002199387979899733
+    },
+    {
+      "parameter": "blocks.2.moe.experts.6.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0002518239740155442
+    },
+    {
+      "parameter": "blocks.2.moe.experts.7.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00023893126855915252
+    },
+    {
+      "parameter": "blocks.2.moe.experts.7.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.4458902339629586e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.7.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00017856043489641006
+    },
+    {
+      "parameter": "blocks.2.moe.experts.7.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.709449092168485e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.8.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0008836738429131958
+    },
+    {
+      "parameter": "blocks.2.moe.experts.8.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 9.597217775088681e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.8.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0016171680504649265
+    },
+    {
+      "parameter": "blocks.2.moe.experts.8.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0001838721948985342
+    },
+    {
+      "parameter": "blocks.2.moe.experts.9.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.003564616345630836
+    },
+    {
+      "parameter": "blocks.2.moe.experts.9.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00048040320933366863
+    },
+    {
+      "parameter": "blocks.2.moe.experts.9.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0042561232581188515
+    },
+    {
+      "parameter": "blocks.2.moe.experts.9.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0006909121371034663
+    },
+    {
+      "parameter": "blocks.2.moe.experts.10.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00015399216136445935
+    },
+    {
+      "parameter": "blocks.2.moe.experts.10.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 1.6115976116958893e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.10.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0005377800197330884
+    },
+    {
+      "parameter": "blocks.2.moe.experts.10.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 3.0424828794136326e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.11.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00033513601872425363
+    },
+    {
+      "parameter": "blocks.2.moe.experts.11.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 3.607844087235428e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.11.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0008388159562722364
+    },
+    {
+      "parameter": "blocks.2.moe.experts.11.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 4.503958240768111e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.12.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00022665030423522304
+    },
+    {
+      "parameter": "blocks.2.moe.experts.12.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.539864350030447e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.12.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0006394344065851782
+    },
+    {
+      "parameter": "blocks.2.moe.experts.12.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 5.3520390945430924e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.13.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00044131603821327193
+    },
+    {
+      "parameter": "blocks.2.moe.experts.13.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 4.7862863777011726e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.13.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.000802566010866083
+    },
+    {
+      "parameter": "blocks.2.moe.experts.13.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 7.748177406608983e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.14.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0002563414013447557
+    },
+    {
+      "parameter": "blocks.2.moe.experts.14.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.7750491342145193e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.14.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00046200204577016304
+    },
+    {
+      "parameter": "blocks.2.moe.experts.14.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 5.579039326921712e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.15.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00048409702507264547
+    },
+    {
+      "parameter": "blocks.2.moe.experts.15.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 5.2171840363092115e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.15.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.000501686088136798
+    },
+    {
+      "parameter": "blocks.2.moe.experts.15.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 7.135509997534069e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.16.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00025467934807698087
+    },
+    {
+      "parameter": "blocks.2.moe.experts.16.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.736171327847782e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.16.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0003361290361607105
+    },
+    {
+      "parameter": "blocks.2.moe.experts.16.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 4.2586966021150404e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.17.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00016913736681835087
+    },
+    {
+      "parameter": "blocks.2.moe.experts.17.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 1.7806731756078788e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.17.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00027296816336125503
+    },
+    {
+      "parameter": "blocks.2.moe.experts.17.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.5458999121608102e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.18.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.000123438988812352
+    },
+    {
+      "parameter": "blocks.2.moe.experts.18.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 1.2893905122698408e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.18.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0003664136477832535
+    },
+    {
+      "parameter": "blocks.2.moe.experts.18.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 3.567132579415666e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.19.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0023005218160645565
+    },
+    {
+      "parameter": "blocks.2.moe.experts.19.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00029451972866893707
+    },
+    {
+      "parameter": "blocks.2.moe.experts.19.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.003051206595541796
+    },
+    {
+      "parameter": "blocks.2.moe.experts.19.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00047836717620388655
+    },
+    {
+      "parameter": "blocks.2.moe.experts.20.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0001765990974891019
+    },
+    {
+      "parameter": "blocks.2.moe.experts.20.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 1.883459618738636e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.20.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0009153865712812052
+    },
+    {
+      "parameter": "blocks.2.moe.experts.20.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 4.1947316632834525e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.21.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00026135876882680035
+    },
+    {
+      "parameter": "blocks.2.moe.experts.21.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.818486790069792e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.21.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0004779369255874642
+    },
+    {
+      "parameter": "blocks.2.moe.experts.21.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 5.79960238363953e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.22.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0008189959335568292
+    },
+    {
+      "parameter": "blocks.2.moe.experts.22.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 8.891536744161115e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.22.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.002318469903923368
+    },
+    {
+      "parameter": "blocks.2.moe.experts.22.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00017973370233887457
+    },
+    {
+      "parameter": "blocks.2.moe.experts.23.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00013236339732407596
+    },
+    {
+      "parameter": "blocks.2.moe.experts.23.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 1.4203925668339822e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.23.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.000737305502295013
+    },
+    {
+      "parameter": "blocks.2.moe.experts.23.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 3.7761882827628106e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.24.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.001823337473759674
+    },
+    {
+      "parameter": "blocks.2.moe.experts.24.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00019440079336591082
+    },
+    {
+      "parameter": "blocks.2.moe.experts.24.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00181008256219972
+    },
+    {
+      "parameter": "blocks.2.moe.experts.24.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00027240923593458067
+    },
+    {
+      "parameter": "blocks.2.moe.experts.25.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0004306033760846403
+    },
+    {
+      "parameter": "blocks.2.moe.experts.25.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 4.644682143861591e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.25.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.001432189437858918
+    },
+    {
+      "parameter": "blocks.2.moe.experts.25.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 7.054554057973368e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.26.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0006192427664522417
+    },
+    {
+      "parameter": "blocks.2.moe.experts.26.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 6.77899533566191e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.26.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0010486670981270532
+    },
+    {
+      "parameter": "blocks.2.moe.experts.26.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 9.367409917970026e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.27.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0002595555964063123
+    },
+    {
+      "parameter": "blocks.2.moe.experts.27.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.8633503090351793e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.27.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.000988970319316668
+    },
+    {
+      "parameter": "blocks.2.moe.experts.27.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.9794751636201257e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.28.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0002357629759178469
+    },
+    {
+      "parameter": "blocks.2.moe.experts.28.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.6910820532158652e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.28.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0004885003308671258
+    },
+    {
+      "parameter": "blocks.2.moe.experts.28.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 6.54912934060798e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.29.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00015167528265897274
+    },
+    {
+      "parameter": "blocks.2.moe.experts.29.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 1.6339284626541717e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.29.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0005700455853111112
+    },
+    {
+      "parameter": "blocks.2.moe.experts.29.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 3.930943268876066e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.30.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0021398487583369104
+    },
+    {
+      "parameter": "blocks.2.moe.experts.30.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.000231199064344365
+    },
+    {
+      "parameter": "blocks.2.moe.experts.30.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0031360670235831287
+    },
+    {
+      "parameter": "blocks.2.moe.experts.30.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00034722143914387457
+    },
+    {
+      "parameter": "blocks.2.moe.experts.31.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00025084509770866085
+    },
+    {
+      "parameter": "blocks.2.moe.experts.31.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.6905077134697014e-05
+    },
+    {
+      "parameter": "blocks.2.moe.experts.31.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0005251672369646832
+    },
+    {
+      "parameter": "blocks.2.moe.experts.31.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 4.3337741633203256e-05
+    },
+    {
+      "parameter": "blocks.3.attention_norm.weight",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.005300049365005571
+    },
+    {
+      "parameter": "blocks.3.attention_norm.bias",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.005846144624478161
+    },
+    {
+      "parameter": "blocks.3.attention.in_proj_weight",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.10024246041446899
+    },
+    {
+      "parameter": "blocks.3.attention.in_proj_bias",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.006863190059958861
+    },
+    {
+      "parameter": "blocks.3.attention.out_proj.weight",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.9101009572198391
+    },
+    {
+      "parameter": "blocks.3.attention.out_proj.bias",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.012712620026487605
+    },
+    {
+      "parameter": "blocks.3.moe_norm.weight",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 9.917569398157876e-05
+    },
+    {
+      "parameter": "blocks.3.moe_norm.bias",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 8.89161865384338e-05
+    },
+    {
+      "parameter": "blocks.3.moe.router.projection.weight",
+      "group": "R",
+      "trainable": false,
+      "missing_gradient": true,
+      "task_l2": null
+    },
+    {
+      "parameter": "blocks.3.moe.experts.0.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0001513410172514268
+    },
+    {
+      "parameter": "blocks.3.moe.experts.0.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 1.6468041737596983e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.0.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00045901606213203197
+    },
+    {
+      "parameter": "blocks.3.moe.experts.0.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 5.5739043826421e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.1.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 4.463989981118775e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.1.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 4.7515782040051894e-06
+    },
+    {
+      "parameter": "blocks.3.moe.experts.1.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00019086884285673435
+    },
+    {
+      "parameter": "blocks.3.moe.experts.1.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 1.755000035280938e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.2.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 8.584327075710379e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.2.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 9.112690575690745e-06
+    },
+    {
+      "parameter": "blocks.3.moe.experts.2.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0009774681877650956
+    },
+    {
+      "parameter": "blocks.3.moe.experts.2.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 5.550280698849017e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.3.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 5.11301900541007e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.3.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 5.597444232267225e-06
+    },
+    {
+      "parameter": "blocks.3.moe.experts.3.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00030313960158364126
+    },
+    {
+      "parameter": "blocks.3.moe.experts.3.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 3.2338747070041376e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.4.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.3573994935232518e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.4.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.5463115409962925e-06
+    },
+    {
+      "parameter": "blocks.3.moe.experts.4.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00041049043787765363
+    },
+    {
+      "parameter": "blocks.3.moe.experts.4.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.870803744216561e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.5.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 4.559459240344664e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.5.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 5.074802602823565e-06
+    },
+    {
+      "parameter": "blocks.3.moe.experts.5.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0003167834574321416
+    },
+    {
+      "parameter": "blocks.3.moe.experts.5.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.8980609457413997e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.6.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 1.916843118486501e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.6.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.0509541671377722e-06
+    },
+    {
+      "parameter": "blocks.3.moe.experts.6.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00024563024212342904
+    },
+    {
+      "parameter": "blocks.3.moe.experts.6.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 1.4227167994227795e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.7.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00014112027468003504
+    },
+    {
+      "parameter": "blocks.3.moe.experts.7.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 1.4382392055373833e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.7.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00029860523732461923
+    },
+    {
+      "parameter": "blocks.3.moe.experts.7.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.9069900821649248e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.8.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 9.557966741239143e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.8.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 1.0214851968891703e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.8.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0004760083879010281
+    },
+    {
+      "parameter": "blocks.3.moe.experts.8.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 3.0726468989664904e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.9.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 3.3568053227811035e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.9.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 3.4948862109825726e-06
+    },
+    {
+      "parameter": "blocks.3.moe.experts.9.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0003936865535436153
+    },
+    {
+      "parameter": "blocks.3.moe.experts.9.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.8490583763610425e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.10.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 8.222697844099342e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.10.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 9.166915328760719e-06
+    },
+    {
+      "parameter": "blocks.3.moe.experts.10.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0006171292044580092
+    },
+    {
+      "parameter": "blocks.3.moe.experts.10.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.7602871739535258e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.11.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.284374741580139e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.11.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.458285168087635e-06
+    },
+    {
+      "parameter": "blocks.3.moe.experts.11.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00019833696101889578
+    },
+    {
+      "parameter": "blocks.3.moe.experts.11.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 1.626944782833859e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.12.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 7.518163768587132e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.12.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 7.760057786876879e-06
+    },
+    {
+      "parameter": "blocks.3.moe.experts.12.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0003269240816213666
+    },
+    {
+      "parameter": "blocks.3.moe.experts.12.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 3.6213586654688946e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.13.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 7.128720498800928e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.13.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 7.692232856617274e-06
+    },
+    {
+      "parameter": "blocks.3.moe.experts.13.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00038644630874745765
+    },
+    {
+      "parameter": "blocks.3.moe.experts.13.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 4.469458173493998e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.14.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 4.662839779276921e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.14.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 4.8708338040862926e-06
+    },
+    {
+      "parameter": "blocks.3.moe.experts.14.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00021473975246665564
+    },
+    {
+      "parameter": "blocks.3.moe.experts.14.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.3697925269160386e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.15.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0002111048258384939
+    },
+    {
+      "parameter": "blocks.3.moe.experts.15.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.1486048346877876e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.15.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0005225314503926465
+    },
+    {
+      "parameter": "blocks.3.moe.experts.15.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 3.717973198816587e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.16.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 3.858175092295089e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.16.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 4.221002143944553e-06
+    },
+    {
+      "parameter": "blocks.3.moe.experts.16.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0005188531980792762
+    },
+    {
+      "parameter": "blocks.3.moe.experts.16.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.8597001653705775e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.17.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.6709532335064496e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.17.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.8616437635797986e-06
+    },
+    {
+      "parameter": "blocks.3.moe.experts.17.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0003581837516157836
+    },
+    {
+      "parameter": "blocks.3.moe.experts.17.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.563401678636384e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.18.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 6.383930150609049e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.18.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 6.584357601345975e-06
+    },
+    {
+      "parameter": "blocks.3.moe.experts.18.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00031383916568248515
+    },
+    {
+      "parameter": "blocks.3.moe.experts.18.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.494089394418048e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.19.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 7.24991707101626e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.19.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 7.878642865113404e-06
+    },
+    {
+      "parameter": "blocks.3.moe.experts.19.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00030776703502754664
+    },
+    {
+      "parameter": "blocks.3.moe.experts.19.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 1.761617267862755e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.20.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 3.9166102777850166e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.20.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 4.111424532170423e-06
+    },
+    {
+      "parameter": "blocks.3.moe.experts.20.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00019189925282614954
+    },
+    {
+      "parameter": "blocks.3.moe.experts.20.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.033977390407673e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.21.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 3.8872008906667934e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.21.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 4.024086100964129e-06
+    },
+    {
+      "parameter": "blocks.3.moe.experts.21.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00015741227834497492
+    },
+    {
+      "parameter": "blocks.3.moe.experts.21.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.0800398487329096e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.22.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 4.731017068462617e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.22.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 4.9729709347763424e-06
+    },
+    {
+      "parameter": "blocks.3.moe.experts.22.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00027362807828990325
+    },
+    {
+      "parameter": "blocks.3.moe.experts.22.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.8311704330010453e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.23.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.9891060800768126e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.23.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 3.112024660636571e-06
+    },
+    {
+      "parameter": "blocks.3.moe.experts.23.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 9.852078041131778e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.23.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 1.3002695538250406e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.24.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 6.853404159284425e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.24.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 7.197368835247371e-06
+    },
+    {
+      "parameter": "blocks.3.moe.experts.24.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0004921471384663793
+    },
+    {
+      "parameter": "blocks.3.moe.experts.24.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 3.898084527770031e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.25.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 9.909467139513489e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.25.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 1.038028194050337e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.25.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0004495181883676377
+    },
+    {
+      "parameter": "blocks.3.moe.experts.25.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 3.7824442581404924e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.26.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0001772215091256508
+    },
+    {
+      "parameter": "blocks.3.moe.experts.26.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 1.948196757125147e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.26.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0011404496899486954
+    },
+    {
+      "parameter": "blocks.3.moe.experts.26.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.9836277691713513e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.27.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00011971941222450357
+    },
+    {
+      "parameter": "blocks.3.moe.experts.27.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 1.2321305163110887e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.27.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0004532019048345627
+    },
+    {
+      "parameter": "blocks.3.moe.experts.27.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 3.214525519606528e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.28.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 6.0417562467890075e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.28.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 6.435093677647486e-06
+    },
+    {
+      "parameter": "blocks.3.moe.experts.28.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00023786405807924404
+    },
+    {
+      "parameter": "blocks.3.moe.experts.28.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 1.9615181332335816e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.29.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 8.444953844901394e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.29.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 9.080469799040182e-06
+    },
+    {
+      "parameter": "blocks.3.moe.experts.29.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0004175015289010574
+    },
+    {
+      "parameter": "blocks.3.moe.experts.29.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 3.287346113231061e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.30.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 4.168866631477984e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.30.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 4.481460746928308e-06
+    },
+    {
+      "parameter": "blocks.3.moe.experts.30.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.00019945159671325353
+    },
+    {
+      "parameter": "blocks.3.moe.experts.30.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.415672644622399e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.31.fc1.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.415591755134196e-05
+    },
+    {
+      "parameter": "blocks.3.moe.experts.31.fc1.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 2.4905899066658233e-06
+    },
+    {
+      "parameter": "blocks.3.moe.experts.31.fc2.weight",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.0002510535750945117
+    },
+    {
+      "parameter": "blocks.3.moe.experts.31.fc2.bias",
+      "group": "E",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 3.146295410987238e-05
+    },
+    {
+      "parameter": "final_norm.weight",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.292112713252717
+    },
+    {
+      "parameter": "final_norm.bias",
+      "group": "S",
+      "trainable": true,
+      "missing_gradient": false,
+      "task_l2": 0.3131035284642776
+    }
+  ],
+  "precision": "production autocast; task-only before loss scaling"
+}

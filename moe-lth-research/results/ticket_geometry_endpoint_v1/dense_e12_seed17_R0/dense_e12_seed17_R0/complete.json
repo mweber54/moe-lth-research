@@ -1,0 +1,71 @@
+{
+  "key": "cc41fad560ae44d1084f8c4622693f87ab0273e2f993581655c3158c945e9c81",
+  "condition": {
+    "id": "dense_e12_seed17_R0",
+    "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/expert_count_replication/e12/dense/seed_17/R0",
+    "sha256": "749b33a4c83e8918d7c61252920071edd47d59be1bde67610c19c9a7ed290c14",
+    "loss": 1.426724171867797,
+    "gap": 0,
+    "ticket": false,
+    "sparsity": 0
+  },
+  "group": "dense_e12_seed17_R0",
+  "num_experts": 12,
+  "seed": 17,
+  "age": 0,
+  "host": "viper.cs.kent.edu",
+  "checkpoint_hashes": {
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/router_conditioned_fixed_budget_dataset/sources/e12/seed_17/checkpoints/step_0.pt": "8216415c0467fb3c19cea6081d3570ef32ecf34c6cc390ed310b65d5f49dd292",
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/router_conditioned_fixed_budget_dataset/sources/e12/seed_17/checkpoints/step_2500.pt": "e430183cf43e48c30c307559127144d727e395b7f2c7716f934de931bc88099e",
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/expert_count_replication/e12/dense/seed_17/R0/checkpoints/final_recovered.pt": "749b33a4c83e8918d7c61252920071edd47d59be1bde67610c19c9a7ed290c14",
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/expert_count_replication/e12/dense/seed_17/R0/metadata.json": "4d56fb326e95343d5e8c941a921deeeaea73211fa13faf707c88998d8a33c82b",
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/expert_count_replication/e12/dense/seed_17/R0/summary.json": "f8b5f79c7d697c5dd8906108b443bfab93f431beff513c564533e4652b7bf68b",
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/data/multidomain_balanced/multidomain_train.txt": "7aad299a6af6f1c85e6ee399ed9d83156ea54af98f1cd5d69a2bf614bde1aed3",
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/data/multidomain_balanced/multidomain_validation.txt": "5d0994ce467642951497b89dcf55e661c719aa2a626404caf7999b25a9c1a2f9"
+  },
+  "probe_sequence_indices": [
+    3,
+    231,
+    886,
+    967,
+    1160,
+    1235,
+    1323,
+    1350,
+    1357,
+    1451,
+    1490,
+    1501,
+    1661,
+    1776,
+    1789,
+    1992,
+    2175,
+    2196,
+    2303,
+    2430,
+    2633,
+    2635,
+    2696,
+    3020,
+    3071,
+    3094,
+    3254,
+    3327,
+    3361,
+    3425,
+    3502,
+    3714
+  ],
+  "probe_note": "validation subset, already used for historical ticket selection; not independent test data",
+  "training_launched": false,
+  "steps": [
+    0,
+    2500
+  ],
+  "initialization_verified": true,
+  "outputs": {
+    "experts.jsonl.gz": "2ef21d3d40b9a1a716de36b8b84ba0e93020eb6e343437e37eef867d473134a2",
+    "layers.csv": "017639728500b943cc94878d1fce6e9c7970ae6280f889a4f5016093576c51ce"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "verified_unix": 1795211095.3939073,
+  "checkpoint_sha256": "3972c5b59d7735d53c86fa754729578101231ee0f3321e86aca364823f20e8b9",
+  "identity": {
+    "seed": 17,
+    "order": "A",
+    "arm": "untouched",
+    "mask_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "prefix_sha256": "31d86b02f531769c5ced2734bad3de1934dac9d701192606b570c7b4b57ff9a8",
+    "train_hash": "9fe626227049ca1720fe5209c7f44945cbbfc6cbefdc6d37248ff1fe89af534e",
+    "validation_hash": "09a073e9f03bbb854d3903081440b9e0869feb8e04b50b3b1be76a1d42658b22"
+  },
+  "global_step": 250,
+  "next_batch_index": 250,
+  "applied_since_branch": 0,
+  "scheduler": "none",
+  "pruning": "untouched: empty mask",
+  "optimizer_state_entries": 552,
+  "scaler_present": true,
+  "python_numpy_torch_cuda_rng_present": true,
+  "note": "Existing production runner restores and validates full state on GPU before the next batch."
+}

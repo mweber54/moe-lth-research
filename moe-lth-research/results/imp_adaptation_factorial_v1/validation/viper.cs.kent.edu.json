@@ -1,0 +1,39 @@
+{
+  "passed": true,
+  "host": "viper.cs.kent.edu",
+  "steps": 25,
+  "max_parameter_absolute_difference": 0.0,
+  "validation_ce_difference": 0.0,
+  "atol": 1e-06,
+  "rtol": 1e-05,
+  "tf32_matmul": true,
+  "tf32_cudnn": true,
+  "reset": {
+    "step": 0,
+    "model_hash": "4edf2d82da15cd4d75d1a9853598aa0af93bdb2243862544fb64c6e976a11f15",
+    "optimizer_entries": 0,
+    "scaler": {
+      "scale": 65536.0,
+      "growth_factor": 2.0,
+      "backoff_factor": 0.5,
+      "growth_interval": 2000,
+      "_growth_tracker": 0
+    }
+  },
+  "cuda_fp16_resume_exact": true,
+  "diagnostics_enabled_native_equivalence": true,
+  "timing": [
+    {
+      "track": "canonical",
+      "seconds": 22.253669791854918,
+      "peak_bytes": 2468776960
+    },
+    {
+      "track": "adapter",
+      "seconds": 24.970218820497394,
+      "peak_bytes": 3344996864
+    }
+  ],
+  "attempt": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_adaptation_factorial_v1/validation/viper.cs.kent.edu/attempt_1792622621690381992",
+  "unix": 1792622682.2508085
+}

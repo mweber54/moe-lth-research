@@ -1,0 +1,13 @@
+{
+  "primary_ce": "Original native CUDA-FP16 full-validation CE, token-weighted across original materialized validation batches",
+  "training_ce": "Per-attempt mean over 128 x 128 target tokens, including attempts skipped by AMP",
+  "native_auxiliary": "Model native mean across layers of num_experts times dot(proposed load frequencies, mean full-softmax probabilities)",
+  "weighted_auxiliary": ".1 times native auxiliary; objective=training_ce+weighted_auxiliary",
+  "gradient_probe": "Validation batch 0, complete structure; model eval mode, FP32, autocast disabled, canonical TF32 flags retained; no scaler/optimizer step",
+  "gradient_denominators": "Each named unique tensor; surviving coordinates only for masked expert weights, all coordinates for expert biases/router/shared. Group total L2, RMS=L2/sqrt(N), L2/N. Frozen groups not requested; zero-norm ratios null.",
+  "updates": "Actual net parameter displacements across 0->100->2500->2600->5000 and from initialization; unique named parameters; normalization by preceding or initial group L2. Not path length or one-step norm.",
+  "clipping": "New: actual native clip_grad_norm_ return and coefficient. Reused full: reconstructed from logged robust preclip norm, explicitly not the exact FP32 native return.",
+  "routing": "Proposed/accepted assignment counts and dropped-assignment fraction by layer on the same full probe; mean full-softmax entropy and selected native confidence; no fixed exposure claim",
+  "agreement": "Top1 assignment agreement against own initialization and corresponding same-variant full snapshot at the same step, on identical probe tokens",
+  "boundary": "First segment CE at2500 retained in primary trajectory; second-call initial CE retained in raw records separately. Model tensors unchanged; AdamW/scaler/RNG reset."
+}

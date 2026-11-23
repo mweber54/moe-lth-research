@@ -1,0 +1,308 @@
+{
+  "passed": true,
+  "required_deliverables_present": true,
+  "original_all_declared_artifact_and_implementation_hashes_unchanged": true,
+  "original_status": "STOPPED_MATCHING_GATE",
+  "fixed40_tensor_subset_preserved": true,
+  "all80_binary_conditions_retained": true,
+  "all1280_reproductions_checked": true,
+  "exact_attrition_stages": 16640,
+  "range_counter_binary_matches_bruteforce": true,
+  "SCC_bound_independent_exhaustive_tests_passed": true,
+  "no_model_operations": true,
+  "no_gradient_recomputation": true,
+  "solver_timeouts_not_infeasibility": true,
+  "RSS_for_wall_killed_jobs": "unavailable, never zero; enforced address-space8GiB",
+  "original_source_coverage_certificates": [
+    {
+      "seed": 7,
+      "complete_graph_tensors": 256,
+      "SCC_bound_below_minimum": 201,
+      "possibly_eligible_tensors": 55,
+      "maximum_retained_whole_expert_dose_bound": 0.0015211105346679688,
+      "source_coverage_proven_impossible": true,
+      "cells": [
+        {
+          "layer": 0,
+          "projection": "fc1",
+          "possibly_eligible": 0,
+          "required": 26
+        },
+        {
+          "layer": 0,
+          "projection": "fc2",
+          "possibly_eligible": 5,
+          "required": 26
+        },
+        {
+          "layer": 1,
+          "projection": "fc1",
+          "possibly_eligible": 7,
+          "required": 26
+        },
+        {
+          "layer": 1,
+          "projection": "fc2",
+          "possibly_eligible": 11,
+          "required": 26
+        },
+        {
+          "layer": 2,
+          "projection": "fc1",
+          "possibly_eligible": 6,
+          "required": 26
+        },
+        {
+          "layer": 2,
+          "projection": "fc2",
+          "possibly_eligible": 9,
+          "required": 26
+        },
+        {
+          "layer": 3,
+          "projection": "fc1",
+          "possibly_eligible": 10,
+          "required": 26
+        },
+        {
+          "layer": 3,
+          "projection": "fc2",
+          "possibly_eligible": 7,
+          "required": 26
+        }
+      ]
+    },
+    {
+      "seed": 17,
+      "complete_graph_tensors": 256,
+      "SCC_bound_below_minimum": 192,
+      "possibly_eligible_tensors": 64,
+      "maximum_retained_whole_expert_dose_bound": 0.0017385482788085938,
+      "source_coverage_proven_impossible": true,
+      "cells": [
+        {
+          "layer": 0,
+          "projection": "fc1",
+          "possibly_eligible": 0,
+          "required": 26
+        },
+        {
+          "layer": 0,
+          "projection": "fc2",
+          "possibly_eligible": 2,
+          "required": 26
+        },
+        {
+          "layer": 1,
+          "projection": "fc1",
+          "possibly_eligible": 11,
+          "required": 26
+        },
+        {
+          "layer": 1,
+          "projection": "fc2",
+          "possibly_eligible": 14,
+          "required": 26
+        },
+        {
+          "layer": 2,
+          "projection": "fc1",
+          "possibly_eligible": 13,
+          "required": 26
+        },
+        {
+          "layer": 2,
+          "projection": "fc2",
+          "possibly_eligible": 9,
+          "required": 26
+        },
+        {
+          "layer": 3,
+          "projection": "fc1",
+          "possibly_eligible": 6,
+          "required": 26
+        },
+        {
+          "layer": 3,
+          "projection": "fc2",
+          "possibly_eligible": 9,
+          "required": 26
+        }
+      ]
+    },
+    {
+      "seed": 29,
+      "complete_graph_tensors": 256,
+      "SCC_bound_below_minimum": 206,
+      "possibly_eligible_tensors": 50,
+      "maximum_retained_whole_expert_dose_bound": 0.0014069676399230957,
+      "source_coverage_proven_impossible": true,
+      "cells": [
+        {
+          "layer": 0,
+          "projection": "fc1",
+          "possibly_eligible": 0,
+          "required": 26
+        },
+        {
+          "layer": 0,
+          "projection": "fc2",
+          "possibly_eligible": 5,
+          "required": 26
+        },
+        {
+          "layer": 1,
+          "projection": "fc1",
+          "possibly_eligible": 11,
+          "required": 26
+        },
+        {
+          "layer": 1,
+          "projection": "fc2",
+          "possibly_eligible": 9,
+          "required": 26
+        },
+        {
+          "layer": 2,
+          "projection": "fc1",
+          "possibly_eligible": 6,
+          "required": 26
+        },
+        {
+          "layer": 2,
+          "projection": "fc2",
+          "possibly_eligible": 7,
+          "required": 26
+        },
+        {
+          "layer": 3,
+          "projection": "fc1",
+          "possibly_eligible": 8,
+          "required": 26
+        },
+        {
+          "layer": 3,
+          "projection": "fc2",
+          "possibly_eligible": 4,
+          "required": 26
+        }
+      ]
+    },
+    {
+      "seed": 43,
+      "complete_graph_tensors": 256,
+      "SCC_bound_below_minimum": 202,
+      "possibly_eligible_tensors": 54,
+      "maximum_retained_whole_expert_dose_bound": 0.0014085173606872559,
+      "source_coverage_proven_impossible": true,
+      "cells": [
+        {
+          "layer": 0,
+          "projection": "fc1",
+          "possibly_eligible": 2,
+          "required": 26
+        },
+        {
+          "layer": 0,
+          "projection": "fc2",
+          "possibly_eligible": 4,
+          "required": 26
+        },
+        {
+          "layer": 1,
+          "projection": "fc1",
+          "possibly_eligible": 9,
+          "required": 26
+        },
+        {
+          "layer": 1,
+          "projection": "fc2",
+          "possibly_eligible": 10,
+          "required": 26
+        },
+        {
+          "layer": 2,
+          "projection": "fc1",
+          "possibly_eligible": 7,
+          "required": 26
+        },
+        {
+          "layer": 2,
+          "projection": "fc2",
+          "possibly_eligible": 7,
+          "required": 26
+        },
+        {
+          "layer": 3,
+          "projection": "fc1",
+          "possibly_eligible": 8,
+          "required": 26
+        },
+        {
+          "layer": 3,
+          "projection": "fc2",
+          "possibly_eligible": 7,
+          "required": 26
+        }
+      ]
+    },
+    {
+      "seed": 61,
+      "complete_graph_tensors": 256,
+      "SCC_bound_below_minimum": 198,
+      "possibly_eligible_tensors": 58,
+      "maximum_retained_whole_expert_dose_bound": 0.0016533583402633667,
+      "source_coverage_proven_impossible": true,
+      "cells": [
+        {
+          "layer": 0,
+          "projection": "fc1",
+          "possibly_eligible": 1,
+          "required": 26
+        },
+        {
+          "layer": 0,
+          "projection": "fc2",
+          "possibly_eligible": 5,
+          "required": 26
+        },
+        {
+          "layer": 1,
+          "projection": "fc1",
+          "possibly_eligible": 14,
+          "required": 26
+        },
+        {
+          "layer": 1,
+          "projection": "fc2",
+          "possibly_eligible": 10,
+          "required": 26
+        },
+        {
+          "layer": 2,
+          "projection": "fc1",
+          "possibly_eligible": 7,
+          "required": 26
+        },
+        {
+          "layer": 2,
+          "projection": "fc2",
+          "possibly_eligible": 6,
+          "required": 26
+        },
+        {
+          "layer": 3,
+          "projection": "fc1",
+          "possibly_eligible": 10,
+          "required": 26
+        },
+        {
+          "layer": 3,
+          "projection": "fc2",
+          "possibly_eligible": 5,
+          "required": 26
+        }
+      ]
+    }
+  ]
+}

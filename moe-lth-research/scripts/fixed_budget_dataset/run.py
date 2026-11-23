@@ -1,6 +1,6 @@
 """Execute only audited missing Dataset A jobs; preserve historical artifacts."""
 from common import *
-import os,time,shutil,traceback,fcntl,math
+import os,time,shutil,traceback,fcntl,math,argparse
 import pandas as pd
 from moe_lth.training.train import train_from_config
 from moe_lth.data import build_dataloaders
@@ -10,13 +10,29 @@ from moe_lth.pruning.router_age import selected_experts_per_batch
 from moe_lth.pruning.magnitude_prune import expert_local_magnitude_masks
 
 def main():
+ parser=argparse.ArgumentParser()
+ parser.add_argument('--groups',nargs='+',default=None,
+  help='Only process specified E:seed groups, e.g. 24:61 32:7')
+ args=parser.parse_args()
+
+ allowed_groups=None
+ if args.groups:
+  allowed_groups={tuple(map(int,x.split(':'))) for x in args.groups}
+
+ def owned(e,seed):
+  return allowed_groups is None or (e,seed) in allowed_groups
+
  OUT.mkdir(parents=True,exist_ok=True)
  lock=(OUT/'build.lock').open('w');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
  audit=jread(OUT/'audit_complete.json');assert audit['status']=='COMPLETE' and sha(OUT/'canonical_grid_audit.csv')==audit['grid_sha256']
  if (OUT/'dataset_manifest.json').exists() and jread(OUT/'dataset_manifest.json').get('frozen'):return
  jobs=pd.read_csv(OUT/'run_manifest.csv').fillna('')
  # Read-only prelaunch check: all chosen reused endpoints must be finite.
- for item in jobs[(jobs.status=='REUSED') & (jobs.job_type!='source')].itertuples():
+ for item in jobs[
+  (jobs.status=='REUSED') &
+  (jobs.job_type!='source') &
+  jobs.apply(lambda row: owned(int(row.architecture),int(row.seed)),axis=1)
+ ].itertuples():
   points=[json.loads(x) for x in (Path(item.artifact_path)/'metrics.jsonl').read_text().splitlines()]
   assert all(math.isfinite(x['loss']) for x in points),f'Nonfinite historical endpoint: {item.condition_id}'
  history=jread(OUT/'historical_source_identities.json');datahash=jread(OUT/'canonical_data_hashes.json')
@@ -37,6 +53,7 @@ def main():
  # Source jobs first. Original seed reconstructions must exactly reproduce all available historical states.
  for e in ES:
   for seed in SEEDS:
+   if not owned(e,seed):continue
    i=idx('source',e,seed);root=Path(jobs.at[i,'artifact_path'])
    if jobs.at[i,'status'] not in ('COMPLETE','REUSED'):
     # Recover a fully completed output if interruption occurred between artifact completion and manifest update.
@@ -54,6 +71,7 @@ def main():
  # One source/model/mask bank per E,seed; dense reused across all six sparsities.
  for e in ES:
   for seed in SEEDS:
+   if not owned(e,seed):continue
    root=Path(jobs.at[idx('source',e,seed),'artifact_path']);c=load(root/'checkpoints/step_0.pt')['config'];assert not protocol_errors(c,e,seed)
    initial=load(root/'checkpoints/step_0.pt')['model'];state={n:v.clone() for n,v in initial.items()}
    final=r.load_model_from_checkpoint(c['model'],str(root/'checkpoints/step_2500.pt'),device)
@@ -94,6 +112,9 @@ def main():
      except Exception as ex:error(i,ex);raise
    del maskbank,state,initial,train,val,probe;torch.cuda.empty_cache()
  # Exact finalization never starts Dataset B or any mechanism experiment.
+ if allowed_groups is not None:
+  print('SHARD COMPLETE - skipping global finalization',flush=True)
+  return
  import finalize
  finalize.main()
 

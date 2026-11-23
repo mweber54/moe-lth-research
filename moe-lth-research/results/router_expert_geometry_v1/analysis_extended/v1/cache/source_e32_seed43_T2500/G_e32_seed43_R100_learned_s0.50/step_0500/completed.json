@@ -1,0 +1,77 @@
+{
+  "cache_key": "7970b3fa7e0463d29ac79adeb35657bb5f5e4fc8ff1f4a7655dc2868a6aa871d",
+  "meta": {
+    "condition_id": "G_e32_seed43_R100_learned_s0.50",
+    "seed": 43,
+    "router_age": 100,
+    "sparsity": 0.5,
+    "mask_type": "learned",
+    "step": 500,
+    "category": "recovery",
+    "dense_condition_id": "G_e32_seed43_R100_dense",
+    "validation_loss": 2.327530425339201
+  },
+  "origin": {
+    "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/router_expert_geometry_v1/recoveries/G_e32_seed43_R100_learned_s0.50/attempt_0001/geometry/step_0500/diagnostic_model_state.pt",
+    "sha256": "743edbc8d889951174490bca5e953e7ef18985cc42867051da9e32082c56a97f",
+    "size": 274288034
+  },
+  "reference_identities": {
+    "source_final": {
+      "category": "source_final_dense",
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/router_conditioned_fixed_budget_dataset/sources/e32/seed_43/checkpoints/step_2500.pt",
+      "sha256": "83d79666edcad6a85366b3ebb239fce26ec586cecf558c51f7b7e88f694479af",
+      "size": 274063179
+    },
+    "matched_dense": {
+      "category": "matched_new_dense_recovery",
+      "condition_id": "G_e32_seed43_R100_dense",
+      "step": 500,
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/router_expert_geometry_v1/recoveries/G_e32_seed43_R100_dense/attempt_0001/geometry/step_0500/diagnostic_model_state.pt",
+      "sha256": "5f6cb2bd65e86a705a901b16d71cbacec08bdd9dbd6f147734840ec36014e71b",
+      "size": 274288034
+    },
+    "recovery_initial": {
+      "category": "recovery_initialization",
+      "source_initial": {
+        "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/router_conditioned_fixed_budget_dataset/sources/e32/seed_43/checkpoints/step_0.pt",
+        "sha256": "758073156ee4ddd24768d794210cabf3b34b94d371e3d053e8471d9ae2a170c0",
+        "size": 274055157
+      },
+      "source_router": {
+        "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/router_conditioned_fixed_budget_dataset/sources/e32/seed_43/checkpoints/step_2500.pt",
+        "sha256": "83d79666edcad6a85366b3ebb239fce26ec586cecf558c51f7b7e88f694479af",
+        "size": 274063179
+      },
+      "mask_identity": "8eb6ab77d4c86cb0eaa55f39d74e10971f523d075af0f9fc6f74ae8a6a89f86d"
+    }
+  },
+  "probe": {
+    "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/router_expert_geometry_v1/probes/source_e32_seed43_T2500.pt",
+    "sha256": "fcd9a40b28cc27b7f6f8385860459f4504bf78d95bda72315fe5c3476b090bf8",
+    "size": 4213845
+  },
+  "model_tensor_sha256": "c6c684c1f004b21a8121a287fb7ef67b150048bc94bc23b0eb0615b798f17fe2",
+  "finite_tensors": true,
+  "mask_applied_verified": true,
+  "expected_initialization_verified": false,
+  "model_preserved": true,
+  "elapsed_seconds": 6.302307583391666,
+  "peak_cuda_allocated": 426020864,
+  "peak_cpu_rss_kib": 4745176,
+  "timing_seconds": {
+    "tensor_checks": 0.411761743016541,
+    "load_and_hash": 1.761864504776895,
+    "gram": 0.18574564158916473,
+    "activation": 3.5262206187471747,
+    "hash_and_write": 0.4169299993664026
+  },
+  "output_hashes": {
+    "activation_layer_pools.csv": "acb0c16a4360fa8ee81cbf826c651ab61060d14545748f5ebbb8ba1fc7c216a9",
+    "activation_within_token.csv": "4786d3ce0aa0faac13a15e97bd8ea5491fc6b48a5c54fbd0bdd2ff6d966b3611",
+    "activation_groups.csv": "e48ae5c3288743ad38f0a413b4a2f17fd9aa0acc5e67ca0bd2ad6e9138f94fdc",
+    "gram_experts.csv": "a6f737800b5b3421e615cce361d03f4f902765fe7a4ab9e75a25c28d9905adb5",
+    "token_pairs.npz": "604d5e584f7ea1a5668f720c69aff4bc2766248db095f8e3f9bafa8b1c18cac0",
+    "input_drift.csv": "92f88cb6d2d2f8c9832d1c3b6bb28aac56b7dff43c7395e021b65da9e8dd819c"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "complete": true,
+  "measured_states": 700,
+  "recovery_states": 525,
+  "existing_states": 175,
+  "independent_seeds": 5,
+  "figure_sets": 89,
+  "validation_passed": true,
+  "original_outputs_preserved": true,
+  "training_launched": false,
+  "dataset_b_restarted": false,
+  "checkpoint_measurement_code_hash": "8a85c58f11b3f4463259df3d301f5eab1b4fe6b209e722dc31b7fdd5abcb3b91",
+  "final_artifact_hashes": {
+    "combined_findings.md": "97b088712874d19e42c1315f6ca81f7f0a645eb93e0316bb6fa4222847dbd050",
+    "metric_definitions.md": "9ec6682eaa3ddc76593ee6b96cbc213271ecc2e895cdbc9e48d7b105a5b510cf",
+    "existing_reference_findings.md": "8325472ce38b4333f0dacb8a3cbd91af0b493b2568aee5c454d7c1469f1a31e0",
+    "state_coverage_inventory.csv": "1b3abf18e7c8f9ab62a71b080a74cd33cc620c06e08c8895bcea2e1d7812ea17",
+    "svd_expert_raw.parquet": "2a8e4f469ccc7987a059d9063355466dbdc91f53224e057170ef78a849ef7e84",
+    "gram_expert_raw.parquet": "9eb0b17d29fef914ccde5c16a039cb93773e0e6c1359c8c185fdd5f088cfa8ca",
+    "activation_expert_raw.parquet": "37226e8ba13da722096b4acbf0cc5686cb430877df2335ac5c8628513be3ee00",
+    "joint_matched_expert_seed_effects.csv": "97a1346bf4405cf6b9a0d374305ad64e61b5317a006a3d7e1d4ef5b308068c14",
+    "joint_router_age_paired_summary.csv": "8aba5f493b562db3ebdb60218236b7c22dbccfe45f25464dfe3172d5508c123e",
+    "pruning_joint_paired_summary.csv": "b0752f6199d070de0cb3d900474ceb87421944934367e018d73a0301c7d7a312",
+    "validation.json": "1ebe69b39195ec41511aef59bfc4ce90a0318bd98670aef98bbd9d7710c717a9",
+    "input_audit.json": "bba4050d93065583d18a3839cb77a68d295045b6b5db7559d2fb33a2f9d8985e",
+    "metric_consistency_validation.json": "ec0d51ba711729392cdf32531382c8a721ab7590fefa6e2849700f0cd1a72be0",
+    "summary_coverage_exceptions.csv": "d8e95bde2e56b5cab846cc412b625fa5f68dee2c2bb14109df95bb5b234e2efa"
+  },
+  "paired_summary_coverage": [
+    {
+      "table": "gram_endpoint_seed_summary.csv",
+      "strata": 1125,
+      "min_n_seeds": 5,
+      "max_n_seeds": 5
+    },
+    {
+      "table": "activation_endpoint_seed_summary.csv",
+      "strata": 2700,
+      "min_n_seeds": 0,
+      "max_n_seeds": 5
+    },
+    {
+      "table": "svd_endpoint_seed_summary.csv",
+      "strata": 3600,
+      "min_n_seeds": 5,
+      "max_n_seeds": 5
+    },
+    {
+      "table": "joint_matched_expert_seed_summary.csv",
+      "strata": 2700,
+      "min_n_seeds": 2,
+      "max_n_seeds": 5
+    }
+  ],
+  "missing_artifact": "Attached PDF unavailable; public arXiv v1 substituted and disclosed",
+  "missing_legacy_energy_fields": 23
+}

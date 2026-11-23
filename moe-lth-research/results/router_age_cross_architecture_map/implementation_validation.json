@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "checks": [
+    "Historical 8E/12E/16E one-to-one primary joins, n=3 per age",
+    "Historical mean winners R20/R60/R60 reconstructed",
+    "Synthetic 24E and 32E localization reports and ten figure families each",
+    "Synthetic five-architecture report with all 31 questions and sixteen figure families",
+    "Repeat observations excluded from unified primary dataset",
+    "Correct expert-count condition/config labels before either new architecture starts"
+  ],
+  "code_sha256": {
+    "scripts/run_16e_seed7_reproducibility.py": "26cedc0f52fb8df6af065627614bcae9a27749b638120ed749e184256201251a",
+    "scripts/run_24e_router_age_localization.py": "a83973f94f921114be40933712e078e50dbbfa422015e6cb72c4000cecee1a46",
+    "scripts/run_32e_router_age_localization.py": "44fc5ae5bd0b50e0996a9b5568cb9ea09f2d47bcce470c6d4f0350cffa8e4e77",
+    "scripts/analyze_24e_router_age_localization.py": "ee04063575d0e8dd02f53f1e579424fc28d2bfd5ddbb277638fb420a785ed9f9",
+    "scripts/analyze_32e_router_age_localization.py": "7808bd02c442850f36e6a399933a3238b9d5f13e99b1882645293504448d9fc4",
+    "scripts/analyze_router_age_cross_architecture_map.py": "bd27811a731cf3c8e88d4bde103810e8b19286c93994f9fe38025ade4dd0223c",
+    "scripts/execute_router_age_mapping_suite.py": "d276cb88adbf4a020f327afd1dc12d660d115ea9c95a1b562c03649133fbae76",
+    "tests/test_router_age_mapping_suite.py": "1c9b6d4c2d5cc138a93cd85fbcfa9c8d5dd72f6f2c223924725915bd54f396bd"
+  },
+  "scientific_replicates_from_tests": 0
+}

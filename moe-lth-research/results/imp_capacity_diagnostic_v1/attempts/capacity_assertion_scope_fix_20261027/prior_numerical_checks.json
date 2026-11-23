@@ -1,0 +1,15 @@
+{
+  "checkpoint_evaluation": "NOT_RUN",
+  "disabled_vs_native_runtime_identity": "NOT_RUN",
+  "model_rng_mode_gradient_preservation": "NOT_RUN",
+  "native_common_readout_reproduction": "NOT_RUN",
+  "no_drop_overflow_runtime_checks": "NOT_RUN",
+  "source_hashes_masks_parent_checks": "PASS",
+  "status": "NOT_RUN_GPU_ADMISSION_BLOCKED",
+  "synthetic_capacity_and_chunking_tests": {
+    "command": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/.venv/bin/python -m pytest tests/test_model.py tests/test_imp_capacity_diagnostic_v1.py -q",
+    "output": "..........                                                               [100%]\n10 passed in 1.90s",
+    "return_code": 0,
+    "status": "PASS"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "checks": [
+    "inside/orthogonal alignment",
+    "sign/rotation invariance",
+    "router centering",
+    "identical geometry",
+    "mixed module modes",
+    "CPU and CUDA RNG",
+    "batch order",
+    "parameters/buffers",
+    "gradients",
+    "optimizer state",
+    "exact grid"
+  ],
+  "cuda_equivalence": "pending",
+  "mask_and_probe_validation": "prepare.py exact hashes/count/generation and shared probe files"
+}

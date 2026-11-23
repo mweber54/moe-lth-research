@@ -1,0 +1,992 @@
+[
+  {
+    "condition": "e32_seed7_dense",
+    "passed": true,
+    "implementation": [
+      {
+        "path": "scripts/high_sparsity_coupling/runner.py",
+        "expected": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "actual": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/moe_layer.py",
+        "expected": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "actual": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/experts.py",
+        "expected": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "actual": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/transformer.py",
+        "expected": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "actual": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/__init__.py",
+        "expected": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "actual": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/router.py",
+        "expected": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "actual": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/pruning/router_age.py",
+        "expected": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "actual": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/data.py",
+        "expected": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "actual": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/utils.py",
+        "expected": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "actual": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/experiments/run_router_age_recovery.py",
+        "expected": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "actual": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "passed": true
+      }
+    ]
+  },
+  {
+    "condition": "e32_seed7_final_s0.80",
+    "passed": true,
+    "implementation": [
+      {
+        "path": "scripts/high_sparsity_coupling/runner.py",
+        "expected": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "actual": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/moe_layer.py",
+        "expected": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "actual": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/experts.py",
+        "expected": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "actual": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/transformer.py",
+        "expected": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "actual": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/__init__.py",
+        "expected": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "actual": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/router.py",
+        "expected": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "actual": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/pruning/router_age.py",
+        "expected": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "actual": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/data.py",
+        "expected": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "actual": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/utils.py",
+        "expected": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "actual": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/experiments/run_router_age_recovery.py",
+        "expected": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "actual": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "passed": true
+      }
+    ]
+  },
+  {
+    "condition": "e32_seed7_final_s0.85",
+    "passed": true,
+    "implementation": [
+      {
+        "path": "scripts/high_sparsity_coupling/runner.py",
+        "expected": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "actual": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/moe_layer.py",
+        "expected": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "actual": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/experts.py",
+        "expected": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "actual": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/transformer.py",
+        "expected": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "actual": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/__init__.py",
+        "expected": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "actual": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/router.py",
+        "expected": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "actual": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/pruning/router_age.py",
+        "expected": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "actual": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/data.py",
+        "expected": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "actual": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/utils.py",
+        "expected": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "actual": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/experiments/run_router_age_recovery.py",
+        "expected": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "actual": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "passed": true
+      }
+    ]
+  },
+  {
+    "condition": "e32_seed17_dense",
+    "passed": true,
+    "implementation": [
+      {
+        "path": "scripts/high_sparsity_coupling/runner.py",
+        "expected": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "actual": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/moe_layer.py",
+        "expected": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "actual": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/experts.py",
+        "expected": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "actual": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/transformer.py",
+        "expected": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "actual": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/__init__.py",
+        "expected": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "actual": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/router.py",
+        "expected": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "actual": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/pruning/router_age.py",
+        "expected": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "actual": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/data.py",
+        "expected": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "actual": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/utils.py",
+        "expected": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "actual": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/experiments/run_router_age_recovery.py",
+        "expected": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "actual": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "passed": true
+      }
+    ]
+  },
+  {
+    "condition": "e32_seed17_final_s0.80",
+    "passed": true,
+    "implementation": [
+      {
+        "path": "scripts/high_sparsity_coupling/runner.py",
+        "expected": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "actual": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/moe_layer.py",
+        "expected": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "actual": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/experts.py",
+        "expected": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "actual": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/transformer.py",
+        "expected": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "actual": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/__init__.py",
+        "expected": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "actual": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/router.py",
+        "expected": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "actual": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/pruning/router_age.py",
+        "expected": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "actual": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/data.py",
+        "expected": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "actual": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/utils.py",
+        "expected": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "actual": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/experiments/run_router_age_recovery.py",
+        "expected": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "actual": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "passed": true
+      }
+    ]
+  },
+  {
+    "condition": "e32_seed17_final_s0.85",
+    "passed": true,
+    "implementation": [
+      {
+        "path": "scripts/high_sparsity_coupling/runner.py",
+        "expected": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "actual": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/moe_layer.py",
+        "expected": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "actual": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/experts.py",
+        "expected": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "actual": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/transformer.py",
+        "expected": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "actual": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/__init__.py",
+        "expected": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "actual": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/router.py",
+        "expected": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "actual": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/pruning/router_age.py",
+        "expected": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "actual": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/data.py",
+        "expected": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "actual": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/utils.py",
+        "expected": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "actual": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/experiments/run_router_age_recovery.py",
+        "expected": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "actual": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "passed": true
+      }
+    ]
+  },
+  {
+    "condition": "e32_seed29_dense",
+    "passed": true,
+    "implementation": [
+      {
+        "path": "scripts/high_sparsity_coupling/runner.py",
+        "expected": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "actual": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/moe_layer.py",
+        "expected": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "actual": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/experts.py",
+        "expected": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "actual": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/transformer.py",
+        "expected": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "actual": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/__init__.py",
+        "expected": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "actual": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/router.py",
+        "expected": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "actual": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/pruning/router_age.py",
+        "expected": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "actual": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/data.py",
+        "expected": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "actual": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/utils.py",
+        "expected": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "actual": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/experiments/run_router_age_recovery.py",
+        "expected": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "actual": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "passed": true
+      }
+    ]
+  },
+  {
+    "condition": "e32_seed29_final_s0.80",
+    "passed": true,
+    "implementation": [
+      {
+        "path": "scripts/high_sparsity_coupling/runner.py",
+        "expected": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "actual": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/moe_layer.py",
+        "expected": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "actual": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/experts.py",
+        "expected": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "actual": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/transformer.py",
+        "expected": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "actual": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/__init__.py",
+        "expected": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "actual": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/router.py",
+        "expected": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "actual": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/pruning/router_age.py",
+        "expected": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "actual": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/data.py",
+        "expected": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "actual": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/utils.py",
+        "expected": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "actual": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/experiments/run_router_age_recovery.py",
+        "expected": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "actual": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "passed": true
+      }
+    ]
+  },
+  {
+    "condition": "e32_seed29_final_s0.85",
+    "passed": true,
+    "implementation": [
+      {
+        "path": "scripts/high_sparsity_coupling/runner.py",
+        "expected": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "actual": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/moe_layer.py",
+        "expected": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "actual": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/experts.py",
+        "expected": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "actual": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/transformer.py",
+        "expected": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "actual": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/__init__.py",
+        "expected": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "actual": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/router.py",
+        "expected": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "actual": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/pruning/router_age.py",
+        "expected": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "actual": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/data.py",
+        "expected": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "actual": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/utils.py",
+        "expected": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "actual": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/experiments/run_router_age_recovery.py",
+        "expected": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "actual": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "passed": true
+      }
+    ]
+  },
+  {
+    "condition": "e32_seed43_dense",
+    "passed": true,
+    "implementation": [
+      {
+        "path": "scripts/high_sparsity_coupling/runner.py",
+        "expected": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "actual": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/moe_layer.py",
+        "expected": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "actual": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/experts.py",
+        "expected": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "actual": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/transformer.py",
+        "expected": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "actual": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/__init__.py",
+        "expected": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "actual": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/router.py",
+        "expected": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "actual": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/pruning/router_age.py",
+        "expected": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "actual": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/data.py",
+        "expected": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "actual": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/utils.py",
+        "expected": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "actual": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/experiments/run_router_age_recovery.py",
+        "expected": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "actual": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "passed": true
+      }
+    ]
+  },
+  {
+    "condition": "e32_seed43_final_s0.80",
+    "passed": true,
+    "implementation": [
+      {
+        "path": "scripts/high_sparsity_coupling/runner.py",
+        "expected": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "actual": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/moe_layer.py",
+        "expected": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "actual": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/experts.py",
+        "expected": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "actual": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/transformer.py",
+        "expected": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "actual": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/__init__.py",
+        "expected": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "actual": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/router.py",
+        "expected": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "actual": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/pruning/router_age.py",
+        "expected": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "actual": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/data.py",
+        "expected": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "actual": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/utils.py",
+        "expected": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "actual": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/experiments/run_router_age_recovery.py",
+        "expected": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "actual": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "passed": true
+      }
+    ]
+  },
+  {
+    "condition": "e32_seed43_final_s0.85",
+    "passed": true,
+    "implementation": [
+      {
+        "path": "scripts/high_sparsity_coupling/runner.py",
+        "expected": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "actual": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/moe_layer.py",
+        "expected": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "actual": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/experts.py",
+        "expected": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "actual": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/transformer.py",
+        "expected": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "actual": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/__init__.py",
+        "expected": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "actual": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/router.py",
+        "expected": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "actual": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/pruning/router_age.py",
+        "expected": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "actual": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/data.py",
+        "expected": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "actual": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/utils.py",
+        "expected": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "actual": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/experiments/run_router_age_recovery.py",
+        "expected": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "actual": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "passed": true
+      }
+    ]
+  },
+  {
+    "condition": "e32_seed61_dense",
+    "passed": true,
+    "implementation": [
+      {
+        "path": "scripts/high_sparsity_coupling/runner.py",
+        "expected": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "actual": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/moe_layer.py",
+        "expected": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "actual": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/experts.py",
+        "expected": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "actual": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/transformer.py",
+        "expected": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "actual": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/__init__.py",
+        "expected": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "actual": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/router.py",
+        "expected": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "actual": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/pruning/router_age.py",
+        "expected": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "actual": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/data.py",
+        "expected": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "actual": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/utils.py",
+        "expected": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "actual": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/experiments/run_router_age_recovery.py",
+        "expected": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "actual": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "passed": true
+      }
+    ]
+  },
+  {
+    "condition": "e32_seed61_final_s0.80",
+    "passed": true,
+    "implementation": [
+      {
+        "path": "scripts/high_sparsity_coupling/runner.py",
+        "expected": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "actual": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/moe_layer.py",
+        "expected": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "actual": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/experts.py",
+        "expected": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "actual": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/transformer.py",
+        "expected": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "actual": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/__init__.py",
+        "expected": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "actual": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/router.py",
+        "expected": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "actual": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/pruning/router_age.py",
+        "expected": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "actual": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/data.py",
+        "expected": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "actual": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/utils.py",
+        "expected": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "actual": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/experiments/run_router_age_recovery.py",
+        "expected": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "actual": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "passed": true
+      }
+    ]
+  },
+  {
+    "condition": "e32_seed61_final_s0.85",
+    "passed": true,
+    "implementation": [
+      {
+        "path": "scripts/high_sparsity_coupling/runner.py",
+        "expected": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "actual": "e4923f4599991accbd690ef9c8db2df5395ec193f613abfc180a8bf5081236bb",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/moe_layer.py",
+        "expected": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "actual": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/experts.py",
+        "expected": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "actual": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/transformer.py",
+        "expected": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "actual": "918394b843611985f67f875cd4305a42db3a0f31724b1f651fe30c6089e11bcf",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/__init__.py",
+        "expected": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "actual": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/models/router.py",
+        "expected": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "actual": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/pruning/router_age.py",
+        "expected": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "actual": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/data.py",
+        "expected": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "actual": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/utils.py",
+        "expected": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "actual": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6",
+        "passed": true
+      },
+      {
+        "path": "src/moe_lth/experiments/run_router_age_recovery.py",
+        "expected": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "actual": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890",
+        "passed": true
+      }
+    ]
+  }
+]

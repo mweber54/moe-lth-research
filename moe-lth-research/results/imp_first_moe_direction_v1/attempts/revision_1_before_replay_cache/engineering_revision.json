@@ -1,0 +1,29 @@
+{
+  "status": "STOPPED_FOR_EQUIVALENT_REPLAY_OPTIMIZATION",
+  "reason": "Repeated immutable replay metadata checks on GPU became synchronization-bound under concurrent GPU jobs; no numerical invariant failed.",
+  "scientific_grid_or_eligibility_changes": false,
+  "tolerance_changes": false,
+  "other_jobs_stopped": false,
+  "current_worker_stopped": 1083082,
+  "preserved": [
+    "analysis_config.json",
+    "specification_seal.json",
+    "protocol.md",
+    "direction_eligibility.json",
+    "eligibility_cache",
+    "cache",
+    "progress.json",
+    "completion.json",
+    "evaluation_profile.json",
+    "gpu_admission.json",
+    "execution_adder.log"
+  ],
+  "completed_pair_caches": 1,
+  "partial_pilot": "Unpruned seed17 incomplete; log preserved; not counted complete",
+  "cache_invalidation": "All revision1 evaluation/eligibility caches retained here; revision2 recomputes with new source/spec seal and checks completed revision1 pair compatibility",
+  "revision2_specification_sha256": "fff9b85a0dd6ece42704735dfb0dca096c6973ff94457e568485cfdbc5d8ef8c",
+  "revision1_specification_sha256": "03807edbdda52f8478911ed67a9b2cae35853ca0ecc45f4e762f27e1a0c8622b",
+  "revision2_tests": "30 passed",
+  "replay_payload_checks": "Same validation performed once on CPU, full immutable payload hash each reuse, per-forward traces still checked",
+  "scientific_configuration_exactly_equal_excluding_implementation_metadata": true
+}

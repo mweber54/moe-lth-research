@@ -1,0 +1,131 @@
+{
+  "cache_compatibility": {
+    "cached_routing_rows": "revalidated with count consistency and per-disabled-layer acceptance assertions before output use",
+    "checkpoint_and_validation_identities": "verified against current audited state before each cache reuse",
+    "forward_implementation_unchanged": true,
+    "numerical_settings": "FP32_TF32off; cached readout precision and 31-batch/492416-target shape checked before reuse",
+    "policy_mapping": {
+      "current": {
+        "NATIVE": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "NO_DROP_ALL": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "NO_DROP_L0": [
+          false,
+          true,
+          true,
+          true
+        ],
+        "NO_DROP_L1": [
+          true,
+          false,
+          true,
+          true
+        ],
+        "NO_DROP_L2": [
+          true,
+          true,
+          false,
+          true
+        ],
+        "NO_DROP_L3": [
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "legacy": "NATIVE all enabled; NO_DROP_ALL all disabled; NO_DROP_Lk disables only layer k",
+      "policy_version_unchanged": true
+    },
+    "policy_version_unchanged": "capacity-rejection-only-v1"
+  },
+  "correction": "Capacity-disabled runtime assertion incorrectly applied to all NO_DROP-prefixed layers.",
+  "historical_registration_hashes_modified": false,
+  "impact": "Validation-only defect; capacity policy execution and cached numerical readouts are unchanged.",
+  "new_source_sha256": "e842e8487eb0e3a5cf30fa69f109c7b5883095bf447a59bba562ce52cb9f219a",
+  "old_source_sha256": "0bb5bd88c041421c60b809d3adbf19c526d4fcee8fbe3fe1a28e74ce00ec4ce6",
+  "prior_attempt_files": {
+    "analysis_config.json": {
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_capacity_diagnostic_v1/attempts/capacity_assertion_scope_fix_20261027/prior_analysis_config.json",
+      "sha256": "974e29e6e12bcda00380e1dad6e831c0d4a3e67fb61f3cb9c465ecb895237f94"
+    },
+    "artifact_inventory.csv": {
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_capacity_diagnostic_v1/attempts/capacity_assertion_scope_fix_20261027/prior_artifact_inventory.csv",
+      "sha256": "23d929fc34dab6059807a1a9a8b8d2922f40a4aa091db1354d4700e51fc35109"
+    },
+    "checkpoint_and_validation_provenance.json": {
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_capacity_diagnostic_v1/attempts/capacity_assertion_scope_fix_20261027/prior_checkpoint_and_validation_provenance.json",
+      "sha256": "7576fe27064c2bdb419f4e2fe267de061d4b35fa818f7c8ca95d39c95019fc02"
+    },
+    "completion.json": {
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_capacity_diagnostic_v1/attempts/capacity_assertion_scope_fix_20261027/prior_completion.json",
+      "sha256": "625cf2ceb7b01e3315fd1a4f281ea1ec6a96d52dde134f49a0dad0f15aeffd4b"
+    },
+    "compute_accounting.json": {
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_capacity_diagnostic_v1/attempts/capacity_assertion_scope_fix_20261027/prior_compute_accounting.json",
+      "sha256": "c3db4a5ff98cad0e80085c1ecf6a0ebe66a700abd368ef869f90d9738d4c03bd"
+    },
+    "evaluation_profile.json": {
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_capacity_diagnostic_v1/attempts/capacity_assertion_scope_fix_20261027/prior_evaluation_profile.json",
+      "sha256": "a1f9ddf99a463540b493f59c423e10f2d52b95c6d323105f98c926d189c6f57c"
+    },
+    "findings.md": {
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_capacity_diagnostic_v1/attempts/capacity_assertion_scope_fix_20261027/prior_findings.md",
+      "sha256": "019a4868339beec93cc11119dd103a8f347ca6f8520fd360fb54d1c46d52ad19"
+    },
+    "gpu_admission.json": {
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_capacity_diagnostic_v1/attempts/capacity_assertion_scope_fix_20261027/prior_gpu_admission.json",
+      "sha256": "74ec73597c7e707f339159268fb4034fcdcc06f999c423761e7573e3ab6f55e1"
+    },
+    "metric_definitions.md": {
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_capacity_diagnostic_v1/attempts/capacity_assertion_scope_fix_20261027/prior_metric_definitions.md",
+      "sha256": "5bf0d1662884ccd7d232ac1be7c022e0c23699d84b27ac16593e2707b2b0a6a4"
+    },
+    "numerical_checks.json": {
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_capacity_diagnostic_v1/attempts/capacity_assertion_scope_fix_20261027/prior_numerical_checks.json",
+      "sha256": "0427b00ca176039b6a7204f0ec7ed2f78f143de1d04db5a04362811bae829c55"
+    }
+  },
+  "prior_cache_files": [
+    {
+      "cache_identity": {
+        "mask_sha256": "6190adc6505729e4c8c4400c360f303b757ab6c3371a162b74e1e2af33379861",
+        "model_state_sha256": "77dd1bdaac90117959508a57ffbd098edf9aa9c799c7c33f0862f080a4d736cc",
+        "model_type": "sparse",
+        "offset": 0,
+        "validation_sha256": "09a073e9f03bbb854d3903081440b9e0869feb8e04b50b3b1be76a1d42658b22",
+        "version": "capacity-rejection-only-v1"
+      },
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_capacity_diagnostic_v1/cache/readout_ecd5053ac49eb1643a1815d1aa02699ff283896f87c1905e9f3a92e34c39f29e.json",
+      "result_model_type": "sparse",
+      "result_offset": 0,
+      "result_seed": 7,
+      "sha256": "95c1078a10915ddf0877063ae31d8da534860fdb8778d9a6d62ea7c8cdb3503c"
+    }
+  ],
+  "source_revision_history": [
+    "5ca6822ac97699297fe438827281a60274853c9182c432925e5710bb5674d23d"
+  ],
+  "status": "PRESERVED_BEFORE_CORRECTION",
+  "unchanged_forward_implementation_hashes": {
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/src/moe_lth/models/moe_layer.py": {
+      "current_sha256": "7b9ca9d9c3a1020125d5d9d42f8429cbd0aea8ca42e8dcc334c1d8724465e21a",
+      "prior_sha256": "7b9ca9d9c3a1020125d5d9d42f8429cbd0aea8ca42e8dcc334c1d8724465e21a",
+      "unchanged": true
+    },
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/src/moe_lth/models/transformer.py": {
+      "current_sha256": "12e14e68c2cd7a223173710c9fb5166823af470ceca605c1c0185063037ba9f6",
+      "prior_sha256": "12e14e68c2cd7a223173710c9fb5166823af470ceca605c1c0185063037ba9f6",
+      "unchanged": true
+    }
+  }
+}

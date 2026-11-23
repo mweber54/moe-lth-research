@@ -1,0 +1,50 @@
+{
+  "parent_experiment": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/dataset_b_pilot",
+  "experts": 32,
+  "seeds": [
+    7,
+    17,
+    29,
+    43,
+    61
+  ],
+  "router_ages": [
+    0,
+    50,
+    100
+  ],
+  "sparsities": [
+    0.5,
+    0.55,
+    0.6,
+    0.65
+  ],
+  "arms": {
+    "A": [
+      2500,
+      2500
+    ],
+    "B": [
+      10000,
+      2500
+    ],
+    "C": [
+      2500,
+      10000
+    ],
+    "D": [
+      10000,
+      10000
+    ]
+  },
+  "learned_recoveries": 240,
+  "random_recoveries": 80,
+  "new_source_runs": 0,
+  "new_dense_runs": 0,
+  "mask_selection": "source-final per-tensor magnitude",
+  "random_control": "exact per-tensor retained counts",
+  "recovery_initialization": "preserve parent protocol",
+  "execution": "not launched; requires extension runner and validation",
+  "dense_matching_tolerance": null,
+  "analysis_note": "Report paired sparse-minus-dense differences. Do not select a matching tolerance after inspecting these results."
+}

@@ -1,0 +1,128 @@
+{
+  "version": 1,
+  "written_before_new_outcomes": true,
+  "exploratory_post_hoc": true,
+  "cohort": {
+    "experts": 32,
+    "seeds": [
+      7,
+      17,
+      29,
+      43,
+      61
+    ],
+    "sparsities": [
+      0.8,
+      0.85
+    ],
+    "dense_controls": "five unique matched dense (one per seed)",
+    "steps": [
+      0,
+      25,
+      100,
+      250,
+      500,
+      1000,
+      1500,
+      2000,
+      2500,
+      2525,
+      2600,
+      3000,
+      3500,
+      4000,
+      4500,
+      5000
+    ]
+  },
+  "states": {
+    "A": "original initialization",
+    "B": "masked initialization actually used for recovery (A * mask)",
+    "C": "direct trained IMP state that selected the mask (.80: round_07, .85: round_08 final_recovered; round_08 is bit-identical to final_s0.80 endpoint)",
+    "D": "diagnostic copy of C with selected mask applied (immediate pruning distortion)",
+    "E": "recovered sparse and same-step dense snapshots",
+    "F": "source final dense (step_2500 reference)"
+  },
+  "probes": {
+    "registered": "high_sparsity_coupling_v1/probes/seed_S.pt: validation batch 0 (128x128 tokens), 2048 registered positions, full source hidden inputs for capacity",
+    "additional_probes": "gradient minibatches only (separate from the validation probe)"
+  },
+  "activation_geometry": {
+    "quantities": [
+      "post-GELU fc1 hidden",
+      "complete expert output"
+    ],
+    "modes": {
+      "fixed_source": "primary",
+      "dense_native": "secondary (same dense-native vectors to both experts)"
+    },
+    "cka": "centered linear CKA, undefined if centered norm zero",
+    "subspace": "feature-space R^d primary (centered), sample-space R^N secondary; ranks 8/16/32 each only if <= numerical rank and <= N-1; degenerate cutoff flagged",
+    "precision": "fp32 forward, float64 reductions, TF32 off",
+    "aggregation": "per layer-expert -> equal-expert mean per layer -> seed; seed is the replication unit"
+  },
+  "fixed_gate_distortion": {
+    "formula": "D = mean_x ||sum_e a_e(x)[f_sparse,e(x)-f_dense,e(x)]||^2",
+    "gates": "softmax prob of selected top-1 expert, capacity-accepted, capacity priority = selected probability over the full batch",
+    "references": [
+      "same-step dense gates (fixed_source and dense_native inputs)",
+      "fixed source-final gates (fixed_source inputs)",
+      "A gates at step 0 == same-step dense at step 0",
+      "C gates for C->D"
+    ],
+    "normalization": "mean squared norm of reference MoE output under the same frozen gates and reference experts",
+    "populations": [
+      "accepted-only",
+      "full 2048 probe (dropped = 0)"
+    ]
+  },
+  "gradient_geometry": {
+    "steps": [
+      0,
+      2500,
+      5000
+    ],
+    "minibatches": "16 per seed: training-loader batches 0,20,...,300 of epoch 1 (batch size 128), same for dense and sparse; selected by index only",
+    "loss": "task = mean token CE; aux = 0.1 * mean load-balance auxiliary loss, separate backward",
+    "precision": "fp32, TF32 off, eval mode, native forward, no optimizer step, no scaler",
+    "tensors": "expert fc1/fc2 weights per layer",
+    "quantities": [
+      "energy retention ||M*g_d||^2/||g_d||^2",
+      "cosine(M*g_d, g_s|M)",
+      "norms",
+      "uncentered Gram-based subspace overlap r=1,2,4,8 subject to numerical rank"
+    ],
+    "random_mask_controls": {
+      "draws": 10,
+      "exact_per_tensor_keep_counts": true,
+      "seeds": "seed*1000+sparsity*10+draw+7*layer+(matrix==fc2)"
+    }
+  },
+  "mask_structure": {
+    "random_controls_draws": 5,
+    "note": "nesting overlap .75 is structural; cross-seed overlap is coordinate-based only"
+  },
+  "connectivity": "inventory first; execute only if distinct same-mask same-init endpoints with independent recovery randomness exist; otherwise unavailable",
+  "primary": [
+    "expert-output/hidden activation geometry (fixed_source)",
+    "fixed-gate distortion same-step dense gates",
+    "gradient energy retention"
+  ],
+  "exploratory": [
+    "dense_native mode",
+    "sample-space subspaces",
+    "fixed-source-gate trajectory",
+    "gradient subspace overlap",
+    "mask structure"
+  ],
+  "exclusions": "no condition selected on recovery outcomes; all ten sparse conditions retained; historical/rerun identical states not independent",
+  "expected_coverage": {
+    "activation_states": 80,
+    "activation_pairs_per_state": 2,
+    "expert_units": 128,
+    "gradient_states": 15,
+    "gradient_pairs": 30
+  },
+  "compute_estimate": "activation ~1-2 min/step/seed on H100; gradient ~3 min/seed; storage ~0.5 GB",
+  "precision_note": "historical continuation had TF32 off, rerun TF32 on; these diagnostics use TF32 off for all"
+}

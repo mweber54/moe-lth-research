@@ -1,0 +1,29 @@
+id: ramp_imp_correspondence_v1
+question: Does routing-aware neuron magnitude explain historical IMP support and sparse recoverability?
+status: retrospective_analysis
+entry_point: scripts/ramp_imp_correspondence_v1/run.py
+preimplementation_audit: reports/ramp_imp_audit.md
+report: reports/ramp_imp_correspondence.md
+output: results/ramp_imp_correspondence_v1
+historical_inputs:
+  endpoints: results/imp_80_85/final_recovery_metrics.csv
+  masks: results/imp_80_85/imp_mask_manifest.csv
+  controls: results/imp_mask_information_v2/results.csv
+architectures: [E8, E16, E32]
+seeds: [7, 17, 29, 43, 61]
+sparsities: [0.80, 0.85]
+reference_checkpoint_steps: [0, 250, 1250, 2500]
+additional_checkpoint: unpruned_IMP_discovery_round_00_final
+replication_unit: independent_source_seed_within_architecture_and_sparsity
+calibration:
+  split: train
+  sources: [TinyStories, WikiText]
+  sequences: 64
+  sequence_length: 128
+  batch_size: 32
+  seed: 20261113
+  reject_exact_sequence_overlap_with: full_validation_split
+profiling_device: cpu
+training_enabled: false
+h3: prepared_not_launched
+h3_design: scripts/ramp_imp_correspondence_v1/H3_design.md

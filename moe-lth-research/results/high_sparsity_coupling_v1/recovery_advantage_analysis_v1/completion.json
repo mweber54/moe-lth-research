@@ -1,0 +1,61 @@
+{
+  "all_focused_checks_passed": true,
+  "independent_source_seeds": 5,
+  "noncheckpoint_scalar_evaluations_not_claimed_as_saved_models": true,
+  "observed_full_validation_steps_per_condition": 103,
+  "outputs": {
+    "aligned_internal_rows": 36560,
+    "competing_explanations_file": "competing_explanations.md",
+    "crossover_rows": 10,
+    "figure_files": 4,
+    "gap_decomposition_rows": 1020,
+    "performance_rows": 1030,
+    "token_array_files": 10,
+    "token_summary_rows": 160,
+    "update_event_group_summaries": 600
+  },
+  "primary_conditions": 10,
+  "saved_model_snapshot_steps": [
+    0,
+    25,
+    100,
+    250,
+    500,
+    1000,
+    1500,
+    2000,
+    2500,
+    2525,
+    2600,
+    3000,
+    3500,
+    4000,
+    4500,
+    5000
+  ],
+  "scope": "checkpoint-only; no model evaluation forwards launched",
+  "source_model_tensors_loaded_or_modified": false,
+  "status": "complete",
+  "strict_endpoint_matches": [
+    {
+      "seed": 7,
+      "sparsity": 0.8
+    },
+    {
+      "seed": 7,
+      "sparsity": 0.85
+    },
+    {
+      "seed": 43,
+      "sparsity": 0.8
+    },
+    {
+      "seed": 61,
+      "sparsity": 0.8
+    }
+  ],
+  "test_split_inspected_or_evaluated": false,
+  "token_probe_positions_per_condition_step": 2048,
+  "token_probe_snapshot_steps": 16,
+  "unique_dense_controls": 5
+}

@@ -1,0 +1,27 @@
+{
+  "seed": 61,
+  "step": 0,
+  "attempt": "attempt_1792509615_925833",
+  "implementation": "28321e73da223a02857c957e7895de750389bd50b83e2d0063b3a788883d6522",
+  "seconds": 76.28541421890259,
+  "dense_snapshot": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/high_sparsity_coupling_v1/reruns/e32_seed61_dense/attempt_1792439923731637151/snapshots/step_0000.pt",
+  "dense_snapshot_sha256_in_json": "0b7d051265d1b6ef4973ade17c8ab6f0d66658216533e9905de49bc688661b84",
+  "sparse_snapshots": {
+    "0.80": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/high_sparsity_coupling_v1/reruns/e32_seed61_final_s0.80/attempt_1792443967862059393/snapshots/step_0000.pt",
+    "0.85": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/high_sparsity_coupling_v1/reruns/e32_seed61_final_s0.85/attempt_1792447856250753661/snapshots/step_0000.pt"
+  },
+  "mask_enforced": {
+    "0.80": true,
+    "0.85": true
+  },
+  "precision": "fp32, TF32 off, eval mode, no autocast",
+  "probe_positions": 2048,
+  "probe_sha256": "74a00ef4f2b2bc412ed259b7e3749d08143207cec88c60e54677677ede6575a2",
+  "identities": {
+    "source_inputs_max_dev_from_F_native": 0.0,
+    "dense_step0_equals_original_init": true,
+    "sparse0.80_step0_equals_masked_original": true,
+    "sparse0.85_step0_equals_masked_original": true
+  },
+  "limit_experts": 0
+}

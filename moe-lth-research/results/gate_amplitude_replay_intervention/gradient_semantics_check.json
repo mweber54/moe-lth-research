@@ -1,0 +1,24 @@
+{
+  "same_state_logits_exact": true,
+  "amplitudes_exact": true,
+  "accepted_tokens_exact": true,
+  "detached_gate": true,
+  "nonrouter_task_gradients_differ": true,
+  "gradients": {
+    "router": {
+      "native_task_norm": 0.23579630242489838,
+      "fixed_task_norm": 0.0,
+      "fixed_aux_norm": 0.07375283545430768
+    },
+    "expert": {
+      "native_task_norm": 1.2387836295360484,
+      "fixed_task_norm": 1.2405223739204354,
+      "fixed_aux_norm": 0.0034586555710247676
+    },
+    "shared": {
+      "native_task_norm": 4.359273275235114,
+      "fixed_task_norm": 4.359080682838017,
+      "fixed_aux_norm": 0.04753487528587815
+    }
+  }
+}

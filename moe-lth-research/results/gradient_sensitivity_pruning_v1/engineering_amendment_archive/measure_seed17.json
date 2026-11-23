@@ -1,0 +1,6 @@
+{
+  "status": "FAILED",
+  "attempt": "attempts/measure_seed17/attempt_0001",
+  "host": "viper.cs.kent.edu",
+  "error": "Traceback (most recent call last):\n  File \"/users/kent/student/mweber54/moe-lth-research/moe-lth-research/scripts/gradient_sensitivity_pruning_v1/measure.py\", line 204, in main\n    result=run(args.seed,attempt)\n           ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/users/kent/student/mweber54/moe-lth-research/moe-lth-research/scripts/gradient_sensitivity_pruning_v1/measure.py\", line 172, in run\n    assert torch.all(total+1e-25>=wgmean.abs())\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+}

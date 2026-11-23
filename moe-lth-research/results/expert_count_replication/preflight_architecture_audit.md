@@ -1,0 +1,3 @@
+# Architecture Audit
+
+The current experiment architecture is 8 experts, top-k=1, 4 MoE layers, d_model=256, expert hidden size=1024, capacity factor=1.25, learned linear routers, and auxiliary routing loss weight=0.1. Dense and recovery budgets are 2500 steps, fp16, AdamW, fresh optimizer, and deterministic materialized train/validation schedules. The replication changes only `num_experts` (8 or 12); all other model/data/training settings are inherited unchanged. Expert-local magnitude sparsity remains the fraction pruned within each expert, never whole-expert removal. Router ages are derived as fractions of each architecture's configured dense-reference budget.

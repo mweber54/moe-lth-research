@@ -1,0 +1,13 @@
+{
+  "gpu": "NVIDIA H100 NVL",
+  "torch": "2.7.0",
+  "steps": 20,
+  "duration_seconds": 70.17587488982826,
+  "seconds_per_attempt_including_diagnostics": 3.5087937444914132,
+  "representative_round_hours_linear": 2.4366623225634814,
+  "full_275_stages_hours_same_architecture_linear": 670.0821387049574,
+  "checkpoint_bytes": 71997175,
+  "full_275_checkpoints_gib_same_architecture": 18.43946345616132,
+  "free_disk_gib": 1348.1015625,
+  "limitations": "Short shared-GPU e8 measurement; fixed diagnostics overestimate per-step cost. Other expert counts and contention vary. Includes 225 discovery stages plus 50 recoveries; temporary AdamW resume snapshots add disk usage."
+}

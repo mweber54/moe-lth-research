@@ -1,0 +1,128 @@
+{
+  "new_training_jobs": 10,
+  "reused_references": 10,
+  "attempts_per_new_job": 5000,
+  "estimated_storage_bytes": 64424509440,
+  "available_storage_bytes": 931046359040,
+  "benchmark_required_before_launch": true,
+  "minimum_free_gpu_bytes": 25769803776,
+  "one_worker_per_host": true,
+  "benchmark": [
+    {
+      "host": "viper.cs.kent.edu",
+      "seed": 17,
+      "engineering_only": true,
+      "attempt": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/benchmarks/viper.cs.kent.edu/attempt_1792958485252997015",
+      "attempts": 100,
+      "wall_seconds": 24.7534750290215,
+      "native_segment_seconds": 23.54102504439652,
+      "diagnostic_seconds": 1.3270042575895786,
+      "evaluation_seconds": 2.7135507855564356,
+      "peak_allocated_bytes": 2271148544,
+      "peak_reserved_bytes": 2866806784,
+      "unix": 1792958510.010448
+    },
+    {
+      "host": "adder.cs.kent.edu",
+      "seed": 17,
+      "engineering_only": true,
+      "attempt": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/benchmarks/adder.cs.kent.edu/attempt_1792958496570207197",
+      "attempts": 100,
+      "wall_seconds": 62.039102436974645,
+      "native_segment_seconds": 59.08005427499302,
+      "diagnostic_seconds": 2.7433346150210127,
+      "evaluation_seconds": 4.949425436090678,
+      "peak_allocated_bytes": 2271148544,
+      "peak_reserved_bytes": 2866806784,
+      "unix": 1792958558.6240392
+    }
+  ],
+  "admission_bytes": 25769803776,
+  "estimated_gpu_hours": 7.232714788833012,
+  "canonical_equivalence_and_event_benchmarks": [
+    {
+      "condition": "dense",
+      "mode": "native",
+      "attempts": 8,
+      "seconds": 10.819932136684656,
+      "peak_allocated_bytes": 2210950144,
+      "peak_reserved_bytes": 2604662784
+    },
+    {
+      "condition": "dense",
+      "mode": "adapter",
+      "attempts": 8,
+      "seconds": 10.579473834484816,
+      "peak_allocated_bytes": 3032435712,
+      "peak_reserved_bytes": 3707764736
+    },
+    {
+      "condition": "fixed",
+      "mode": "native",
+      "attempts": 8,
+      "seconds": 8.455049545504153,
+      "peak_allocated_bytes": 2473824768,
+      "peak_reserved_bytes": 2877292544
+    },
+    {
+      "condition": "fixed",
+      "mode": "adapter",
+      "attempts": 8,
+      "seconds": 12.674746162258089,
+      "peak_allocated_bytes": 2472493568,
+      "peak_reserved_bytes": 3160408064
+    },
+    {
+      "condition": "engineering_gradual_events",
+      "mode": "adapter_events",
+      "attempts": 8,
+      "seconds": 15.493469575420022,
+      "peak_allocated_bytes": 2479340544,
+      "peak_reserved_bytes": 3154116608,
+      "diagnostic_seconds": 3.3349212696775794
+    },
+    {
+      "condition": "dense",
+      "mode": "native",
+      "attempts": 8,
+      "seconds": 28.60588654805906,
+      "peak_allocated_bytes": 2210950144,
+      "peak_reserved_bytes": 2604662784
+    },
+    {
+      "condition": "dense",
+      "mode": "adapter",
+      "attempts": 8,
+      "seconds": 42.30707718699705,
+      "peak_allocated_bytes": 3032435712,
+      "peak_reserved_bytes": 3707764736
+    },
+    {
+      "condition": "fixed",
+      "mode": "native",
+      "attempts": 8,
+      "seconds": 38.55397233692929,
+      "peak_allocated_bytes": 2473824768,
+      "peak_reserved_bytes": 2877292544
+    },
+    {
+      "condition": "fixed",
+      "mode": "adapter",
+      "attempts": 8,
+      "seconds": 61.110426642000675,
+      "peak_allocated_bytes": 2472493568,
+      "peak_reserved_bytes": 3133145088
+    },
+    {
+      "condition": "engineering_gradual_events",
+      "mode": "adapter_events",
+      "attempts": 8,
+      "seconds": 74.09532523294911,
+      "peak_allocated_bytes": 2479385600,
+      "peak_reserved_bytes": 3139436544,
+      "diagnostic_seconds": 14.37954065494705
+    }
+  ],
+  "estimate_includes_startup_and_checkpoint_overhead": true,
+  "diagnostic_overhead_allowance": 0.2
+}

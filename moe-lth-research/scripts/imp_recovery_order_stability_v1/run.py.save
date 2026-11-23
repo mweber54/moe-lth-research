@@ -1,0 +1,2855 @@
+from __future__ import annotations
+
+import argparse
+import csv
+import fcntl
+import hashlib
+import json
+import math
+import os
+import random
+import shutil
+import socket
+import subprocess
+import sys
+import time
+import uuid
+from collections import Counter
+from copy import deepcopy
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+sys.path[:0] = [str(ROOT / "src"), str(ROOT / "scripts/fixed_budget_dataset")]
+
+import numpy as np
+import torch
+import torch.nn.functional as F
+from moe_lth.data import build_dataloaders
+from moe_lth.experiments import run_router_age_recovery as recovery
+from moe_lth.models import TinyMoELanguageModel
+from moe_lth.pruning.masks import expert_weight_parameters, load_masks
+from moe_lth.pruning.router_age import (
+    assemble_router_age_model,
+    component_state_dict,
+    parameter_group,
+    selected_experts_per_batch,
+    state_dict_hash,
+)
+
+
+OUT = ROOT / "results/imp_recovery_order_stability_v1"
+COHORT_ROOT = ROOT / "results/high_sparsity_coupling_v1"
+COHORT_PATH = COHORT_ROOT / "cohort.json"
+FREEZE_PATH = COHORT_ROOT / "freeze.json"
+CANONICAL_INDEX = ROOT / "results/final_dataset_a/canonical/dataset_a_canonical.csv"
+SEEDS = (7, 17, 29, 43, 61)
+ORDER_SEEDS = (91001, 91002)
+ORDER_NAMES = ("A", "B")
+SEGMENT_SIZE = 2500
+TOTAL_STEPS = 5000
+SNAPSHOT_STEPS = (0, 250, 500, 1000, 1500, 2000, 2500, 2525, 3000, 4000, 5000)
+PILOT = (17, "A")
+HOST_SEEDS = {"viper.cs.kent.edu": (7, 17, 29), "adder.cs.kent.edu": (43, 61)}
+
+PROTOCOL = """# Recovery batch-order stability protocol
+
+This prospectively specified follow-up is within an exploratory project; it is
+not project-level preregistration. The question is whether relative sparse vs
+unpruned recovery outcomes persist across temporal permutations of the same
+training batches while each source initialization and IMP80 mask stays fixed.
+It does not isolate initialization from IMP discovery, establish a mechanism,
+or test a new pruning algorithm.
+
+## Cohort and budget
+
+The fixed cohort is 32 experts and source seeds 7, 17, 29, 43, and 61. Each
+source uses its original step-0 model and original IMP80 mask. Exactly 20 new
+jobs are registered: five sources x two new orders (A=91001, B=91002) x IMP80
+and unpruned. Each job has 5,000 attempted updates. Original-order historical
+runs are references only and are reevaluated under the common readout; no
+original-order reproduction, extra seed, sparsity, mask, or outcome-dependent
+extension is allowed.
+
+The 5,000-batch source-specific training stream is reconstructed by the audited
+native loader. Its batches are never regenerated from another seed. Order A/B
+permute batch indices independently within 0..2499 and 2500..4999 using
+NumPy SeedSequence + PCG64 generators spawned from seeds 91001 and 91002.
+Permutation arrays are saved and their hashes are authoritative. Batch tensors,
+within-batch order, boundaries, and multiplicities are unchanged. The same
+permutation indices are applied to every source, and sparse/unpruned jobs
+within a source/order consume identical batches. Existing source streams are
+recorded as matching or differing across source seeds, not assumed equal.
+
+## Optimization and reset
+
+Every job begins with the exact source step-0 tensors. IMP80 applies only the
+source's original IMP mask; unpruned applies no mask. The native router-age
+recovery trainer, configuration, trainability, AdamW, clipping, auxiliary
+loss, capacity behavior, precision, autocast, GradScaler, persistent gradient
+masking, and post-update mask enforcement are retained. The native two-call
+semantics are retained: run 1 consumes the first permuted segment; then the
+complete model state is checkpointed, a fresh optimizer/scaler is created,
+native RNG reset/model assembly is repeated, and run 2 consumes the second
+permuted segment. Parameter/component hashes are checked across reset.
+Changed batches may change gradients, routes, clipping, and AMP skips; runs are
+not equalized afterward.
+
+Native RNG reset policy is the source seed at the start of each segment, as in
+the verified historical runner. Batch-order generation uses local PCG64
+generators and does not advance global Python, NumPy, CPU Torch, or CUDA Torch
+training RNG state. Dropout is configured off in the audited cohort. Any
+remaining stochastic native operations and numerical environment are recorded.
+
+## Evaluation and endpoints
+
+Model snapshots are saved at global steps 0, 250, 500, 1000, 1500, 2000, 2500,
+2525, 3000, 4000, and 5000. Common evaluation uses the complete validated
+population, FP32, TF32 disabled, eval/inference mode, native capacity, and
+target-token-weighted cross entropy. Target counts and partial-batch handling
+come from materialized source artifacts. Evaluation is isolated from training
+RNG/model/optimizer/scaler state. No geometry or activation-substitution
+analysis is performed.
+
+Primary endpoint is step 5000; secondary endpoint is step 2500. For each
+source/order, gap = sparse CE - unpruned CE; negative means the sparse model
+beats its matched comparator under this protocol, not automatically a strict
+original-LTH claim. Historical endpoints are used only when compatibility is
+demonstrated and are reevaluated with this same readout. No near-match tolerance
+is used.
+
+## Dispatch, resources, and resumption
+
+Engineering checks and a preselected seed-17/order-A sparse+dense pilot precede
+the remaining jobs. Pilot dispatch checks are numerical, provenance,
+endpoint-completeness, and resource checks only; pilot effect signs/match labels
+cannot control dispatch. One worker per available GPU uses shared-home locks,
+unique attempts, atomic statuses and heartbeats, hash-verified inputs, and
+saved model/optimizer/scaler/RNG/batch position for resumption. Failed attempts
+are preserved. No process is killed, no run is extended because of outcome,
+and incomplete outcomes are reported.
+
+## Interpretation limits
+
+Orders are nested within each fixed source-initialization/IMP-mask pair. The
+five source seeds are the replication units; the orders do not add independent
+initializations. One mask per source means initialization, mask identity,
+discovery trajectory, and source-specific streams cannot be separated. This
+study varies temporal order only, within the two fixed optimizer segments; it
+does not vary batch composition, data sampling, discovery order, architecture,
+sparsity, or all optimization randomness. It cannot identify why a pair is
+good.
+"""
+
+
+def _sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def _json(path: Path) -> dict:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _atomic_json(path: Path, value: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(path.name + f".{os.getpid()}.tmp")
+    temporary.write_text(json.dumps(value, indent=2, sort_keys=True, default=str) + "\n", encoding="utf-8")
+    temporary.replace(path)
+
+
+def _write_csv(path: Path, rows: list[dict], fields: list[str] | None = None) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fields = list(dict.fromkeys((fields or []) + [key for row in rows for key in row]))
+    temporary = path.with_name(path.name + f".{os.getpid()}.tmp")
+    with temporary.open("w", newline="", encoding="utf-8") as stream:
+        writer = csv.DictWriter(stream, fieldnames=fields, extrasaction="ignore")
+        writer.writeheader()
+        writer.writerows(rows)
+    temporary.replace(path)
+
+
+def _tensor_state_hash(state: dict[str, torch.Tensor]) -> str:
+    return state_dict_hash({name: tensor.detach().cpu() for name, tensor in state.items()})
+
+
+def _batch_content_hash(batch: tuple[torch.Tensor, torch.Tensor]) -> str:
+    digest = hashlib.sha256()
+    for label, tensor in zip(("inputs", "targets"), batch):
+        cpu = tensor.detach().cpu().contiguous()
+        digest.update(label.encode("utf-8"))
+        digest.update(str(tuple(cpu.shape)).encode("utf-8"))
+        digest.update(str(cpu.dtype).encode("utf-8"))
+        digest.update(cpu.numpy().tobytes())
+    return digest.hexdigest()
+
+
+def _multiset_hash(batch_hashes: list[str]) -> str:
+    digest = hashlib.sha256()
+    for value in sorted(batch_hashes):
+        digest.update(value.encode("ascii"))
+    return digest.hexdigest()
+
+
+def _load_frozen_cohort() -> dict:
+    cohort = _json(COHORT_PATH)
+    freeze = _json(FREEZE_PATH)
+    if _sha256_file(COHORT_PATH) != freeze["cohort_sha256"]:
+        raise RuntimeError("The frozen high-sparsity cohort hash does not match freeze.json")
+    if _sha256_file(COHORT_ROOT / "protocol.md") != freeze["protocol_sha256"]:
+        raise RuntimeError("The frozen high-sparsity protocol hash does not match freeze.json")
+    return cohort
+
+
+def _cohort_jobs() -> tuple[dict[int, dict], dict[int, dict]]:
+    cohort = _load_frozen_cohort()
+    dense = {}
+    sparse = {}
+    for item in cohort["conditions"]:
+        if int(item["config"]["model"]["num_experts"]) != 32:
+            continue
+        seed = int(item["seed"])
+        if seed not in SEEDS:
+            continue
+        if item.get("sparsity") is None:
+            target = dense
+        elif float(item["sparsity"]) == 0.8:
+            target = sparse
+        else:
+            continue
+        if seed in target:
+            raise RuntimeError(f"Frozen cohort has duplicate source records for seed {seed}")
+        target[seed] = item
+    if set(dense) != set(SEEDS) or set(sparse) != set(SEEDS):
+        raise RuntimeError("Frozen cohort does not contain exactly the required 32E dense/IMP80 sources")
+    return sparse, dense
+
+
+def _source_stream(seed: int, config: dict) -> tuple[list[tuple[torch.Tensor, torch.Tensor]], list[tuple[torch.Tensor, torch.Tensor]]]:
+    recovery.seed_everything(seed)
+    train_loader, validation_loader = build_dataloaders(
+        config["data"], int(config["training"]["batch_size"]), seed
+    )
+    train = recovery._materialize_batches(train_loader, TOTAL_STEPS)
+    validation = recovery._materialize_validation_batches(
+        validation_loader, int(config["data"]["validation_blocks"])
+    )
+    return train, validation
+
+
+def _generate_orders() -> dict[str, dict[str, np.ndarray]]:
+    orders: dict[str, dict[str, np.ndarray]] = {}
+    for name, seed in zip(ORDER_NAMES, ORDER_SEEDS):
+        children = np.random.SeedSequence(seed).spawn(2)
+        first = np.random.Generator(np.random.PCG64(children[0])).permutation(SEGMENT_SIZE)
+        second = np.random.Generator(np.random.PCG64(children[1])).permutation(SEGMENT_SIZE) + SEGMENT_SIZE
+        orders[name] = {
+            "segment_0": np.asarray(first, dtype="<u8"),
+            "segment_1": np.asarray(second, dtype="<u8"),
+        }
+    return orders
+
+
+def _array_hash(indices: np.ndarray) -> str:
+    return hashlib.sha256(np.asarray(indices, dtype="<u8").tobytes()).hexdigest()
+
+
+def _code_inventory() -> list[dict]:
+    paths = (
+        Path(__file__).resolve(),
+        ROOT / "src/moe_lth/experiments/run_router_age_recovery.py",
+        ROOT / "src/moe_lth/data.py",
+        ROOT / "src/moe_lth/pruning/router_age.py",
+        ROOT / "src/moe_lth/pruning/rewind.py",
+        ROOT / "src/moe_lth/pruning/masks.py",
+        ROOT / "src/moe_lth/models/transformer.py",
+        ROOT / "src/moe_lth/models/moe_layer.py",
+        ROOT / "src/moe_lth/models/experts.py",
+        ROOT / "src/moe_lth/models/router.py",
+        ROOT / "src/moe_lth/utils.py",
+        ROOT / "scripts/imp_80_85/run.py",
+        ROOT / "scripts/imp_extended_recovery/pipeline.py",
+        ROOT / "scripts/imp_extended_recovery/run.py",
+    )
+    result = []
+    for path in paths:
+        if not path.is_file():
+            raise FileNotFoundError(f"Required protocol/code input is missing: {path}")
+        result.append({"path": str(path), "sha256": _sha256_file(path), "bytes": path.stat().st_size})
+    return result
+
+
+def _resolve_data_path(value: str) -> Path:
+    path = Path(value)
+    return path if path.is_absolute() else ROOT / path
+
+
+def _prepare_into_output() -> None:
+    (OUT / "protocol.md").write_text(PROTOCOL, encoding="utf-8")
+    (OUT / "README.md").write_text(
+        """# Monitoring and resuming the recovery-order study
+
+Run all commands from the repository root with `.venv-highres` (PyTorch 2.7.0).
+Preparation, engineering, throughput profiling, and historical evaluation are
+non-production gates:
+
+```bash
+.venv-highres/bin/python scripts/imp_recovery_order_stability_v1/run.py prepare
+.venv-highres/bin/python scripts/imp_recovery_order_stability_v1/run.py engineering
+.venv-highres/bin/python scripts/imp_recovery_order_stability_v1/run.py benchmark
+.venv-highres/bin/python scripts/imp_recovery_order_stability_v1/run.py evaluate-historical
+.venv-highres/bin/python scripts/imp_recovery_order_stability_v1/run.py verify-host
+.venv-highres/bin/python scripts/imp_recovery_order_stability_v1/run.py seal
+```
+
+Run `verify-host` on both verified hosts, then run `seal`. The shared worker
+manifest assigns Viper seeds 7/17/29 and Adder seeds 43/61. Start one worker per
+available GPU only after checking that external GPU workloads are not active:
+
+```bash
+.venv-highres/bin/python scripts/imp_recovery_order_stability_v1/run.py worker
+```
+
+The worker runs the preselected seed-17/order-A sparse and unpruned pilot first,
+then dispatches remaining jobs only after the outcome-independent pilot gate
+passes. Inspect status and heartbeats with:
+
+```bash
+.venv-highres/bin/python scripts/imp_recovery_order_stability_v1/run.py status
+find results/imp_recovery_order_stability_v1/status -maxdepth 1 -type f -print
+find results/imp_recovery_order_stability_v1/jobs -name heartbeat.json -print
+```
+
+After an interruption, relaunch the same host's worker with:
+
+```bash
+.venv-highres/bin/python scripts/imp_recovery_order_stability_v1/run.py worker --resume
+```
+
+Completed updates are restored from the native interruption checkpoint with
+optimizer, scaler, RNG, model, and batch position. The original permutation
+arrays and identities remain fixed. Failed attempts are retained. After all
+registered jobs complete, produce summaries and figures with:
+
+```bash
+.venv-highres/bin/python scripts/imp_recovery_order_stability_v1/run.py analyze
+```
+""",
+        encoding="utf-8",
+    )
+    sparse_jobs, dense_jobs = _cohort_jobs()
+    cohort = _load_frozen_cohort()
+    frozen_files = {entry["path"]: entry["sha256"] for entry in cohort["files"]}
+
+    orders = _generate_orders()
+    order_manifest = {
+        "generator": "NumPy SeedSequence + PCG64; independent child stream per segment",
+        "numpy_version": np.__version__,
+        "order_seeds": dict(zip(ORDER_NAMES, ORDER_SEEDS)),
+        "segments": {},
+        "same_indices_across_source_seeds": True,
+    }
+    permutation_dir = OUT / "permutations"
+    permutation_dir.mkdir(parents=True, exist_ok=True)
+    for name, segments in orders.items():
+        order_manifest["segments"][name] = {}
+        for segment_name, indices in segments.items():
+            segment_start = 0 if segment_name == "segment_0" else SEGMENT_SIZE
+            expected = np.arange(segment_start, segment_start + SEGMENT_SIZE, dtype="<u8")
+            if len(indices) != SEGMENT_SIZE or not np.array_equal(np.sort(indices), expected):
+                raise RuntimeError(f"{name}/{segment_name} is not a segment-preserving bijection")
+            if np.array_equal(indices, expected):
+                raise RuntimeError(f"{name}/{segment_name} did not change temporal batch order")
+            path = permutation_dir / f"order_{name}_{segment_name}.npy"
+            np.save(path, indices, allow_pickle=False)
+            order_manifest["segments"][name][segment_name] = {
+                "path": str(path.relative_to(OUT)),
+                "sha256": _sha256_file(path),
+                "index_array_sha256": _array_hash(indices),
+                "count": len(indices),
+                "min_index": int(indices.min()),
+                "max_index": int(indices.max()),
+            }
+
+    artifacts: dict[str, dict] = {}
+    stream_records = {}
+    compatibility = []
+    job_rows = []
+    historical_rows = []
+    source_hashes = {}
+    sample_stream_hashes = {}
+
+    def register(path: Path, expected: str | None, role: str) -> dict:
+        resolved = path.resolve()
+        if not resolved.is_file():
+            raise FileNotFoundError(f"Required artifact is missing ({role}): {resolved}")
+        actual = _sha256_file(resolved)
+        if expected is not None and actual != expected:
+            raise RuntimeError(f"Artifact hash mismatch ({role}): {resolved}")
+        if str(resolved) in frozen_files and actual != frozen_files[str(resolved)]:
+            raise RuntimeError(f"Frozen cohort hash mismatch ({role}): {resolved}")
+        entry = {
+            "path": str(resolved),
+            "sha256": actual,
+            "bytes": resolved.stat().st_size,
+            "role": role,
+            "frozen_cohort_hash_present": str(resolved) in frozen_files,
+        }
+        artifacts[str(resolved)] = entry
+        return entry
+
+    freeze = _json(FREEZE_PATH)
+    register(COHORT_PATH, freeze["cohort_sha256"], "frozen_historical_cohort_manifest")
+    register(COHORT_ROOT / "protocol.md", freeze["protocol_sha256"], "frozen_historical_protocol")
+    register(FREEZE_PATH, None, "frozen_historical_freeze_manifest")
+    canonical_entry = cohort["canonical_index"]
+    register(
+        Path(canonical_entry["path"]),
+        canonical_entry.get("sha256"),
+        "canonical_dataset_index",
+    )
+
+    for seed in SEEDS:
+        sparse = sparse_jobs[seed]
+        dense = dense_jobs[seed]
+        init_path = Path(sparse["initial"])
+        if dense["initial"] != sparse["initial"]:
+            raise RuntimeError(f"Matched sparse/dense source initialization differs for seed {seed}")
+        init_entry = register(init_path, sparse["canonical_pair"]["source_checkpoint_hash"], "step0_initialization")
+        init_payload = torch.load(init_path, map_location="cpu", weights_only=False)
+        if int(init_payload.get("step", -1)) != 0:
+            raise RuntimeError(f"Source initialization is not step 0 for seed {seed}")
+        config = init_payload["config"]
+        if int(config["model"]["num_experts"]) != 32 or int(config["seed"]) != seed:
+            raise RuntimeError(f"Source config does not match the cohort for seed {seed}")
+
+        mask_path = Path(sparse["mask"])
+        mask_entry = register(mask_path, None, "original_imp80_mask")
+        mask_metadata_path = mask_path.with_suffix(".json")
+        mask_metadata = _json(mask_metadata_path)
+        mask_meta_entry = register(mask_metadata_path, None, "imp80_mask_provenance")
+        masks = load_masks(mask_path)
+        mask_hash = recovery._mask_hash(masks)
+        masked_init = {
+            name: tensor.detach().cpu().clone() for name, tensor in init_payload["model"].items()
+        }
+        for name, mask in masks.items():
+            masked_init[name].mul_(mask.to(dtype=masked_init[name].dtype))
+        masked_init_hash = _tensor_state_hash(masked_init)
+        stage_path = Path(sparse["boundary"]).parents[1] / "stage.json"
+        stage = _json(stage_path)
+        stage_entry = register(stage_path, None, "imp80_recovery_stage")
+        if mask_hash != stage["mask_hash"] or mask_hash != mask_metadata["mask_hash"]:
+            raise RuntimeError(f"IMP80 mask identity mismatch for seed {seed}")
+        if stage["identity"].get("initial_sha256") != init_entry["sha256"]:
+            raise RuntimeError(f"IMP80 stage does not rewind to the original initialization for seed {seed}")
+        if stage.get("optimizer_step_attempts") != SEGMENT_SIZE:
+            raise RuntimeError(f"IMP80 boundary stage has an unexpected step budget for seed {seed}")
+
+        source_data_hash = sparse["canonical_pair"]["data_hash"]
+        validation_hash = sparse["canonical_pair"]["validation_hash"]
+        if dense["canonical_pair"]["data_hash"] != source_data_hash or dense["canonical_pair"]["validation_hash"] != validation_hash:
+            raise RuntimeError(f"Canonical sparse/dense data identities differ for seed {seed}")
+        train, validation = _source_stream(seed, config)
+        prefix_hash = recovery._batch_sequence_hash(train[:SEGMENT_SIZE])
+        continuation_hash = recovery._batch_sequence_hash(train[SEGMENT_SIZE:])
+        full_hash = recovery._batch_sequence_hash(train)
+        observed_validation_hash = recovery._batch_sequence_hash(validation)
+        if prefix_hash != source_data_hash or prefix_hash != stage["training_batch_sequence_hash"]:
+            raise RuntimeError(f"Reconstructed original first segment differs for seed {seed}")
+        if observed_validation_hash != validation_hash:
+            raise RuntimeError(f"Reconstructed validation stream differs for seed {seed}")
+        sparse_identity = sparse["extension_identity"]
+        dense_identity = dense["extension_identity"]
+        if sparse_identity["training_batch_hash"] != continuation_hash:
+            raise RuntimeError(f"Reconstructed original sparse continuation differs for seed {seed}")
+        dense_continuation_verified = dense_identity["training_batch_hash"] == continuation_hash
+        if not dense_continuation_verified:
+            raise RuntimeError(f"Reconstructed original unpruned continuation differs for seed {seed}")
+        if sparse_identity["validation_batch_hash"] != observed_validation_hash or dense_identity["validation_batch_hash"] != observed_validation_hash:
+            raise RuntimeError(f"Historical sparse/unpruned validation identities differ for seed {seed}")
+
+        per_batch_hashes = [_batch_content_hash(batch) for batch in train]
+        first_multiset = _multiset_hash(per_batch_hashes[:SEGMENT_SIZE])
+        second_multiset = _multiset_hash(per_batch_hashes[SEGMENT_SIZE:])
+        training_files = []
+        for field in ("train_path", "validation_path"):
+            data_path = _resolve_data_path(config["data"][field])
+            expected_data_sha = frozen_files.get(str(data_path.resolve()))
+            if expected_data_sha is None:
+                raise RuntimeError(f"Frozen provenance does not hash the source data file: {data_path}")
+            data_entry = register(data_path, expected_data_sha, f"source_{field}")
+            training_files.append(data_entry)
+        stream_records[str(seed)] = {
+            "source_seed": seed,
+            "source_checkpoint": init_entry,
+            "source_model_hash": _tensor_state_hash(init_payload["model"]),
+            "imp80_masked_step0_model_hash": masked_init_hash,
+            "config": config,
+            "config_sha256": hashlib.sha256(
+                json.dumps(config, sort_keys=True, separators=(",", ":"), default=str).encode()
+            ).hexdigest(),
+            "training_data_files": training_files,
+            "validation_target_tokens": sum(int(target.numel()) for _, target in validation),
+            "validation_batch_count": len(validation),
+            "validation_batch_sequence_hash": observed_validation_hash,
+            "training_batch_count": len(train),
+            "training_batch_sequence_hash": full_hash,
+            "first_segment_batch_sequence_hash": prefix_hash,
+            "second_segment_batch_sequence_hash": continuation_hash,
+            "first_segment_multiset_hash": first_multiset,
+            "second_segment_multiset_hash": second_multiset,
+            "per_batch_content_hashes": per_batch_hashes,
+            "per_batch_hashes_sha256": hashlib.sha256("".join(per_batch_hashes).encode("ascii")).hexdigest(),
+            "sparse_and_unpruned_historical_second_segment_match": dense_continuation_verified,
+            "sparse_and_unpruned_historical_validation_match": True,
+            "source_original_training_stream_cross_seed_match_pending": True,
+            "mask": {**mask_entry, "mask_hash": mask_hash, "provenance": mask_meta_entry},
+            "imp80_stage": stage_entry,
+            "imp80_stage_attempts": stage["optimizer_step_attempts"],
+            "imp80_stage_applied_updates": stage["optimizer_steps_applied"],
+        }
+        sample_stream_hashes[seed] = full_hash
+
+        for model_type, item in (("imp80", sparse), ("unpruned", dense)):
+            historical_checkpoints = {}
+            for history_step, history_path in item["historical_checkpoints"].items():
+                candidate = Path(history_path)
+                expected_history_hash = frozen_files.get(str(candidate.resolve()))
+                if expected_history_hash is None:
+                    raise RuntimeError(f"Frozen provenance does not hash historical checkpoint {candidate}")
+                historical_checkpoints[history_step] = register(
+                    candidate,
+                    expected_history_hash,
+                    f"historical_{model_type}_step{history_step}",
+                )
+            endpoint_path = Path(item["historical_checkpoints"]["5000"])
+            boundary_path = Path(item["boundary"])
+            extension_dir = Path(item["historical_checkpoints"]["5000"]).parent.parent
+            extension_manifest_path = extension_dir / "extension_manifest.json"
+            extension_manifest = _json(extension_manifest_path)
+            endpoint_entry = historical_checkpoints["5000"]
+            boundary_entry = register(boundary_path, item["extension_identity"]["source_checkpoint_sha256"], f"historical_{model_type}_step2500")
+            extension_entry = register(extension_manifest_path, None, f"historical_{model_type}_extension_manifest")
+            boundary_training_hash = prefix_hash
+            boundary_validation_hash = observed_validation_hash
+            boundary_metadata_entry = None
+            if model_type == "unpruned":
+                boundary_metadata_path = Path(item["canonical_pair"]["dense_artifact_path"]) / "metadata.json"
+                boundary_metadata = _json(boundary_metadata_path)
+                boundary_metadata_entry = register(boundary_metadata_path, None, "historical_unpruned_step2500_metadata")
+                boundary_training_hash = boundary_metadata.get("training_batch_sequence_hash", "")
+                boundary_validation_hash = boundary_metadata.get("validation_batch_sequence_hash", "")
+                if boundary_training_hash != prefix_hash or boundary_validation_hash != observed_validation_hash:
+                    raise RuntimeError(f"Historical dense first-segment stream mismatch for seed {seed}")
+            endpoint_payload = torch.load(endpoint_path, map_location="cpu", weights_only=False)
+            if int(endpoint_payload.get("step", -1)) != TOTAL_STEPS:
+                raise RuntimeError(f"Historical endpoint is not global step 5000: {endpoint_path}")
+            if endpoint_payload.get("identity") != item["extension_identity"]:
+                raise RuntimeError(f"Historical endpoint identity mismatch: {endpoint_path}")
+            if endpoint_payload["identity"]["source_checkpoint_sha256"] != boundary_entry["sha256"]:
+                raise RuntimeError(f"Historical endpoint has a different step-2500 boundary identity for seed {seed}")
+            expected_mask = mask_hash if model_type == "imp80" else recovery._mask_hash({})
+            if endpoint_payload.get("mask_hash") != expected_mask:
+                raise RuntimeError(f"Historical endpoint mask identity mismatch: {endpoint_path}")
+            historical_rows.append({
+                "seed": seed,
+                "model_type": model_type,
+                "historical_checkpoint": str(endpoint_path),
+                "historical_checkpoint_sha256": endpoint_entry["sha256"],
+                "historical_step3000_sha256": historical_checkpoints["3000"]["sha256"],
+                "historical_step4000_sha256": historical_checkpoints["4000"]["sha256"],
+                "historical_step5000_sha256": historical_checkpoints["5000"]["sha256"],
+                "step2500_boundary": str(boundary_path),
+                "step2500_boundary_sha256": boundary_entry["sha256"],
+                "extension_manifest": str(extension_manifest_path),
+                "extension_manifest_sha256": extension_entry["sha256"],
+                "source_step0_sha256": init_entry["sha256"],
+                "imp80_mask_sha256": mask_hash if model_type == "imp80" else "",
+                "canonical_first_segment_hash": prefix_hash,
+                "historical_second_segment_hash": item["extension_identity"]["training_batch_hash"],
+                "reconstructed_second_segment_hash": continuation_hash,
+                "historical_second_segment_matches": item["extension_identity"]["training_batch_hash"] == continuation_hash,
+                "historical_first_segment_hash": boundary_training_hash,
+                "historical_first_segment_matches": boundary_training_hash == prefix_hash,
+                "validation_hash_matches": item["extension_identity"]["validation_batch_hash"] == observed_validation_hash,
+                "boundary_metadata": str(boundary_metadata_entry["path"]) if boundary_metadata_entry else str(stage_path),
+                "historical_optimizer_protocol": item["extension_identity"]["optimizer_protocol"],
+                "historical_common_readout_pending": True,
+                "compatibility": "compatible",
+                "common_FP32_readout_pending": True,
+            })
+
+        compatibility.append({
+            "seed": seed,
+            "architecture_experts": 32,
+            "initialization_step": 0,
+            "source_checkpoint_sha256": init_entry["sha256"],
+            "imp80_mask_sha256": mask_hash,
+            "imp80_mask_source": "original IMP round 8 mask_08.pt",
+            "imp80_mask_provenance_sha256": mask_meta_entry["sha256"],
+            "source_config_sha256": stream_records[str(seed)]["config_sha256"],
+            "first_segment_stream_hash": prefix_hash,
+            "second_segment_stream_hash": continuation_hash,
+            "validation_stream_hash": observed_validation_hash,
+            "sparse_historical_stream_match": True,
+            "unpruned_historical_second_segment_match": dense_continuation_verified,
+            "native_two_segment_reset": "fresh AdamW/GradScaler; complete model retained; source-seed RNG reset and model assembly",
+            "historical_sparse_endpoint_step": TOTAL_STEPS,
+            "historical_unpruned_endpoint_step": TOTAL_STEPS,
+            "historical_model_readouts_pending": True,
+            "historical_unpruned_first_segment_match": True,
+            "historical_sparse_first_segment_match": True,
+            "status": "compatible",
+        })
+
+        for order_name, order_seed in zip(ORDER_NAMES, ORDER_SEEDS):
+            for model_type in ("imp80", "unpruned"):
+                job_id = f"e32_seed{seed}_order_{order_name}_{model_type}"
+                job_rows.append({
+                    "job_id": job_id,
+                    "seed": seed,
+                    "num_experts": 32,
+                    "order": order_name,
+                    "permutation_seed": order_seed,
+                    "model_type": model_type,
+                    "initial_checkpoint": str(init_path),
+                    "initial_checkpoint_sha256": init_entry["sha256"],
+                    "initial_model_state_hash": (
+                        masked_init_hash if model_type == "imp80"
+                        else stream_records[str(seed)]["source_model_hash"]
+                    ),
+                    "mask_path": str(mask_path) if model_type == "imp80" else "",
+                    "mask_sha256": mask_hash if model_type == "imp80" else "",
+                    "order_segment0_sha256": order_manifest["segments"][order_name]["segment_0"]["index_array_sha256"],
+                    "order_segment1_sha256": order_manifest["segments"][order_name]["segment_1"]["index_array_sha256"],
+                    "steps_attempted": TOTAL_STEPS,
+                    "segment0_steps": SEGMENT_SIZE,
+                    "segment1_steps": SEGMENT_SIZE,
+                    "pilot": seed == PILOT[0] and order_name == PILOT[1],
+                    "status_path": f"status/{job_id}.json",
+                    "output_path": f"jobs/{job_id}",
+                })
+
+        # Do not keep five 5,000-batch streams resident while preparing.
+        del train, validation, per_batch_hashes, init_payload, endpoint_payload
+
+    if len(job_rows) != 20:
+        raise RuntimeError(f"Expected exactly 20 registered jobs, found {len(job_rows)}")
+    for seed in SEEDS:
+        for model_type in ("imp80", "unpruned"):
+            paired = [
+                row for row in job_rows
+                if int(row["seed"]) == seed and row["model_type"] == model_type
+            ]
+            if len(paired) != 2 or len({row["initial_model_state_hash"] for row in paired}) != 1:
+                raise RuntimeError(f"Order starts do not share identical source tensors for seed {seed}/{model_type}")
+        for order_name in ORDER_NAMES:
+            paired = [
+                row for row in job_rows
+                if int(row["seed"]) == seed and row["order"] == order_name
+            ]
+            if len(paired) != 2 or len({row["order_segment0_sha256"] for row in paired}) != 1 or len(
+                {row["order_segment1_sha256"] for row in paired}
+            ) != 1:
+                raise RuntimeError(f"Sparse/unpruned permutation arrays differ for seed {seed}/{order_name}")
+
+    reference_hash = sample_stream_hashes[SEEDS[0]]
+    for seed in SEEDS:
+        stream_records[str(seed)]["source_original_training_stream_cross_seed_match"] = (
+            sample_stream_hashes[seed] == reference_hash
+        )
+        stream_records[str(seed)]["cross_seed_reference_seed"] = SEEDS[0]
+
+    source_masks = {
+        seed: {
+            "initial_checkpoint": stream_records[str(seed)]["source_checkpoint"],
+            "initial_model_state_hash": stream_records[str(seed)]["source_model_hash"],
+            "imp80_masked_step0_model_hash": stream_records[str(seed)]["imp80_masked_step0_model_hash"],
+            "imp80_mask": stream_records[str(seed)]["mask"],
+        }
+        for seed in SEEDS
+    }
+    stream_manifest = {
+        "canonical_stream_protocol": "native Dataset A materialized stream; 5,000 complete batches; source seed/config preserved",
+        "num_experts": 32,
+        "seeds": stream_records,
+        "cross_seed_full_streams_all_identical": len(set(sample_stream_hashes.values())) == 1,
+        "validation_target_token_counts_verified": True,
+    }
+    _atomic_json(OUT / "canonical_stream_manifest.json", stream_manifest)
+    _atomic_json(OUT / "recovery_order_manifest.json", order_manifest)
+    _atomic_json(OUT / "initialization_and_mask_hashes.json", source_masks)
+    _write_csv(OUT / "artifact_inventory.csv", list(artifacts.values()))
+    _write_csv(OUT / "historical_compatibility.csv", compatibility)
+    _write_csv(OUT / "job_manifest.csv", job_rows)
+    _write_csv(OUT / "historical_endpoints_inventory.csv", historical_rows)
+
+    code = _code_inventory()
+    registration = {
+        "title": "32E IMP80 recovery batch-order stability",
+        "registration_scope": "prospectively specified follow-up within an exploratory project",
+        "created_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "seed_cohort": list(SEEDS),
+        "orders": dict(zip(ORDER_NAMES, ORDER_SEEDS)),
+        "model_types": ["imp80", "unpruned"],
+        "job_count": len(job_rows),
+        "attempted_updates_per_job": TOTAL_STEPS,
+        "pilot": {"seed": PILOT[0], "order": PILOT[1], "jobs": 2, "outcome_independent_dispatch": True},
+        "snapshot_steps": list(SNAPSHOT_STEPS),
+        "source_and_mask_hashes_sha256": _sha256_file(OUT / "initialization_and_mask_hashes.json"),
+        "canonical_stream_manifest_sha256": _sha256_file(OUT / "canonical_stream_manifest.json"),
+        "recovery_order_manifest_sha256": _sha256_file(OUT / "recovery_order_manifest.json"),
+        "job_manifest_sha256": _sha256_file(OUT / "job_manifest.csv"),
+        "artifact_inventory_sha256": _sha256_file(OUT / "artifact_inventory.csv"),
+        "historical_compatibility_sha256": _sha256_file(OUT / "historical_compatibility.csv"),
+        "protocol_sha256": _sha256_file(OUT / "protocol.md"),
+        "code_inputs": code,
+        "optimizer_reset": "fresh AdamW and GradScaler at 2,500; complete model state retained",
+        "stochasticity_audit": {
+            "dropout_probability_by_seed": {
+                seed: stream_records[str(seed)]["config"]["model"]["dropout"] for seed in SEEDS
+            },
+            "dropout_active": any(
+                float(stream_records[str(seed)]["config"]["model"]["dropout"]) > 0.0
+                for seed in SEEDS
+            ),
+            "native_router_or_capacity_sampling": False,
+            "training_data_randomization_after_materialization": False,
+            "global_training_rng_reset": "Python, NumPy, CPU Torch, and all CUDA RNGs are reset to the source seed before each native segment model assembly",
+            "order_rng": "isolated NumPy SeedSequence/PCG64 generators; does not mutate global RNG state",
+            "stochastic_numerical_operations": "CUDA/AMP kernels may be numerically nondeterministic across hosts; no cross-host bitwise requirement",
+        },
+        "evaluation": {
+            "precision": "FP32",
+            "tf32": False,
+            "mode": "eval/inference",
+            "batching": "complete contextual validation batches; native capacity",
+            "loss_weighting": "sum over target tokens divided by verified target token count",
+        },
+        "evaluation_identities": {
+            seed: {
+                "validation_stream_hash": stream_records[str(seed)]["validation_batch_sequence_hash"],
+                "validation_batch_count": stream_records[str(seed)]["validation_batch_count"],
+                "target_token_count": stream_records[str(seed)]["validation_target_tokens"],
+            }
+            for seed in SEEDS
+        },
+        "numerical_environment": {
+            "python": sys.version.split()[0],
+            "torch": torch.__version__,
+            "cuda_runtime": torch.version.cuda,
+            "numpy": np.__version__,
+            "device": torch.cuda.get_device_name(0) if torch.cuda.is_available() else "CPU preparation",
+        },
+        "numerical_tolerances": {
+            "state_reset_hash": "exact tensor-state hash equality",
+            "wrapper_equivalence": "same-host exact state equality for deterministic short CPU engineering stream",
+            "common_evaluation": "FP32 readouts are exact to accumulated float64 token-loss sum on fixed hardware; no post-hoc near-match threshold",
+        },
+        "historical_order_jobs": 0,
+        "new_order_jobs": len(job_rows),
+        "allowed_outcome_dependent_extensions": 0,
+    }
+    _atomic_json(OUT / "registration.json", registration)
+    _atomic_json(
+        OUT / "preparation.json",
+        {
+            "status": "PASS",
+            "registered_jobs": len(job_rows),
+            "historical_endpoints": len(historical_rows),
+            "historical_streams_verified": len(compatibility),
+            "prepared_at_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        },
+    )
+
+
+def prepare() -> None:
+    global OUT
+    target = OUT
+    if target.exists():
+        raise FileExistsError(f"Study output directory already exists: {target}")
+    staging = target.with_name(f".{target.name}.prepare_{time.time_ns()}")
+    staging.mkdir(parents=True, exist_ok=False)
+    OUT = staging
+    try:
+        _prepare_into_output()
+    except BaseException:
+        OUT = target
+        shutil.rmtree(staging)
+        raise
+    OUT = target
+    staging.replace(target)
+    print(f"Prepared 20 jobs under {target}")
+
+
+def _verify_registration() -> dict:
+    registration_path = OUT / "registration.json"
+    if not registration_path.is_file():
+        raise FileNotFoundError(f"Run prepare first: {registration_path}")
+    registration = _json(registration_path)
+    for item in registration["code_inputs"]:
+        path = Path(item["path"])
+        if not path.is_file() or _sha256_file(path) != item["sha256"]:
+            raise RuntimeError(f"Registered code input changed after registration: {path}")
+    for filename, key in (
+        ("initialization_and_mask_hashes.json", "source_and_mask_hashes_sha256"),
+        ("canonical_stream_manifest.json", "canonical_stream_manifest_sha256"),
+        ("recovery_order_manifest.json", "recovery_order_manifest_sha256"),
+        ("job_manifest.csv", "job_manifest_sha256"),
+        ("artifact_inventory.csv", "artifact_inventory_sha256"),
+        ("historical_compatibility.csv", "historical_compatibility_sha256"),
+        ("protocol.md", "protocol_sha256"),
+    ):
+        if _sha256_file(OUT / filename) != registration[key]:
+            raise RuntimeError(f"Sealed registration input changed: {filename}")
+    return registration
+
+
+def seal() -> None:
+    registration = _verify_registration()
+    checks_path = OUT / "engineering_checks.json"
+    benchmark_path = OUT / "engineering/throughput_benchmark/benchmark.json"
+    historical_path = OUT / "historical_endpoint_readouts.csv"
+    for path in (checks_path, benchmark_path, historical_path):
+        if not path.is_file():
+            raise FileNotFoundError(f"Pre-production seal input is missing: {path}")
+    checks = _json(checks_path)
+    if checks.get("status") != "PASS":
+        raise RuntimeError("Engineering checks have not passed")
+    benchmark_record = _json(benchmark_path)
+    if not benchmark_record.get("engineering_only") or not math.isfinite(float(benchmark_record["seconds_per_attempt"])):
+        raise RuntimeError("Engineering throughput profile is invalid")
+    historical_rows = list(csv.DictReader(historical_path.open(encoding="utf-8")))
+    if len(historical_rows) != len(SEEDS) * 2 * 4:
+        raise RuntimeError("Expected common readouts for historical steps 2500/3000/4000/5000")
+    if any(row.get("historical_compatibility") != "compatible" for row in historical_rows):
+        raise RuntimeError("A historical endpoint failed compatibility or common-readout evaluation")
+    host_records = {}
+    for host in HOST_SEEDS:
+        path = OUT / "hosts" / f"{host}.json"
+        if not path.is_file():
+            raise FileNotFoundError(f"Required pre-production input verification is missing: {path}")
+        report = _json(path)
+        if report.get("host") != host or report.get("verified") is not True:
+            raise RuntimeError(f"Invalid host verification report: {path}")
+        host_records[host] = {"path": str(path), "sha256": _sha256_file(path)}
+    registration.update({
+        "engineering_checks_sha256": _sha256_file(checks_path),
+        "throughput_benchmark_sha256": _sha256_file(benchmark_path),
+        "historical_common_readout_sha256": _sha256_file(historical_path),
+        "host_input_verification": host_records,
+        "production_ready": True,
+        "production_sealed_at_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "estimated_gpu_hours": benchmark_record["estimated_total_gpu_hours"],
+        "estimated_storage_bytes": benchmark_record["snapshot_storage_estimate_bytes"],
+    })
+    _atomic_json(OUT / "registration.json", registration)
+    _atomic_json(
+        OUT / "production_seal.json",
+        {
+            "status": "SEALED",
+            "registration_sha256": _sha256_file(OUT / "registration.json"),
+            "engineering_checks_sha256": registration["engineering_checks_sha256"],
+            "historical_common_readout_sha256": registration["historical_common_readout_sha256"],
+            "host_input_verification": host_records,
+        },
+    )
+
+
+def _verify_artifacts_on_host() -> dict:
+    _verify_registration()
+    rows = list(csv.DictReader((OUT / "artifact_inventory.csv").open(encoding="utf-8")))
+    checked = []
+    for row in rows:
+        path = Path(row["path"])
+        actual = _sha256_file(path)
+        if actual != row["sha256"]:
+            raise RuntimeError(f"Host input verification failed for {path}")
+        checked.append({"path": str(path), "sha256": actual, "bytes": path.stat().st_size})
+    result = {
+        "host": socket.getfqdn(),
+        "verified_at_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "file_count": len(checked),
+        "verified": True,
+        "torch_version": torch.__version__,
+        "cuda_available": torch.cuda.is_available(),
+        "gpu_names": [torch.cuda.get_device_name(i) for i in range(torch.cuda.device_count())],
+        "files": checked,
+    }
+    _atomic_json(OUT / "hosts" / f"{socket.getfqdn()}.json", result)
+    return result
+
+
+def _permutations() -> dict[str, dict[str, np.ndarray]]:
+    manifest = _json(OUT / "recovery_order_manifest.json")
+    result = {}
+    for order_name in ORDER_NAMES:
+        result[order_name] = {}
+        for segment_name in ("segment_0", "segment_1"):
+            record = manifest["segments"][order_name][segment_name]
+            path = OUT / record["path"]
+            if _sha256_file(path) != record["sha256"]:
+                raise RuntimeError(f"Saved permutation file hash mismatch: {path}")
+            array = np.load(path, allow_pickle=False)
+            if _array_hash(array) != record["index_array_sha256"]:
+                raise RuntimeError(f"Saved permutation array hash mismatch: {path}")
+            result[order_name][segment_name] = array.astype(np.int64, copy=False)
+    return result
+
+
+def _apply_order(canonical_batches: list, indices: np.ndarray) -> list:
+    return [canonical_batches[int(index)] for index in indices]
+
+
+def _preserved_rng():
+    class _Context:
+        def __enter__(self):
+            self.python = random.getstate()
+            self.numpy = np.random.get_state()
+            self.torch = torch.get_rng_state()
+            self.cuda = torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None
+            return self
+
+        def __exit__(self, *_args):
+            random.setstate(self.python)
+            np.random.set_state(self.numpy)
+            torch.set_rng_state(self.torch)
+            if self.cuda is not None:
+                torch.cuda.set_rng_state_all(self.cuda)
+
+    return _Context()
+
+
+def _load_training_material(seed: int) -> tuple[dict, list, list]:
+    manifest = _json(OUT / "canonical_stream_manifest.json")
+    record = manifest["seeds"][str(seed)]
+    config = record["config"]
+    train, validation = _source_stream(seed, config)
+    if len(train) != TOTAL_STEPS:
+        raise RuntimeError(f"Source seed {seed} yielded {len(train)} batches, expected {TOTAL_STEPS}")
+    if recovery._batch_sequence_hash(train[:SEGMENT_SIZE]) != record["first_segment_batch_sequence_hash"]:
+        raise RuntimeError(f"Source seed {seed} first segment changed after registration")
+    if recovery._batch_sequence_hash(train[SEGMENT_SIZE:]) != record["second_segment_batch_sequence_hash"]:
+        raise RuntimeError(f"Source seed {seed} second segment changed after registration")
+    if recovery._batch_sequence_hash(validation) != record["validation_batch_sequence_hash"]:
+        raise RuntimeError(f"Source seed {seed} validation stream changed after registration")
+    return config, train, validation
+
+
+def _masked_initial_state(checkpoint_path: Path, masks: dict[str, torch.Tensor]) -> dict[str, torch.Tensor]:
+    payload = torch.load(checkpoint_path, map_location="cpu", weights_only=False)
+    if int(payload.get("step", -1)) != 0:
+        raise RuntimeError(f"Recovery must start from the original step-0 checkpoint: {checkpoint_path}")
+    state = {name: tensor.detach().cpu().clone() for name, tensor in payload["model"].items()}
+    for name, mask in masks.items():
+        if name not in state:
+            raise RuntimeError(f"IMP mask references a missing model tensor: {name}")
+        state[name].mul_(mask.to(dtype=state[name].dtype, device="cpu"))
+    return state
+
+
+def _model_snapshot(path: Path, model: torch.nn.Module, step: int, config: dict, role: str) -> dict:
+    payload = {
+        "model": {name: tensor.detach().cpu().clone() for name, tensor in model.state_dict().items()},
+        "step": int(step),
+        "config": deepcopy(config),
+        "resumable": False,
+        "snapshot_role": role,
+        "model_sha256": _tensor_state_hash(model.state_dict()),
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(path.name + f".{os.getpid()}.tmp")
+    torch.save(payload, temporary)
+    temporary.replace(path)
+    return {
+        "path": str(path),
+        "step": int(step),
+        "role": role,
+        "model_sha256": payload["model_sha256"],
+        "snapshot_sha256": _sha256_file(path),
+        "bytes": path.stat().st_size,
+        "resumable": False,
+    }
+
+
+def _eval_one_snapshot(
+    model: TinyMoELanguageModel,
+    checkpoint_path: Path,
+    validation: list[tuple[torch.Tensor, torch.Tensor]],
+    device: torch.device,
+    seed: int,
+    order: str,
+    model_type: str,
+    job_id: str,
+    expected_stream_hash: str,
+) -> dict:
+    payload = torch.load(checkpoint_path, map_location="cpu", weights_only=False)
+    model.load_state_dict(payload["model"], strict=True)
+    model.eval()
+    token_sum = 0.0
+    target_count = 0
+    old_matmul_tf32 = torch.backends.cuda.matmul.allow_tf32
+    old_cudnn_tf32 = torch.backends.cudnn.allow_tf32
+    started = time.perf_counter()
+    try:
+        torch.backends.cuda.matmul.allow_tf32 = False
+        torch.backends.cudnn.allow_tf32 = False
+        with torch.inference_mode():
+            for token_ids, targets in validation:
+                token_ids = token_ids.to(device)
+                targets = targets.to(device)
+                logits = model(token_ids).logits.float()
+                batch_sum = F.cross_entropy(
+                    logits.reshape(-1, logits.shape[-1]),
+                    targets.reshape(-1),
+                    reduction="sum",
+                )
+                token_sum += float(batch_sum.double().cpu())
+                target_count += int(targets.numel())
+    finally:
+        torch.backends.cuda.matmul.allow_tf32 = old_matmul_tf32
+        torch.backends.cudnn.allow_tf32 = old_cudnn_tf32
+    if target_count <= 0 or not math.isfinite(token_sum):
+        raise FloatingPointError(f"Invalid common evaluation for {job_id} at {checkpoint_path}")
+    return {
+        "job_id": job_id,
+        "seed": seed,
+        "order": order,
+        "model_type": model_type,
+        "step": int(payload["step"]),
+        "cross_entropy": token_sum / target_count,
+        "token_loss_sum_fp64_accumulator": token_sum,
+        "target_tokens": target_count,
+        "validation_batch_count": len(validation),
+        "validation_stream_hash": expected_stream_hash,
+        "precision": "FP32",
+        "tf32": False,
+        "model_sha256": payload.get("model_sha256") or _tensor_state_hash(payload["model"]),
+        "resumable_snapshot": bool(payload.get("resumable", False)),
+        "evaluation_seconds": time.perf_counter() - started,
+    }
+
+
+def _common_evaluate(
+    snapshot_paths: list[tuple[int, Path, str]],
+    config: dict,
+    validation: list[tuple[torch.Tensor, torch.Tensor]],
+    seed: int,
+    order: str,
+    model_type: str,
+    job_id: str,
+    expected_stream_hash: str,
+    device: torch.device,
+    allowed_steps: tuple[int, ...] = SNAPSHOT_STEPS,
+) -> list[dict]:
+    with _preserved_rng():
+        model = TinyMoELanguageModel(deepcopy(config["model"])).to(device)
+        rows = [
+            _eval_one_snapshot(
+                model,
+                path,
+                validation,
+                device,
+                seed,
+                order,
+                model_type,
+                job_id,
+                expected_stream_hash,
+            )
+            for step, path, _role in snapshot_paths
+        ]
+    for row in rows:
+        if row["target_tokens"] != sum(int(target.numel()) for _, target in validation):
+            raise RuntimeError(f"Evaluation target count mismatch for {job_id} at step {row['step']}")
+        if row["step"] not in allowed_steps:
+            raise RuntimeError(f"Unexpected common-evaluation step for {job_id}: {row['step']}")
+    return rows
+
+
+def _seed_entry(seed: int) -> dict:
+    return _json(OUT / "canonical_stream_manifest.json")["seeds"][str(seed)]
+
+
+def _read_model_payload(path: Path) -> dict:
+    payload = torch.load(path, map_location="cpu", weights_only=False)
+    if "model" not in payload:
+        raise RuntimeError(f"Model state absent from checkpoint {path}")
+    return payload
+
+
+def _load_masks_for_row(row: dict) -> dict[str, torch.Tensor]:
+    if row["model_type"] == "imp80":
+        return load_masks(Path(row["mask_path"]))
+    if row["model_type"] == "unpruned":
+        return {}
+    raise ValueError(f"Unknown model type {row['model_type']!r}")
+
+
+def _source_init_for_row(row: dict) -> tuple[dict, dict[str, torch.Tensor]]:
+    init_path = Path(row["initial_checkpoint"])
+    payload = _read_model_payload(init_path)
+    if _sha256_file(init_path) != row["initial_checkpoint_sha256"]:
+        raise RuntimeError(f"Registered initialization hash changed: {init_path}")
+    masks = _load_masks_for_row(row)
+    initial = _masked_initial_state(init_path, masks)
+    return payload, initial
+
+
+def _assert_model_mask(model: torch.nn.Module, masks: dict[str, torch.Tensor]) -> None:
+    state = model.state_dict()
+    for name, mask in masks.items():
+        if torch.count_nonzero(state[name][~mask.to(state[name].device)]).item():
+            raise RuntimeError(f"Persistent IMP mask enforcement failed for {name}")
+
+
+def _save_boundary_reset(
+    attempt: Path,
+    config: dict,
+    seed: int,
+    boundary_path: Path,
+    boundary_state: dict[str, torch.Tensor],
+    masks: dict[str, torch.Tensor],
+) -> dict:
+    pre_hash = _tensor_state_hash(boundary_state)
+    boundary_payload = _read_model_payload(boundary_path)
+    if _tensor_state_hash(boundary_payload["model"]) != pre_hash:
+        raise RuntimeError("Boundary checkpoint model state differs from the in-memory segment-1 state")
+    recovery.seed_everything(seed)
+    model = assemble_router_age_model(
+        config["model"], boundary_state, str(boundary_path), masks, torch.device("cpu")
+    )
+    post_state = model.state_dict()
+    post_hash = _tensor_state_hash(post_state)
+    component_hashes = {
+        group: state_dict_hash(component_state_dict(model, group))
+        for group in ("expert", "router", "shared")
+    }
+    _assert_model_mask(model, masks)
+    if pre_hash != post_hash:
+        raise RuntimeError("Model parameters changed during the native segment-boundary assembly/reset")
+    optimizer = torch.optim.AdamW(
+        [parameter for parameter in model.parameters() if parameter.requires_grad],
+        lr=float(config["training"]["learning_rate"]),
+        weight_decay=float(config["training"]["weight_decay"]),
+    )
+    if optimizer.state:
+        raise RuntimeError("Fresh optimizer unexpectedly contains state at the segment boundary")
+    scaler = recovery.create_grad_scaler(True)
+    snapshot_path = attempt / "snapshots/step_2500_after_reset.pt"
+    snapshot = _model_snapshot(snapshot_path, model, 2500, config, "post_reset_model_only")
+    result = {
+        "step": 2500,
+        "model_hash_before_reset": pre_hash,
+        "model_hash_after_reset": post_hash,
+        "component_hashes_after_reset": component_hashes,
+        "model_parameters_unchanged": pre_hash == post_hash,
+        "fresh_optimizer_state_entries": len(optimizer.state),
+        "optimizer_reset": "fresh AdamW",
+        "scaler_reset": "fresh GradScaler; native CUDA FP16 scaler is initialized by trainer",
+        "scaler_probe_state": scaler.state_dict(),
+        "segment_1_checkpoint_sha256": _sha256_file(boundary_path),
+        "post_reset_snapshot": snapshot,
+        "rng_policy": "source seed reset before native model assembly; independent of permutation generator",
+    }
+    _atomic_json(attempt / "reset_boundary.json", result)
+    del optimizer, scaler, model
+    return result
+
+
+def _snapshot_paths(attempt: Path) -> list[tuple[int, Path, str]]:
+    rows = []
+    for step in SNAPSHOT_STEPS:
+        path = attempt / "snapshots" / f"step_{step:04d}.pt"
+        if not path.is_file():
+            raise FileNotFoundError(f"Expected model-only snapshot is missing: {path}")
+        rows.append((step, path, "production_model_only"))
+    return rows
+
+
+def _update_accounting(attempt: Path) -> list[dict]:
+    rows = []
+    for segment_name, offset in (("segment_0", 0), ("segment_2500", 2500)):
+        log_path = attempt / segment_name / "gradient_stats/gradient_stats.jsonl"
+        if not log_path.is_file():
+            raise FileNotFoundError(f"Native update log missing: {log_path}")
+        records = [json.loads(line) for line in log_path.read_text(encoding="utf-8").splitlines()]
+        for record in records:
+            rows.append({
+                "segment": segment_name,
+                "step": offset + int(record["step"]),
+                "local_step": int(record["step"]),
+                "attempted": True,
+                "applied": bool(record["optimizer_step_applied"]),
+                "amp_skipped": record["measurement_status"] == "amp_overflow_skipped",
+                "loss_scale_before": record["loss_scale_before"],
+                "loss_scale_after": record["loss_scale_after"],
+                "train_cross_entropy": record.get("train_cross_entropy"),
+                "auxiliary_routing_loss": record.get("auxiliary_routing_loss"),
+            })
+    return rows
+
+
+def _boundary_update_rows(rows: list[dict]) -> list[dict]:
+    return [row for row in rows if row["step"] in (2499, 2500, 2501, 2525)]
+
+
+def _job_status_path(job_id: str) -> Path:
+    return OUT / "status" / f"{job_id}.json"
+
+
+def _write_status(job_id: str, **fields) -> None:
+    path = _job_status_path(job_id)
+    current = _json(path) if path.is_file() else {}
+    current.update(fields)
+    current["job_id"] = job_id
+    current["updated_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    _atomic_json(path, current)
+
+
+def _heartbeat(job_id: str, attempt: Path, step: int, segment: str) -> None:
+    _atomic_json(
+        attempt / "heartbeat.json",
+        {
+            "job_id": job_id,
+            "host": socket.getfqdn(),
+            "pid": os.getpid(),
+            "segment": segment,
+            "global_step": step,
+            "unix_time": time.time(),
+        },
+    )
+
+
+def _new_or_resumable_attempt(job_id: str, resume: bool) -> tuple[Path, bool]:
+    attempts = OUT / "jobs" / job_id / "attempts"
+    attempts.mkdir(parents=True, exist_ok=True)
+    existing = sorted(attempts.glob("attempt_*"))
+    if resume:
+        for attempt in reversed(existing):
+            first = attempt / "segment_0"
+            second = attempt / "segment_2500"
+            if (
+                (first / "checkpoints/final_recovered.pt").is_file()
+                or (first / "interruption.pt").is_file()
+                or (second / "interruption.pt").is_file()
+            ):
+                return attempt, True
+        raise RuntimeError(f"No resumable checkpoint exists for {job_id}; failed attempts are preserved")
+    attempt = attempts / f"attempt_{time.time_ns()}_{uuid.uuid4().hex[:8]}"
+    attempt.mkdir(parents=True, exist_ok=False)
+    return attempt, False
+
+
+def _run_segment(
+    job: dict,
+    attempt: Path,
+    config: dict,
+    initial_state: dict[str, torch.Tensor],
+    masks: dict[str, torch.Tensor],
+    router_checkpoint: Path,
+    train_batches: list[tuple[torch.Tensor, torch.Tensor]],
+    validation: list[tuple[torch.Tensor, torch.Tensor]],
+    offset: int,
+    segment_name: str,
+    device: torch.device,
+) -> dict:
+    destination = attempt / segment_name
+    expected_hash = recovery._batch_sequence_hash(train_batches)
+    validation_hash = recovery._batch_sequence_hash(validation)
+    expected_expert_hash = state_dict_hash({
+        name: tensor for name, tensor in initial_state.items() if parameter_group(name) == "expert"
+    })
+    expected_shared_hash = state_dict_hash({
+        name: tensor for name, tensor in initial_state.items() if parameter_group(name) == "shared"
+    })
+    with _preserved_rng():
+        reference = TinyMoELanguageModel(deepcopy(config["model"])).to(device)
+        reference.load_state_dict(initial_state, strict=True)
+        reference.eval()
+        selected = selected_experts_per_batch(
+            reference, recovery._calibration_batches(validation), device
+        )
+    del reference
+    boundary_hash_path = attempt / "boundary_parameter_hashes.json"
+    pending_before: dict[int, dict] = (
+        {int(step): value for step, value in _json(boundary_hash_path).items()}
+        if boundary_hash_path.is_file()
+        else {}
+    )
+    def training_forward(model, token_ids, local_step):
+        global_step = offset + local_step
+        if global_step in (2499, 2500, 2501, 2525):
+            pending_before[global_step] = {
+                "model_hash_before_update": _tensor_state_hash(model.state_dict()),
+                "component_hashes_before_update": {
+                    group: state_dict_hash(component_state_dict(model, group))
+                    for group in ("expert", "router", "shared")
+                },
+            }
+        return model(token_ids)
+
+    def snapshot_callback(model, optimizer, scaler, local_step):
+        global_step = offset + local_step
+        _heartbeat(job["job_id"], attempt, global_step, segment_name)
+        if global_step in SNAPSHOT_STEPS:
+            _assert_model_mask(model, masks)
+            path = attempt / "snapshots" / f"step_{global_step:04d}.pt"
+            saved = _model_snapshot(path, model, global_step, config, "production_model_only")
+            pending = pending_before.get(global_step)
+            if pending is not None:
+                pending["model_hash_after_update"] = saved["model_sha256"]
+                pending["component_hashes_after_update"] = {
+                    group: state_dict_hash(component_state_dict(model, group))
+                    for group in ("expert", "router", "shared")
+                }
+                pending["model_changed"] = pending["model_hash_before_update"] != saved["model_sha256"]
+        if global_step in pending_before and global_step not in SNAPSHOT_STEPS:
+            pending = pending_before[global_step]
+            pending["model_hash_after_update"] = _tensor_state_hash(model.state_dict())
+            pending["component_hashes_after_update"] = {
+                group: state_dict_hash(component_state_dict(model, group))
+                for group in ("expert", "router", "shared")
+            }
+            pending["model_changed"] = pending["model_hash_before_update"] != pending["model_hash_after_update"]
+        if pending_before:
+            _atomic_json(attempt / "boundary_parameter_hashes.json", pending_before)
+
+    started = time.perf_counter()
+    record = recovery._run_recovery_condition(
+        config=config,
+        condition_name=job["job_id"],
+        pruned_base_state=initial_state,
+        router_checkpoint=str(router_checkpoint),
+        router_age_percent=0,
+        router_step=offset,
+        masks=masks,
+        expert_hash=expected_expert_hash,
+        shared_hash=expected_shared_hash,
+        mask_hash=recovery._mask_hash(masks),
+        reference_selected=selected,
+        calibration_batches=recovery._calibration_batches(validation),
+        train_batches=train_batches,
+        validation_batches=validation,
+        train_batch_hash=expected_hash,
+        validation_batch_hash=validation_hash,
+        device=device,
+        recovery_steps=SEGMENT_SIZE,
+        dense_loss=0.0,
+        output_dir=destination,
+        confidence_control=False,
+        target_confidence=None,
+        seed=int(job["seed"]),
+        sparsity=0.8 if job["model_type"] == "imp80" else 0.0,
+        router_mode="trainable",
+        state_snapshot_callback=snapshot_callback,
+        training_forward_callback=training_forward,
+        interruption_checkpoint=destination / "interruption.pt",
+        interruption_interval=100,
+    )
+    record["segment_name"] = segment_name
+    record["global_offset"] = offset
+    record["segment_training_batch_hash"] = expected_hash
+    record["segment_seconds"] = time.perf_counter() - started
+    record["resumable_checkpoint"] = str(destination / "interruption.pt")
+    _atomic_json(destination / "segment_record.json", record)
+    return record
+
+
+def _run_one_job(row: dict, resume: bool = False, device_index: int = 0) -> None:
+    job_id = row["job_id"]
+    lock_path = OUT / "locks" / f"{job_id}.lock"
+    lock_path.parent.mkdir(parents=True, exist_ok=True)
+    with lock_path.open("a") as lock:
+        try:
+            fcntl.flock(lock.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            return
+        previous = _job_status_path(job_id)
+        previous_status = _json(previous).get("status") if previous.is_file() else None
+        if previous_status == "COMPLETE":
+            return
+        resume_attempt = resume or previous_status == "RUNNING"
+        attempt, resuming = _new_or_resumable_attempt(job_id, resume_attempt)
+        _write_status(
+            job_id,
+            status="RUNNING",
+            attempt=str(attempt),
+            host=socket.getfqdn(),
+            pid=os.getpid(),
+            resumed=resuming,
+            error=None,
+        )
+        try:
+            if not torch.cuda.is_available():
+                raise RuntimeError("Production recovery requires the verified CUDA FP16 environment")
+            if not torch.__version__.startswith("2.7.0"):
+                raise RuntimeError(f"Expected torch 2.7.0, found {torch.__version__}")
+            device = torch.device(f"cuda:{device_index}")
+            torch.cuda.set_device(device)
+            config, canonical_train, validation = _load_training_material(int(row["seed"]))
+            if not config["training"].get("precision", "").lower().startswith("fp16"):
+                raise RuntimeError("Source training precision does not match the audited CUDA FP16 protocol")
+            permutations = _permutations()[row["order"]]
+            ordered_indices = np.concatenate(
+                (permutations["segment_0"], permutations["segment_1"])
+            )
+            original_hashes = _seed_entry(int(row["seed"]))["per_batch_content_hashes"]
+            permuted_hashes = [original_hashes[int(index)] for index in ordered_indices]
+            if Counter(permuted_hashes[:SEGMENT_SIZE]) != Counter(original_hashes[:SEGMENT_SIZE]):
+                raise RuntimeError("Permutation changed the first segment batch multiset")
+            if Counter(permuted_hashes[SEGMENT_SIZE:]) != Counter(original_hashes[SEGMENT_SIZE:]):
+                raise RuntimeError("Permutation changed the second segment batch multiset")
+            first_batches = _apply_order(canonical_train, permutations["segment_0"])
+            second_batches = _apply_order(canonical_train, permutations["segment_1"])
+            sparse_source, dense_source = _cohort_jobs()
+            source_item = sparse_source[int(row["seed"])] if row["model_type"] == "imp80" else dense_source[int(row["seed"])]
+            initial_path = Path(source_item["initial"])
+            masks = load_masks(Path(row["mask_path"])) if row["model_type"] == "imp80" else {}
+            initial_state = _masked_initial_state(initial_path, masks)
+            init_hash = _tensor_state_hash(initial_state)
+            if row["model_type"] == "imp80":
+                expected_mask_hash = row["mask_sha256"]
+                if recovery._mask_hash(masks) != stream_manifest_mask_hash(int(row["seed"])):
+                    raise RuntimeError("Source IMP80 mask hash changed after registration")
+            else:
+                expected_mask_hash = recovery._mask_hash({})
+            if expected_mask_hash != (row["mask_sha256"] or recovery._mask_hash({})):
+                raise RuntimeError(f"Job mask identity differs from sealed manifest for {job_id}")
+            source_snapshot = attempt / "snapshots/step_0000.pt"
+            if not source_snapshot.exists():
+                initial_model = assemble_router_age_model(
+                    config["model"], initial_state, str(initial_path), masks, device
+                )
+                _assert_model_mask(initial_model, masks)
+                _model_snapshot(source_snapshot, initial_model, 0, config, "production_model_only")
+                del initial_model
+            first_output = attempt / "segment_0"
+            first_checkpoint = first_output / "checkpoints/final_recovered.pt"
+            if first_checkpoint.is_file() and (first_output / "segment_record.json").is_file():
+                first_state = _read_model_payload(first_checkpoint)["model"]
+                first_record = _json(first_output / "segment_record.json")
+            else:
+                first_record = _run_segment(
+                    row,
+                    attempt,
+                    config,
+                    initial_state,
+                    masks,
+                    initial_path,
+                    first_batches,
+                    validation,
+                    0,
+                    "segment_0",
+                    device,
+                )
+                first_state = _read_model_payload(first_checkpoint)["model"]
+            boundary_reset = _save_boundary_reset(
+                attempt, config, int(row["seed"]), first_checkpoint, first_state, masks
+            )
+            if first_output.joinpath("interruption.pt").is_file():
+                first_interrupt = torch.load(
+                    first_output / "interruption.pt", map_location="cpu", weights_only=False
+                )
+                boundary_reset["segment1_optimizer_state_entries_before_reset"] = len(
+                    first_interrupt.get("optimizer", {}).get("state", {})
+                )
+                boundary_reset["segment1_scaler_state_before_reset"] = first_interrupt.get("scaler", {})
+                _atomic_json(attempt / "reset_boundary.json", boundary_reset)
+            second_output = attempt / "segment_2500"
+            second_checkpoint = second_output / "checkpoints/final_recovered.pt"
+            if second_checkpoint.is_file() and (second_output / "segment_record.json").is_file():
+                second_record = _json(second_output / "segment_record.json")
+            else:
+                second_record = _run_segment(
+                    row,
+                    attempt,
+                    config,
+                    first_state,
+                    masks,
+                    first_checkpoint,
+                    second_batches,
+                    validation,
+                    SEGMENT_SIZE,
+                    "segment_2500",
+                    device,
+                )
+            snapshot_list = _snapshot_paths(attempt)
+            actual_stream_hash = recovery._batch_sequence_hash(canonical_train)
+            eval_rows = _common_evaluate(
+                snapshot_list,
+                config,
+                validation,
+                int(row["seed"]),
+                row["order"],
+                row["model_type"],
+                job_id,
+                _seed_entry(int(row["seed"]))["validation_batch_sequence_hash"],
+                device,
+            )
+            eval_path = attempt / "common_evaluations.jsonl"
+            with eval_path.open("w", encoding="utf-8") as stream:
+                for item in eval_rows:
+                    stream.write(json.dumps(item, sort_keys=True) + "\n")
+            updates = _update_accounting(attempt)
+            if len(updates) != TOTAL_STEPS:
+                raise RuntimeError(f"Expected 5,000 attempted updates for {job_id}, found {len(updates)}")
+            if sum(int(item["applied"]) for item in updates) > TOTAL_STEPS:
+                raise RuntimeError(f"Applied-update accounting exceeds attempts for {job_id}")
+            if not boundary_reset["model_parameters_unchanged"]:
+                raise RuntimeError(f"Parameters changed at the fresh-optimizer reset for {job_id}")
+            boundary_updates = _boundary_update_rows(updates)
+            if {item["step"] for item in boundary_updates} != {2499, 2500, 2501, 2525}:
+                raise RuntimeError(f"Applied-update accounting around reset is incomplete for {job_id}")
+            _atomic_json(
+                attempt / "update_boundary_accounting.json",
+                {
+                    "boundary_step": 2500,
+                    "updates": boundary_updates,
+                    "segment1_optimizer_state_entries": boundary_reset.get("segment1_optimizer_state_entries_before_reset"),
+                    "segment1_scaler_state": boundary_reset.get("segment1_scaler_state_before_reset"),
+                    "segment2_fresh_scaler_state": boundary_reset["scaler_probe_state"],
+                    "segment2_optimizer_state_entries_before_first_update": boundary_reset["fresh_optimizer_state_entries"],
+                },
+            )
+            if [item["step"] for item in eval_rows] != list(SNAPSHOT_STEPS):
+                raise RuntimeError(f"Common evaluation snapshots incomplete for {job_id}")
+            reset_path = attempt / "reset_boundary.json"
+            status = {
+                "status": "COMPLETE",
+                "attempt": str(attempt),
+                "attempted_updates": len(updates),
+                "applied_updates": sum(int(item["applied"]) for item in updates),
+                "amp_skipped_updates": sum(int(item["amp_skipped"]) for item in updates),
+                "step_2500_model_reset_hash_equal": True,
+                "common_evaluation_steps": [item["step"] for item in eval_rows],
+                "common_evaluation_target_tokens": eval_rows[-1]["target_tokens"],
+                "common_evaluation_sha256": _sha256_file(eval_path),
+                "initial_masked_state_hash": init_hash,
+                "permuted_stream_hash_segment_0": recovery._batch_sequence_hash(first_batches),
+                "permuted_stream_hash_segment_1": recovery._batch_sequence_hash(second_batches),
+                "original_stream_hash": actual_stream_hash,
+                "segment_0_seconds": first_record["segment_seconds"],
+                "segment_1_seconds": second_record["segment_seconds"],
+                "completed_at_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                "pilot_checks": None,
+            }
+            _atomic_json(attempt / "completion.json", status)
+            _write_status(job_id, **status)
+        except BaseException as error:
+            _write_status(
+                job_id,
+                status="FAILED",
+                attempt=str(attempt),
+                host=socket.getfqdn(),
+                pid=os.getpid(),
+                error=repr(error),
+                failed_at_utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            )
+            raise
+
+
+def stream_manifest_mask_hash(seed: int) -> str:
+    record = _seed_entry(seed)
+    return record["mask"]["mask_hash"]
+
+
+def _pilot_checks() -> tuple[bool, dict]:
+    expected_pilot_jobs = {
+        f"e32_seed{PILOT[0]}_order_{PILOT[1]}_imp80",
+        f"e32_seed{PILOT[0]}_order_{PILOT[1]}_unpruned",
+    }
+    records = {}
+    for job_id in sorted(expected_pilot_jobs):
+        status_path = _job_status_path(job_id)
+        if not status_path.is_file():
+            return False, {"passed": False, "reason": f"pilot status missing: {job_id}"}
+        status = _json(status_path)
+        if status.get("status") != "COMPLETE":
+            return False, {"passed": False, "reason": f"pilot incomplete: {job_id}"}
+        if status.get("attempted_updates") != TOTAL_STEPS:
+            return False, {"passed": False, "reason": f"pilot update count mismatch: {job_id}"}
+        if status.get("common_evaluation_steps") != list(SNAPSHOT_STEPS):
+            return False, {"passed": False, "reason": f"pilot evaluation snapshots incomplete: {job_id}"}
+        if not status.get("step_2500_model_reset_hash_equal"):
+            return False, {"passed": False, "reason": f"pilot reset hash mismatch: {job_id}"}
+        attempt = Path(status["attempt"])
+        for step in SNAPSHOT_STEPS:
+            snapshot = attempt / "snapshots" / f"step_{step:04d}.pt"
+            if not snapshot.is_file():
+                return False, {"passed": False, "reason": f"pilot snapshot missing: {snapshot}"}
+        evals = [json.loads(line) for line in (attempt / "common_evaluations.jsonl").read_text().splitlines()]
+        if len(evals) != len(SNAPSHOT_STEPS) or any(
+            not math.isfinite(float(item["cross_entropy"])) for item in evals
+        ):
+            return False, {"passed": False, "reason": f"pilot common evaluation invalid: {job_id}"}
+        records[job_id] = {
+            "attempted_updates": status["attempted_updates"],
+            "applied_updates": status["applied_updates"],
+            "target_tokens": status["common_evaluation_target_tokens"],
+            "snapshot_count": len(evals),
+            "reset_hash_equal": status["step_2500_model_reset_hash_equal"],
+            "gpu_name": torch.cuda.get_device_name(0),
+            "measured_seconds": status["segment_0_seconds"] + status["segment_1_seconds"],
+            "result_signs_or_match_labels_used_for_dispatch": False,
+            "completion_sha256": _sha256_file(attempt / "completion.json"),
+        }
+    free_bytes = shutil.disk_usage(OUT).free
+    required_remaining = _estimated_remaining_storage_bytes()
+    passed = free_bytes >= required_remaining
+    summary = {
+        "passed": passed,
+        "checks": {
+            "numerical": True,
+            "provenance": True,
+            "endpoint_completeness": True,
+            "resources": passed,
+            "outcome_independent": True,
+        },
+        "free_disk_bytes": free_bytes,
+        "estimated_remaining_storage_bytes": required_remaining,
+        "jobs": records,
+    }
+    _atomic_json(OUT / "pilot_gate.json", summary)
+    if passed:
+        for job_id in expected_pilot_jobs:
+            _write_status(job_id, pilot_checks=summary["checks"])
+    return passed, summary
+
+
+def _estimated_remaining_storage_bytes() -> int:
+    rows = list(csv.DictReader((OUT / "job_manifest.csv").open(encoding="utf-8")))
+    completed = {
+        path.stem
+        for path in (OUT / "status").glob("*.json")
+        if path.is_file() and _json(path).get("status") == "COMPLETE"
+    }
+    remaining = [row for row in rows if row["job_id"] not in completed]
+    sizes = [
+        Path(row["initial_checkpoint"]).stat().st_size
+        for row in rows[:1]
+    ]
+    model_bytes = sizes[0] if sizes else 300_000_000
+    # Model snapshots plus both segments' optimizer-bearing resumable states.
+    return int(max(model_bytes, 300_000_000) * (24 * len(remaining) + 4) + 10 * 1024**3)
+
+
+def _pilot_gate_passed() -> bool:
+    path = OUT / "pilot_gate.json"
+    if not path.is_file():
+        return False
+    return bool(_json(path).get("passed"))
+
+
+def _assigned_seeds(host: str) -> tuple[int, ...]:
+    key = next((name for name in HOST_SEEDS if name.split(".")[0] in host), None)
+    if key is None:
+        raise RuntimeError(f"Unregistered execution host {host}; expected one of {sorted(HOST_SEEDS)}")
+    return HOST_SEEDS[key]
+
+
+def _gpu_idle(device_index: int) -> tuple[bool, dict]:
+    query = subprocess.run(
+        [
+            "nvidia-smi",
+            f"--id={device_index}",
+            "--query-gpu=memory.total,memory.used,utilization.gpu",
+            "--format=csv,noheader,nounits",
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+        timeout=15,
+    )
+    fields = [part.strip() for part in query.stdout.splitlines()[0].split(",")]
+    total_mib, used_mib, util = map(int, fields)
+    process_query = subprocess.run(
+        [
+            "nvidia-smi",
+            f"--id={device_index}",
+            "--query-compute-apps=pid",
+            "--format=csv,noheader,nounits",
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+        timeout=15,
+    )
+    external_pids = [
+        int(line.strip())
+        for line in process_query.stdout.splitlines()
+        if line.strip() and int(line.strip()) != os.getpid()
+    ]
+    details = {
+        "memory_total_mib": total_mib,
+        "memory_used_mib": used_mib,
+        "utilization_percent": util,
+        "external_compute_pids": external_pids,
+    }
+    return (
+        not external_pids
+return (
+    (total_mib - used_mib) >= 30000
+    and util <= 10
+), details        and used_mib < max(1024, total_mib // 5)
+        and util <= 10
+    ), details
+
+
+def _worker_loop(device_index: int = 0, resume: bool = False, idle_wait: int = 60) -> None:
+    host = socket.getfqdn()
+    assigned = set(_assigned_seeds(host))
+    host_report = _verify_artifacts_on_host()
+    registration = _verify_registration()
+    if not registration.get("production_ready"):
+        raise RuntimeError("Production is not sealed; run engineering, historical evaluation, and seal first")
+    if host not in registration.get("host_input_verification", {}):
+        raise RuntimeError(f"Host {host} was not included in the pre-production seal")
+    if not host_report.get("verified"):
+        raise RuntimeError(f"Host input verification failed for {host}")
+    if not torch.cuda.is_available() or not torch.__version__.startswith("2.7.0"):
+        raise RuntimeError(f"Host {host} does not have the verified CUDA/Torch 2.7.0 environment")
+    while True:
+        rows = list(csv.DictReader((OUT / "job_manifest.csv").open(encoding="utf-8")))
+        job_rows = [row for row in rows if int(row["seed"]) in assigned]
+        available = []
+        pilot_complete = _pilot_gate_passed()
+        for row in job_rows:
+            status_path = _job_status_path(row["job_id"])
+            status = _json(status_path) if status_path.is_file() else {}
+            if status.get("status") == "COMPLETE":
+                continue
+            if status.get("status") == "FAILED" and not resume:
+                continue
+            is_pilot = row["pilot"] == "True"
+            if not pilot_complete and not is_pilot:
+                continue
+            if resume and status.get("status") not in ("FAILED", "RUNNING"):
+                continue
+            available.append(row)
+        if not available:
+            failed_pilots = [
+                job_id
+                for job_id in (
+                    "e32_seed17_order_A_imp80",
+                    "e32_seed17_order_A_unpruned",
+                )
+                if _job_status_path(job_id).is_file()
+                and _json(_job_status_path(job_id)).get("status") == "FAILED"
+            ]
+            if failed_pilots:
+                raise RuntimeError(f"Pilot failed; remaining jobs are not dispatched: {failed_pilots}")
+            if _pilot_gate_passed() and all(
+                _job_status_path(row["job_id"]).is_file()
+                and _json(_job_status_path(row["job_id"])).get("status") in ("COMPLETE", "FAILED")
+                for row in job_rows
+            ):
+                return
+            if not any(row["pilot"] == "True" for row in job_rows) and not _pilot_gate_passed():
+                time.sleep(idle_wait)
+                continue
+            if pilot_complete and all(
+                _job_status_path(row["job_id"]).is_file()
+                and _json(_job_status_path(row["job_id"])).get("status") in ("COMPLETE", "FAILED")
+                for row in job_rows
+            ):
+                return
+            time.sleep(idle_wait)
+            continue
+        available.sort(key=lambda row: (row["pilot"] != "True", int(row["seed"]), row["order"], row["model_type"]))
+        idle, gpu_details = _gpu_idle(device_index)
+        if not idle:
+            _atomic_json(
+                OUT / "workers" / f"{host}.json",
+                {"status": "WAITING_FOR_GPU", "gpu": gpu_details, "updated_unix": time.time()},
+            )
+            time.sleep(idle_wait)
+            continue
+        row = available[0]
+        try:
+            _run_one_job(row, resume=resume, device_index=device_index)
+        except BaseException:
+            if row["pilot"] == "True":
+                raise
+        if row["pilot"] == "True" and all(
+            _job_status_path(f"e32_seed17_order_A_{kind}").is_file()
+            and _json(_job_status_path(f"e32_seed17_order_A_{kind}")).get("status") == "COMPLETE"
+            for kind in ("imp80", "unpruned")
+        ):
+            passed, gate = _pilot_checks()
+            if not passed:
+                raise RuntimeError(f"Pilot did not pass dispatch gate: {json.dumps(gate, sort_keys=True)}")
+        _atomic_json(
+            OUT / "workers" / f"{host}.json",
+            {"status": "RUNNING", "last_job_id": row["job_id"], "updated_unix": time.time()},
+        )
+
+
+def worker(device_index: int = 0, resume: bool = False, idle_wait: int = 60) -> None:
+    host = socket.getfqdn()
+    lock_path = OUT / "locks" / f"worker_{host}_gpu{device_index}.lock"
+    lock_path.parent.mkdir(parents=True, exist_ok=True)
+    with lock_path.open("a") as lock:
+        try:
+            fcntl.flock(lock.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError as error:
+            raise RuntimeError(f"A worker already owns {host} GPU {device_index}") from error
+        _worker_loop(device_index=device_index, resume=resume, idle_wait=idle_wait)
+
+
+def evaluate_historical() -> None:
+    registration = _verify_registration()
+    _verify_artifacts_on_host()
+    sparse_jobs, dense_jobs = _cohort_jobs()
+    rows = []
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    sparse_jobs, dense_jobs = _cohort_jobs()
+    for seed in SEEDS:
+        config, _train, validation = _load_training_material(seed)
+        expected_hash = _seed_entry(seed)["validation_batch_sequence_hash"]
+        for model_type, item in (("imp80", sparse_jobs[seed]), ("unpruned", dense_jobs[seed])):
+            paths = [
+                (2500, Path(item["boundary"]), "historical_boundary_model_only"),
+                *[
+                    (int(step), Path(path), "historical_model_only")
+                    for step, path in item["historical_checkpoints"].items()
+                ],
+            ]
+            with _preserved_rng():
+                model = TinyMoELanguageModel(deepcopy(config["model"])).to(device)
+                evaluated = _common_evaluate(
+                    paths,
+                    config,
+                    validation,
+                    seed,
+                    "original",
+                    model_type,
+                    f"historical_e32_seed{seed}_{model_type}",
+                    expected_hash,
+                    device,
+                    allowed_steps=(2500, 3000, 4000, 5000),
+                )
+            for row, (_step, path, _role) in zip(evaluated, paths):
+                row["origin"] = "historical_original_order"
+                row["checkpoint_path"] = str(path)
+                row["checkpoint_sha256"] = _sha256_file(path)
+                row["historical_compatibility"] = "compatible"
+                rows.append(row)
+            del model
+        del _train, validation
+    _write_csv(OUT / "historical_endpoint_readouts.csv", rows)
+    _atomic_json(
+        OUT / "historical_readout_completion.json",
+        {
+            "status": "COMPLETE",
+            "historical_endpoints_evaluated": len(rows),
+            "registration_sha256": _sha256_file(OUT / "registration.json"),
+            "readout": registration["evaluation"],
+            "completed_at_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        },
+    )
+
+
+def benchmark() -> dict:
+    _verify_registration()
+    benchmark_dir = OUT / "engineering/throughput_benchmark"
+    if benchmark_dir.exists() and any(benchmark_dir.iterdir()):
+        raise FileExistsError(f"Engineering benchmark output exists: {benchmark_dir}")
+    benchmark_dir.mkdir(parents=True, exist_ok=True)
+    sparse_jobs, _dense_jobs = _cohort_jobs()
+    item = sparse_jobs[17]
+    config, train, validation = _load_training_material(17)
+    masks = load_masks(Path(item["mask"]))
+    initial = _masked_initial_state(Path(item["initial"]), masks)
+    training = train[:20]
+    stream_hash = recovery._batch_sequence_hash(training)
+    validation_hash = recovery._batch_sequence_hash(validation)
+    device = torch.device("cuda:0")
+    with _preserved_rng():
+        reference = TinyMoELanguageModel(deepcopy(config["model"])).to(device)
+        reference.load_state_dict(initial)
+        reference.eval()
+        selected = selected_experts_per_batch(
+            reference, recovery._calibration_batches(validation), device
+        )
+    expert_hash = state_dict_hash({
+        name: tensor for name, tensor in initial.items() if parameter_group(name) == "expert"
+    })
+    shared_hash = state_dict_hash({
+        name: tensor for name, tensor in initial.items() if parameter_group(name) == "shared"
+    })
+    started = time.perf_counter()
+    record = recovery._run_recovery_condition(
+        config=config,
+        condition_name="engineering_e32_seed17_imp80_throughput_only",
+        pruned_base_state=initial,
+        router_checkpoint=item["initial"],
+        router_age_percent=0,
+        router_step=0,
+        masks=masks,
+        expert_hash=expert_hash,
+        shared_hash=shared_hash,
+        mask_hash=recovery._mask_hash(masks),
+        reference_selected=selected,
+        calibration_batches=recovery._calibration_batches(validation),
+        train_batches=training,
+        validation_batches=validation,
+        train_batch_hash=stream_hash,
+        validation_batch_hash=validation_hash,
+        device=device,
+        recovery_steps=len(training),
+        dense_loss=0.0,
+        output_dir=benchmark_dir / "native",
+        confidence_control=False,
+        target_confidence=None,
+        seed=17,
+        sparsity=0.8,
+        router_mode="trainable",
+        interruption_checkpoint=benchmark_dir / "native/interruption.pt",
+        interruption_interval=10,
+    )
+    elapsed = time.perf_counter() - started
+    estimated_total_gpu_seconds = elapsed / len(training) * TOTAL_STEPS * 20
+    result = {
+        "engineering_only": True,
+        "scientific_endpoint": False,
+        "benchmark_job_count": 1,
+        "benchmark_attempts": len(training),
+        "benchmark_applied_updates": record["optimizer_steps_applied"],
+        "benchmark_wall_seconds": elapsed,
+        "seconds_per_attempt": elapsed / len(training),
+        "estimated_total_gpu_seconds": estimated_total_gpu_seconds,
+        "estimated_total_gpu_hours": estimated_total_gpu_seconds / 3600,
+        "estimated_elapsed_hours_at_two_available_gpus": estimated_total_gpu_seconds / 2 / 3600,
+        "snapshot_storage_estimate_bytes": _estimated_remaining_storage_bytes(),
+        "measured_batch_size": int(config["training"]["batch_size"]),
+        "num_experts": 32,
+        "seed": 17,
+        "precision": config["training"].get("precision"),
+        "gpu_name": torch.cuda.get_device_name(device),
+        "torch_version": torch.__version__,
+        "note": "Linear throughput extrapolation; reported separately from production cost.",
+    }
+    _atomic_json(benchmark_dir / "benchmark.json", result)
+    checks_path = OUT / "engineering_checks.json"
+    if checks_path.is_file():
+        checks = _json(checks_path)
+        checks["throughput_profile"] = result
+        _atomic_json(checks_path, checks)
+    return result
+
+
+def _read_all_evaluations() -> list[dict]:
+    rows = []
+    historical_path = OUT / "historical_endpoint_readouts.csv"
+    if historical_path.is_file():
+        rows.extend(csv.DictReader(historical_path.open(encoding="utf-8")))
+    for status_path in sorted((OUT / "status").glob("*.json")):
+        status = _json(status_path)
+        if status.get("status") != "COMPLETE":
+            continue
+        eval_path = Path(status["attempt"]) / "common_evaluations.jsonl"
+        if not eval_path.is_file():
+            continue
+        rows.extend(json.loads(line) for line in eval_path.read_text(encoding="utf-8").splitlines())
+    return rows
+
+
+def _number(value) -> float:
+    return float(value)
+
+
+def _rank(values: dict[int, float]) -> dict[int, float]:
+    ordered = sorted(values.items(), key=lambda pair: pair[1])
+    ranks = {}
+    index = 0
+    while index < len(ordered):
+        end = index + 1
+        while end < len(ordered) and ordered[end][1] == ordered[index][1]:
+            end += 1
+        average = ((index + 1) + end) / 2
+        for seed, _ in ordered[index:end]:
+            ranks[seed] = average
+        index = end
+    return ranks
+
+
+def _pairwise_rank_agreement(
+    left: dict[int, float], right: dict[int, float]
+) -> tuple[int, int, list[dict]]:
+    concordant = 0
+    comparable = 0
+    rows = []
+    for index, seed_a in enumerate(SEEDS):
+        for seed_b in SEEDS[index + 1 :]:
+            delta_left = left[seed_a] - left[seed_b]
+            delta_right = right[seed_a] - right[seed_b]
+            if delta_left == 0 or delta_right == 0:
+                status = "tie"
+            else:
+                comparable += 1
+                same = (delta_left < 0) == (delta_right < 0)
+                concordant += int(same)
+                status = "concordant" if same else "reversal"
+            rows.append({
+                "seed_a": seed_a,
+                "seed_b": seed_b,
+                "left_difference": delta_left,
+                "right_difference": delta_right,
+                "pairwise_status": status,
+            })
+    return concordant, comparable, rows
+
+
+def _readout_lookup(rows: list[dict]) -> dict[tuple[int, str, str, int], dict]:
+    lookup = {}
+    for row in rows:
+        order = str(row["order"])
+        key = (int(row["seed"]), order, str(row["model_type"]), int(row["step"]))
+        lookup[key] = row
+    return lookup
+
+
+def analyze() -> None:
+    registration = _verify_registration()
+    all_rows = _read_all_evaluations()
+    if not all_rows:
+        raise RuntimeError("No common evaluation outputs are available")
+    lookup = _readout_lookup(all_rows)
+    endpoints = []
+    for seed in SEEDS:
+        for order in ("original", *ORDER_NAMES):
+            for step in (2500, 5000):
+                sparse = lookup.get((seed, order, "imp80", step))
+                dense = lookup.get((seed, order, "unpruned", step))
+                status_path = (
+                    _job_status_path(f"e32_seed{seed}_order_{order}_imp80")
+                    if order != "original"
+                    else None
+                )
+                status = _json(status_path) if status_path and status_path.is_file() else {}
+                compatible = order != "original" or bool(sparse and dense)
+                endpoints.append({
+                    "seed": seed,
+                    "order": order,
+                    "step": step,
+                    "sparse_ce": _number(sparse["cross_entropy"]) if sparse else "",
+                    "unpruned_ce": _number(dense["cross_entropy"]) if dense else "",
+                    "gap_sparse_minus_unpruned": (
+                        _number(sparse["cross_entropy"]) - _number(dense["cross_entropy"])
+                        if sparse and dense else ""
+                    ),
+                    "sparse_target_tokens": sparse["target_tokens"] if sparse else "",
+                    "unpruned_target_tokens": dense["target_tokens"] if dense else "",
+                    "historical_compatibility": "compatible" if order == "original" and compatible else (
+                        "not_applicable" if order != "original" else "incomplete"
+                    ),
+                    "job_status": status.get("status", "historical_reference" if order == "original" else "incomplete"),
+                })
+    _write_csv(OUT / "endpoint_losses.csv", endpoints)
+
+    trajectories = []
+    for row in all_rows:
+        trajectories.append({
+            "seed": int(row["seed"]),
+            "order": str(row["order"]),
+            "model_type": str(row["model_type"]),
+            "step": int(row["step"]),
+            "cross_entropy": _number(row["cross_entropy"]),
+            "target_tokens": int(row["target_tokens"]),
+            "validation_stream_hash": row["validation_stream_hash"],
+            "precision": row["precision"],
+            "tf32": row["tf32"],
+            "origin": row.get("origin", "new_order"),
+            "job_id": row["job_id"],
+        })
+    _write_csv(OUT / "trajectory_losses.csv", trajectories)
+
+    paired = []
+    stability = []
+    for seed in SEEDS:
+        for step in (2500, 5000):
+            hist_sparse = lookup.get((seed, "original", "imp80", step))
+            hist_dense = lookup.get((seed, "original", "unpruned", step))
+            historical_ok = bool(hist_sparse and hist_dense)
+            for order in ORDER_NAMES:
+                new_sparse = lookup.get((seed, order, "imp80", step))
+                new_dense = lookup.get((seed, order, "unpruned", step))
+                complete = bool(new_sparse and new_dense)
+                gap = (
+                    _number(new_sparse["cross_entropy"]) - _number(new_dense["cross_entropy"])
+                    if complete else None
+                )
+                delta_sparse = (
+                    _number(new_sparse["cross_entropy"]) - _number(hist_sparse["cross_entropy"])
+                    if complete and historical_ok else None
+                )
+                delta_dense = (
+                    _number(new_dense["cross_entropy"]) - _number(hist_dense["cross_entropy"])
+                    if complete and historical_ok else None
+                )
+                delta_gap = (
+                    gap - (_number(hist_sparse["cross_entropy"]) - _number(hist_dense["cross_entropy"]))
+                    if complete and historical_ok else None
+                )
+                identity_pass = (
+                    delta_gap is None
+                    or math.isclose(delta_gap, delta_sparse - delta_dense, rel_tol=0.0, abs_tol=1e-12)
+                )
+                paired.append({
+                    "seed": seed,
+                    "contrast": f"{order}_vs_original",
+                    "order": order,
+                    "step": step,
+                    "historical_compatibility": historical_ok,
+                    "sparse_ce_order": _number(new_sparse["cross_entropy"]) if complete else "",
+                    "unpruned_ce_order": _number(new_dense["cross_entropy"]) if complete else "",
+                    "gap_order": gap if gap is not None else "",
+                    "delta_sparse": delta_sparse if delta_sparse is not None else "",
+                    "delta_unpruned": delta_dense if delta_dense is not None else "",
+                    "delta_gap": delta_gap if delta_gap is not None else "",
+                    "delta_gap_identity_verified": identity_pass,
+                    "complete": complete,
+                })
+            a_sparse = lookup.get((seed, "A", "imp80", step))
+            b_sparse = lookup.get((seed, "B", "imp80", step))
+            a_dense = lookup.get((seed, "A", "unpruned", step))
+            b_dense = lookup.get((seed, "B", "unpruned", step))
+            complete_ab = all((a_sparse, b_sparse, a_dense, b_dense))
+            if complete_ab:
+                gap_a = _number(a_sparse["cross_entropy"]) - _number(a_dense["cross_entropy"])
+                gap_b = _number(b_sparse["cross_entropy"]) - _number(b_dense["cross_entropy"])
+                delta_sparse = _number(b_sparse["cross_entropy"]) - _number(a_sparse["cross_entropy"])
+                delta_dense = _number(b_dense["cross_entropy"]) - _number(a_dense["cross_entropy"])
+                paired.append({
+                    "seed": seed,
+                    "contrast": "B_vs_A",
+                    "order": "B_vs_A",
+                    "step": step,
+                    "historical_compatibility": historical_ok,
+                    "sparse_ce_order": _number(b_sparse["cross_entropy"]),
+                    "unpruned_ce_order": _number(b_dense["cross_entropy"]),
+                    "gap_order": gap_b,
+                    "sparse_ce_reference": _number(a_sparse["cross_entropy"]),
+                    "unpruned_ce_reference": _number(a_dense["cross_entropy"]),
+                    "gap_reference": gap_a,
+                    "delta_sparse": delta_sparse,
+                    "delta_unpruned": delta_dense,
+                    "delta_gap": gap_b - gap_a,
+                    "delta_gap_identity_verified": math.isclose(
+                        gap_b - gap_a, delta_sparse - delta_dense, rel_tol=0.0, abs_tol=1e-12
+                    ),
+                    "complete": True,
+                })
+
+            compatible_orders = []
+            sparse_values = []
+            dense_values = []
+            for order in ("original", *ORDER_NAMES):
+                sparse_row = lookup.get((seed, order, "imp80", step))
+                dense_row = lookup.get((seed, order, "unpruned", step))
+                if sparse_row and dense_row:
+                    sparse_ce = _number(sparse_row["cross_entropy"])
+                    dense_ce = _number(dense_row["cross_entropy"])
+                    compatible_orders.append({
+                        "order": order,
+                        "gap": sparse_ce - dense_ce,
+                        "sparse": sparse_ce,
+                        "dense": dense_ce,
+                    })
+                    sparse_values.append(sparse_ce)
+                    dense_values.append(dense_ce)
+            gaps = [item["gap"] for item in compatible_orders]
+            stability.append({
+                "seed": seed,
+                "step": step,
+                "historical_compatibility": historical_ok,
+                "original_gap": next((item["gap"] for item in compatible_orders if item["order"] == "original"), ""),
+                "order_A_gap": next((item["gap"] for item in compatible_orders if item["order"] == "A"), ""),
+                "order_B_gap": next((item["gap"] for item in compatible_orders if item["order"] == "B"), ""),
+                "compatible_order_count": len(compatible_orders),
+                "gap_mean": float(np.mean(gaps)) if gaps else "",
+                "gap_min": min(gaps) if gaps else "",
+                "gap_max": max(gaps) if gaps else "",
+                "gap_range": max(gaps) - min(gaps) if gaps else "",
+                "gap_sample_sd": float(np.std(gaps, ddof=1)) if len(gaps) > 1 else "",
+                "match_count_strict": sum(value <= 0.0 for value in gaps),
+                "match_count_denominator": len(gaps),
+                "sparse_ce_variation_range": max(sparse_values) - min(sparse_values) if sparse_values else "",
+                "sparse_ce_sample_sd": float(np.std(sparse_values, ddof=1)) if len(sparse_values) > 1 else "",
+                "unpruned_ce_variation_range": max(dense_values) - min(dense_values) if dense_values else "",
+                "unpruned_ce_sample_sd": float(np.std(dense_values, ddof=1)) if len(dense_values) > 1 else "",
+                "all_gap_deltas_accounted_by_sparse_minus_dense": True,
+            })
+    _write_csv(OUT / "paired_order_effects.csv", paired)
+    _write_csv(OUT / "source_stability_summary.csv", stability)
+
+    rank_rows = []
+    rank_summary = []
+    for step in (2500, 5000):
+        for order in ("original", *ORDER_NAMES):
+            sparse_values = {
+                seed: _number(lookup[(seed, order, "imp80", step)]["cross_entropy"])
+                for seed in SEEDS if (seed, order, "imp80", step) in lookup
+            }
+            dense_values = {
+                seed: _number(lookup[(seed, order, "unpruned", step)]["cross_entropy"])
+                for seed in SEEDS if (seed, order, "unpruned", step) in lookup
+            }
+            gaps = {
+                seed: sparse_values[seed] - dense_values[seed]
+                for seed in sparse_values.keys() & dense_values.keys()
+            }
+            gap_ranks = _rank(gaps)
+            sparse_ranks = _rank(sparse_values)
+            for seed in SEEDS:
+                rank_rows.append({
+                    "row_type": "source_rank",
+                    "seed": seed,
+                    "step": step,
+                    "order": order,
+                    "gap": gaps.get(seed, ""),
+                    "gap_rank": gap_ranks.get(seed, ""),
+                    "sparse_ce": sparse_values.get(seed, ""),
+                    "sparse_ce_rank": sparse_ranks.get(seed, ""),
+                })
+        if all((seed, order, "imp80", step) in lookup and (seed, order, "unpruned", step) in lookup
+               for seed in SEEDS for order in ("original", *ORDER_NAMES)):
+            maps = {}
+            for order in ("original", *ORDER_NAMES):
+                sparse_values = {
+                    seed: _number(lookup[(seed, order, "imp80", step)]["cross_entropy"])
+                    for seed in SEEDS
+                }
+                dense_values = {
+                    seed: _number(lookup[(seed, order, "unpruned", step)]["cross_entropy"])
+                    for seed in SEEDS
+                }
+                maps[order] = {
+                    "gap": {seed: sparse_values[seed] - dense_values[seed] for seed in SEEDS},
+                    "sparse": sparse_values,
+                }
+            for metric in ("gap", "sparse"):
+                for left_name, right_name in (("original", "A"), ("original", "B"), ("A", "B")):
+                    concordant, comparable, pairs = _pairwise_rank_agreement(
+                        maps[left_name][metric], maps[right_name][metric]
+                    )
+                    rank_summary.append({
+                        "row_type": "rank_agreement",
+                        "step": step,
+                        "metric": metric,
+                        "left_order": left_name,
+                        "right_order": right_name,
+                        "concordant_pairs": concordant,
+                        "comparable_pairs": comparable,
+                        "pairwise_rank_agreement": concordant / comparable if comparable else "",
+                        "pairwise_rank_reversals": comparable - concordant,
+                    })
+                    for pair in pairs:
+                        rank_rows.append({
+                            "row_type": "pairwise_comparison",
+                            "step": step,
+                            "metric": metric,
+                            "left_order": left_name,
+                            "right_order": right_name,
+                            **pair,
+                        })
+    _write_csv(OUT / "rank_comparisons.csv", rank_rows + rank_summary)
+
+    compute_rows = []
+    total_attempted = total_applied = total_skipped = 0
+    production_seconds = 0.0
+    job_completions = []
+    for status_path in sorted((OUT / "status").glob("*.json")):
+        status = _json(status_path)
+        if status.get("status") != "COMPLETE":
+            continue
+        attempt = Path(status["attempt"])
+        job_id = status["job_id"]
+        row = next(item for item in csv.DictReader((OUT / "job_manifest.csv").open()) if item["job_id"] == job_id)
+        for segment, offset in (("segment_0", 0), ("segment_2500", 2500)):
+            record = _json(attempt / segment / "segment_record.json")
+            compute_rows.append({
+                "job_id": job_id,
+                "seed": int(row["seed"]),
+                "order": row["order"],
+                "model_type": row["model_type"],
+                "segment": segment,
+                "global_start": offset,
+                "global_end": offset + SEGMENT_SIZE,
+                "attempted_updates": record["optimizer_step_attempts"],
+                "applied_updates": record["optimizer_steps_applied"],
+                "amp_skipped_updates": record["amp_overflow_step_count"],
+                "wall_seconds": record["segment_seconds"],
+                "gpu": record.get("compute_device"),
+                "gpu_name": record.get("gpu_name"),
+                "optimizer": "fresh AdamW",
+                "scaler": "fresh GradScaler",
+                "training_batch_hash": record["segment_training_batch_hash"],
+            })
+            production_seconds += float(record["segment_seconds"])
+            total_attempted += int(record["optimizer_step_attempts"])
+            total_applied += int(record["optimizer_steps_applied"])
+            total_skipped += int(record["amp_overflow_step_count"])
+        job_completions.append({
+            "job_id": job_id,
+            "attempt": str(attempt),
+            "completion_sha256": _sha256_file(attempt / "completion.json"),
+            "common_evaluation_sha256": status["common_evaluation_sha256"],
+        })
+    _write_csv(OUT / "optimizer_compute_accounting.csv", compute_rows)
+    benchmark_path = OUT / "engineering/throughput_benchmark/benchmark.json"
+    benchmark_record = _json(benchmark_path) if benchmark_path.is_file() else {}
+    estimate = {
+        "new_jobs_registered": 20,
+        "new_jobs_complete": len(job_completions),
+        "attempted_updates": total_attempted,
+        "expected_attempted_updates_if_complete": 20 * TOTAL_STEPS,
+        "applied_updates": total_applied,
+        "amp_skipped_updates": total_skipped,
+        "measured_production_gpu_seconds": production_seconds,
+        "measured_production_gpu_hours": production_seconds / 3600,
+        "engineering_estimated_gpu_hours": benchmark_record.get("estimated_total_gpu_hours"),
+        "engineering_estimated_elapsed_hours_at_two_gpus": benchmark_record.get("estimated_elapsed_hours_at_two_available_gpus"),
+        "storage_estimate_bytes": benchmark_record.get("snapshot_storage_estimate_bytes"),
+        "production_costs_exclude_engineering_and_historical_evaluation": True,
+        "jobs": job_completions,
+    }
+    _atomic_json(OUT / "compute_accounting.json", estimate)
+    _write_findings(registration, endpoints, paired, stability, rank_summary, estimate)
+    _write_figures(lookup)
+    completion = {
+        "status": "COMPLETE" if len(job_completions) == 20 else "INCOMPLETE",
+        "registered_jobs": 20,
+        "completed_jobs": len(job_completions),
+        "failed_jobs": [
+            _json(path).get("job_id")
+            for path in (OUT / "status").glob("*.json")
+            if _json(path).get("status") == "FAILED"
+        ],
+        "historical_compatibility": "compatible for all five source pairs; common FP32/TF32-off endpoint readout performed",
+        "historical_trajectory_missing_snapshots": [0, 250, 500, 1000, 1500, 2000, 2525],
+        "new_order_outputs_complete": len(job_completions) == 20,
+        "pilot_effect_signs_or_matches_used_for_dispatch": False,
+        "completed_at_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+    }
+    _atomic_json(OUT / "completion.json", completion)
+
+
+def _write_findings(registration, endpoints, paired, stability, rank_summary, compute) -> None:
+    primary = [row for row in endpoints if row["step"] == 5000]
+    lines = [
+        "# Recovery batch-order stability findings",
+        "",
+        "This is a fixed five-source exploratory follow-up. Source seeds, not repeated orders, are the replication units. A missing outcome is not imputed. No near-match tolerance is used.",
+        "",
+        f"Completed new jobs: {compute['new_jobs_complete']}/20; attempted updates: {compute['attempted_updates']}/{compute['expected_attempted_updates_if_complete']}.",
+        "",
+        "## Primary endpoint: step 5,000",
+        "",
+        "| Seed | Original gap | Order A gap | Order B gap | Match count / evaluated orders |",
+        "|---:|---:|---:|---:|---:|",
+    ]
+    for row in stability:
+        if row["step"] != 5000:
+            continue
+        lines.append(
+            f"| {row['seed']} | {row['original_gap']} | {row['order_A_gap']} | {row['order_B_gap']} | "
+            f"{row['match_count_strict']} / {row['match_count_denominator']} |"
+        )
+    lines.extend(["", "## Per-source compatible outcomes", ""])
+    for seed in SEEDS:
+        rows = [row for row in primary if int(row["seed"]) == seed]
+        formatted = []
+        for row in rows:
+            gap = row["gap_sparse_minus_unpruned"]
+            formatted.append(f"{row['order']}={gap if gap != '' else 'missing'}")
+        lines.append(f"- Seed {seed}: " + "; ".join(formatted) + ".")
+    lines.extend([
+        "",
+        "## Order effects and interpretation",
+        "",
+        "Continuous gap ranges and sample SDs are in source_stability_summary.csv. Sparse and unpruned CE changes are reported separately in paired_order_effects.csv; `delta_gap = delta_sparse - delta_unpruned` is checked for every available contrast. These arithmetic contrasts do not identify a mechanism.",
+        "",
+        "Pair rankings by sparse-minus-unpruned gap and by absolute sparse CE, including source values, pairwise agreement, and reversals, are in rank_comparisons.csv. Repeated orders are nested within each source initialization-mask pair.",
+        "",
+        "The original-order references are compatible with the reconstructed stream, source initialization, IMP80 mask, matched unpruned source, and two-segment reset protocol. Original common-readout checkpoints exist at steps 2,500, 3,000, 4,000, and 5,000; other requested historical trajectory checkpoints are not available and are not invented.",
+        "",
+        "No conclusions about all optimization randomness, mask-vs-initialization causality, or mechanism follow. This tests only temporal order within the two fixed segments.",
+        "",
+        f"Measured successful production GPU time: {compute['measured_production_gpu_hours']:.3f} hours. Engineering throughput extrapolation: {compute.get('engineering_estimated_gpu_hours')} GPU-hours; kept separate from measured production cost.",
+        "",
+    ])
+    (OUT / "findings.md").write_text("\n".join(lines), encoding="utf-8")
+
+
+def _write_figures(lookup: dict) -> None:
+    try:
+        import matplotlib.pyplot as plt
+    except ImportError as error:
+        raise RuntimeError("matplotlib is required to produce the registered study figures") from error
+    figure_dir = OUT / "figures"
+    figure_dir.mkdir(parents=True, exist_ok=True)
+    orders = ("original", "A", "B")
+    labels = {"original": "Original", "A": "Order A", "B": "Order B"}
+
+    fig, axis = plt.subplots(figsize=(9, 5))
+    for seed in SEEDS:
+        values = []
+        for order in orders:
+            sparse = lookup.get((seed, order, "imp80", 5000))
+            dense = lookup.get((seed, order, "unpruned", 5000))
+            values.append(
+                _number(sparse["cross_entropy"]) - _number(dense["cross_entropy"])
+                if sparse and dense else np.nan
+            )
+        axis.plot(labels.values(), values, marker="o", label=f"seed {seed}")
+    axis.axhline(0, color="black", linewidth=0.8)
+    axis.set_ylabel("Sparse CE - unpruned CE (step 5,000)")
+    axis.set_title("Endpoint gaps by source and recovery order")
+    axis.legend(ncol=2)
+    fig.tight_layout()
+    fig.savefig(figure_dir / "endpoint_gaps_by_source.png", dpi=180)
+    plt.close(fig)
+
+    fig, axis = plt.subplots(figsize=(10, 5))
+    for model_type, linestyle in (("imp80", "-"), ("unpruned", "--")):
+        for seed in SEEDS:
+            values = []
+            for order in orders:
+                item = lookup.get((seed, order, model_type, 5000))
+                values.append(_number(item["cross_entropy"]) if item else np.nan)
+            axis.plot(
+                [f"{labels[order]}\n{model_type}" for order in orders],
+                values,
+                marker="o",
+                linestyle=linestyle,
+                label=f"{model_type}, seed {seed}",
+            )
+    axis.set_ylabel("Validation cross-entropy (step 5,000)")
+    axis.set_title("Absolute sparse and unpruned endpoint losses")
+    axis.tick_params(axis="x", labelsize=8)
+    fig.tight_layout()
+    fig.savefig(figure_dir / "absolute_endpoint_losses.png", dpi=180)
+    plt.close(fig)
+
+    fig, axes = plt.subplots(1, 5, figsize=(18, 4), sharey=True)
+    for axis, seed in zip(axes, SEEDS):
+        for order in orders:
+            steps = []
+            gaps = []
+            for step in SNAPSHOT_STEPS:
+                sparse = lookup.get((seed, order, "imp80", step))
+                dense = lookup.get((seed, order, "unpruned", step))
+                if sparse and dense:
+                    steps.append(step)
+                    gaps.append(_number(sparse["cross_entropy"]) - _number(dense["cross_entropy"]))
+            axis.plot(steps, gaps, marker=".", label=labels[order])
+        axis.axhline(0, color="black", linewidth=0.6)
+        axis.set_title(f"seed {seed}")
+        axis.set_xlabel("Global step")
+    axes[0].set_ylabel("Sparse CE - unpruned CE")
+    axes[-1].legend(fontsize=8)
+    fig.suptitle("Paired sparse-minus-unpruned trajectories")
+    fig.tight_layout()
+    fig.savefig(figure_dir / "paired_gap_trajectories.png", dpi=180)
+    plt.close(fig)
+
+    fig, axis = plt.subplots(figsize=(8, 5))
+    for seed in SEEDS:
+        ranks = []
+        available_orders = []
+        for order in orders:
+            sparse = lookup.get((seed, order, "imp80", 5000))
+            dense = lookup.get((seed, order, "unpruned", 5000))
+            if sparse and dense:
+                available_orders.append(order)
+                ranks.append(
+                    _rank({
+                        other_seed: _number(lookup[(other_seed, order, "imp80", 5000)]["cross_entropy"])
+                        - _number(lookup[(other_seed, order, "unpruned", 5000)]["cross_entropy"])
+                        for other_seed in SEEDS
+                        if (other_seed, order, "imp80", 5000) in lookup
+                        and (other_seed, order, "unpruned", 5000) in lookup
+                    })[seed]
+                )
+        axis.plot([labels[name] for name in available_orders], ranks, marker="o", label=f"seed {seed}")
+    axis.invert_yaxis()
+    axis.set_ylabel("Rank by sparse-minus-unpruned gap (1 = lowest)")
+    axis.set_title("Source ranking across recovery orders")
+    axis.legend(ncol=2)
+    fig.tight_layout()
+    fig.savefig(figure_dir / "source_rankings_across_orders.png", dpi=180)
+    plt.close(fig)
+
+
+def _read_job_manifest() -> list[dict]:
+    return list(csv.DictReader((OUT / "job_manifest.csv").open(encoding="utf-8")))
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="32E IMP80 recovery batch-order stability study")
+    commands = parser.add_subparsers(dest="command", required=True)
+    commands.add_parser("prepare")
+    commands.add_parser("verify-host")
+    commands.add_parser("engineering")
+    commands.add_parser("benchmark")
+    commands.add_parser("evaluate-historical")
+    commands.add_parser("seal")
+    commands.add_parser("status")
+    worker_parser = commands.add_parser("worker")
+    worker_parser.add_argument("--device-index", type=int, default=0)
+    worker_parser.add_argument("--resume", action="store_true")
+    worker_parser.add_argument("--idle-wait", type=int, default=60)
+    commands.add_parser("analyze")
+    arguments = parser.parse_args()
+    torch.set_num_threads(2)
+    if arguments.command == "prepare":
+        prepare()
+    elif arguments.command == "verify-host":
+        print(json.dumps(_verify_artifacts_on_host(), indent=2))
+    elif arguments.command == "engineering":
+        verify_engineering()
+    elif arguments.command == "benchmark":
+        if not torch.cuda.is_available():
+            raise RuntimeError("Throughput benchmark requires the verified GPU environment")
+        print(json.dumps(benchmark(), indent=2))
+    elif arguments.command == "evaluate-historical":
+        evaluate_historical()
+    elif arguments.command == "seal":
+        seal()
+    elif arguments.command == "worker":
+        worker(arguments.device_index, arguments.resume, arguments.idle_wait)
+    elif arguments.command == "analyze":
+        analyze()
+    elif arguments.command == "status":
+        statuses = []
+        for row in _read_job_manifest():
+            path = _job_status_path(row["job_id"])
+            status = _json(path) if path.is_file() else {"status": "PENDING"}
+            statuses.append({
+                "job_id": row["job_id"],
+                "seed": int(row["seed"]),
+                "order": row["order"],
+                "model_type": row["model_type"],
+                "status": status.get("status", "PENDING"),
+                "global_step": status.get("global_step"),
+                "attempt": status.get("attempt"),
+                "error": status.get("error"),
+            })
+        print(json.dumps({
+            "counts": dict(Counter(item["status"] for item in statuses)),
+            "pilot_gate": _json(OUT / "pilot_gate.json") if (OUT / "pilot_gate.json").is_file() else None,
+            "jobs": statuses,
+        }, indent=2))
+
+
+def verify_engineering() -> None:
+    _verify_registration()
+    from moe_lth.config import DEFAULT_CONFIG
+
+    checks = {}
+    pre_python = random.getstate()
+    pre_numpy = np.random.get_state()
+    pre_torch = torch.get_rng_state().clone()
+    pre_cuda = torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None
+    orders = _generate_orders()
+    checks["order_generation_preserves_global_rng"] = (
+        random.getstate() == pre_python
+        and all(np.array_equal(a, b) for a, b in zip(np.random.get_state()[1:], pre_numpy[1:]))
+        and torch.equal(torch.get_rng_state(), pre_torch)
+        and (
+            pre_cuda is None
+            or all(torch.equal(a, b) for a, b in zip(torch.cuda.get_rng_state_all(), pre_cuda))
+        )
+    )
+    checks["permutation_bijection_and_segment_preservation"] = all(
+        np.array_equal(
+            np.sort(order[segment]),
+            np.arange(0 if segment == "segment_0" else SEGMENT_SIZE,
+                      SEGMENT_SIZE if segment == "segment_0" else TOTAL_STEPS),
+        )
+        for order in orders.values()
+        for segment in ("segment_0", "segment_1")
+    )
+    short_stream = [
+        (torch.arange(8).reshape(2, 4), torch.arange(8, 16).reshape(2, 4)),
+        (torch.arange(16, 24).reshape(2, 4), torch.arange(24, 32).reshape(2, 4)),
+    ]
+    identity_order = np.arange(len(short_stream))
+    checks["original_order_loader_behavior"] = (
+        recovery._batch_sequence_hash([short_stream[index] for index in identity_order])
+        == recovery._batch_sequence_hash(short_stream)
+    )
+    model_pair_batches = {
+        model_type: [short_stream[index] for index in identity_order]
+        for model_type in ("imp80", "unpruned")
+    }
+    checks["paired_sparse_dense_batch_identity"] = (
+        recovery._batch_sequence_hash(model_pair_batches["imp80"])
+        == recovery._batch_sequence_hash(model_pair_batches["unpruned"])
+    )
+
+    temp = OUT / "engineering" / f"checks_{time.time_ns()}"
+    temp.mkdir(parents=True)
+    config = deepcopy(DEFAULT_CONFIG)
+    config.update({"seed": 17, "device": "cpu", "output_dir": str(temp / "tiny")})
+    config["model"].update({
+        "vocab_size": 32, "max_seq_len": 4, "num_layers": 1, "num_heads": 1,
+        "d_model": 4, "num_experts": 2, "expert_hidden_size": 8, "dropout": 0.0,
+        "top_k": 1, "capacity_factor": 1.25,
+    })
+    config["data"].update({"seq_len": 4, "validation_blocks": 1})
+    config["routing"].update({"mode": "learned", "aux_loss_weight": 0.01})
+    config["training"].update({
+        "steps": 2, "batch_size": 2, "learning_rate": 3e-4, "weight_decay": 0.0,
+        "grad_clip": 1.0, "eval_interval": 1, "log_interval": 1,
+        "checkpoint_steps": [0, 1, 2], "save_optimizer": False,
+        "record_train_routes": False, "precision": "fp32",
+    })
+    train = [
+        (torch.tensor([[1, 2, 3, 4], [4, 3, 2, 1]]), torch.tensor([[2, 3, 4, 5], [3, 2, 1, 0]])),
+        (torch.tensor([[5, 6, 7, 8], [8, 7, 6, 5]]), torch.tensor([[6, 7, 8, 9], [7, 6, 5, 4]])),
+    ]
+    validation = train[:1]
+    source_path = temp / "source.pt"
+    torch.manual_seed(17)
+    source_model = TinyMoELanguageModel(deepcopy(config["model"]))
+    torch.save({"step": 0, "model": source_model.state_dict(), "config": config}, source_path)
+    masks = {
+        name: torch.ones_like(parameter, dtype=torch.bool)
+        for name, parameter in expert_weight_parameters(source_model).items()
+    }
+    for mask in masks.values():
+        mask.view(-1)[::2] = False
+    initial = {name: tensor.detach().cpu().clone() for name, tensor in source_model.state_dict().items()}
+    for name, mask in masks.items():
+        initial[name].mul_(mask)
+    expected_expert = state_dict_hash({
+        name: tensor for name, tensor in initial.items() if parameter_group(name) == "expert"
+    })
+    expected_shared = state_dict_hash({
+        name: tensor for name, tensor in initial.items() if parameter_group(name) == "shared"
+    })
+    mask_hash = recovery._mask_hash(masks)
+    train_hash = recovery._batch_sequence_hash(train)
+    validation_hash = recovery._batch_sequence_hash(validation)
+    def run_tiny(
+        dest: Path,
+        batches: list,
+        interrupt: bool = False,
+        base_state: dict[str, torch.Tensor] | None = None,
+        router_path: Path | None = None,
+    ):
+        from moe_lth.pruning.router_age import selected_experts_per_batch
+
+        state = initial if base_state is None else base_state
+        checkpoint = source_path if router_path is None else router_path
+        expert_hash = state_dict_hash({
+            name: tensor for name, tensor in state.items() if parameter_group(name) == "expert"
+        })
+        shared_hash = state_dict_hash({
+            name: tensor for name, tensor in state.items() if parameter_group(name) == "shared"
+        })
+        with _preserved_rng():
+            ref = TinyMoELanguageModel(deepcopy(config["model"]))
+            ref.load_state_dict(state)
+            selected = selected_experts_per_batch(ref, recovery._calibration_batches(validation), torch.device("cpu"))
+        triggered = {"value": False}
+
+        def interrupt_after_first(model, token_ids, local_step):
+            if interrupt and local_step == 2 and not triggered["value"]:
+                triggered["value"] = True
+                raise RuntimeError("engineering interruption")
+            return model(token_ids)
+
+        return recovery._run_recovery_condition(
+            config=config,
+            condition_name="engineering_tiny",
+            pruned_base_state=state,
+            router_checkpoint=str(checkpoint),
+            router_age_percent=0,
+            router_step=0,
+            masks=masks,
+            expert_hash=expert_hash,
+            shared_hash=shared_hash,
+            mask_hash=mask_hash,
+            reference_selected=selected,
+            calibration_batches=recovery._calibration_batches(validation),
+            train_batches=batches,
+            validation_batches=validation,
+            train_batch_hash=recovery._batch_sequence_hash(batches),
+            validation_batch_hash=validation_hash,
+            device=torch.device("cpu"),
+            recovery_steps=len(batches),
+            dense_loss=0.0,
+            output_dir=dest,
+            confidence_control=False,
+            target_confidence=None,
+            seed=17,
+            sparsity=0.5,
+            router_mode="trainable",
+            training_forward_callback=interrupt_after_first if interrupt else None,
+            interruption_checkpoint=dest / "interruption.pt",
+            interruption_interval=1,
+        )
+
+    direct_dir = temp / "native_direct"
+    direct_record = run_tiny(direct_dir, train)
+    wrapper_dir = temp / "native_wrapper"
+    tiny_order = np.array([0, 1], dtype=np.int64)
+    wrapped_batches = _apply_order(train, tiny_order)
+    wrapper_record = run_tiny(wrapper_dir, wrapped_batches)
+    direct_model = _read_model_payload(direct_dir / "checkpoints/final_recovered.pt")["model"]
+    wrapper_model = _read_model_payload(wrapper_dir / "checkpoints/final_recovered.pt")["model"]
+    checks["native_versus_wrapper_equivalence"] = _tensor_state_hash(direct_model) == _tensor_state_hash(wrapper_model)
+    checks["persistent_mask_enforcement"] = all(
+        torch.count_nonzero(direct_model[name][~mask]).item() == 0 for name, mask in masks.items()
+    )
+    checks["initialization_and_mask_identity"] = (
+        _tensor_state_hash(initial) == _tensor_state_hash(_masked_initial_state(source_path, masks))
+        and recovery._mask_hash(masks) == mask_hash
+    )
+    registered_jobs = _read_job_manifest()
+    checks["source_initialization_and_mask_identity_across_orders"] = all(
+        len({
+            (row["initial_model_state_hash"], row["mask_sha256"])
+            for row in registered_jobs
+            if int(row["seed"]) == seed and row["model_type"] == model_type
+        }) == 1
+        for seed in SEEDS
+        for model_type in ("imp80", "unpruned")
+    )
+    checks["attempted_applied_update_accounting"] = (
+        direct_record["optimizer_step_attempts"] == len(train)
+        and direct_record["optimizer_steps_applied"] == len(train)
+    )
+    config_path = temp / "config.json"
+    config_path.write_text(json.dumps(config, sort_keys=True), encoding="utf-8")
+    checks["checkpoint_config_serialization_and_directory_creation"] = (
+        json.loads(config_path.read_text()) == config and (direct_dir / "checkpoints/final_recovered.pt").is_file()
+    )
+
+    interrupted_dir = temp / "resume"
+    try:
+        run_tiny(interrupted_dir, train, interrupt=True)
+    except RuntimeError as error:
+        if str(error) != "engineering interruption":
+            raise
+    else:
+        raise RuntimeError("Engineering interruption did not occur")
+    if not (interrupted_dir / "interruption.pt").is_file():
+        raise RuntimeError("Native trainer did not persist the expected resumable state")
+    resumed_record = run_tiny(interrupted_dir, train)
+    resumed_model = _read_model_payload(interrupted_dir / "checkpoints/final_recovered.pt")["model"]
+    checks["uninterrupted_versus_resumed_execution"] = (
+        _tensor_state_hash(direct_model) == _tensor_state_hash(resumed_model)
+        and resumed_record["optimizer_step_attempts"] == len(train)
+    )
+    boundary_dir = temp / "segment_0_boundary"
+    boundary_record = run_tiny(boundary_dir, train[:1])
+    boundary_checkpoint = boundary_dir / "checkpoints/final_recovered.pt"
+    boundary_state = _read_model_payload(boundary_checkpoint)["model"]
+    before_reset_hash = _tensor_state_hash(boundary_state)
+    reset_model = assemble_router_age_model(
+        config["model"], boundary_state, str(boundary_checkpoint), masks, torch.device("cpu")
+    )
+    reset_hash = _tensor_state_hash(reset_model.state_dict())
+    fresh_optimizer = torch.optim.AdamW(
+        reset_model.parameters(),
+        lr=float(config["training"]["learning_rate"]),
+        weight_decay=float(config["training"]["weight_decay"]),
+    )
+    checks["reset_parameter_identity"] = (
+        before_reset_hash == reset_hash and len(fresh_optimizer.state) == 0
+    )
+    second_segment_direct = temp / "segment_1_direct"
+    second_direct_record = run_tiny(
+        second_segment_direct, train, base_state=boundary_state, router_path=boundary_checkpoint
+    )
+    second_segment_interrupted = temp / "segment_1_resume"
+    try:
+        run_tiny(
+            second_segment_interrupted,
+            train,
+            interrupt=True,
+            base_state=boundary_state,
+            router_path=boundary_checkpoint,
+        )
+    except RuntimeError as error:
+        if str(error) != "engineering interruption":
+            raise
+    else:
+        raise RuntimeError("Second-segment engineering interruption did not occur")
+    second_resume_record = run_tiny(
+        second_segment_interrupted,
+        train,
+        base_state=boundary_state,
+        router_path=boundary_checkpoint,
+    )
+    second_direct_model = _read_model_payload(
+        second_segment_direct / "checkpoints/final_recovered.pt"
+    )["model"]
+    second_resumed_model = _read_model_payload(
+        second_segment_interrupted / "checkpoints/final_recovered.pt"
+    )["model"]
+    checks["restart_on_either_side_of_segment_boundary"] = (
+        (interrupted_dir / "checkpoints/final_recovered.pt").is_file()
+        and (second_segment_interrupted / "checkpoints/final_recovered.pt").is_file()
+        and _tensor_state_hash(second_direct_model) == _tensor_state_hash(second_resumed_model)
+        and boundary_record["optimizer_step_attempts"] == 1
+        and second_direct_record["optimizer_step_attempts"] == len(train)
+        and second_resume_record["optimizer_steps_applied"] == len(train)
+    )
+
+    evaluation_model = TinyMoELanguageModel(deepcopy(config["model"]))
+    eval_rng_before = torch.get_rng_state().clone()
+    eval_state_before = _tensor_state_hash(evaluation_model.state_dict())
+    eval_rows = _common_evaluate(
+        [(1, wrapper_dir / "checkpoints/final_recovered.pt", "engineering")],
+        config,
+        validation,
+        17,
+        "engineering",
+        "imp80",
+        "engineering",
+        validation_hash,
+        torch.device("cpu"),
+        allowed_steps=(2,),
+    )
+    checks["evaluation_state_and_rng_preservation"] = (
+        torch.equal(eval_rng_before, torch.get_rng_state())
+        and _tensor_state_hash(evaluation_model.state_dict()) == eval_state_before
+        and eval_rows[0]["precision"] == "FP32"
+        and eval_rows[0]["tf32"] is False
+    )
+    checks["engineering_directory_isolated"] = str(temp).startswith(str(OUT / "engineering"))
+    checks["paired_sparse_unpruned_same_batch_arrays"] = all(
+        len({
+            (row["order_segment0_sha256"], row["order_segment1_sha256"])
+            for row in registered_jobs
+            if int(row["seed"]) == seed and row["order"] == order
+        }) == 1
+        for seed in SEEDS
+        for order in ORDER_NAMES
+    )
+
+    failed = [name for name, passed in checks.items() if not passed]
+    result = {
+        "status": "PASS" if not failed else "FAIL",
+        "checks": checks,
+        "failed_checks": failed,
+        "engineering_only": True,
+        "scientific_endpoint": False,
+        "tiny_stream_attempted_updates": len(train),
+        "created_at_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+    }
+    _atomic_json(OUT / "engineering_checks.json", result)
+    if failed:
+        raise RuntimeError(f"Engineering checks failed: {failed}")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,95 @@
+{
+  "analysis_id": "imp_capacity_diagnostic_v1",
+  "available_offsets_by_seed": {
+    "7": [
+      0,
+      500
+    ],
+    "17": [
+      0,
+      500
+    ],
+    "29": [
+      0,
+      500
+    ],
+    "43": [
+      0,
+      500
+    ],
+    "61": [
+      0,
+      500
+    ]
+  },
+  "capacity": {
+    "capacity_formula": "max(1, ceil(capacity_factor * batch_size * sequence_length * top_k / num_experts))",
+    "no_drop": "remove capacity rejection only; preserve top-k, full softmax, selected gate, expert, residual and downstream rerouting",
+    "overflow_order": "descending selected gate confidence per expert using native topk(capacity), unchanged",
+    "unit": "all token positions in the complete original input batch at each MoE layer"
+  },
+  "condition": "router_experts_frozen",
+  "independent_replication_unit": "source seed",
+  "interpretation_limits": [
+    "K and J are controlled checkpoint-evaluation contrasts, not uniquely attributable mediation effects.",
+    "No outcome is a training run without capacity limits.",
+    "The repeated validation set is not an independent test set.",
+    "Seeds are the only independent replication units; tokens, batches, experts, and layers are not independent replications.",
+    "No seed selection, threshold, clamping, or winner classifier is used."
+  ],
+  "layer_local_policies": [
+    "NO_DROP_L0",
+    "NO_DROP_L1",
+    "NO_DROP_L2",
+    "NO_DROP_L3"
+  ],
+  "model_types": [
+    "sparse",
+    "unpruned"
+  ],
+  "offsets_requested": [
+    0,
+    25,
+    100,
+    250,
+    500
+  ],
+  "primary_offsets": [
+    0,
+    500
+  ],
+  "primary_policies": [
+    "NATIVE",
+    "NO_DROP_ALL"
+  ],
+  "provenance_status": "PASS_WITH_DOCUMENTED_EVALUATION_API_EXTENSION",
+  "purpose": "checkpoint-only controlled evaluation of native versus capacity rejection disabled",
+  "seeds": [
+    7,
+    17,
+    29,
+    43,
+    61
+  ],
+  "source_paths": {
+    "adaptation": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1",
+    "compensation": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_compensation_analysis_v1",
+    "transition": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1",
+    "uploaded_shared_only_diagnostics": "definitions audited from the attached CSV header and scripts/imp_postpruning_adaptation_v1/diagnostics.py"
+  },
+  "tolerances": {
+    "ce_absolute": 1e-06,
+    "model_atol": 1e-06,
+    "model_rtol": 1e-05
+  },
+  "validation": {
+    "batching": "identical original canonical 31-batch sequence per seed, including partial last batch",
+    "evaluation_mode": "eval/inference",
+    "expected_batches": 31,
+    "expected_target_tokens": 492416,
+    "independent_test_set": false,
+    "loss": "task cross-entropy, summed NLL divided by total target tokens",
+    "precision": "FP32",
+    "tf32": false
+  }
+}

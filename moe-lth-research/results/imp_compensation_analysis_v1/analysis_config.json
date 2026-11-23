@@ -1,0 +1,143 @@
+{
+  "analysis_type": "transparent post hoc analysis; not a new experiment or overall preregistration",
+  "cohort": {
+    "seeds": [
+      7,
+      17,
+      29,
+      43,
+      61
+    ],
+    "independent_unit": "source seed",
+    "primary_pair": {
+      "sparse": "native abrupt IMP80 at global step 1000",
+      "unpruned": "compatible unpruned trajectory from the same reconstructed step-1000 parent"
+    },
+    "offsets": [
+      0,
+      25,
+      100,
+      250,
+      500
+    ],
+    "global_steps": [
+      1000,
+      1025,
+      1100,
+      1250,
+      1500
+    ]
+  },
+  "conditions": {
+    "full": {
+      "router": "train",
+      "experts": "train",
+      "shared": "train",
+      "label": "full adaptation"
+    },
+    "router_frozen": {
+      "router": "frozen",
+      "experts": "train",
+      "shared": "train",
+      "label": "router frozen"
+    },
+    "experts_frozen": {
+      "router": "train",
+      "experts": "frozen",
+      "shared": "train",
+      "label": "experts frozen"
+    },
+    "router_experts_frozen": {
+      "router": "frozen",
+      "experts": "frozen",
+      "shared": "train",
+      "label": "shared-only adaptation"
+    }
+  },
+  "readout_populations": {
+    "validation": {
+      "definition": "complete native validation population, target-token weighted, including native partial final batch",
+      "expected_batches": 31,
+      "expected_target_tokens": 492416,
+      "precision": "FP32, TF32 disabled, eval/inference mode"
+    },
+    "event_probe": {
+      "definition": "original pruning-event training-only diagnostic batches",
+      "expected_target_tokens": 32768,
+      "independent_test_set": false,
+      "kept_separate_from_validation": true
+    },
+    "factorial_probe": {
+      "manifest": "results/imp_postpruning_adaptation_v1/diagnostic_probe_manifest.json",
+      "complete_batches_per_seed": 4,
+      "target_tokens_per_seed": 65536,
+      "independent_test_set": false,
+      "kept_separate_from_validation": true
+    }
+  },
+  "definitions": {
+    "D_validation": "L(post-prune at global step 1000) - L(pre-prune at global step 1000), on the identical complete validation population",
+    "D_event_probe": "L(post-prune) - L(pre-prune) on the original event training-only diagnostic batches; never pooled with validation",
+    "G_seed_condition_offset": "L_sparse(seed, condition, offset) - L_unpruned(seed, condition, offset)",
+    "C_seed_condition_offset": "D_validation(seed) - G_seed_condition_offset(offset), only when common-parent and evaluation checks pass",
+    "H_seed_condition_offset": "G_seed_condition_offset(0) - G_seed_condition_offset(offset); observed initial-gap closure only if common-parent or paired-D requirements fail",
+    "R_sparse": "L_sparse(offset 0) - L_sparse(offset k)",
+    "R_unpruned": "L_unpruned(offset 0) - L_unpruned(offset k)",
+    "P_R": "L_router_frozen - L_full, computed within model type, seed, and offset",
+    "P_E": "L_experts_frozen - L_full, computed within model type, seed, and offset",
+    "P_RE": "L_router_experts_frozen - L_full, computed within model type, seed, and offset; this is the shared-only branch",
+    "interaction": "I = L11 - L10 - L01 + L00; 1 means that component adapts, shared parameters train in every cell",
+    "integral": "trapezoidal integral over the observed common offset grid only; no extrapolation"
+  },
+  "aggregation": {
+    "primary": "show every seed-level value; summarize across five source seeds with mean, median, minimum, maximum, and sample SD",
+    "confidence_intervals": "none added; any interval already present in prior reports is descriptive and seed-level only",
+    "no_binary_thresholds": true,
+    "no_winner_classifier": true,
+    "no_percent_recovery_or_additive_component_percentages": true
+  },
+  "coverage_requirements": {
+    "factorial_cells": 40,
+    "trajectory_rows": 200,
+    "required_grid_per_cell": 5,
+    "branch_updates": 500,
+    "verify_checkpoint_hashes": true,
+    "verify_common_target_counts": true,
+    "verify_no_duplicate_seed_model_condition_offset_phase": true,
+    "verify_loss_sum_over_target_tokens_equals_ce": true,
+    "verify_factorial_and_gap_closure_identities": true,
+    "verify_frozen_components_and_masks": true
+  },
+  "checkpoint_only_diagnostics": {
+    "authorization": "checkpoint-only forwards are limited to shared-only pathway diagnostics; no backward pass, optimizer update, training-batch advance, component swap, or state mutation",
+    "models": "sparse and unpruned",
+    "condition": "router_experts_frozen",
+    "timepoints": [
+      "branch_start_offset_0",
+      "endpoint_offset_500"
+    ],
+    "forwards_per_state": 4,
+    "complete_training_probe_batches_per_seed": 4,
+    "profile_forwards": 1,
+    "maximum_evaluation_forwards_after_profile": 80,
+    "max_probe_target_tokens": 1310720,
+    "precision": "FP32, TF32 disabled, eval/inference mode",
+    "metrics": [
+      "final-normalized-hidden representation change on identical input tokens",
+      "logit displacement and cosine",
+      "softmax Jensen-Shannon divergence",
+      "top-1 prediction agreement",
+      "target-token-weighted probe CE",
+      "tied token-embedding/output-matrix displacement"
+    ],
+    "reused_measurements": "existing sealed-probe routing, expert-function, input-representation, update, and validation caches"
+  },
+  "interpretation_limits": [
+    "C is closure of an observed pruning-associated CE gap, not uniquely attributable repair and not proof original function is restored.",
+    "H is only observed initial-gap closure when D or parent requirements are not verified.",
+    "A larger sparse loss reduction from a worse starting loss is not by itself evidence for specialized compensation.",
+    "Frozen experts remain functionally in the pathway because shared adaptation may change their inputs, gates, assignments, and use.",
+    "The tied embedding/output matrix has both input and output roles.",
+    "Candidate diagnostics describe processes and are not a causal decomposition."
+  ]
+}

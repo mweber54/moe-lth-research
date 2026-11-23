@@ -1,0 +1,120 @@
+{
+  "all_pass": true,
+  "historical_seed_level": "results/router_age_sparsity_matrix/routing_age_sparsity_seed_level.csv",
+  "protocol_version": "standard_moe_sparsity_transition_v1",
+  "router_checkpoint_semantics": "initialization_state_trainable_during_recovery",
+  "seeds": {
+    "17": {
+      "checkpoints": {
+        "R0": {
+          "file_sha256": "9fa94d789a27c5be2f9df714efd19cb9c25d159d4722bc022b71f7ba48ca1acb",
+          "identifier": "step_0.pt",
+          "path": "results/router_age_reference_seed17_v2/checkpoints/step_0.pt",
+          "payload_step": 0,
+          "router_hash": "f18131f59cacbd0cd790739782fb067ead0b71661b270f6dde8ae3b51e835485"
+        },
+        "R100": {
+          "file_sha256": "971959f893cb035b8cec25a7469c036c8ca7ff15ad2aa1bb6b49962b18c8c7ec",
+          "identifier": "step_2500.pt",
+          "path": "results/router_age_reference_seed17_v2/checkpoints/step_2500.pt",
+          "payload_step": 2500,
+          "router_hash": "921de4127c2f2738d07364e33c08bbe9e1230abe73fba62e87e427f9cdf7a14c"
+        },
+        "R20": {
+          "file_sha256": "2ae08f079638f22e4f153a6f1c11dca274d52df1cd991484cf35cf22ddd6080b",
+          "identifier": "step_500.pt",
+          "path": "results/router_age_reference_seed17_v2/checkpoints/step_500.pt",
+          "payload_step": 500,
+          "router_hash": "9d150b725f993a7588c5946075f952e35c9e13c233e402aa9d92c9fcc7403978"
+        }
+      },
+      "config_path": "configs/router_age_reference_seed17.yaml",
+      "historical_mask_anchors": {
+        "0.60": "745e0ffee5162f6245bbf9bc9e35756438d7bfc5fb103fca04dbbc4908bc360c",
+        "0.70": "21dd892d071b3fd0c2a2988e2576f75193304bfde515dc20fedb4df7237c0d95",
+        "0.80": "b9a83c31c1969544a1e1f30b1815044446d5c6ecfd9468486d2c6481f7d67dbd",
+        "0.90": "79b9d38e67c524c952e204be462737ec6159f31e3ddb81173f473ec3b3d99310",
+        "0.95": "6844138d5c12527e4e223ad4422de23b1373fdd20de73e91a8ca9104f205bda4"
+      },
+      "reference_run_dir": "results/router_age_reference_seed17_v2",
+      "shared_state_hash": "371961d0e4188231da316951772ff3a6bf56a7a05c1b666bc492101c9576a3f3",
+      "training_sequence_hash": "ac403b30c74a432e5f30f7b14150461a79c72f734f89f5096c77882e84484ac4",
+      "validation_sequence_hash": "09a073e9f03bbb854d3903081440b9e0869feb8e04b50b3b1be76a1d42658b22"
+    },
+    "29": {
+      "checkpoints": {
+        "R0": {
+          "file_sha256": "af979e23189780d09ed72915f752e42b66d24d42e0fbe1cfe664aa2918de2728",
+          "identifier": "step_0.pt",
+          "path": "results/router_age_reference_seed29/checkpoints/step_0.pt",
+          "payload_step": 0,
+          "router_hash": "c44dff4e5683dd6e5a34fd421048e177af13511cb028915f82037e0ead1b6df1"
+        },
+        "R100": {
+          "file_sha256": "57595bf537c802e0074a24db3de2e5c83eddc50fd73e440e315f5738288d2a56",
+          "identifier": "step_2500.pt",
+          "path": "results/router_age_reference_seed29/checkpoints/step_2500.pt",
+          "payload_step": 2500,
+          "router_hash": "769eeb2a233b24fddf363c15107faffad13f55f7fbbbc993409f7592de9bcd5d"
+        },
+        "R20": {
+          "file_sha256": "faf788c27a65259452b245354b5055c424bff17699ad8d3cbcea9300e01a51d4",
+          "identifier": "step_500.pt",
+          "path": "results/router_age_reference_seed29/checkpoints/step_500.pt",
+          "payload_step": 500,
+          "router_hash": "1b8228413bb81ee5679d596dcb8f93e2378a590b3add1afd534559df38434086"
+        }
+      },
+      "config_path": "configs/router_age_reference_seed29.yaml",
+      "historical_mask_anchors": {
+        "0.60": "01a729cd3696fe9fb4ef452c73c562bfd232c0a836882a73287e2ee628667cfa",
+        "0.70": "d2ec5743e87069fd74e834cb21c068ddbe815e9122ba7a17345659542f8601da",
+        "0.80": "ba4e6efbbd51f1e1f5482191392d53888a1f3830eb39539662715da414ab037e",
+        "0.90": "e9c477fad02714998a5b718301666b720c3229a6b281d5a091743586fa52c609",
+        "0.95": "f79dfa9b7e34512c1cb45c0fb49763805c96648c4052b2894c5d6cc2f934bd18"
+      },
+      "reference_run_dir": "results/router_age_reference_seed29",
+      "shared_state_hash": "75f61f06410d3ddef21be94e7dd60b5092e65d993cb34887f8921ae4ce92079a",
+      "training_sequence_hash": "b9f0287fc5fe9ee8f87951575f61e25a60f2bf0f787cc30fbf86ba0afcf55bba",
+      "validation_sequence_hash": "09a073e9f03bbb854d3903081440b9e0869feb8e04b50b3b1be76a1d42658b22"
+    },
+    "7": {
+      "checkpoints": {
+        "R0": {
+          "file_sha256": "271c95950521fef6828bb732f99b5958516e40331d04e368212c9ad39473daf8",
+          "identifier": "step_0.pt",
+          "path": "results/router_age_reference_seed7/checkpoints/step_0.pt",
+          "payload_step": 0,
+          "router_hash": "d57727cf4caf59399ea4bef88612b7359365ff939d8fec9304dfe894dcdaa071"
+        },
+        "R100": {
+          "file_sha256": "b60ae49bd617d6aa07d5a5ae26a30a5b99ba75da8d984f727030590c0051e885",
+          "identifier": "step_2500.pt",
+          "path": "results/router_age_reference_seed7/checkpoints/step_2500.pt",
+          "payload_step": 2500,
+          "router_hash": "bd1d617906701475edb1e7b4cde6a0346f028e1e26369a82f6eafa5cd08da46a"
+        },
+        "R20": {
+          "file_sha256": "128f29827427016b864657070f72d81cfb5768dd96da12c63cfebe54dbcc2b1f",
+          "identifier": "step_500.pt",
+          "path": "results/router_age_reference_seed7/checkpoints/step_500.pt",
+          "payload_step": 500,
+          "router_hash": "7a1272f4611400daf8ca5e29370dcbf6e5ee958e15d96c9b41ab2de00717bf64"
+        }
+      },
+      "config_path": "configs/router_age_reference_seed7.yaml",
+      "historical_mask_anchors": {
+        "0.60": "70403239689d1b030633867bc40cce8cd7ac5634ad9b63793bda609622de1d3e",
+        "0.70": "ecb3239cadea0af11aca3da6ec9712dbca4af0476cc21e4033f4056d2b9b2932",
+        "0.80": "48a320081e56c8f6466b16616b9824d5b9ce8e2afb771e621f6ff9f0f1df6d02",
+        "0.90": "457209d8a6091c915ea670961fea416ba500784e6bc4d81926a5cba7554a718f",
+        "0.95": "575bb26989c3f77227266c770cac911054cf2f4dddfaeba9f9027097cd9196cb"
+      },
+      "reference_run_dir": "results/router_age_reference_seed7",
+      "shared_state_hash": "f1022a5cc27ab244db6dc147544aa1e614723425bf5f3c1c7c04484268772bce",
+      "training_sequence_hash": "de2acd18e49f434f33ba48dd2ed8cbe7805614ba044f954941c3463c14734d3c",
+      "validation_sequence_hash": "09a073e9f03bbb854d3903081440b9e0869feb8e04b50b3b1be76a1d42658b22"
+    }
+  },
+  "smoke": false
+}

@@ -1,0 +1,41 @@
+{
+  "conclusion": "Suspected indexing defect is not reproducible. In the row branch x=(r,d)=cross_r and y=(s,c)=cross_s; in the column branch x=(s,c)=cross_s and y=(r,d)=cross_r. Selected and accounted control indices therefore coincide.",
+  "confirmed": false,
+  "deterministic_seeds_compared": 19999,
+  "first_failing_examples": [],
+  "independent_reference_branch_cases": [
+    {
+      "branch": "row",
+      "high": [
+        0,
+        8
+      ],
+      "reference_control": [
+        2,
+        6
+      ],
+      "selected_control": [
+        2,
+        6
+      ]
+    },
+    {
+      "branch": "column",
+      "high": [
+        0,
+        8
+      ],
+      "reference_control": [
+        6,
+        2
+      ],
+      "selected_control": [
+        6,
+        2
+      ]
+    }
+  ],
+  "original_validated_exact_output_equivalence": true,
+  "validated_all_passed": true,
+  "validated_random_outputs_checked": 19999
+}

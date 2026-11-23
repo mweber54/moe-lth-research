@@ -1,0 +1,46 @@
+topic,file,start_line,end_line,quote
+embedding_and_tied_head_initialization,src/moe_lth/models/transformer.py,78,88,"78:         self.token_embedding = nn.Embedding(vocab_size, d_model)
+79:         self.position_embedding = nn.Embedding(max_seq_len, d_model)
+80:         self.blocks = nn.ModuleList(
+81:             MoETransformerBlock(config) for _ in range(int(config[""num_layers""]))
+82:         )
+83:         self.final_norm = nn.LayerNorm(d_model)
+84:         self.lm_head = nn.Linear(d_model, vocab_size, bias=False)
+85:         self.lm_head.weight = self.token_embedding.weight
+86: 
+87:     def forward(
+88:         self,"
+unscaled_input_embedding,src/moe_lth/models/transformer.py,103,103,"103:         hidden = self.token_embedding(token_ids) + self.position_embedding(positions)[None, :, :]"
+unscaled_output_head,src/moe_lth/models/transformer.py,126,126,126:         logits = self.lm_head(self.final_norm(hidden))
+expert_initialization_and_no_mask_compensation,src/moe_lth/models/experts.py,7,16,"7: class ExpertFFN(nn.Module):
+8:     def __init__(self, d_model: int, hidden_size: int, dropout: float = 0.0):
+9:         super().__init__()
+10:         self.fc1 = nn.Linear(d_model, hidden_size)
+11:         self.activation = nn.GELU()
+12:         self.dropout = nn.Dropout(dropout)
+13:         self.fc2 = nn.Linear(hidden_size, d_model)
+14: 
+15:     def forward(self, inputs: torch.Tensor) -> torch.Tensor:
+16:         return self.fc2(self.dropout(self.activation(self.fc1(inputs))))"
+next_token_targets,src/moe_lth/data.py,151,165,"151: class TokenBlockDataset(Dataset[tuple[torch.Tensor, torch.Tensor]]):
+152:     def __init__(self, tokens: list[int], seq_len: int):
+153:         usable = max(0, (len(tokens) - 1) // seq_len * seq_len)
+154:         if usable < seq_len:
+155:             raise ValueError(""Corpus is too short for the configured sequence length."")
+156:         self.tokens = torch.tensor(tokens[: usable + 1], dtype=torch.long)
+157:         self.seq_len = seq_len
+158: 
+159:     def __len__(self) -> int:
+160:         return (len(self.tokens) - 1) // self.seq_len
+161: 
+162:     def __getitem__(self, index: int) -> tuple[torch.Tensor, torch.Tensor]:
+163:         start = index * self.seq_len
+164:         block = self.tokens[start : start + self.seq_len + 1]
+165:         return block[:-1], block[1:]"
+each_discovery_round_rewinds_all_weights_to_original_init,scripts/imp_80_85/run.py,89,95,"89:     initial = load_model_from_checkpoint(config['model'], str(init), torch.device('cpu'))
+90:     state = {n: t.detach().clone() * masks[n] if n in masks else t.detach().clone()
+91:              for n, t in initial.state_dict().items()}
+92:     del initial
+93:     group_hash = lambda g: state_dict_hash({n: t for n, t in state.items() if parameter_group(n) == g})
+94:     started = time.perf_counter()
+95:     record = recovery._run_recovery_condition("

@@ -1,0 +1,17 @@
+{
+  "passive_logging_cuda_invariance": "PASS; final model hash and full train/validation metric files identical on synthetic four-step CUDA fp16 test",
+  "historical_runtime": "PyTorch2.7.0 CUDA12.8; OMP_NUM_THREADS=4",
+  "seed_count": 3,
+  "additional_experimental_replicates": 0,
+  "code_hashes": {
+    "scripts/run_32e_router_age_localization.py": "3f6034032359b9f79e854ef6e8d9dbba1770efc3c72e9fe27555aaf70a7c1e5a",
+    "scripts/analyze_32e_router_age_localization.py": "7808bd02c442850f36e6a399933a3238b9d5f13e99b1882645293504448d9fc4",
+    "scripts/finalize_32e_localization.py": "4df3f127a40ff8b5d58856c8040a8a71a42c1578efba6e7fe685522b624a0afc",
+    "src/moe_lth/training/train.py": "441091ad2c571047046e7c15d8c02f13f4b18b784d2fc1f6ce4db1470955545a",
+    "src/moe_lth/experiments/run_router_age_recovery.py": "082ff8495a27f160c1057613d273f75b53ea7d7644df5e1149e011ce24f3bdb8",
+    "src/moe_lth/models/moe_layer.py": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+    "src/moe_lth/pruning/magnitude_prune.py": "8340b879b1a120d07eed7dc22451bae81c80942fe52a88da766093cef445d7a3",
+    "src/moe_lth/pruning/router_age.py": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+    "tests/test_32e_exposure_logging.py": "58e1549b575b57563ed5f015cb22914dc20e7400d82c9f89632a904cb75fc7c0"
+  }
+}

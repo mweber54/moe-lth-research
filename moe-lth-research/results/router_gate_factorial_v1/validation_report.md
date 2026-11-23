@@ -1,0 +1,21 @@
+# Factorial implementation validation
+
+PASS: 12 historical initial-state/data/mask identities, 24 actual-state gradient diagnostics, CPU float 64 and CUDA float 32 full-model controls, and exact local float 64/float 32/float 16 gate Jacobians. C returns donor gates bit-for-bit and supplies the native selected-gate Jacobian; D returns native gates bit-for-bit with zero gate Jacobian. A/D and B/C logits, assignments and accepted sets match exactly. C equals A when donor equals native.
+
+CE gradients: routers active in A/C and zero in B/D; expert branches and shared/upstream parameters remain active. Native auxiliary probabilities remain differentiable in all cells. The auxiliary objective stays at coefficient .1; later auxiliary paths through earlier gates can change under detach. It is not an exclusively CE-specific graph cut.
+
+Tied embedding task gradient equals separate lookup plus output-head leaves (relative error <2e-5). Diagnostics preserve parameters, RNG, gradients and module modes. Single-expert, selected-only-normalized top 1, and saturated softmax are structurally degenerate controls; the actual full-softmax E8 model is not structurally degenerate.
+
+All 12,243 archived donor occurrences pass SHA256 integrity. Each recovery will check occurrence input hashes, assignments, accepted sets and ordering. Dense/sparse budgets use the same frozen legacy trainer, 2500 attempts, fresh AdamW, clipping 1, FP16 AMP, and primary FP32 token-weighted CE readout; applied updates/skips are reported separately.
+
+Reused A intermediate/final checkpoints and B intermediate snapshots are missing. Audited A/B scalar readouts and execution provenance are reused; B final checkpoints remain. No reconstructed baseline training is presented. Donor validation at step 25 does not exist: fixed step 0 diagnostics and native readout are labeled separately, and primary timing comparisons exclude 25. See protocol.json and validation_details.json.
+
+Additional legacy checks passed in both FP32 and FP16 AMP: B adapter logits and every task/auxiliary parameter gradient are bit-identical to the original gate override; D logits and every gradient match independent native-gate detached overrides. The auxiliary-gradient difference between A and D is observed (about 0.0001965 in the fixture), confirming the documented downstream graph consequence rather than incorrectly asserting equal auxiliary gradients.
+
+The first authorized C/R100/dense recovery reproduces all 51 historical native validation values and every final model parameter bit-for-bit. This supplies a full-trajectory compatibility control beyond initial-state checks (`benchmark_validation.json`).
+
+Post-execution checks: all 24 final states match their step 2500 snapshots, all sparse mask zeros and tied embedding values remain intact, and all weights are finite. All three C/R100/dense runs reproduce every native donor validation value and final weight bit-for-bit. All 216 snapshot mutation audits pass. The maximum tied-gradient decomposition error is 3.47e-8; all 192 AdamW reconstructions pass explicit FP32 rounding bounds (maximum absolute discrepancy 2.384e-7).
+
+All 864 observed local FP16 gate Jacobians match the requested policy. The mean exact-zero fraction of the underlying native local Jacobian is 0.252% in C states and 2.475% in D states; this is measured numerical saturation, not a structurally constant E8 gate. C retains nonzero router task gradients at every saved probe state (minimum norm 0.05125). D router task gradients are exactly zero at every probe, while direct auxiliary, expert and shared paths remain active. All 4896 logged layer/step forward-source errors are zero. All 36 re-evaluated B endpoint readouts reproduce audited losses within 1.78e-15 nats.
+
+The final strict byte check detected one removed trailing newline in the earlier narrative verdict. No scientific/protocol input changed. The original report was left untouched; exact original/observed byte copies, SHA proof and a preservation-only analyzer amendment are retained in new provenance. See preservation_exception.md. The final worker audit error occurred after all 24 recoveries completed and did not trigger another recovery.

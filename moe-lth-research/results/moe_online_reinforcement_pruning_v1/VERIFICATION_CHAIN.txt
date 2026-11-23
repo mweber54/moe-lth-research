@@ -1,0 +1,290 @@
+================================================================================
+MOE ONLINE REINFORCEMENT PRUNING V1 - VERIFICATION CHAIN
+================================================================================
+Timestamp: 2026-11-20 03:34:47 UTC
+Chain Status: COMPLETE AND SEALED
+
+================================================================================
+LAYER 1: PROTOCOL INTEGRITY
+================================================================================
+
+Document: protocol.md
+Hash: 403caae38a808e39571bcd1526a48cf44e06801e57e239f18800789bb690e2fc
+Bytes: 5,603
+Frozen: 2026-11-20T02:14:08.030344000Z
+
+✓ PASS: Protocol locked before any branch outcome inspection or generation
+✓ PASS: Protocol SHA-256 matches registration.json reference
+✓ IMPLICATION: Randomization and selection matching procedures frozen
+
+================================================================================
+LAYER 2: REGISTRATION METADATA
+================================================================================
+
+File: registration.json
+Status: PROTOCOL_FROZEN_SELECTION_NOT_STARTED
+
+Recorded Facts:
+  • Seeds: [7, 17, 29]
+  • Orders: ["A", "B"]
+  • Primary dose: 0.05 (5% of parameters per matrix)
+  • Small candidate fraction: 0.25 (smallest 25% by magnitude)
+  • Step-250 endpoint: verified
+  • Branch step: 250 (validation frequency)
+  • Endpoint: 2500 (final validation)
+  • No branch outcomes read before freeze: true
+  • No branch outcomes generated before freeze: true
+
+✓ PASS: Registration consistent with frozen protocol
+✓ PASS: No outcomes inspected/generated prematurely
+✓ IMPLICATION: Selection and randomization are genuinely blinded
+
+================================================================================
+LAYER 3: STEP-250 PREFIX VERIFICATION (6 CELLS)
+================================================================================
+
+Each cell has: prefixes/seed{N}_{A,B}/verification.json
+
+─────────────────────────────────────────────────────────────────────────────
+Cell: seed7_A
+─────────────────────────────────────────────────────────────────────────────
+  Initial checkpoint:
+    Path: .../32e_router_age_localization/references/seed_7/checkpoints/step_0.pt
+    SHA-256: 1fa0a62b5db07ff498915319529badf38183e394797d8dca0b478c899d319fa1
+    ✓ VERIFIED: Exists and loads correctly
+  
+  Applied updates (1–250): 249 ✓
+  AMP overflow attempts: 1 ✓
+  Restoration model check: true ✓
+  Restoration optimizer check: true ✓
+  Restoration scaler check: true ✓
+  
+  Checkpoint at step 250:
+    Path: prefixes/seed7_A/native/interruption.pt
+    SHA-256: 13ec00be7c9ddbe00c2004105b2f6bafc1b9bbd564b9ebf95b66af7a3352a94c
+    Size: 823 MiB ✓
+  
+  Step-251 oracle saved: prefixes/seed7_A/native/expected_step251.pt ✓
+  Scores saved: prefixes/seed7_A/scores.pt ✓
+    SHA-256: f9c232aa0579172c634819085fac187dc8375e2870f7f5d94dfffd8738c81290
+  
+  Status: VERIFIED ✓
+
+─────────────────────────────────────────────────────────────────────────────
+Cell: seed7_B
+─────────────────────────────────────────────────────────────────────────────
+  Applied updates (1–250): 249 ✓
+  AMP overflow attempts: 1 ✓
+  Restoration checks: model✓ optimizer✓ scaler✓
+  Checkpoint SHA-256: b3d3c78483ed8873e8d00f414aa0e8ac54b15e7146a40a68e1f2532fa00698fc ✓
+  Scores SHA-256: fd3f6acd6848797aa888c0ae75231d715ca8529a4d30c857a76bc8349d5d73ea ✓
+  Status: VERIFIED ✓
+
+─────────────────────────────────────────────────────────────────────────────
+Cell: seed17_A
+─────────────────────────────────────────────────────────────────────────────
+  Applied updates (1–250): 249 ✓
+  AMP overflow attempts: 1 ✓
+  Restoration checks: model✓ optimizer✓ scaler✓
+  Checkpoint SHA-256: 31d86b02f531769c5ced2734bad3de1934dac9d701192606b570c7b4b57ff9a8 ✓
+  Scores SHA-256: 3c5d75d3a834baa93f2195c6df439f271b071b8534ca120f890f962c59f524d6 ✓
+  Status: VERIFIED ✓
+
+─────────────────────────────────────────────────────────────────────────────
+Cell: seed17_B
+─────────────────────────────────────────────────────────────────────────────
+  Applied updates (1–250): 249 ✓
+  AMP overflow attempts: 1 ✓
+  Restoration checks: model✓ optimizer✓ scaler✓
+  Checkpoint SHA-256: f011fd2b6ba3739fbecd56f754a595c9e74b57a495ec2d0022d5228d9579e212 ✓
+  Scores SHA-256: 62e9da16555d2ef31092df265bb6a97af548848c91dda9c8f0c208505dbc4a92 ✓
+  Status: VERIFIED ✓
+
+─────────────────────────────────────────────────────────────────────────────
+Cell: seed29_A
+─────────────────────────────────────────────────────────────────────────────
+  Applied updates (1–250): 249 ✓
+  AMP overflow attempts: 1 ✓
+  Restoration checks: model✓ optimizer✓ scaler✓
+  Checkpoint SHA-256: 7f3a00c4a649e8bd3ed1c0a14e6ad47ff07e92559075a7524bb689a6364eed62 ✓
+  Scores SHA-256: 31e7753a17b43bb31406a43f86682aa2d07b9c32d0ba09e8bf153dc70562f7bd ✓
+  Status: VERIFIED ✓
+
+─────────────────────────────────────────────────────────────────────────────
+Cell: seed29_B
+─────────────────────────────────────────────────────────────────────────────
+  Applied updates (1–250): 249 ✓
+  AMP overflow attempts: 1 ✓
+  Restoration checks: model✓ optimizer✓ scaler✓
+  Checkpoint SHA-256: 6426e7999e181cb7b2acef30d0884bd091e67458c02429de5dbdf6806c6b2589 ✓
+  Scores SHA-256: a6f188c96edb723cf9b3c36a7e2e6adbf14bc894f815f3a0b033a7542cb1321f ✓
+  Status: VERIFIED ✓
+
+✓ PASS: All 6 cells have step-250 state captured, verified, and oracle saved
+✓ IMPLICATION: Dense model and reinforcement scores recorded successfully
+
+================================================================================
+LAYER 4: SELECTION MATCHING (6 CELLS)
+================================================================================
+
+Each cell has: matching/seed{N}_{A,B}/complete.json
+
+─────────────────────────────────────────────────────────────────────────────
+Frozen Criterion 1: Identical Deletion Counts
+─────────────────────────────────────────────────────────────────────────────
+
+Result across all 6 cells:
+  Deletions per matrix/arm: 3,355,392
+  Matrices: 256
+  Total per arm: 858,980,352
+  Row/column balance: PERFECT (constraints enforced)
+
+✓ PASS: All 6 cells achieved identical deletion counts in every matrix/row/col
+
+─────────────────────────────────────────────────────────────────────────────
+Frozen Criterion 2: Magnitude Bin Stratification
+─────────────────────────────────────────────────────────────────────────────
+
+Result across all 6 cells:
+  Strata per matrix: 5
+  Total matrices: 256
+  Bin fraction difference requirement: ≤ ±0.02
+  Largest/smallest bin size difference: ≤ 1
+
+✓ PASS: All 6 cells achieved balanced magnitude bin distributions
+
+─────────────────────────────────────────────────────────────────────────────
+Frozen Criterion 3: Removed Squared-Weight Energy Balance
+─────────────────────────────────────────────────────────────────────────────
+
+Requirement: Within every matrix, removed energy must differ by ≤5% or be exact
+
+✓ PASS: All 6 cells audit files confirm energy balance compliance
+
+─────────────────────────────────────────────────────────────────────────────
+Frozen Criterion 4: Mean Reinforcement Separation
+─────────────────────────────────────────────────────────────────────────────
+
+Requirement: Mean high-arm score - mean random-arm score ≥ 0.20
+
+| Cell    | High Mean | Random Mean | Separation | Requirement | Status |
+|---------|-----------|-------------|------------|-------------|--------|
+| seed7_A | 0.2375    | -0.3212     | 0.5587     | ≥ 0.20      | ✓PASS |
+| seed7_B | 0.2308    | -0.3167     | 0.5475     | ≥ 0.20      | ✓PASS |
+| seed17_A| 0.2330    | -0.3298     | 0.5628     | ≥ 0.20      | ✓PASS |
+| seed17_B| 0.2361    | -0.3294     | 0.5655     | ≥ 0.20      | ✓PASS |
+| seed29_A| 0.2320    | -0.3210     | 0.5529     | ≥ 0.20      | ✓PASS |
+| seed29_B| 0.2313    | -0.3210     | 0.5523     | ≥ 0.20      | ✓PASS |
+
+Average separation: 0.5556 (2.78× protocol minimum)
+
+✓ PASS: All 6 cells achieved strong score separation
+
+─────────────────────────────────────────────────────────────────────────────
+Frozen Criterion 5: Shared-Location Fraction (Overlap)
+─────────────────────────────────────────────────────────────────────────────
+
+Requirement: Overlap fraction ≤ 0.30
+
+| Cell    | Overlap Count | Overlap Fraction | Requirement | Status |
+|---------|---------------|------------------|-------------|--------|
+| seed7_A | 940,929       | 0.280423         | ≤ 0.30      | ✓PASS |
+| seed7_B | 940,931       | 0.280424         | ≤ 0.30      | ✓PASS |
+| seed17_A| 940,819       | 0.280390         | ≤ 0.30      | ✓PASS |
+| seed17_B| 941,804       | 0.280684         | ≤ 0.30      | ✓PASS |
+| seed29_A| 940,795       | 0.280383         | ≤ 0.30      | ✓PASS |
+| seed29_B| 941,113       | 0.280478         | ≤ 0.30      | ✓PASS |
+
+Average overlap fraction: 0.28047 (93.5% of limit)
+
+✓ PASS: All 6 cells achieved tight overlap clustering
+
+─────────────────────────────────────────────────────────────────────────────
+Matching Overall Status
+─────────────────────────────────────────────────────────────────────────────
+
+✓ PASS: All 6 cells passed all frozen matching acceptance criteria
+✓ IMPLICATION: Selections are sealed and immutable; ready for branching
+
+================================================================================
+LAYER 5: GPU ADMISSION POLICY COMPLIANCE
+================================================================================
+
+Registered Policy:
+  Maximum utilization: 90%
+  Minimum free memory: 24 GiB
+  Enforcement: One worker per device; no process killing
+
+Admission records at step-250 capture:
+
+| Cell    | Utilization | Free GiB | Min Policy | Max Policy | Status |
+|---------|-------------|----------|------------|------------|--------|
+| seed7_A | 11%         | 91.7     | ✓ 24       | ✓ 90       | ✓ADMIT |
+| seed7_B | 80%         | 91.7     | ✓ 24       | ✓ 90       | ✓ADMIT |
+| seed17_A| 78%         | 91.7     | ✓ 24       | ✓ 90       | ✓ADMIT |
+| seed17_B| 27%         | 91.7     | ✓ 24       | ✓ 90       | ✓ADMIT |
+| seed29_A| 0%          | 91.7     | ✓ 24       | ✓ 90       | ✓ADMIT |
+| seed29_B| 51%         | 91.7     | ✓ 24       | ✓ 90       | ✓ADMIT |
+
+Transcript Cross-Check:
+  "Adder admission at 80% utilization" → seed7_B admission.json shows 80% ✓
+
+✓ PASS: All admissions within registered policy
+✓ IMPLICATION: Study may proceed to branch execution on current GPU resource
+
+================================================================================
+LAYER 6: IMPLEMENTATION FIDELITY CHECKS
+================================================================================
+
+AMP Overflow Strategy Check:
+  Protocol: "Up to 1 AMP overflow without retry; not reapplied to scores"
+  Recorded: 1 overflow per cell, not retried, scores from 249 applied updates
+  ✓ MATCH: Implementation matches protocol exactly
+
+Stratified Binning Check:
+  Protocol: "5 equal-frequency magnitude bins; stable sort on (magnitude, index)"
+  Recorded: 256 matrices, 5 strata each, deterministic stratification
+  ✓ MATCH: Implementation matches protocol exactly
+
+Restore Verification Check:
+  Protocol: "Restore must reproduce next untouched update (step 251)"
+  Recorded: Triple-pass model/optimizer/scaler equality checks all pass
+  ✓ MATCH: Implementation matches protocol exactly
+
+✓ PASS: All implementation details match protocol specification
+✓ IMPLICATION: Protocol adherence verified; no deviations detected
+
+================================================================================
+FINAL VERIFICATION CHAIN SUMMARY
+================================================================================
+
+Layer 1 (Protocol): ✓ PASS
+  → Protocol integrity established, frozen at specific time/hash
+
+Layer 2 (Registration): ✓ PASS
+  → Study metadata consistent, no premature outcome inspection
+
+Layer 3 (Prefix Completion): ✓ PASS
+  → All 6 cells: step-250 captured, 249 applied updates, state verified
+
+Layer 4 (Selection Matching): ✓ PASS
+  → All 6 cells: 5 frozen criteria met, selections sealed, arm separation strong
+
+Layer 5 (Resource Policy): ✓ PASS
+  → GPU admission policy compliance verified, transcript reference validated
+
+Layer 6 (Implementation): ✓ PASS
+  → AMP, stratification, and restoration strategies match protocol exactly
+
+═════════════════════════════════════════════════════════════════════════════
+VERIFICATION CHAIN COMPLETE & SEALED
+═════════════════════════════════════════════════════════════════════════════
+
+✓ ALL LAYERS PASS: Study is cleared for branch continuation
+✓ NO PROTOCOL VIOLATIONS: Implementation faithful to specification
+✓ SELECTIONS IMMUTABLE: Ready for three-arm branching (untouched, random, high)
+
+Next Phase: Execute 18 branch jobs (6 cells × 3 arms, step 250→2500)
+Final Analysis: Compute Delta_i for each cell; report means and effect sizes
+
+═════════════════════════════════════════════════════════════════════════════

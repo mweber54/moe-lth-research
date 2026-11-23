@@ -1,0 +1,57 @@
+{
+  "arms": {
+    "A": [
+      "native",
+      "native"
+    ],
+    "B": [
+      "donor",
+      "detached"
+    ],
+    "C": [
+      "donor",
+      "native"
+    ],
+    "D": [
+      "native",
+      "detached"
+    ]
+  },
+  "experts": 8,
+  "seeds": [
+    7,
+    17,
+    29
+  ],
+  "ages": [
+    20,
+    100
+  ],
+  "sparsity": 0.85,
+  "new_recoveries": 24,
+  "steps": 2500,
+  "snapshots": [
+    0,
+    25,
+    100,
+    250,
+    500,
+    1000,
+    1500,
+    2000,
+    2500
+  ],
+  "primary": "donor assignments AND donor gate coefficients, token-weighted FP32 CE on identical 31 validation batches",
+  "age_contrast": "T=(CE_sparse_R20-CE_dense_R20)-(CE_sparse_R100-CE_dense_R100)",
+  "simple_value": "T_C-T_A",
+  "simple_detach": "T_D-T_A",
+  "interaction": "T_B-T_C-T_D+T_A",
+  "marginal_value": ".5*((T_C-T_A)+(T_B-T_D))",
+  "marginal_detach": ".5*((T_D-T_A)+(T_B-T_C))",
+  "attenuation": "1-abs(T_arm)/(abs(T_A)+1e-12); flag abs(T_A)<1e-5",
+  "stopping": "Stop after 24. Promote only if an isolated effect exceeds .02 nats in same direction in all three seeds, controls pass, and not solely evaluation-policy reversal. No fresh-seed confirmation authorized.",
+  "step25": "No archived donor validation at 25: use the fixed step0 diagnostic readout (explicitly labeled), native readout, save snapshot; omit 25 from primary timing comparisons.",
+  "auxiliary": "Native full-softmax probabilities and .1 objective remain. Gate detach also cuts downstream auxiliary paths through earlier gate coefficients, matching B. Direct router auxiliary gradients remain active.",
+  "precision": "Legacy FP16 AMP train; legacy TF32 FP32 readouts; fixed diagnostics FP32 TF32 disabled.",
+  "baseline_limitation": "A checkpoints and A/B intermediate snapshots unavailable. Reuse audited scalar readouts with provenance; B final checkpoints retained. Do not retrain controls."
+}

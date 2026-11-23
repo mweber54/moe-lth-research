@@ -1,0 +1,2 @@
+cd /users/kent/student/mweber54/moe-lth-research/moe-lth-research/scripts/functional_geometry_extension
+for s in 7 17 29; do /users/kent/student/mweber54/moe-lth-research/moe-lth-research/.venv-highres/bin/python activation_worker.py --seed $s >> /users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/high_sparsity_coupling_v1/functional_geometry_extension_v1/logs/activation_viper_seed$s.log 2>&1; done

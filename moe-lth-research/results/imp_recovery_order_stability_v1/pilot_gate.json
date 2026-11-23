@@ -1,0 +1,36 @@
+{
+  "checks": {
+    "endpoint_completeness": true,
+    "numerical": true,
+    "outcome_independent": true,
+    "provenance": true,
+    "resources": true
+  },
+  "estimated_remaining_storage_bytes": 141537418240,
+  "free_disk_bytes": 542411587584,
+  "jobs": {
+    "e32_seed17_order_A_imp80": {
+      "applied_updates": 4998,
+      "attempted_updates": 5000,
+      "completion_sha256": "d835b54055d366ab569be917955079d1c5b3aaf9010a0afd1297cb540b9e203d",
+      "gpu_name": "NVIDIA H100 NVL",
+      "measured_seconds": 1138.2510634893551,
+      "reset_hash_equal": true,
+      "result_signs_or_match_labels_used_for_dispatch": false,
+      "snapshot_count": 11,
+      "target_tokens": 492416
+    },
+    "e32_seed17_order_A_unpruned": {
+      "applied_updates": 4999,
+      "attempted_updates": 5000,
+      "completion_sha256": "84c5a476eb0fa17d2a07f524db62b18a821b52917e0e1bacda84ba6d5fa2c78c",
+      "gpu_name": "NVIDIA H100 NVL",
+      "measured_seconds": 903.9305022563785,
+      "reset_hash_equal": true,
+      "result_signs_or_match_labels_used_for_dispatch": false,
+      "snapshot_count": 11,
+      "target_tokens": 492416
+    }
+  },
+  "passed": true
+}

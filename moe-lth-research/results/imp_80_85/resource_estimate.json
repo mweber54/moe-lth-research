@@ -1,0 +1,28 @@
+{
+  "benchmark_path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_80_85/benchmarks/e8_seed7_1791912245641482253/benchmark.json",
+  "canonical_benchmark": {
+    "gpu": "NVIDIA H100 NVL",
+    "torch": "2.7.0",
+    "steps": 20,
+    "duration_seconds": 70.17587488982826,
+    "seconds_per_attempt_including_diagnostics": 3.5087937444914132,
+    "representative_round_hours_linear": 2.4366623225634814,
+    "full_275_stages_hours_same_architecture_linear": 670.0821387049574,
+    "checkpoint_bytes": 71997175,
+    "full_275_checkpoints_gib_same_architecture": 18.43946345616132,
+    "free_disk_gib": 1348.1015625,
+    "limitations": "Short shared-GPU e8 measurement; fixed diagnostics overestimate per-step cost. Other expert counts and contention vary. Includes 225 discovery stages plus 50 recoveries; temporary AdamW resume snapshots add disk usage."
+  },
+  "full_attempted_steps": 687500,
+  "discovery_attempted_steps": 562500,
+  "final_recovery_attempted_steps": 125000,
+  "checkpoint_tensor_gib": 40.8980505913496,
+  "mask_tensor_gib": 8.0859375,
+  "largest_temporary_resume_tensor_gib_approx": 0.765844389796257,
+  "suggested_free_disk_reserve_gib": 80,
+  "gpu_hour_scenarios": {
+    "all_stages_at_measured_e8_rate": 670.0821387049574,
+    "expert_count_proportional_scenario": 1541.188919021402
+  },
+  "limitations": "GPU-hour scenarios are not confidence bounds. Shared busy H100, only 20 E8 attempts; fixed diagnostics and snapshot I/O included. Top-1 routing means parameter-size scaling does not imply runtime scaling. Full-budget and other-architecture timing required for reliable scheduling. Disk excludes reused baseline checkpoints; includes masks and all new trained tensors, with reserve for serialization/logs/component snapshots. No held-out test prerequisite identified or substituted."
+}

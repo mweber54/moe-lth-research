@@ -1,0 +1,47 @@
+{
+  "generator": "NumPy SeedSequence + PCG64; independent child stream per segment",
+  "numpy_version": "1.26.4",
+  "order_seeds": {
+    "A": 91001,
+    "B": 91002
+  },
+  "same_indices_across_source_seeds": true,
+  "segments": {
+    "A": {
+      "segment_0": {
+        "count": 2500,
+        "index_array_sha256": "66cbbea0a64b02e5bf31143a929c279a8615e0ec2d0da9740e8ba0dc2c90167a",
+        "max_index": 2499,
+        "min_index": 0,
+        "path": "permutations/order_A_segment_0.npy",
+        "sha256": "a64d071c6adf45cef77d1cd667edb0496023f051fbabc25183e7ddbadaf255b0"
+      },
+      "segment_1": {
+        "count": 2500,
+        "index_array_sha256": "ce79f0f74c4dd5a4688e07d72efdcbe2b1ba1d5c8523ac871032d152dced87bd",
+        "max_index": 4999,
+        "min_index": 2500,
+        "path": "permutations/order_A_segment_1.npy",
+        "sha256": "5594b5a9b6e7eb57b7491894921a5c0f51bee60de8bba914d1d02ceac4897089"
+      }
+    },
+    "B": {
+      "segment_0": {
+        "count": 2500,
+        "index_array_sha256": "a7ab93ecdbb72bcb42cc381f5df128382de631090c0abd48027018531968dc61",
+        "max_index": 2499,
+        "min_index": 0,
+        "path": "permutations/order_B_segment_0.npy",
+        "sha256": "76ebff67d3cca2fdc547a69464c7e14d946a5141641c794fb848d53906e4f4d7"
+      },
+      "segment_1": {
+        "count": 2500,
+        "index_array_sha256": "3352f1e7c56191113c8d43bf18400b79ffe5ac7c72a7c2202e39169efa523db8",
+        "max_index": 4999,
+        "min_index": 2500,
+        "path": "permutations/order_B_segment_1.npy",
+        "sha256": "a616f2dc03dec8aed84b7eff111c6c3179d5169a3500ac47a99dce1538b1c828"
+      }
+    }
+  }
+}

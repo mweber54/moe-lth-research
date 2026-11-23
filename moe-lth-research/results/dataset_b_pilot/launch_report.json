@@ -1,0 +1,59 @@
+{
+  "verified_at_utc": "2026-09-29T04:06:38.827714+00:00",
+  "screen_session": "1575481.dataset-b-32e-v1",
+  "supervisor": {
+    "pid": 1575482,
+    "host": "viper.cs.kent.edu",
+    "started_at": 1790654727.8792067,
+    "gpu": 0
+  },
+  "observed_queue_status": {
+    "state": "WAITING_GPU",
+    "pid": 1575482,
+    "external_compute_processes": [
+      "2551521, /data/kkolesni/.conda/envs/kimodo/bin/python, 22266"
+    ],
+    "next_condition": "A_e32_seed17_R0_sparse_random_s0.75",
+    "pending_ready": 40,
+    "updated_at": 1790654788.5240045
+  },
+  "manifest_status_counts": {
+    "REUSED": 45,
+    "PENDING": 180
+  },
+  "production_training_started": false,
+  "blocker": "External GPU compute process 2551521 remains active; supervisor automatically waits without competing or terminating it.",
+  "stages": [
+    {
+      "stage": 1,
+      "reused": 45,
+      "new_queued": 20
+    },
+    {
+      "stage": 2,
+      "new_queued": 45
+    },
+    {
+      "stage": 3,
+      "new_queued": 5
+    },
+    {
+      "stage": 4,
+      "new_queued": 110
+    }
+  ],
+  "estimated_gpu_hours": {
+    "median": 68.3,
+    "historical_range": [
+      66,
+      74
+    ],
+    "excludes": "GPU waiting and setup; source costs approximated from historical recovery timings"
+  },
+  "storage_gib": {
+    "expected_growth": 75,
+    "additional_reserve": 30
+  },
+  "monitor": "tail -f results/dataset_b_pilot/logs/supervisor.log",
+  "resume_instructions": "README.md"
+}

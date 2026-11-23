@@ -1,0 +1,18 @@
+{
+  "status": "analysis_ready_for_review",
+  "required_dense_sources": 18,
+  "required_decomposition_recoveries": 252,
+  "conditions": [
+    "global_mean",
+    "layer_mean",
+    "expert_layer_mean",
+    "token_conditioned",
+    "temporal",
+    "temporal_shuffle",
+    "token_shuffle"
+  ],
+  "primary_readout": "primary_r100_common_readout",
+  "extra_experiments_authorized": false,
+  "stage_script": "scripts/run_amplitude_pattern_decomposition.py",
+  "stage_source_sha256": "bac19736c065d310beda435df787ddec8523b5792eca8fcacb70d1b84ee5a92c"
+}

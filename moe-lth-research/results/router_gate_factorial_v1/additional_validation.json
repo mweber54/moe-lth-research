@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "controls": [
+    {
+      "amp": false,
+      "legacy_B_logits_and_all_gradients_exact": true,
+      "D_independent_reference_all_gradients_exact": true,
+      "aux_gradient_A_D_difference_norm": 0.00019650108597473395,
+      "all_forward_pairs_exact": true
+    },
+    {
+      "amp": true,
+      "legacy_B_logits_and_all_gradients_exact": true,
+      "D_independent_reference_all_gradients_exact": true,
+      "aux_gradient_A_D_difference_norm": 0.00019648177131239644,
+      "all_forward_pairs_exact": true
+    }
+  ],
+  "torch": "2.7.0",
+  "cuda": "12.8",
+  "device": "NVIDIA H100 NVL",
+  "native_auxiliary_graph_consequence": "A/D auxiliary scalars match but auxiliary gradients may differ through earlier gates; direct native-probability auxiliary gradients remain."
+}

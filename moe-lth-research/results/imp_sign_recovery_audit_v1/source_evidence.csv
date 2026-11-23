@@ -1,0 +1,73 @@
+question,answer,file,start_line,end_line,quote
+step_zero,"true original random initialization, saved before the step-1 training loop",src/moe_lth/training/train.py,142,142,"142:     model = TinyMoELanguageModel(config[""model""]).to(device)"
+checkpoint_save_point,step zero saved before model.train() and the training loop,src/moe_lth/training/train.py,166,177,"166:     if 0 in checkpoint_steps:
+167:         save_checkpoint(
+168:             output_dir / ""checkpoints"" / ""step_0.pt"",
+169:             model,
+170:             optimizer if config[""training""][""save_optimizer""] else None,
+171:             0,
+172:             None,
+173:             config,
+174:         )
+175: 
+176:     model.train()
+177:     for step in range(1, total_steps + 1):"
+router_attention_embedding_bias_source,complete original initialization state copied; bundle replaces expert matrix weights,scripts/imp_initial_value_placement_v1/run.py,108,119,"108: def variant_state(row):
+109:     bundle = torch.load(row['variant_path'],map_location='cpu',weights_only=True)
+110:     if sha(Path(row['variant_path'])) != row['variant_sha256']: raise RuntimeError('Variant changed')
+111:     original = native._read_model_payload(Path(row['initial_checkpoint']))
+112:     if original['step'] != 0 or sha(Path(row['initial_checkpoint'])) != row['initial_checkpoint_sha256']:
+113:         raise RuntimeError('Original initialization changed')
+114:     state = {n:t.clone() for n,t in original['model'].items()}
+115:     state.update(bundle['weights'])
+116:     if native._tensor_state_hash(state) != row['initial_model_state_hash']: raise RuntimeError('Starting model changed')
+117:     masks = load_masks(Path(row['mask_path']))
+118:     if native.recovery._mask_hash(masks) != row['mask_sha256']: raise RuntimeError('Mask changed')
+119:     return state,masks"
+router_source,router swapped from the same original initialization checkpoint,src/moe_lth/pruning/router_age.py,86,101,"86:     model = TinyMoELanguageModel(deepcopy(model_config)).to(device)
+87:     model.load_state_dict(pruned_base_state)
+88: 
+89:     router_source = TinyMoELanguageModel(deepcopy(model_config))
+90:     load_checkpoint(router_checkpoint, router_source, map_location=""cpu"")
+91:     router_state = {
+92:         name: tensor
+93:         for name, tensor in router_source.state_dict().items()
+94:         if parameter_group(name) == ""router""
+95:     }
+96:     current_state = model.state_dict()
+97:     current_state.update({name: tensor.to(device) for name, tensor in router_state.items()})
+98:     model.load_state_dict(current_state)
+99: 
+100:     # Re-apply the mask defensively: router swap must never touch expert weights.
+101:     apply_masks_(model, masks)"
+masked_coordinates,"zero via multiplication of original weights by the binary mask, preserving signed zero",scripts/imp_initial_value_placement_v1/run.py,62,71,"62:     permutation = torch.arange(len(coordinates), dtype=torch.int64)
+63:     if shuffle_seed is not None:
+64:         g = torch.Generator(device='cpu').manual_seed(derived_seed(shuffle_seed,source,name,'shuffle'))
+65:         permutation = torch.randperm(len(coordinates), generator=g)
+66:     values = w0.flatten()[coordinates]
+67:     output = w0 * m  # Preserve native signed-zero bits for exact original reconstruction.
+68:     output.view(-1)[coordinates] = values[permutation]
+69:     return output, m, coordinates, permutation
+70: 
+71: def validate_value(w0, result, mask, coordinates, permutation):"
+expert_initialization,native nn.Linear initialization; no custom expert scaling in forward,src/moe_lth/models/experts.py,7,16,"7: class ExpertFFN(nn.Module):
+8:     def __init__(self, d_model: int, hidden_size: int, dropout: float = 0.0):
+9:         super().__init__()
+10:         self.fc1 = nn.Linear(d_model, hidden_size)
+11:         self.activation = nn.GELU()
+12:         self.dropout = nn.Dropout(dropout)
+13:         self.fc2 = nn.Linear(hidden_size, d_model)
+14: 
+15:     def forward(self, inputs: torch.Tensor) -> torch.Tensor:
+16:         return self.fc2(self.dropout(self.activation(self.fc1(inputs))))"
+shared_initialization,native embeddings/layernorm; LM head tied to token embedding,src/moe_lth/models/transformer.py,78,88,"78:         self.token_embedding = nn.Embedding(vocab_size, d_model)
+79:         self.position_embedding = nn.Embedding(max_seq_len, d_model)
+80:         self.blocks = nn.ModuleList(
+81:             MoETransformerBlock(config) for _ in range(int(config[""num_layers""]))
+82:         )
+83:         self.final_norm = nn.LayerNorm(d_model)
+84:         self.lm_head = nn.Linear(d_model, vocab_size, bias=False)
+85:         self.lm_head.weight = self.token_embedding.weight
+86: 
+87:     def forward(
+88:         self,"

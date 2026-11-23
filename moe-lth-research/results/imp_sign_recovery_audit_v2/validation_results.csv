@@ -1,0 +1,30 @@
+check,passed,details
+20_original_CE_evaluations,True,five sources times dense/IMP/two fixed random masks
+baseline_reproduction_tolerance,True,max difference 2.8421709430404014e-14
+independent_CE_arithmetic,True,max difference 5.6164401485148119e-06
+70_legacy_run_protocol_checks,True,30 originals reusable; shuffled jobs rerun by user decision
+sealed_source_matches,True,actual files hashed against sealed registration
+reconstructed_A_B_data_orders,True,five sources x two orders x two segments; actual content hashes compared to run metadata
+discovery_matrix_rows,True,five sources x 256 matrices x (two fixed groups plus ten random groups)
+discovery_finite_statistics,True,all groups have nonzero counts and defined correlations
+discovery_valid_correlations,True,Pearson ranges
+discovery_random_matrix_budgets,True,each draw matches the corresponding final IMP survivor count per matrix
+discovery_seed7_eligible_count,True,eligible count=14073728
+discovery_seed17_eligible_count,True,eligible count=14073728
+discovery_seed29_eligible_count,True,eligible count=14073728
+discovery_seed43_eligible_count,True,eligible count=14073728
+discovery_seed61_eligible_count,True,eligible count=14073728
+dense_matrix_rows,True,five sources x 256 matrices x (two fixed groups plus ten random groups)
+dense_finite_statistics,True,all groups have nonzero counts and defined correlations
+dense_valid_correlations,True,Pearson ranges
+dense_random_matrix_budgets,True,each draw matches the corresponding final IMP survivor count per matrix
+dense_seed7_eligible_count,True,eligible count=67108864
+dense_seed17_eligible_count,True,eligible count=67108864
+dense_seed29_eligible_count,True,eligible count=67108864
+dense_seed43_eligible_count,True,eligible count=67108864
+dense_seed61_eligible_count,True,eligible count=67108864
+primary_subset_and_zero_invariants,True,the executed sign-analysis assertions also checked zeros outside the parent mask
+legacy_threshold_rows,True,five sources x two orders x seven variants x three fixed targets
+planned_run_count,True,"proposed budget only, no training"
+checkpoint_role_and_mask_identity,True,"actual selecting path, parent/final mask hashes, initial identity and seed checked"
+all_checkpoint_hashes_verified,True,round07 and round00 trained checkpoints verified against stage hashes

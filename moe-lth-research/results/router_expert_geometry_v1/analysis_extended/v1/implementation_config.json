@@ -1,0 +1,42 @@
+{
+  "config": {
+    "version": 1,
+    "minimum_samples": 8,
+    "variance_floor": 1e-12,
+    "counterfactual_tokens": 128,
+    "normalization": "within layer/expert and selection, population z-score",
+    "correlation": "Pearson primary, Spearman sensitivity",
+    "shuffle": "all 31 nonidentity cyclic expert pairings",
+    "selection": "existing 8 sequences/1024 positions, unchanged order for capacity",
+    "gram_dtype": "float64",
+    "ranks": [
+      8,
+      16,
+      32
+    ],
+    "primary_rank": 16,
+    "post_hoc": true
+  },
+  "code_hash": "8a85c58f11b3f4463259df3d301f5eab1b4fe6b209e722dc31b7fdd5abcb3b91",
+  "original_manifest_sha256": "c36ac28edad01f10e0940da99d2d2c20f5e9d2aa386df59ca33a3edc6beb660e",
+  "original_analysis_hashes": {
+    "analysis/pruning_effects.png": "00fcf3af5456dcc94988993df8b27ec16951ac1ce6e0fa10c757de8d7a22282d",
+    "analysis/functional_geometry_cases.csv": "b6d9a8c7ce8e0ba95e61ab32b059e3bc2498223b365b0b6d274a7233b3dfbb61",
+    "analysis/pruning_seed_effects.csv": "ae99fba11ed601f74cbb336c32711ca863a2a5c99c0eef876487d0a36da03048",
+    "analysis/router_age_paired.csv": "6ee9e0969995286bed3767166d5f57bade0875689d46fc2c351123e764379314",
+    "analysis/domain_routing.csv": "5fefbdfd6cc5c0685cd9d069f9ab135dad0805c2607e976c75da315a74f84766",
+    "analysis/existing_state_seed_summaries.csv": "efcf1a5e6e2984a4c7529ee2248b7688fea03932ac39615e436d985163346efb",
+    "analysis/initial_report.md": "f0b415711795a6f61b0f94587843f55353a0ee6c6f96607dda320ee85f33802f",
+    "analysis/trajectory_seed_values.csv": "5a587624c08b034e80c678ff7fe79bc7cfdb3e09fbc0bf8950792ea4096e4db8",
+    "analysis/pruning_summary.csv": "5f725f60a973da866a029902d13440b4d5ecae5b5044a5b75e719b8506cf3822",
+    "analysis/native_backfill_completed.json": "7dad146a9f6ac69904b0a2b02a6fe28a8c065337d38f5ba30e6be0e2d4b0b2b4",
+    "analysis/initial_analysis_status.json": "2d7ebc2101574f47b0aed3f123e6e22bb37f1a01055ece4a3e575f401255c68a",
+    "analysis/within_condition_correlations.csv": "312f03b63b751cf1c196827456e4ba68f067514d2cac0e6f207134971f5eafe2",
+    "analysis/final_findings.md": "ffb9ae69f70fb32346facad518244b785a860ea5a3c629ce60637ee59a2e16f6",
+    "analysis/learned_random_paired.csv": "ebd54eca3f20d85904a510724a1f361a4a62dbce6144a3e1e4a3b785a09d9f2d",
+    "analysis/trajectory_paired_summary.csv": "91abe5848f8e3b950c3d76894e165517221ecb06a652eb66456dd94e7867f024"
+  },
+  "torch_version": "2.7.0",
+  "device": "cuda",
+  "disclosure": "Measurements and corrected aggregation selected after inspecting original rank-16 outcomes."
+}

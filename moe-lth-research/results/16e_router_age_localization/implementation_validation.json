@@ -1,0 +1,26 @@
+{
+  "recorded_utc": "2026-09-09T14:43:28.623977+00:00",
+  "checks": [
+    "checkpoint-only save preserves small deterministic final model and validation curve",
+    "interior/tied/boundary staged refinement selection",
+    "8E/12E historical anchor schema verified",
+    "synthetic complete analysis, ten PNG/PDF figure families, all report questions"
+  ],
+  "code_sha256": {
+    "scripts/run_16e_router_age_localization.py": "434b14ebfd4cf5aedc781e53424ce61ec78e2bfe46f78eeb11ba283aa0259be5",
+    "scripts/analyze_16e_router_age_localization.py": "b85b40b51e9ddc7b4ce4dc8fe07721d0718ca415c4f5748c83bf3948a7db4a2b",
+    "scripts/analyze_r20_8_vs_r60_12.py": "a589d0c1082531806b04343c21e7f96e204cb299c7f14023d6f9fe44435b1898",
+    "src/moe_lth/training/train.py": "6d22c340a13330575f0b52b832ea9e5cdda91a091e6f06b5b26113e16b3fbd0a",
+    "src/moe_lth/experiments/run_router_age_recovery.py": "082ff8495a27f160c1057613d273f75b53ea7d7644df5e1149e011ce24f3bdb8",
+    "src/moe_lth/pruning/magnitude_prune.py": "8340b879b1a120d07eed7dc22451bae81c80942fe52a88da766093cef445d7a3",
+    "src/moe_lth/pruning/router_age.py": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681",
+    "tests/test_16e_localization.py": "30812e0772f90aaeceb711d0e98af612da937ffb531fdec1174da35b0a89a5ec",
+    "tests/test_16e_localization_analysis.py": "7bc1f048dff1daeace29f13e42f65c33b12d5928779bb06ab74179066ab36bc8"
+  },
+  "scientific_replicates_added_by_tests": 0,
+  "reference_trajectories_authorized": 3,
+  "stage_a_recoveries_authorized": 36,
+  "stage_b": "only missing ages selected after Stage A",
+  "stage_c": "omitted; report unresolved basin",
+  "replay_interventions": 0
+}

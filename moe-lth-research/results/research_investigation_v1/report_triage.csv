@@ -1,0 +1,429 @@
+path,sha256,bytes,claims
+results/16e_router_age_localization/final_report.md,8a18910dd346431f2495738f0662a7decc30ef54cd8e9771c622c84f0a3c3220,7718,"1: # 16-expert router-age ticket localization
+21: Mean paired difference -0.03394451; seed differences: {7: 0.024189327796279497, 17: -0.09397056055031769, 29: -0.032052288744584184}.
+65: The observed mean sequence is 8E R20 → 12E R60 → 16E R60. A stable later interior optimum is supported descriptively: False. Three architectures do not establish a scaling law.
+109: 70          2.159467  0.202606  0.195589              1.260753                      0.707179             0.023710                     72704.0"
+results/16e_router_age_localization/preflight_audit.md,e818f7ffc4256a951c7de654cbadb26a9ff73a0c8c32e15b270455f4ff774b48,1257,1: # 16E native localization preflight
+results/16e_seed7_reproducibility/final_report.md,ae4fe09dcd8f256db1889cdc893985696dc6ba479dd9b0c2ac0588b76aebfb27,1047,"1: # 16E seed-7 repeatability
+18:   ""original_r100_minus_r60"": -0.024189327796279497,
+19:   ""rerun_r100_minus_r60"": -0.024189327796279497,"
+results/16e_seed7_reproducibility/preflight_audit.md,1f62a6eda8d64dc471a9539c6146c7b4a8e52254ec8f43aa55a75eb032d100be,1136,1: # 16E seed-7 reproducibility preflight
+results/24e_router_age_localization/final_report.md,3428071fc2538a773c682f378a8d571d1c00a671b159bf7b89c795301c0982bc,7740,"1: # 24-expert router-age ticket localization
+65: The observed mean sequence is 8E R20 → 12E R60 → 24E R50. A stable later interior optimum is supported descriptively: False. Three architectures do not establish a scaling law."
+results/24e_router_age_localization/preflight_audit.md,edba896e7fa5c2d5636bddb69781769fe6456217436fb63389998f68f6fe07c5,1257,1: # 24E native localization preflight
+results/32e_router_age_localization/cross_architecture_interpretation.md,04e98d2ec119117266c082d122851a64220e1c1157307feff674f41b3d270f77,1783,
+results/32e_router_age_localization/final_report.md,bcb93223f6f4ad994f200630bb3f20c35d941c18b6f215f799ac85c481fd2343,10840,
+results/32e_router_age_localization/preflight_audit.md,9d1696ad418d390ec45e0e45235d8463451a0372b19cce324218dd124a720cee,1257,1: # 32E native localization preflight
+results/32e_router_age_localization/historical_analysis_details.md,c51daa6b9e481aebe5e4bcdd0f50eb4868f16041953d97eed1d65b7da3b53136,6997,"1: # 32-expert router-age ticket localization
+65: The observed mean sequence is 8E R20 → 12E R60 → 32E R0. A stable later interior optimum is supported descriptively: False. Three architectures do not establish a scaling law.
+85:       32         100          3           -2.294472                1.567898              0.026329               1.392496             0.030421         0.175402       0.008156"
+results/32e_router_age_localization/protocol_integrity.md,40e0c5f059cd830f6398626ab774a62c336b10cdec28c397c625ce211e479073,1142,
+results/architecture_scaling_audit/final_report.md,4584f5c46632b92522c537946c305ff1c8f42739c83bd79439771f6a7c471327,16535,"101: Yes under the precise fixed-global-token/attempt-budget interpretation supported by the manuscript and localization protocol. FLOPs, wall time and exact successful source update counts are not proven matched.
+109: 24E VALID UNDER FIXED-COMPUTE INTERPRETATION ONLY. No mandatory rerun is supported for the current fixed-budget claims. Stronger developmental claims require a separate design, not a 24E-only repair.
+127: ## Primary source-exposure table
+138: ## Theoretical baseline (one physical expert in one layer)
+147: ## Measured source samples and capacity
+163: ## Full recovery exposure, common R0/R20/R100 grid
+178: ## Source late development
+194: | 24 | 17 | 1.59345 | 1.49477 | 0.0986759 | 0.0619261 |
+206: ## Independent 24E endpoints
+236: ## Competing explanations
+244: | H5 | Genuine seed-conditioned phenomenon | Supported as a fixed-budget observation | Raw endpoints reproduce all 27 gaps and published seed winners; no protocol error explains the observed flat mean curve. Mechanistic or budget-invariant interpretation is not established. |
+248: Best-supported interpretation: (1) a real seed-conditioned fixed-budget observation, (2) native sparse/dense recovery and comparator behavior, (3) architecture-dependent accepted exposure and gate weighting as plausible contributors. Historical data do not causally rank those mechanisms. H1/H2 are not established diagnoses.
+250: ## Evidence and reproducibility"
+results/architecture_scaling_audit/rerun_recommendation.md,69e266b849566df2214b9f90b7b3b18d88c34a14e764da2e13c3ff52ca710f58,4526,1: # Rerun recommendation
+results/architecture_scaling_audit/historical_data_availability.md,d533bcb1b0f6a2d059ae756fe22d94a5572436d0b05b6d289433ccc38315b892,4101,1: # Historical data availability and limits
+results/architecture_scaling_audit/code_path_manifest.md,c58dc82d4df6449d9a1b02cea6a0810b4044f29861c669ae60a843ab2bc1171a,6444,1: # Code-path manifest
+results/architecture_scaling_audit/router_scaling_audit.md,e95515c7aea62369da2ecfecddcbbd4ccbd4f857d9fe6be0127640e80127e094,3373,"1: # Router, capacity and initialization scaling"
+results/cross_arch_optimization_geometry/preflight_audit.md,06f942ae5115c2450c0785cd2a7c3ba73e5d8ecce0602894c8a14fab80ae9b5b,840,"1: # Optimization Geometry Preflight
+3: ## Existing Pairing
+7: ## Falsified Retrospective Path"
+results/cross_arch_optimization_geometry/optimization_geometry_report.md,763440820ecfc4366e35e3278aff921d970fefec9b3d7d4b334c0a181bd4a13d,2077,"1: # Cross-Architecture Sparse-Expert Optimization Geometry
+3: ## Finding
+7: ## Consequence
+11: ## Minimum Diagnostic Rerun
+15: ## Verdict
+19: **Most important implication for the paper:** The existing performance results show architecture-specific favorable router ages, but they cannot establish a common sparse-expert optimization geometry. Scalar gradient norms and final checkpoints are not substitutes for time-resolved gradient/update direction data."
+results/cross_arch_optimization_geometry/fixed_schedule_intervention/final_report.md,fdceb44e72f800b674c6b336a55a76ef8013c16434822b8229ddc93239909b9a,8440,"1: # Complete recovery-trajectory routing intervention
+5: ## Intervention and primary comparison
+11: ## Paired results
+35: ## Seed rankings and architecture means
+75: ## Interpretation
+81: ## Audit and storage
+91: ## Verdict"
+results/cross_arch_optimization_geometry/fixed_schedule_intervention/protocol_audit.md,219dc25eea06c123e31751d1546210bee97f7778f9f04eb10483ca82fbbea143,1597,1: # Fixed recovery-trajectory schedule intervention
+results/cross_arch_optimization_geometry/diagnostic_rerun/final_report.md,783e6f2c0f38f8e6f9ce77bafac8fb834b287d012d294de64c48eeb516bb8fb2,16879,"1: # Cross-architecture optimization geometry: completed diagnostic rerun
+3: All **18 matched pairs / 36 recoveries** completed the historical 2500-step protocol. All 36 final validation losses and all 18 ticket gaps reproduce history exactly at the stored numeric precision. All 36 final model states are also bit-identical to their historical checkpoints. All **324 complete model/optimizer snapshots** passed their mutation audits. The requested mechanism is not supported: favorable mean ticket gaps do not coincide with a common advantage in forced gradient, optimizer-upd
+5: ## Protocol and measurement integrity
+15: ## Primary results
+30: ### Paired effects against each control
+57: ## Answers to the scientific questions
+77: 10. **Does alignment separate before or alongside the loss advantage?** No common favorable-target sequence is supported. The preregistered first-all-seed concurrence finds no forced advantage over R100 at any saved step for either architecture. Against the earlier control, 8E’s R20 gradient difference can exist at step 0, while 12E R60 first wins across all seeds at step 250, after a ticket-gap difference is already observed. These first occurrences can be transient: initial gaps are negative a
+87: 15. **What is the strongest supported mechanistic statement?** Under exactly reproduced recoveries, higher matched dense/sparse gradient, update, or function alignment on this fixed probe does not reliably identify the router checkpoint with the smallest ticket gap. Common accepted-token forcing fails to recover the proposed intermediate-age advantage.
+89: 16. **Which tempting claims remain unsupported?** Universal geometry, architecture independence, causal mediation, an established token-selection mechanism, and a shared emergent co-adaptation explanation remain unsupported. Correlations with absolute sparse loss must not be substituted post hoc for the preregistered matched ticket-gap test.
+91: ## Initialization, seeds, and heterogeneity
+159: ## Coverage and limitations
+171: ## Artifacts and verification
+180: ## Primary verdict"
+results/cross_arch_optimization_geometry/diagnostic_rerun/protocol_audit.md,525aa595c980a006a61b9dc0eea8e2f46c882c421e519d542bc7c34ff37fa300,2069,"1: # Protocol audit
+11: ## Completion verification"
+results/dataset_a_full_lower_sparsity/analysis_final/scientific_interpretation.md,c490e2492d15fe5ba632742c31094e7c44082f624bb62c0cc728163b685af19d,7426,1: # Numerical interpretation
+results/dataset_a_full_lower_sparsity/analysis_final/findings.md,7ce89216534c2c330d14d6f66b450b10a64b6609028241eea7ccc46726e59015,21646,"1: # Dataset A lower-sparsity findings
+19: ## Supported findings and practical limits
+25: No setting has a one-sided 95% upper bound below zero, and no strict mean-matching claim survives adjustment. The exploratory 5% tolerance has 122/220 settings passing descriptively in all five seeds; five mean-below-tolerance tests survive Holm over 220 settings and three survive joint Holm over all 880 setting/tolerance tests. Those three are **8E/R70/50%, 8E/R70/55%, and 8E/R80/50%**. The 1% and 2% tolerance tests yield no adjusted discoveries.
+33: ## Observations
+95: ## Statistical evidence and precision
+101: Mean-setting tests use Holm at alpha .05 for each threshold's 220 settings; joint Holm over all 880 tests is also provided. Combined-grid tests use separate 550-setting per-threshold and 2,200-test joint families. A strict seed-run count does not imply a supported negative population mean. Per-setting leave-one-seed-out mean ranges and selection stability expose single-seed influence. Inference concerns variation over these source seeds and this fixed validation corpus, not independent validatio
+103: ## Separate random-mask control evidence
+121: ## Interpretation and smallest follow-ups
+125: ## Reproduction and artifacts
+130: # Numerical interpretation"
+results/dataset_a_full_lower_sparsity/analysis_final/README.md,57ff4d6e5b75295dd0822d4b5c5f8e5f4020c194bef206442a84220f627a51a4,3540,1: # Dataset A lower-sparsity endpoint analysis
+results/dataset_a_full_lower_sparsity/analysis_final/audit_report.md,c0acac70d5272511e0cd18233e1b5d8f551e853b5045f9e3a2f4ee279b3df770,4278,"1: # Coverage and provenance audit
+19: ## Final output verification"
+results/dataset_b_pilot/PROTOCOL.md,d546f487556a82ca9b025677a55cef3044294f0dacc3196c11c568b75af4c131,10281,"1: # Dataset B: nominal exposure matching, staged 32E controlled follow-up
+5: ## Verified Dataset A semantics
+17: ## Sampling and longer budgets
+23: ## Factorial pilot and sharing
+40: ## Diagnostics, storage, and restart
+50: ## Prespecified analysis"
+results/dataset_b_pilot/README.md,e217b95db7c801fa8a0267a84fcdd55abfd5e84f6a322553c24fad6abe3e055e,5405,"1: # Dataset B 32E pilot
+7: ## Current status and monitor
+20: ## Launch / resume the durable queue
+32: ## Reproduce checks / analyses
+46: ## Outputs and validation"
+results/dataset_b_pilot/analysis/dataset_a_evidence.md,c3150828fac32735ac44fe85e70a01db302961804f2cdcfcb6c3d7296afa7f6c,3754,"1: # Existing evidence before Dataset B
+5: ## Recovery endpoint
+18: 8,100,sparse,0.75,5,0.08133702899128674,0.004091900690427684,5,0.008892541294876377,0.003097799373857819
+20: 32,0,dense,0.0,5,0.11967789541134936,0.005484509497979754,5,0.011558460129494153,0.00350090062250476
+23: 32,50,dense,0.0,5,0.07966733971663435,0.011882646702199793,5,0.005829022127155881,0.0038799299988907256
+32: ## Router age × sparsity
+36: ## Retained capacity"
+results/expert_count_replication/preflight_architecture_audit.md,0454b7c17b5d21fa0932e3bf08e2b2a613e04950e60a3a4094c2972f623d0faa,671,1: # Architecture Audit
+results/expert_count_replication/replication_report.md,1fcac83906bc4cd58fa8e749ac07a628dc6931466fd2fc9acdeb8de1dbf0e0da,3850,"1: # Expert-Count Architecture Replication
+3: ## Study Status
+7: ## Architecture
+11: ## Mean Ticket Gaps
+22: ## Seed-Level 85% Results
+33: ## Answers
+43: ## Classifications
+50: ## Overall Verdict"
+results/final_dataset_a/dataset_a_data_dictionary.md,b1e07a8fcbaa4de0f5ef0e1fb28aaa600446be5a31d41cf778b292f8b4086055,17431,"1: # Dataset A data dictionary
+7: ## Canonical condition table
+107: ## Long trajectories
+127: ## Summary and selection conventions"
+results/final_dataset_a/README.md,139104d19b47ccc943f4bc1c15f3f401546a3c0c59983f02fcb5359838c2c6ca,1913,1: # Dataset A finalization
+results/final_dataset_a/figures/README.md,fe7e8ae53f800f8b477455ccbee3f3d2f3b4af9515fc362b0dd7f1c094445d87,4162,
+results/final_dataset_a/reports/dataset_a_final_analysis.md,4418c18e85847fc9af17f6cd7afccab5f5a9ea55b9a524d4195ec13d5a865926,25937,"1: # Dataset A final analysis attempt — PASS
+3: ## 1. Executive summary
+13: ## 2. Dataset completeness
+28: ## 3. Protocol validation
+38: ## 4. Canonical metric definitions
+42: ## 5. Full router-age results
+91: ## 6. Sparsity dependence
+95: ## 7. Architecture dependence
+99: ## 8. Five-seed reproducibility
+137: ## 9. Recovery-trajectory analysis
+143: ## 10. Metric disagreement
+147: ## 11. Router developmental statistics
+153: ## 12. Exposure scaling
+168: ## 13. Comparison against September 21 interim observations
+206: ## 14. Negative and contradictory results
+210: ## 15. Limitations
+214: ## 16. Implications for Dataset B
+218: ## 17. Candidate mechanism hypotheses
+222: ## 18. Conclusions supported by Dataset A alone
+228: ## Additional measured diagnostics"
+results/gate_amplitude_pattern_decomposition/final_report.md,96480bb385c37e7852f32d0b9cec51c9d5bf15a59a697133441ea05abbee5557,35868,"1: # Gate-amplitude pattern decomposition
+7: ## Source identity and actual shuffle perturbation
+32: | 8 | train | 0.889338 | 0.897039 | 0.889317 | 0.897036 | 0.999427 | 0.999458 |
+33: | 8 | validation | 0.405407 | 0.484904 | 0.405405 | 0.484904 | 0.999381 | 0.999427 |
+34: | 12 | train | 0.931521 | 0.939253 | 0.931268 | 0.93925 | 0.998725 | 0.999187 |
+37: ## Final contrast hierarchy
+46: ## Paired contrasts
+138: | 12 | 17 | 60 | 100 | token_shuffle | -11.5124 | -9.99982 | -1.51261 | True | -1.38055 | -1.51315 | 11.4109 | False | False | -0.132061 | 0.000544643 |
+159: ## Scientific questions
+177: | 12 | 60 | 100 | layer_mean | 0.781416 | 0.869457 | 1 | 2 | -3.14352 | 5.85077 | 3 | 2 |
+332: ## Protocol and interpretation"
+results/gate_amplitude_pattern_decomposition/preflight_audit.md,2a274dfcdbece2e607a74865cf14e259353f43a88eaaf394817871d94ae69b24,5368,"1: # Gate-amplitude pattern decomposition preflight
+5: ## Amplitude availability
+11: ## Readout choice
+15: ## Identity and shuffle feasibility
+23: ## Scope and interpretation
+27: The source proposals requested here come from Level-2 states; they are not the original Level-1 online amplitude trajectory. Level 1 also retains task gradients through gates, whereas every new condition is detached. Consequently failure of all reduced conditions cannot establish HIGH-ORDER GATE PATTERN REQUIRED without a successful full detached recipient-source control. No extra control has been silently added. Conclusions will be limited to information sufficient in the specified detached int
+29: ## Approved canonical source and readout
+33: ## Prespecified transformation and analysis rules
+37: ## Coefficient-precision repair"
+results/gate_amplitude_replay_intervention/final_report.md,a0f336c756895eb17d62f590820d575ec66ef0b3be6771727908ecc7978f7e9e,11272,"1: # Gate-amplitude replay intervention
+3: 8E target versus R0: target is better after full replay in 2/3 seeds; incremental contrast change 0.061632 ± 0.118098 seed SD; attenuation 94.7%; flips 2/3.
+5: 12E target versus R20: target is better after full replay in 2/3 seeds; incremental contrast change -0.930294 ± 0.508118 seed SD; attenuation 99.8%; flips 2/3.
+8: ## Paired contrasts at the common assignment-plus-gate readout
+18: | 12 | 7 | 60 | 20 | 0.821394 | 0.405732 | -0.0016963 | -0.407428 | -0.82309 | 0.995819 | True | False | -0.120278 | 0.10103 | -0.221309 | True | False |
+21: | 12 | 17 | 60 | 100 | -1.37002 | -0.132061 | 0.000544643 | 0.132606 | 1.37056 | 0.995876 | True | True | 0.143471 | -0.0220078 | 0.165479 | True | False |
+32: ## Architecture means (all three training levels at common readout)
+43: ## Interpretation and limits
+51: ## Answers to the remaining scientific questions
+83: 13. The following correlations use three seed-level target-minus-control amplitude differences per contrast. They describe proposals on gate-intervened hidden states, not an independently measured native-training mediator. They are observational, highly unstable at n=3, and cannot establish mediation.
+89: | 12 | 20 | 3 | 0.994872 |
+94: 15–16. A paired common-readout change supports a contribution of this specific detached gate substitution beyond assignment replay; consistent substantial attenuation of favorable contrasts supports a major contribution within the tested donor schedule. It cannot establish that amplitude is the unique or universal explanation: detachment changes gradient paths as well as forward coefficients, the donor is fixed, and only three seeds were tested. The descriptive verdict below applies only to thes
+98: ## Artifacts and validation
+106: GATE-AMPLITUDE MECHANISM SUPPORTED"
+results/gate_amplitude_replay_intervention/preflight_audit.md,24de888ebe3fd15f4c3d0834aaca1d00a4d687229f5d51071c96469d54378289,3772,"1: # Gate-amplitude replay preflight
+7: ## Gradient semantics and self-replay criterion
+17: ## User-approved resolution
+23: ## Existing ordering is not uniformly target-favorable"
+results/high_sparsity_coupling_v1/implementation_note_01.md,f3c34a7c0120a0c16db40f47a5a57fbbc7f998d41eb894548302a7aa3bac258e,1113,1: # Implementation correction 01 — complementary pairing controls
+results/high_sparsity_coupling_v1/execution_status.md,fd41b68e67315f01c5257f9049107f0b4cb2e09b0637fb0fd6dce83d7e4b3522,570,1: # Verified completion
+results/high_sparsity_coupling_v1/protocol.md,49fe4fea5da5a145d6364c5cae9a8ee63d831a52b54286f77511a8453a669bdd,7757,"1: # High sparsity coupling v1 — exploratory/post hoc protocol
+5: ## Audited recovery and provenance
+13: ## Fixed probes and metrics
+25: ## Execution and analysis"
+results/high_sparsity_coupling_v1/provenance_audit.md,cd28893523d5ee8ff734863f3ed949c03088411545f42cbf6c865486b8c320e0,4271,1: # Cohort and provenance audit
+results/high_sparsity_coupling_v1/report/analysis_details.md,d3455297d70085a82ee92a938ff02a7170ce382e4ff7efc61d0750ef0ada1ebb,25736,"1: # Reviewed high-sparsity coupling analysis
+3: **Provenance verdict:** identical historical/rerun model states explain the duplication. No raw measurement-cache collision or incorrect checkpoint resolution was found.
+7: ## Provenance and evaluation precision
+13: ## Tickets
+49: ## 1–3. Coupling and matched dense recovery
+76: 43,0.85,False,0.237619795887739,-0.2945701396637495,0.6614483865793708,0.5321899355514885,128
+83: ## 4. Weight geometry: shape, scale, and rank are different
+97: 0.85,same_step_dense,16,0.2104993211651852,0.29475998891030847,0.08426066774512327,0.6991468913345832,0.8388858099215,0.1397389185869165,116
+101: Gram distance is rank-free and is repeated only to accompany the three separately reported SVD ranks; it must not be averaged as three pieces of evidence. Gram cosine is algebraically related to normalized Gram distance. Scale is separately reported by trace/energy and unnormalized distances. A growing distance to the *moving* same-step dense model can coexist with shrinking distance to the fixed dense endpoint. Rank-specific subspaces need not follow full-spectrum shape. Thus one rank/distance 
+108: 0.8,raw,dense,5000,0.010915892365511558,0.00669721107552326,0.00421868128998826,0.00390625
+116: 0.85,raw,dense,5000,0.010915892365511558,0.00669721107552326,0.00421868128998826,0.00390625
+125: ## 5. E and downstream representations
+129: 0.8,sparse,original_initial,0.06534578226406727,0.9984273417715739,154.8911902189529,0.11221646939056962,0.05838787559929508,15.680944509787196,0.9342846999589538
+132: 0.8,dense,original_initial,0.06469647932722818,0.9984667661286721,154.8942536111907,0.11214199784227263,0.05782497020178749,15.699908946701507,0.9153435666832624
+133: 0.8,dense,source,0.023974192635597,0.9997457100340297,154.8942536111907,0.11214199784227263,0.02344782645261754,15.699908946701507,0.3392767096388701
+134: 0.8,dense,same_step_dense,0.0,1.0,154.8942536111907,0.11214199784227263,0.0,15.699908946701507,0.0
+137: 0.85,sparse,same_step_dense,0.03514594850221432,0.9993810082722835,154.87964163944372,0.1121884929780772,0.03566313395500548,15.681481083878376,0.48467836420613625
+138: 0.85,dense,original_initial,0.06469647932722818,0.9984667661286721,154.8942536111907,0.11214199784227263,0.05782497020178749,15.699908946701507,0.9153435666832624
+139: 0.85,dense,source,0.023974192635597,0.9997457100340297,154.8942536111907,0.11214199784227263,0.02344782645261754,15.699908946701507,0.3392767096388701
+140: 0.85,dense,same_step_dense,0.0,1.0,154.8942536111907,0.11214199784227263,0.0,15.699908946701507,0.0"
+results/high_sparsity_coupling_v1/report/findings.md,f7a0af20d620f2382dbf8b8cb9074c513d2241b384ed33a25ba364dbc836f09b,10806,"1: # Provenance verdict and findings
+9: ## Coupling is probe-dependent and differs from dense recovery
+30: ### Accepted-pair coverage sensitivity
+32: The primary four-endpoint contrast uses roughly 125–126 common valid units on average and shows a negative sparse accepted-pair change in all ten conditions. However, the common population across **all 16 trajectory steps** contains only **11–14 of 128 units**. On this highly restricted subset, sparse changes increase in six conditions and decrease in four; differences-in-changes are positive in all ten. This is a different, traffic-selected expert population, not a contradiction in the underlyi
+36: ### Pairing controls
+42: ## Geometry gives contradictory but compatible answers
+49: There is evidence of leading-subspace alignment, whole-spectrum separation, and sparsity-dependent source restoration at once. “Sparse models do not realign geometrically” is unsupported. See [rank/reference endpoint effects](geometry_endpoint_changes.csv), [geometry trajectories/exclusions](geometry_trajectories.csv), and [raw/centered q](q_trajectories.csv).
+51: ## E changes modestly; downstream differences are much larger
+53: The tied byte embedding/LM-head E drifts 6.53%/6.72% from initialization at .80/.85, versus 6.47% dense; sparse–dense drift is 3.68%/3.51% with CKA .99934/.99938. Effective rank changes only slightly (154.75 initially to 154.89/154.88); top-eight energy stays near .1122. Mean row norms fall from 15.983 to 15.681/15.681 (dense 15.700). Token–token similarity and individual byte-row drifts are tabulated. E serves output prediction as well as input representation.
+55: On identical probe positions, final token-embedding CKA is .99998, but after the first attention residual it is .7833/.7626, and normalized router-input CKA ranges roughly .56–.78 through depth. Differences already exist in deeper initial sparse states; the first attention stage starts at CKA 1 and diverges by the step-25 measurement. CKA changes are not monotonic through depth.
+59: ## Functional agreement does not require expert equality
+65: ## Limits and review artifacts
+69: Supported: the quantified probe-dependent paired effects, rank/reference-specific geometry, modest tied-E drift, large downstream representation/function differences and four strict validation winners. Unsupported: a universal coupling trend, coupling as a winner discriminator, blanket lack of geometric realignment, or causal representation mediation. Historical intermediates and independent-test behavior remain unresolved."
+results/high_sparsity_coupling_v1/report/figure_notes.md,90ab5ca57606ad9a59c300d91b1b56e76536d94de4d3744e50224107ce65732e,2429,1: # Figure definitions and populations
+results/high_sparsity_coupling_v1/report/provenance_diagnosis.md,90b61d2657fffb1300f5b77e565a687648d5677576e2509f0c1e228da47eabc7,3134,1: # Provenance diagnosis
+results/high_sparsity_coupling_v1/embedding_weight_sparsity/findings.md,856601192e7cbbaf148e03786a2becf01243ffcf2ad8b726954b685981401472,13346,"1: # Tied byte-token embedding coordinate sparsity
+14: - tau=.1, current_rms, dense: final fraction mean 0.079998779, initialization change mean -0.000039673, seed range -0.001449585 to +0.001281738.
+56: ## Interpretation and limitations
+60: ## Outputs
+64: ## Row/coordinate concentration and label detail
+82: ## Threshold-specific endpoint interpretation
+99: The winner pattern is not consistent across winning seeds: at 80%, winning seed 61 has a positive current-scale tau=.1 contrast (+0.000808716), like nonwinning seeds 17 and 29, while winning seeds 7 and 43 have negative contrasts. At 85%, the only winning seed is 7 (negative contrast); one winning seed cannot establish replication across winning seeds. RMS is lower for every sparse endpoint, including all winners and nonwinners. These annotations do not establish a mechanism or classifier."
+results/high_sparsity_coupling_v1/embedding_weight_sparsity/README.md,c26f8fb998d1fe4783f6ba219a9a9f59784d3e67faa246f83c8f966ac56b1dcd,2826,1: # Reproduce this checkpoint-only analysis
+results/high_sparsity_coupling_v1/retained/pre_correction_01/report/findings.md,69106a7fb422288e5551f9b4765b01b1c8917db1629f260473e27d301e065da5,2484,"1: # High sparsity coupling: execution report
+20: ## Findings and limits
+28: 5. Embedding/hidden evolution: byte embeddings are tied to the output head. Partial snapshots cannot establish temporal precedence."
+results/imp_80_85/README.md,c01aa3761fb0518cb6579c151fe5ead6a02a6b36deac9b8419d021ce4d31374f,8009,"1: # Dataset A original-initialization IMP at 80% and 85%
+11: ## Commands
+36: ## Interruption and artifacts
+46: ## Resource planning
+48: The short benchmark is separate under `benchmarks/` and excluded from all scientific tables. It measures an actual canonical-shape dense-mask stage using the same trainer, optimizer, precision, validation, and diagnostics. Its linear GPU-hour estimate includes fixed initial/final diagnostics, and is provisional on a shared busy GPU. A short E8 timing cannot establish scaling across all architectures. Storage estimates must include all 275 trained checkpoints, 225 masks, logs, and one temporary m"
+results/imp_extended_recovery/README.md,6756b9dee9efc0ca93728f50e6a38221a28e1e93ce4e141bc7aa037a9e3c8740,2187,"1: # Extended IMP and Dense Recoveries
+11: ## Continuation Method
+31: ## Commands"
+results/lth_definition_audit/README.md,f82580a80afb5985a97f4b9cfd7df4cfcfe1b418d992543b6406583b4f114b72,10976,"1: # Original-LTH Definition Audit (2026-10-12)
+3: ## Conclusion
+9: ## Definition and Scope
+21: ## Checkpoint and Mask Logic
+31: ## Recomputed Performance
+46: ## Status by Requested Category
+55: ## Collection for Geometry Work
+61: ## Inventory Files and Limitations
+73: ## Final Answers"
+results/r20_8_vs_r60_12/r20_vs_r60_report.md,c152334df5dd5c40863c96113a7879c20bd7ce518e724e313cd29b9c78a76e4d,2247,"1: # R20(8) vs R60(12) Developmental-State Comparison
+5: ## Measured Comparison
+11: ## Limits
+15: ## Verdict"
+results/r20_8_vs_r60_12/preflight_available_artifacts.md,9a73ec71de230b024d768e3cc31b3397e0d6e0be895eb46ff43735ffa7402a31,570,1: # Available Artifact Audit
+results/router_age_cross_architecture_map/suite_protocol.md,cdc3a6f4c6933d8be3fd8777237422d1e772f203da9dc33036ef1e9ffc4e3b50,1414,1: # Router-age mapping suite
+results/router_age_lth_80pct/router_age_recovery_results.md,0c59262d1f6497d15c9c7ce0c493efc6470c840f64fe349b04dcb36872d346bb,7565,"1: # Router-Age Recovery Experiment Results
+21: ## Pruning Summary (computed once per seed, applied to every router age)
+29: ## Native-Confidence Router-Age Sweep
+55: ## Confidence-Matched Control
+69: ## Mean Gradient Norms During Recovery (native-confidence conditions)"
+results/router_age_lth_80pct_dense_v2/router_age_recovery_results.md,8cae8a3663744cb790ad6f0b4399f54d1e92f0edc773aa3ee2a143dc4993be6a,11898,"1: # Router-Age Recovery Experiment Results
+21: ## Pruning Summary (computed once per seed, applied to every router age)
+29: ## Native-Confidence Router-Age Sweep
+76: ## Confidence-Matched Control
+94: ## Mean Gradient Norms During Recovery (native-confidence conditions)"
+results/router_age_recovery_gpu_complete/router_age_recovery_results.md,08cbecffb0813cdfc10caa33203944b3d46fa0bbc679d72f4c941bf2982216d4,7378,"1: # Router-Age Recovery Experiment Results
+21: ## Pruning Summary (computed once per seed, applied to every router age)
+29: ## Native-Confidence Router-Age Sweep
+55: ## Confidence-Matched Control
+69: ## Mean Gradient Norms During Recovery (native-confidence conditions)"
+results/router_age_sparsity_matrix/routing_age_sparsity_summary.md,a4d59dc37a8b67747f7d29c791352255a62a8daded8d857917c3216c530330af,1017,"1: # Router-Age x Sparsity Ticket-Gap Matrix
+16: ## Standard Deviations"
+results/router_age_wikitext103/router_age_recovery_results.md,ff3555e84afa9bd3886f12014b1f59f1a7ee3e3831a045fa22bfc5cde9a211fa,4763,"1: # Router-Age Recovery Experiment Results
+21: ## Pruning Summary (computed once per seed, applied to every router age)
+27: ## Native-Confidence Router-Age Sweep
+39: ## Confidence-Matched Control
+53: ## Mean Gradient Norms During Recovery (native-confidence conditions)"
+results/router_coadaptation_forensics/missing_evidence.md,bfdf4e0f41fcc4c94ca9c195031f92ddb0cec8bbc00e41b7617f09ef7d0cd8a8,1167,"1: # Missing Evidence
+3: ## Can Compute Retrospectively
+8: ## Requires Diagnostic Rerun
+14: ## Requires Causal Intervention"
+results/router_coadaptation_forensics/results_inventory.md,2a8cc93c6d4af0b2363078309e18ea53dce7ace157a57ab1e4682c231c1e9042,547,"1: # Results Inventory
+5: ## File Types
+16: ## 85% Analysis Cohort"
+results/router_coadaptation_forensics/forensic_report.md,b030c534ef9451a6a9c980a1e784bdd5ed6ea906bd76644b8a1ed3b4e81439ca,2679,"1: # Router Coadaptation Forensics
+3: ## Direct Answer
+5: **The existing results are insufficient to identify the mechanism.** The strongest supported statement is: **during approximately steps 500-1000, trainable R20 undergoes coupled router adaptation (nonzero drift, aggregate assignment change, increased margin, reduced entropy, and changing expert gradients) while frozen R20 cannot update its parameters.** However, R0 also moves and reorganizes at least as much on several aggregate metrics, so existing results do not establish what R20 does differe
+7: ## Reconstructed Performance
+11: ## What Is Established
+19: ## Scientific Compatibility"
+results/router_coadaptation_forensics/available_diagnostics.md,668e97b826e706906282db00fb05415ea0169d503ac59bce97b5ac3ba4771b38,894,1: # Available Diagnostics
+results/router_coadaptation_forensics/mechanism_candidate_ranking.md,0814f2ba9c899ac528efdd013986c3a549752e643abb19585da5d6fb48f8ee8e,2561,1: # Mechanism Candidate Ranking
+results/router_coadaptation_forensics/structural_analysis/layer_mechanism_ranking.md,62e2b1df070d397837f0ee0cead379cfcb5fa349d21bc47fd02f497b669a48f4,721,1: # Layer Mechanism Ranking
+results/router_coadaptation_forensics/structural_analysis/structural_mechanism_report.md,6f29a10879c442b0ec7c341246031b6c1120bc84f4ec3457787484623c34a442,2787,"1: # Structural Mechanism Report
+3: ## Result
+5: **H7 is the best-supported hypothesis: existing evidence is insufficient to determine whether R20 makes the right token-expert assignments.** The saved routing records are aggregate expert distributions/counts per layer at each checkpoint. They do not contain token identities, per-token assignments, per-token probabilities, or intermediate recovered router checkpoints.
+7: ## What Can Be Tested
+15: ## Hypotheses
+22: - H6 Distributed multi-layer effect: aggregate layer shifts do not show a seed-consistent R20-specific layer, and cannot establish coordinated causal behavior.
+23: - H7 Existing evidence insufficient: supported."
+results/router_coadaptation_highres/seed7_mechanism_report.md,6f9c1c8e7197abaf678aca018bb5b3437e20f491855542becee273ed524ca042,3164,"1: # Seed-7 High-Resolution Mechanism Diagnostic
+3: ## Scope
+7: ## Result
+22: ## Hypothesis Assessment
+24: - H2 targeted reorganization: not supported. Token transitions and source-destination matrices exist, but no R20-only pattern separates it from both controls in this single seed.
+25: - H3 stabilization: not supported. R20 is more stable than R0 in most layers, but R100 is still more stable.
+26: - H4 load correction: not supported. The probe has capacity outcomes and expert loads, but no expert-specific recoverability/damage measure was logged to make “better suited” testable.
+27: - H5 routing-gradient coupling: candidate only. `routing_gradient_coupling.csv` aligns valid aggregate expert gradients with token dynamics, but it does not show R20-specific favorable optimization versus both controls and cannot establish mediation.
+28: - H6 distributed multi-layer effect: not supported by this single-seed diagnostic; no coordinated R20-specific signature is present.
+34: ## Verdict"
+results/router_coadaptation_highres/preflight_audit.md,b38d615e62049bd44665ef5a35d2efb98012b8ddf938e2d75c80acbe8306cbba,725,1: # Preflight Audit
+results/router_coadaptation_mechanism/trainable_85/router_age_recovery_results.md,a51c815ffcb85796404581915f98f2d9408d32ebf92c5adc1206c239cc273620,12174,"1: # Router-Age Recovery Experiment Results
+21: ## Pruning Summary (computed once per seed, applied to every router age)
+29: ## Native-Confidence Router-Age Sweep
+76: ## Confidence-Matched Control
+94: ## Mean Gradient Norms During Recovery (native-confidence conditions)"
+results/router_conditioned_fixed_budget_dataset/README.md,d601b25f1ce367ea6a36eed6d24c0c88c3155efaa951e3d56ce500569a9c15df,5957,1: # Router-Conditioned Sparse Recoverability Under Equal Global Training/Recovery Budgets
+results/router_conditioned_fixed_budget_dataset/interim_analysis/README.md,d92b93f805803a52a17eae0aecd387cc3b1cef5f36e840bb0a6660da0554d1be,1179,1: # Dataset A interim analysis
+results/router_conditioned_fixed_budget_dataset/interim_analysis/20260921T133833582668Z/figure_index.md,64923d1461730f66f9f8249a5e858e68cbe0a8c27813ada49d153853a0178773,2342,1: # Interim figures
+results/router_conditioned_fixed_budget_dataset/interim_analysis/20260921T133833582668Z/interim_analysis_report.md,9125b32acd81feec2b4d8dd0f549b93b9ee8648fb4a20ceeeb3445dd6a16f39c,31079,"1: # Interim Analysis — Fixed-Budget Router-Conditioned Sparse Recoverability
+5: ## 1. Dataset status
+23: ## 2. Protocol validation
+40: ## 3. Main router-age results
+79: ## 4. Sparsity dependence
+108: ## 5. Seed reproducibility
+144: ## 6. Architecture dependence
+152: ## 7. Metric disagreement
+194: ## 8. Router development
+236: ## 9. Exposure scaling
+256: ## 10. What 32E needs to tell us
+260: ## 11. Questions for Dataset B
+264: ## 12. Current limitations
+268: ### Direct answers to the 15 requested questions
+286: ### Outputs and reproduction"
+results/router_conditioned_fixed_budget_dataset.HOME_BACKUP/README.md,d601b25f1ce367ea6a36eed6d24c0c88c3155efaa951e3d56ce500569a9c15df,5957,1: # Router-Conditioned Sparse Recoverability Under Equal Global Training/Recovery Budgets
+results/router_conditioned_fixed_budget_dataset.HOME_BACKUP/interim_analysis/README.md,d92b93f805803a52a17eae0aecd387cc3b1cef5f36e840bb0a6660da0554d1be,1179,1: # Dataset A interim analysis
+results/router_conditioned_fixed_budget_dataset.HOME_BACKUP/interim_analysis/20260921T133833582668Z/interim_analysis_report.md,9125b32acd81feec2b4d8dd0f549b93b9ee8648fb4a20ceeeb3445dd6a16f39c,31079,"1: # Interim Analysis — Fixed-Budget Router-Conditioned Sparse Recoverability
+5: ## 1. Dataset status
+23: ## 2. Protocol validation
+40: ## 3. Main router-age results
+79: ## 4. Sparsity dependence
+108: ## 5. Seed reproducibility
+144: ## 6. Architecture dependence
+152: ## 7. Metric disagreement
+194: ## 8. Router development
+236: ## 9. Exposure scaling
+256: ## 10. What 32E needs to tell us
+260: ## 11. Questions for Dataset B
+264: ## 12. Current limitations
+268: ### Direct answers to the 15 requested questions
+286: ### Outputs and reproduction"
+results/router_conditioned_fixed_budget_dataset.HOME_BACKUP/interim_analysis/20260921T133833582668Z/figure_index.md,64923d1461730f66f9f8249a5e858e68cbe0a8c27813ada49d153853a0178773,2342,1: # Interim figures
+results/router_conditioned_sparsity_sweep/sparsity_sweep_summary.md,68e220bb75832848f52fd138f6e60e1614c2be20bc748064727077baec374319,1235,"1: # Router-Conditioned Sparsity Sweep
+5: ## Paired Results"
+results/router_development_12expert_retry4_20260902/results_review.md,542e05857019129d386b2722afab6ed174bc4d25b9c136b0265e7c6d79fe1514,11885,"1: # 12-Expert Router-Development Review
+3: ## Executive Summary
+5: Protocol validity is supported by the recorded metadata: 12 experts, top-1 routing, four MoE layers, `d_model=256`, expert hidden size 1024, 2500-step recovery, trainable routers, E_T magnitude masks, E_0 rewind, and matched dense controls. The retry contains all 126 sparse conditions and all 21 dense controls. Of the 147 matched rows, 36 were reused from the compatible e12 replication and 111 were newly run; no failed or missing condition is recorded.
+13: ## 1. Reconstruction and Completeness
+29: ## 2. Protocol Audit
+35: ## 3. Ticket-Gap Results
+39: ### Mean gap
+50: ### SD
+61: ### Seed-level gaps
+88: ## 4. Response Shape and Architecture Comparison
+103: Chronological optima shift later in the 12-expert sweep at 75% and 85%. Equivalent normalized developmental measurements for the 8-expert R20 state were not available, so the stronger claim that 12-expert R60 matches the functional state of 8-expert R20 is unsupported.
+105: ## 5. Router Development
+125: ## 6. Gap Versus Developmental State
+127: The age curves show that favorable recovery at 70–90% occurs while entropy is intermediate-to-low, margin and confidence are intermediate-to-high, and specialization is already near its mature plateau. This is compatible with an intermediate developmental state, but it does not identify which statistic matters. The same statistics continue changing after R60, while the gap often worsens again; correlations are therefore descriptive and cannot establish mechanism.
+131: ## 7. Hypothesis Assessment
+134: * **H2, shifted intermediate optimum:** supported at the mean level, especially 70–90%, with the important qualification that seed 7 repeatedly favors R0.
+135: * **H3, common functional developmental state:** untested/unsupported because equivalent 8-expert probe metrics and stability/movement measures are absent.
+136: * **H4, mature-router advantage:** not supported at 70–90%; R100 is not best at 85%.
+137: * **H5, sparsity-dependent optimum:** supported descriptively. The mean best age is R100, R60, R60, R60, R60, R0 across the six sparsities, and seed optima vary substantially.
+138: * **H6, capacity-limited regime:** supported descriptively. At 95%, gaps remain large (.410-.460), and router age does not rescue the ticket."
+results/router_development_12expert_retry4_20260902/preflight_audit.md,519e593fa92e3d1b6d89f096ea1c03f4d2a56062bd20226115f13c7d99db0083,503,1: # 12-Expert Router Development Preflight
+results/router_expert_geometry_v1/protocol.md,9a2de4e84e1f57cde27f6762577724d76f6d3a6f8b42ddb2aa072cb879c4678c,7017,"1: # Router–expert geometry v1: fixed registration
+9: ## Actual model and coordinate system
+30: ## Metrics and references
+65: ## Analysis and limitations
+79: ## Verified historical availability"
+results/router_expert_geometry_v1/validation/report.md,76e0f82473b04145dbf4bd541f5578dc4cec18d4f53db954c337e18508215262,1594,1: # Instrumentation validation
+results/router_expert_geometry_v1/analysis_extended/README.md,427db95710cfd7cccf66abcc5d7d7a7831ce53d74d00662c3a392f4e3f905c33,468,1: # Post hoc geometry extension
+results/router_expert_geometry_v1/analysis_extended/v1/existing_reference_findings.md,8325472ce38b4333f0dacb8a3cbd91af0b493b2568aee5c454d7c1469f1a31e0,1789,1: # Existing source and pruning-only references
+results/router_expert_geometry_v1/analysis_extended/v1/metric_definitions.md,9ec6682eaa3ddc76593ee6b96cbc213271ecc2e895cdbc9e48d7b105a5b510cf,11202,"1: # Measurement definitions and scope — extension v1
+5: ## Paper provenance
+11: ## Deployed model
+17: ## References and state identities
+30: ## SVD membership
+32: The existing per-expert SVD tables are reused; a summary cannot reconstruct weights. Ranks 8/16/32 are reported separately. Invalid current matrices are excluded for zero norm, rank deficiency (cutoff <= max singular value × 1e-6), cutoff degeneracy (relative adjacent gap <1e-3), or missing overlap. The direct correction of the original claim retains its original current-matrix exclusion rules, but uses exactly the same `(layer,expert)` rows at step 0 and 2500. Source-reference flags are exporte
+36: ## Full-spectrum input Gram
+49: ## GELU analogue of score–activation coupling
+67: ## Uncertainty, caching and preservation"
+results/router_expert_geometry_v1/analysis_extended/v1/combined_findings.md,97b088712874d19e42c1315f6ca81f7f0a645eb93e0316bb6fa4222847dbd050,28196,"1: # Geometry and score–activation extension v1
+5: ## Input and reference audit
+11: ## Corrected SVD findings
+13: The original rank-16 learned-mask claim changes from 30/30 to **28/30** when both endpoints use identical valid (layer, expert) membership. Seed 17/R0/50% and seed 43/R0/50% instead increase slightly. The original step-specific mean changed which experts were included; therefore its universal sign claim is invalid.
+21: | 16 | learned | 28/30 | 2/30 |
+27: Endpoint matching, fixed trajectory intersections, and learned/random joint intersections are reported separately. The main figures, direction counts and cross-metric cases require valid current and source-reference bases; the direct original-rule correction is preserved separately. Both reproduce 28/30. Cutoff gaps and retained energy are preserved in the expert raw tables. An endpoint decrease is not a monotonic trajectory claim.
+29: ## Full-spectrum Gram findings
+57: ## GELU score–activation association
+61: ### fixed, proposed
+83: | random | 0.65 | 0 | 0.10388 | 0.04444 | 0.18342 | 0.19457 | 0.03227 | 0.11172 | [0.05146, 0.17197] |
+87: ### fixed, accepted
+113: ### fixed, all_expert
+125: | dense | 0.0 | 100 | -0.21046 | -0.03926 | -0.19446 | -0.14450 | -0.15004 | -0.14775 | [-0.19407, -0.09135] |
+139: ### native, proposed
+165: ### native, accepted
+191: ### native, all_expert
+217: ## Joint observations and discordant cases
+219: - learned: leading-rank overlap decreases in 28/30; both overlap decreases and full Gram distance increases in 22/30. Native proposed-pair coefficients increase despite decreasing overlap in 0/30, and despite increasing full Gram distance in 0/30. Positive final association above shuffled controls coexists with full Gram departure in 15/30. A higher coefficient can remain negative; endpoint increases alone are not evidence of positive coupling.
+238: ## Coverage and uncertainty
+250: ## Conclusion"
+results/router_expert_geometry_v1/analysis_extended/v1/README.md,a617f226cccb9bd5b94719377a810c85499f526d16f11a4f6e5cd2d9e0c93e8a,3810,"1: # Completed post hoc extension v1
+7: ## Main observations
+9: - Endpoint-matched rank-16 learned source overlap decreases in 28/30 runs, correcting the original 30/30 claim. Requiring valid source bases also gives 28/30.
+14: ## Deliverables"
+results/router_expert_geometry_v1/analysis/initial_report.md,f0b415711795a6f61b0f94587843f55353a0ee6c6f96607dda320ee85f33802f,2523,"1: # Initial checkpoint analysis
+12: ## All seed effects for primary centered alignment"
+results/router_expert_geometry_v1/analysis/final_findings.md,ffb9ae69f70fb32346facad518244b785a860ea5a3c629ce60637ee59a2e16f6,6351,"1: # Recovery findings
+42: - router_age ('R100-R50', 0.5, 'random', 2500) loss_difference: mean -0.00605593, seed bootstrap [-0.0272412, 0.00943717], n=5."
+results/ticket_collection_80plus/README.md,57466fa4e0c828c048292aa6c6dcb701b02539e7cde5bcb2ffc8c3a146a4a0b6,4940,"1: # Saved tickets at target sparsity >=80% — audit 2026-10-12
+7: ## Restart protocol
+15: ## Performance and selection
+28: ## Files for further experiments"
+results/weight_distribution_analysis/exploratory_findings.md,46c0129aa56f227842f4e01f74aa655186f0577b84e313409c8481caee200973,1990,"1: # Exploratory outcome comparisons
+14: | e32/seed_17/final_s0.80 | fc1 | 0.021117 | 0.0594978 | 1.0255 | 0.3363 | 0.00572775 |"
+results/weight_distribution_analysis/README.md,497fba59717b056660f2d967b2f7ee5aec51fd2f4e76819904563b99485a33d1,5538,"1: # Router and expert weight distributions
+5: ## Checkpoints and verification
+9: ## Plots
+15: ## Tables and interpretation"
+results/weight_distribution_analysis/focused_winners/README.md,d3d07bbbe53930df78da1dcf150b7f79deb69d3debbdbec1e80da8b868f9fe2d,3610,"1: # Focused E32 seed-7 weight distributions
+9: ## Ten figures, each in 300-dpi PNG and vector PDF
+18: ## Interpretation and controls
+24: ## Provenance and statistics"

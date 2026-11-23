@@ -1,0 +1,5 @@
+# Prior narrative formatting exception
+
+The final worker preservation check detected a change in the earlier investigation narrative `research_verdict.md` at 2026-10-20 14:06:51 UTC. Its only difference is one removed trailing newline. Adding that newline in memory produces the exact original SHA256 aeacfbbc 9d 93d 0e 09e 5e 556343d 33eb 9a 40968527e 6338b 0798710ab 88ea 89e 2. No original file was restored or overwritten. Before/observed byte copies are saved in new provenance only. All 24 recovery completion markers and all 192 AdamW checks passed before final analysis. The worker audit failure occurred after every update and output was saved; no recoveries were relaunched.
+
+The frozen analyzer is retained unchanged. `analyze_final.py` differs only in its preservation audit and output metadata; its estimands, thresholds, tables and plots are identical. The exact patch is retained. A strict audit accepts only this exact path with the mathematically proven one-newline difference; any numerical, protocol, model, data identity, mask or other hash mutation still fails. The verdict and all effect calculations are unaffected.

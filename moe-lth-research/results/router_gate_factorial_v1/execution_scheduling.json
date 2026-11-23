@@ -1,0 +1,28 @@
+{
+  "policy": "Measured multi-context slowdown; serialize existing processes with SIGSTOP/SIGCONT, no restart or parameter mutation",
+  "events": [
+    {
+      "utc_seconds": 1792500553.8698468,
+      "paused_pids": [
+        3229179,
+        3229183
+      ],
+      "running_pid": 3229181
+    },
+    {
+      "utc_seconds": 1792502233.0494337,
+      "completed_process_pid": 3229181,
+      "resumed_pid": 3229179
+    },
+    {
+      "utc_seconds": 1792503988.236018,
+      "completed_process_pid": 3229179,
+      "resumed_pid": 3229183
+    },
+    {
+      "utc_seconds": 1792505683.404165,
+      "all_scheduled_processes_exited": true
+    }
+  ],
+  "note": "Per-cell wall seconds include paused intervals; attempted budgets and RNG are unchanged."
+}

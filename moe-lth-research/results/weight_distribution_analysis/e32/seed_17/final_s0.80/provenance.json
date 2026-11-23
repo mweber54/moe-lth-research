@@ -1,0 +1,72 @@
+{
+  "case": "e32/seed_17/final_s0.80",
+  "status": "complete",
+  "config": {
+    "vocab_size": 256,
+    "max_seq_len": 128,
+    "num_layers": 4,
+    "num_heads": 4,
+    "d_model": 256,
+    "num_experts": 32,
+    "expert_hidden_size": 1024,
+    "dropout": 0.0,
+    "top_k": 1,
+    "capacity_factor": 1.25
+  },
+  "checkpoints": [
+    {
+      "stage": "dense_source",
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/32e_router_age_localization/recovery/seed_17/R0/dense/checkpoints/final_recovered.pt",
+      "sha256": "1517f152320da714ea404ecd88df628c114d52526e745b8b1c9a03798a4d4e03",
+      "step": 2500
+    },
+    {
+      "stage": "sparse_initial",
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_80_85/trajectories/e32/seed_17/final_s0.80/checkpoints/final_recovered.pt",
+      "sha256": "1f6e0febb4ea4b970b3bf740c56f034fd465c91835c9d8d1fef72abed20fff14",
+      "step": 2500
+    },
+    {
+      "stage": "sparse_final",
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_extended_recovery/e32/seed_17/final_s0.80/checkpoints/step_5000.pt",
+      "sha256": "334689157a2bcc0137f732f7f67e8da0098a7732cef301531b055a8362e874cd",
+      "step": 5000
+    },
+    {
+      "stage": "dense_final",
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_extended_recovery/e32/seed_17/dense/checkpoints/step_5000.pt",
+      "sha256": "bac7c967a1ea0f9a43f14fde4b783433a8e89c4735ccef14fd536013d43f5bce",
+      "step": 5000
+    }
+  ],
+  "mask_path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_80_85/trajectories/e32/seed_17/mask_08.pt",
+  "mask_hash": "ff6e85e4e917b39b7bdaa9f887ad4147e5008e7902acb52a436c24570dc90f5a",
+  "original_recovery_router_checkpoint": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/32e_router_age_localization/references/seed_17/checkpoints/step_0.pt",
+  "original_recovery_router_step": 0,
+  "protocol": {
+    "num_experts": 32,
+    "seed": 17,
+    "condition": "sparse",
+    "sparsity": 0.8,
+    "source_checkpoint_sha256": "1f6e0febb4ea4b970b3bf740c56f034fd465c91835c9d8d1fef72abed20fff14",
+    "mask_hash": "ff6e85e4e917b39b7bdaa9f887ad4147e5008e7902acb52a436c24570dc90f5a",
+    "training_batch_hash": "0e6cfb44900684ed1272ff6dd20e9dc2a7b3a755db8dcf8b6187c5432348904f",
+    "validation_batch_hash": "09a073e9f03bbb854d3903081440b9e0869feb8e04b50b3b1be76a1d42658b22",
+    "source_step": 2500,
+    "target_step": 5000,
+    "optimizer_protocol": "fresh_adamw_and_grad_scaler_from_step_2500",
+    "evaluation_interval": 50
+  },
+  "training_hyperparameters": {
+    "batch_size": 128,
+    "learning_rate": 0.0003,
+    "weight_decay": 0.01,
+    "grad_clip": 1.0,
+    "precision": "fp16"
+  },
+  "canonical_dense_condition": "dense_e32_seed17_R0",
+  "sparse_minus_dense_ce_5000": 0.021116930508198406,
+  "matches_or_beats_dense": false,
+  "sparse_ce": 1.3510094219472522,
+  "dense_ce": 1.3298924914390537
+}

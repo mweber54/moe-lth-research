@@ -1,0 +1,33 @@
+{
+  "time": 1792806538.2523627,
+  "stage": "AFTER_FIRST_CALIBRATION_ATTEMPTS_BEFORE_RELIABILITY_OR_SELECTION_OR_INTERVENTION",
+  "reason": "Both first attempts failed the mathematical Jensen audit because independently summed FP64 mean-absolute and absolute-mean values differed at rounding precision. Diagnostic comparison now permits relative 1e-12 plus absolute 1e-25; score values/selection rules/reliability thresholds unchanged.",
+  "scientific_registration_unchanged": true,
+  "repeat_scope": "Same 32 fixed calibration batches at same fixed source model; no additional batches, source selection or production updates",
+  "pre_scoring_amendment_sha256": "cbed04bd66e83ac64289257128b3fc2de0b6786ab10c5cb2cc5547f3c070e459",
+  "files": {
+    "scripts/gradient_sensitivity_pruning_v1/common.py": "c3e49f2cf777f090e115b9d6082a642fac83ffe34131edee0bf764b1d59adc34",
+    "scripts/gradient_sensitivity_pruning_v1/measure.py": "844e7eccd3b7da08a6006f839e9d1a3efdcb0ae07b3ff108693bdcb5c2909f02",
+    "scripts/gradient_sensitivity_pruning_v1/worker.py": "9d3db1170484c284c19088748c5047bf7f6596e000362f3afe1c6f67725bebe5"
+  },
+  "preserved_previous_files": {
+    "results/gradient_sensitivity_pruning_v1/engineering_amendment_archive/worker.py": "164dc8f40345810076c9991e9dfcaf5b4440d13003bc6e3289827888d79b3e13",
+    "results/gradient_sensitivity_pruning_v1/engineering_amendment_archive/measure_seed17.json": "5ecda2ceb6485638f8b085bf11344105c7db0e25bdd48d852652d509724d31d6",
+    "results/gradient_sensitivity_pruning_v1/engineering_amendment_archive/measure_seed7.json": "f825cd5ca7d7aeab0c2b11197619d5d1854d03800bfa03d1b4eb021913133e1f",
+    "results/gradient_sensitivity_pruning_v1/engineering_amendment_archive/measure.py": "9270900f6907b8ff6d0fed39a07e7bd2cf83e29e9b256d54c5f8df8d8688d2b2",
+    "results/gradient_sensitivity_pruning_v1/engineering_amendment_archive/common.py": "c7a585de606a913d0043724ddd850541a141eee969b3cdd6fe240a716734ba25"
+  },
+  "fixture_checks_passed": {
+    "tiny_native_model_full_vs_streamed_gradients": true,
+    "full_vs_streamed_float64": true,
+    "mean_absolute_not_absolute_mean": true,
+    "sample_batch_variance_and_second_moment": true,
+    "undefined_constant_ranks": true,
+    "zero_sign_consistency_is_undefined": true,
+    "tolerance": 1e-14
+  },
+  "failed_attempts": [
+    "attempts/measure_seed7/attempt_0001",
+    "attempts/measure_seed17/attempt_0001"
+  ]
+}

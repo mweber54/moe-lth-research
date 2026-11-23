@@ -1,0 +1,26 @@
+{
+  "key": [
+    "architecture",
+    "source_seed",
+    "mask_id",
+    "initialization_id",
+    "sparsity",
+    "discovery_run",
+    "recovery_run"
+  ],
+  "gap_definition": "absolute_sparse_ce - absolute_dense_ce at matched budget/readout",
+  "units": "token-weighted validation cross entropy, nats",
+  "independent_unit": "source_seed within architecture; nested masks and streams are repeated observations",
+  "classification": "validation endpoint screen separate from strict original-LTH evidence",
+  "missing": "empty CSV value",
+  "primary_rows": 30,
+  "combined_rows": 404,
+  "protocols": [
+    "5000_attempts_fresh_optimizer_at2500",
+    "5000_order_A_FP32_readout_reset2500",
+    "5000_order_B_FP32_readout_reset2500",
+    "dataset-a-imp-r0-v1",
+    "historical-native-fixed-budget-v1_OMP_R0",
+    "mask_information_v2_2500"
+  ]
+}

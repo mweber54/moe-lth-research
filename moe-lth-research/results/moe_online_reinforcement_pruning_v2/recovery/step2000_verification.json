@@ -1,0 +1,23 @@
+{
+  "verified_unix": 1795210225.7122097,
+  "checkpoint_sha256": "f4501eec5c09f29f21e7ab6143ab1b5b2f7f27614e326c3b9eb1c793301b5fd1",
+  "checkpoint_backup": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/moe_online_reinforcement_pruning_v2/recovery/seed7_B_high_step2000.pt",
+  "identity": {
+    "seed": 7,
+    "order": "B",
+    "arm": "high-reinforcement-small",
+    "mask_sha256": "e79e0240c02e471eadfa036cf7a4932a02bd623c21359917fe47739cc3177400",
+    "prefix_sha256": "b3d3c78483ed8873e8d00f414aa0e8ac54b15e7146a40a68e1f2532fa00698fc",
+    "train_hash": "c19672f8883a0eb991407f6c3518d8f97720a3a43a81dd66abb732f04c1b5f1b",
+    "validation_hash": "09a073e9f03bbb854d3903081440b9e0869feb8e04b50b3b1be76a1d42658b22"
+  },
+  "global_step": 2000,
+  "next_batch_index": 2000,
+  "applied_since_branch": 1750,
+  "scheduler": "none",
+  "selected_weights_and_moments_zero": 3355392,
+  "optimizer_state_entries": 552,
+  "scaler_present": true,
+  "python_numpy_torch_cuda_rng_present": true,
+  "note": "Production runner rechecks identity and restores model, optimizer, scaler, RNG and masks on GPU before advancing."
+}

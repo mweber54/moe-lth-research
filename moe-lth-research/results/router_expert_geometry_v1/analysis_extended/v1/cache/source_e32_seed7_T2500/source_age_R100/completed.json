@@ -1,0 +1,55 @@
+{
+  "cache_key": "614346678386ee7d4d3afa92beffec010c5476c4029da856bea6f046460a2351",
+  "meta": {
+    "condition_id": "source_age_R100",
+    "seed": 7,
+    "router_age": 100,
+    "sparsity": 0.0,
+    "mask_type": "dense",
+    "step": null,
+    "category": "source_age",
+    "dense_condition_id": null,
+    "validation_loss": null
+  },
+  "origin": {
+    "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/32e_router_age_localization/references/seed_7/checkpoints/step_2500.pt",
+    "sha256": "20498ff8253d902d05e80b8389a76d55f803b90bd20d0eb7a994c7220712c731",
+    "size": 274063179
+  },
+  "reference_identities": {
+    "source_final": {
+      "category": "source_final_dense",
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/32e_router_age_localization/references/seed_7/checkpoints/step_2500.pt",
+      "sha256": "20498ff8253d902d05e80b8389a76d55f803b90bd20d0eb7a994c7220712c731",
+      "size": 274063179
+    }
+  },
+  "probe": {
+    "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/router_expert_geometry_v1/probes/source_e32_seed7_T2500.pt",
+    "sha256": "af4e02f2dc3e563131db1d20276e6dac9a3be4866032737109f8742b75e1d8a6",
+    "size": 4213833
+  },
+  "model_tensor_sha256": "cfd798772de41966a336d2bfe35d22981cbdf40fb80cd5936dc29f712c371856",
+  "finite_tensors": true,
+  "mask_applied_verified": false,
+  "expected_initialization_verified": false,
+  "model_preserved": true,
+  "elapsed_seconds": 6.144862769171596,
+  "peak_cuda_allocated": 426020864,
+  "peak_cpu_rss_kib": 5101688,
+  "timing_seconds": {
+    "tensor_checks": 0.0840837974101305,
+    "load_and_hash": 1.7865154212340713,
+    "gram": 0.13887613080441952,
+    "activation": 3.7130702659487724,
+    "hash_and_write": 0.4225168311968446
+  },
+  "output_hashes": {
+    "activation_layer_pools.csv": "c6727897a1a64decde39ecfe36fd7732acb802773f02fb3a22691dca31607013",
+    "activation_within_token.csv": "e295903aacbcae60a5e0d28414ba80ab3343d2a522b865a518844b8f453bf143",
+    "activation_groups.csv": "a1b0173f03c809c1c4f08958205f9f3dbbf5ecacb0cfdcd6ab6d5af89750f4c1",
+    "gram_experts.csv": "53e622b8017f3f0db2c4e308f13833438ccbf2edd4042b11f1d7d193b1611c79",
+    "token_pairs.npz": "d1bc360a655aa46e631f9eb98cbdb167a6a35ce6fe6261b03941166e48c5e7a5",
+    "input_drift.csv": "1aebe9adadd889c9bbfe8aab38955c8e3224880e46ca1bb417983b3bfd0fe757"
+  }
+}

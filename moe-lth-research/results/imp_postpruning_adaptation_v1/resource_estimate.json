@@ -1,0 +1,29 @@
+{
+  "benchmark_seconds_per_update_by_host": [
+    0.24753475029021502,
+    0.6203910243697465
+  ],
+  "benchmark_source": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/resource_estimate.json",
+  "diagnostic_overhead_allowance": 0.2,
+  "dispatch_status": "not dispatched",
+  "engineering_checks_excluded_from_core_cohort": "GPU equivalence, interruption/resume, and measurement probes; accounted after host benchmarks",
+  "engineering_pilot_branch_updates": 4000,
+  "estimated_branch_gpu_hours": 2.893085915533205,
+  "estimated_core_gpu_hours_total": 3.616357394416506,
+  "estimated_prefix_gpu_hours": 0.7232714788833012,
+  "estimated_storage_bytes": 182620000000,
+  "maximum_gpu_utilization_percent": 90,
+  "median_seconds_per_update": 0.43396288732998073,
+  "minimum_free_disk_bytes": 214748364800,
+  "minimum_free_gpu_bytes": 25769803776,
+  "new_branch_attempted_updates": 20000,
+  "planned_endpoints": 40,
+  "planned_new_branch_continuations": 40,
+  "planned_reusable_full_endpoint_candidates": 10,
+  "prefix_reconstruction_attempted_updates": 5000,
+  "reusable_full_endpoint_claim": "candidate only; requires numerical verification; trajectories are not reusable because offset-25/100 and the requested diagnostics are absent",
+  "status": "pre_dispatch_estimate",
+  "storage_estimate_note": "upper bound assumes five full-state resumable checkpoints per 500-update endpoint plus dense/sparse prefix states and diagnostics; verify against actual filesystem before launch",
+  "storage_free_bytes_at_registration": 880759799808,
+  "workers_per_host": 1
+}

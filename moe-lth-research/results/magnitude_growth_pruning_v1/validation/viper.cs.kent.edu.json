@@ -1,0 +1,40 @@
+{
+  "passed": true,
+  "host": "viper.cs.kent.edu",
+  "torch": "2.7.0",
+  "synthetic_signed_vs_magnitude": true,
+  "no_individual_denominator": true,
+  "fluctuation_not_stability": true,
+  "no_future_observations": true,
+  "coordinate_matching_deterministic": true,
+  "branches": [
+    {
+      "branch": "control",
+      "only_intended_coordinates_changed": true,
+      "initial_optimizer_empty": true,
+      "optimizer_membership_all": true,
+      "mask_count": 0
+    },
+    {
+      "branch": "growing",
+      "only_intended_coordinates_changed": true,
+      "initial_optimizer_empty": true,
+      "optimizer_membership_all": true,
+      "mask_count": 670976,
+      "diagnostic_rng_optimizer_weights_preserved": true,
+      "serialized_resume_model_optimizer_scaler_rng_exact": true,
+      "masked_gradients_zero": true,
+      "router_shared_bias_gradient_flow": true
+    },
+    {
+      "branch": "stable",
+      "only_intended_coordinates_changed": true,
+      "initial_optimizer_empty": true,
+      "optimizer_membership_all": true,
+      "mask_count": 670976
+    }
+  ],
+  "peak_gpu_bytes": 3401717248,
+  "free_gpu_bytes": 97281179648,
+  "production_branches_run": 0
+}

@@ -1,0 +1,25 @@
+{
+  "tests": "PASS: budget/seed/LR drift rejection; accepted/active-attempt/applied counts; legacy missing applied flags remain NA",
+  "source_counter_invariance": "Prior CUDA fp16 tiny-model test produced identical train/validation metrics and final state hashes",
+  "training_launched_during_tests": false,
+  "code_hashes": {
+    "scripts/fixed_budget_dataset/common.py": "49f692e88717cbce3afe8b1d53f1bf51ad94dad27dfd6b0da5bffe02b5620fb8",
+    "scripts/fixed_budget_dataset/finalize.py": "5b6dc2aa8371dd45f882c0b8f291d832a590c337d3efbf2a0128d980b184ec9c",
+    "scripts/fixed_budget_dataset/run.py": "4499c25ae675eb373045c16a018bf2eb10c07e4ec7956c3d0da6ff7a1b0c6119",
+    "scripts/fixed_budget_dataset/audit.py": "9c8fad230f476ff22bbaa7c490778ce47497d56ae0cd4560f6dd2aa4af60e920",
+    "src/moe_lth/training/train.py": "441091ad2c571047046e7c15d8c02f13f4b18b784d2fc1f6ce4db1470955545a",
+    "src/moe_lth/experiments/run_router_age_recovery.py": "082ff8495a27f160c1057613d273f75b53ea7d7644df5e1149e011ce24f3bdb8",
+    "src/moe_lth/models/moe_layer.py": "3a3569a402555ef5245b11ef9845f59d4a45ec445c6f29030a0c9505273553f9",
+    "tests/test_fixed_budget_dataset.py": "ff9a7c1501ff5b8ef31226a3df6d2be6be5220746ffd2e193eaf4062559d923e",
+    "scripts/fixed_budget_dataset/launch_after_audit.py": "8367e30d0c49dd9d9bdd9a8db17df1626da97cd2af2ae3a35b781905e2f27e49",
+    "scripts/fixed_budget_dataset/progress.py": "f99d034f7208612cfda8e53b366707889356279f0c7e093e32c3fc48bb3ce6c0",
+    "scripts/fixed_budget_dataset/supervise.py": "449187685dc6f9921c1b778b7c479218de3b669f639c805420dc1860a03b9c19",
+    "scripts/fixed_budget_dataset/prepare_masks.py": "3b9ec005266fa6f133e05019a075257bad894873022a5bbfacc8d3683006aa25"
+  },
+  "summary_validation": "PASS: synthetic five-seed marginal sample SD equals sqrt(2.5); known R0 winners recovered at all six sparsities",
+  "auc_validation": "PASS: analytic linear-curve integral 3281.25; noncanonical extra sample excluded; missing canonical sample rejected",
+  "expanded_summary_validation": "PASS: five within-seed uncertainty; numerical tie sets; second-ranked gaps; paired dense/sparse decomposition; descriptive report; observed-grid cross-architecture figures",
+  "tie_preservation_validation": "PASS: all tied ages displayed in mean and seed matrices; unique winner fields NA for ties; all-candidate paired decomposition; winner-set agreement and endpoint overlap; five-seed marginal sample SD unchanged",
+  "tie_preservation_test": "tests/test_fixed_budget_dataset.py::test_tied_winners_keep_all_ages_and_pairings (same synthetic scenario verified during build)",
+  "mask_preparation_validation": "PASS: 60 new masks; 150-cell exact mask Cartesian product; source checkpoint SHA/state identities and per-expert rounded keep counts validated; incremental mask hashes agree"
+}

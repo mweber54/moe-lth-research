@@ -1,0 +1,26 @@
+{
+  "status": "protocol clarified after pilot and before replay or inspection of the nine gated cells",
+  "original_protocol_sha256": "51f14aa3b53cb890bb501f670b654aa28fcb938eedb47d85b562bb100373b81f",
+  "replay_sha256": "fe0bfd4f1a0a6da0251d0e415bf4db3bf3328ce4255beea966fe8fa35704a104",
+  "pilot_cell": "seed17_B_250",
+  "pilot_index_sha256": "cdb2ec670854de9079335bb1089378252988c78107e34f35802614fd480fb95a",
+  "split": "first 180 retained batches in archived replay order, first 90 versus next 90; same batch IDs for every labeling",
+  "selection": "strong opposite signs in discovery half, thresholds 0.6, 0.8, 0.9; no validation-half information in discovery",
+  "coverage": "original protocol independently for both domains and halves; ineligible is unknown",
+  "permutation": "within batch, shuffle eligible domain labels at target-position level; seed 230112 + 1000003 * permutation_index + batch_id; recompute gradients; first pilot permutation index 0",
+  "state": "original replay verifies model and global RNG unchanged",
+  "interpretation": "reproducible gradient opposition does not establish importance or safety for pruning",
+  "exposure_matching": "for each permutation and expert require permuted/original ratio in [0.8, 1.2] for accepted occurrences and contributing batches in each domain and half; zero matches zero only; compare observed and permutation on same matched experts; report expert counts and all raw exposure distributions",
+  "empirical_comparison": "paired within-permutation comparison, upper tail, (1 + number of null fractions at least observed matched fraction) / (1 + number of usable permutations); report number usable",
+  "clarification": {
+    "timing": "2026-11-23, after pilot and before inspecting nine gated cells",
+    "primary": "first 180 retained batches in archived replay order, first 90 versus next 90; same batch IDs for every labeling",
+    "secondary": "for nine cells with more than 180 retained batches, all retained batches in archived replay order, split at floor(n/2), second half receives remainder",
+    "unconditional_statistic": "among weights eligible in both domains and both halves, fraction strongly opposed in discovery and strongly opposed in validation with both original directions retained; zero selections yield zero when denominator is nonzero",
+    "zero_selection": "keep all permutations; conditional retention undefined when selected validation-known count is zero"
+  },
+  "pilot_split_half_replay_sha256": "cec9438b48c474e181a289c7ef510325a691ddd405261650c7dbdac9ff127143",
+  "clarified_split_half_replay_sha256": "34505be84139ddb729f362c1dbbb79770c492174d64cf3a4f7b293aad69c22ea",
+  "clarified_split_half_analysis_sha256": "13c021c1ab9cb524f5eacc377d91f3db97c0369f3b507c1e4687aa664d36a728",
+  "index_audit_sha256": "8a60d0a979d9f6a5194f15368fe45b6bc5a1b6def7f74ad9614fbb8e5b7d73b8"
+}

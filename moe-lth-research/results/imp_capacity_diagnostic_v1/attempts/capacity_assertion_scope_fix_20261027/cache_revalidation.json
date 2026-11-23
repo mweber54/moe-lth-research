@@ -1,0 +1,77 @@
+{
+  "cache_entries_revalidated": [
+    {
+      "cache_consumed_by_final_report": true,
+      "cache_identity": {
+        "mask_sha256": "6190adc6505729e4c8c4400c360f303b757ab6c3371a162b74e1e2af33379861",
+        "model_state_sha256": "77dd1bdaac90117959508a57ffbd098edf9aa9c799c7c33f0862f080a4d736cc",
+        "model_type": "sparse",
+        "offset": 0,
+        "validation_sha256": "09a073e9f03bbb854d3903081440b9e0869feb8e04b50b3b1be76a1d42658b22",
+        "version": "capacity-rejection-only-v1"
+      },
+      "checkpoint_id": "step1000_sparse_seed7",
+      "checkpoint_sha256": "b155728dd7734550d02f436b0bedcd477e8e8178852c0d714f853ed0e860e365",
+      "numerical_checks": {
+        "disabled_intervention_identical_to_native": true,
+        "first_intervened_layer_probabilities_ids_gates_identical": true,
+        "first_intervened_layer_raw_scores_identical": true,
+        "gradient_state_preserved": true,
+        "layer_local_upstream_unchanged": true,
+        "masked_zeros_preserved": true,
+        "model_state_hash_preserved": true,
+        "module_modes_preserved": true,
+        "native_vs_policy_accepted_contribution_equal": true,
+        "rng_preserved": true
+      },
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_capacity_diagnostic_v1/cache/readout_ecd5053ac49eb1643a1815d1aa02699ff283896f87c1905e9f3a92e34c39f29e.json",
+      "policy_mapping": {
+        "NATIVE": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "NO_DROP_ALL": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "NO_DROP_L0": [
+          false,
+          true,
+          true,
+          true
+        ],
+        "NO_DROP_L1": [
+          true,
+          false,
+          true,
+          true
+        ],
+        "NO_DROP_L2": [
+          true,
+          true,
+          false,
+          true
+        ],
+        "NO_DROP_L3": [
+          true,
+          true,
+          true,
+          false
+        ]
+      },
+      "precision": "FP32_TF32off",
+      "reason": "GPU admission blocked resumed cohort before checkpoint aggregation",
+      "routing_validation": "PASS",
+      "sha256": "95c1078a10915ddf0877063ae31d8da534860fdb8778d9a6d62ea7c8cdb3503c",
+      "validation_batches": 31,
+      "validation_sha256": "09a073e9f03bbb854d3903081440b9e0869feb8e04b50b3b1be76a1d42658b22",
+      "validation_target_tokens": 492416
+    }
+  ],
+  "policy_version": "capacity-rejection-only-v1",
+  "status": "PASS"
+}

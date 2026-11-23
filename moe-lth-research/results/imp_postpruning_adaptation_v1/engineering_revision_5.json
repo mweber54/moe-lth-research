@@ -1,0 +1,31 @@
+{
+  "completed_unpruned_full_attempt_preserved": true,
+  "failed_attempt": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1/attempts/seed17_unpruned_router_frozen/attempt_1793036366390347539",
+  "failed_router_frozen_attempt_preserved": true,
+  "failure": "RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu! (when checking argument for argument other in method wrapper_CUDA__equal)",
+  "new_source_hash_manifest_sha256": "483b2ec65dea2c0d0d7b2d4fa00618341ac9bcebe4e07ab6bba01a3e16f90d8d",
+  "optimizer_updates_in_failed_attempt": 0,
+  "probe_manifest_sha256_unchanged": "506f897c83f58efbd5ca5b95ff95d1990ea836333a7dce7162f6add301d0fd6b",
+  "repair_scope": "compare frozen optimizer tensors exactly after mapping to CPU only when their devices differ",
+  "revision": 5,
+  "saved_checkpoint_step": 1000,
+  "scientific_conditions_changed": false,
+  "source_hash_changes": {
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/scripts/imp_postpruning_adaptation_v1/engine.py": {
+      "new": "b9faddc2cabfaae0e97d4d473bbc81c8eed2c9cb9d5948a491385040be8f2408",
+      "old": "2ab3ce8985cde955c8b9d52160f2887eb13e024bdeb1bb5393aab280f755f3a2"
+    },
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/scripts/imp_postpruning_adaptation_v1/finalize_step1500.py": {
+      "new": "10588caad0e0bd9918030b9d1b7de052ea37426bb62efe951032ecc8d5e1535f",
+      "old": "4c914aacf658589cb2719289ef316236eb7fe75cdb0f2aa01ceb7b1bf0dc63ce"
+    },
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/scripts/imp_postpruning_adaptation_v1/prepare.py": {
+      "new": "2b437b834f9176456f550995db6dc5aceb98326e6c7128c78cc4928171251bbf",
+      "old": "b9e5566c49a35f12056d8c464b49a5fe1e8886399627e201f7f4e705b6220a41"
+    }
+  },
+  "supersedes_registration": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1/registration_revision_4.json",
+  "supersedes_registration_sha256": "db5f214c4bf7828d83237fb621114c25530f5223683d7d0472f76df410ae772d",
+  "supersedes_source_hash_manifest": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1/input_code_configuration_hashes_revision_4.json",
+  "supersedes_source_hash_manifest_sha256": "7f6fd1a02925e97c90191559ba89977dc2212aea3ba7883171bf324f0d614e04"
+}

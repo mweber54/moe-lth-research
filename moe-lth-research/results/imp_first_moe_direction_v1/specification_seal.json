@@ -1,0 +1,93 @@
+{
+  "audit": {
+    "inventory_sha256": "fc1b8b84b7eccd732cd82f1aa4624b0567d8bb995086475aec6e5462d99a87de",
+    "provenance_sha256": "9c3835b1eee432bc0262f5bd2db7e46c912249d78e48bd398d61c4c2354f281d",
+    "source_sha256": "133fdd43692835161489ebaf470000c414c8c718fdeaea0b36ba850c4574fd84",
+    "status": "PASS"
+  },
+  "configuration": {
+    "ce_atol": 1e-06,
+    "condition": "router_experts_frozen",
+    "construction_dtype": "FP64 then cast to recipient FP32",
+    "contrasts": [
+      "D_start_norm",
+      "D_end_norm",
+      "N_start_dir",
+      "N_end_dir",
+      "B_common",
+      "I"
+    ],
+    "direction_l2_atol": 2e-06,
+    "eligibility_candidate": "exact FP64 nonzero in both native donor vectors; no epsilon or floor; abort on unusable FP32 construction before CE",
+    "eligibility_evidence": "existing sealed training-only four-complete-batch probes and dtype-aware synthetic tests; no new validation losses before rule seal",
+    "end_step": 1500,
+    "fp64_unit_norm_atol": 2e-12,
+    "full_donor_context": "reuse verified prior alpha1 cells only; no causal full-minus-common support effect",
+    "id": "imp_first_moe_direction_v1",
+    "implementation_revision": 2,
+    "limits": "This follow-up and layer 0 were chosen after prior interface/amplitude results; the new configuration and numerical eligibility rule are sealed before intervention losses. Validation has been repeatedly examined and is not an independent test set. Source seeds (n=5) are the replication unit; tokens, sequences, batches, contexts and cells are nested observations. Directions are those of the complete native gated contribution in native residual coordinates, with no learned alignment or transformation. On S only, norm and direction donors are crossed; outside S every variant equals the recipient's own native contribution. Unsupported positions are not tested and are not shown harmless. Other-diagonal hybrids are common-support substitutions, not necessarily full-donor transplants. Cross-recipient contrasts include residual context, downstream parameters and unsupported-position backgrounds; they are not downstream-weight attribution. Each sparse/unpruned trajectory uses its own norms/directions and is not an equal-sized cross-model perturbation. Downstream replay fixes each recipient's own decisions and computes experts on current inputs; mode differences do not isolate one routing mechanism. Algebraic decompositions are not percentages of training recovery. Frozen experts did not learn new weights. Direction effects may reflect changed assignments or different inputs to the same frozen experts; they do not isolate upstream cause, semantic content, all recovery, winning tickets, normal-training attainability, or an online pruning criterion. No subsequent experiment is launched.",
+    "logical_cells": 160,
+    "logit_atol": 1e-06,
+    "logit_rtol": 1e-05,
+    "loss_scope": "whole validation population; batch/sequence differences nested in seed",
+    "model_types": [
+      "sparse",
+      "unpruned"
+    ],
+    "modes": [
+      "NATIVE_DOWNSTREAM",
+      "RECIPIENT_BASELINE_REPLAY"
+    ],
+    "norm_rtol": 2e-06,
+    "outside_S": "same recipient-native contribution in all four variants",
+    "pilot_seed": 17,
+    "primary_mode": "NATIVE_DOWNSTREAM",
+    "recipients": [
+      "start",
+      "end"
+    ],
+    "replay_engine": "immutable CPU payload validation once per batch, hash checked every call, cached device indices, unchanged native-order expert dispatch",
+    "seeds": [
+      7,
+      17,
+      29,
+      43,
+      61
+    ],
+    "selected_layer": 0,
+    "selection": "post hoc follow-up to completed interface/amplitude studies",
+    "start_step": 1000,
+    "validation": {
+      "batches": 31,
+      "independent_test": false,
+      "precision": "FP32",
+      "rebatching": false,
+      "target_tokens": 492416,
+      "tf32": false
+    },
+    "variants": [
+      "V00",
+      "V01",
+      "V10",
+      "V11"
+    ]
+  },
+  "source_hashes": {
+    "scripts/imp_capacity_diagnostic_v1/run.py": "e842e8487eb0e3a5cf30fa69f109c7b5883095bf447a59bba562ce52cb9f219a",
+    "scripts/imp_expert_contribution_ablation_v1/replay.py": "08c9bff982444f8cde8b0650b1fc13862e153d4fda05bda15a073a491583ef2d",
+    "scripts/imp_first_moe_amplitude_v1/engine.py": "f29009157f095959a8dd0f621d3f17586632206ddc3cca33344e168c8d94ae35",
+    "scripts/imp_first_moe_amplitude_v1/run.py": "a03366584a83e9fd3a489b19d23b6237293498c404e15a34c98d795421d10529",
+    "scripts/imp_first_moe_direction_v1/audit.py": "133fdd43692835161489ebaf470000c414c8c718fdeaea0b36ba850c4574fd84",
+    "scripts/imp_first_moe_direction_v1/engine.py": "0fad32c075d160803b59c9053d9168b31304563636c0891378f8fe5016153018",
+    "scripts/imp_first_moe_direction_v1/fast_replay.py": "879c4bb3a2a22f904a56ad6ed7bcfec9cf36c683a7b84d60cc0037e3f0b66711",
+    "scripts/imp_first_moe_direction_v1/report.py": "fd7c43659460bb2c1541a1c310e4d35a743523e3dabf03d070c2a34e63f2e3f5",
+    "scripts/imp_first_moe_direction_v1/run.py": "55a3e56bd06c976c65ddff2d3a35c43342ea981eed8e4a991e3002456049874a",
+    "scripts/imp_first_moe_interface_v1/engine.py": "b51e15c61ee4635904bcff72a5fb5a3a3033a3c3203ef15a3dca092a4971bfe6",
+    "src/moe_lth/models/__init__.py": "ca8f4c77a5167c12afb86474a4b55be10312296175940b82ad9e70e318041552",
+    "src/moe_lth/models/experts.py": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+    "src/moe_lth/models/moe_layer.py": "7b9ca9d9c3a1020125d5d9d42f8429cbd0aea8ca42e8dcc334c1d8724465e21a",
+    "src/moe_lth/models/router.py": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6",
+    "src/moe_lth/models/transformer.py": "12e14e68c2cd7a223173710c9fb5166823af470ceca605c1c0185063037ba9f6",
+    "tests/test_imp_first_moe_direction_v1.py": "d885befebe2b8460f3baf59a3e4c76bafd3f7046970ea10f1bb4a1a821180602"
+  }
+}

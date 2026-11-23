@@ -1,0 +1,53 @@
+ARCHITECTURE SCALING AUDIT COMPLETE
+
+Protocol integrity:
+- checkpoint mapping: PASS; 27 used 24E pairs plus saved intermediate checkpoints
+- pruning masks: PASS; recomputed from R100, intentionally shared across ages
+- matched dense controls: PASS; all 27
+- recovery initialization: PASS; reconstructed initial hashes and fresh-optimizer metadata
+- ticket-gap recomputation: PASS; raw final losses and published sample SD agree
+
+Source training:
+- global tokens matched?: YES; 40,960,000 each
+- optimizer steps matched?: 2500 attempts; applied source steps NA
+- per-expert exposure matched?: NO in source samples; complete counts NA
+- 8E relative exposure: 1.000000 sampled accepted; complete NA
+- 12E relative exposure: 0.660819 sampled accepted; complete NA
+- 16E relative exposure: 0.490456 sampled accepted; complete NA
+- 24E relative exposure: 0.324479 sampled accepted; complete NA
+
+Recovery:
+- global recovery steps matched?: YES, 2500 attempts; applied updates separately logged
+- per-expert recovery exposure matched?: NO; full accepted counts measured
+- sparse/dense exposure matched within pairs?: input schedule yes; accepted distributions no
+
+24E convergence:
+- late-training behavior: still improving, comparably to 8E/12E/16E
+- expert displacement: mean absolute 12.231183, relative 0.591227; 8E 11.492731, 0.555479
+- evidence of underdevelopment?: unequal exposure observed; unique 24E inadequacy unproven
+
+Architecture scaling:
+- capacity issue?: no formula bug found; observed drop rates differ
+- router/aux-loss scaling issue?: balanced normalization correct; full-softmax gate semantics depend on E
+- implementation/config drift?: no 24E-specific error found
+
+Best explanation for flat 24E curve:
+1. Real seed-conditioned fixed-budget observation
+2. Native recovery/comparator behavior; covariance reported
+3. Exposure and gate-weighting differences are plausible, not causally established
+
+24E verdict:
+24E VALID UNDER FIXED-COMPUTE INTERPRETATION ONLY
+
+Does 24E need rerun?: No mandatory rerun for fixed-budget claims
+If yes, exact rerun scope: Not applicable; alternative developmental study scope in recommendation
+
+Does this affect historical 8E/12E/16E?: Same developmental caveats; fixed-budget results preserved
+
+32E verdict:
+32E CLEARED UNDER CURRENT PROTOCOL
+
+Recommended protocol going forward: A for existing fixed-budget claims; B/C only as a preregistered separate study
+
+Path to final_report.md:
+/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/architecture_scaling_audit/final_report.md

@@ -1,0 +1,55 @@
+{
+  "checkpoint": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/high_sparsity_coupling_v1/reruns/e32_seed43_final_s0.80/attempt_1792426258801444153/segment_2500/checkpoints/final_recovered.pt",
+  "reused": true,
+  "attempted_updates": 5000,
+  "applied_updates": 4997,
+  "amp_skips": 3,
+  "final_mask_hash": "7d663f6ebd9fcd1a206c49444e193b25af63dd83f9f6e14d80fa625d062167b2",
+  "source": {
+    "checkpoint": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/high_sparsity_coupling_v1/reruns/e32_seed43_final_s0.80/attempt_1792426258801444153/segment_2500/checkpoints/final_recovered.pt",
+    "attempt": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/high_sparsity_coupling_v1/reruns/e32_seed43_final_s0.80/attempt_1792426258801444153",
+    "snapshots": {
+      "0": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/high_sparsity_coupling_v1/reruns/e32_seed43_final_s0.80/attempt_1792426258801444153/snapshots/step_0000.pt",
+      "100": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/high_sparsity_coupling_v1/reruns/e32_seed43_final_s0.80/attempt_1792426258801444153/snapshots/step_0100.pt",
+      "500": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/high_sparsity_coupling_v1/reruns/e32_seed43_final_s0.80/attempt_1792426258801444153/snapshots/step_0500.pt",
+      "1000": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/high_sparsity_coupling_v1/reruns/e32_seed43_final_s0.80/attempt_1792426258801444153/snapshots/step_1000.pt",
+      "1500": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/high_sparsity_coupling_v1/reruns/e32_seed43_final_s0.80/attempt_1792426258801444153/snapshots/step_1500.pt",
+      "2000": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/high_sparsity_coupling_v1/reruns/e32_seed43_final_s0.80/attempt_1792426258801444153/snapshots/step_2000.pt",
+      "2500": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/high_sparsity_coupling_v1/reruns/e32_seed43_final_s0.80/attempt_1792426258801444153/snapshots/step_2500.pt",
+      "2525": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/high_sparsity_coupling_v1/reruns/e32_seed43_final_s0.80/attempt_1792426258801444153/snapshots/step_2525.pt",
+      "2600": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/high_sparsity_coupling_v1/reruns/e32_seed43_final_s0.80/attempt_1792426258801444153/snapshots/step_2600.pt",
+      "3000": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/high_sparsity_coupling_v1/reruns/e32_seed43_final_s0.80/attempt_1792426258801444153/snapshots/step_3000.pt",
+      "3500": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/high_sparsity_coupling_v1/reruns/e32_seed43_final_s0.80/attempt_1792426258801444153/snapshots/step_3500.pt",
+      "4000": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/high_sparsity_coupling_v1/reruns/e32_seed43_final_s0.80/attempt_1792426258801444153/snapshots/step_4000.pt",
+      "4500": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/high_sparsity_coupling_v1/reruns/e32_seed43_final_s0.80/attempt_1792426258801444153/snapshots/step_4500.pt",
+      "5000": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/high_sparsity_coupling_v1/reruns/e32_seed43_final_s0.80/attempt_1792426258801444153/snapshots/step_5000.pt"
+    },
+    "applied": 4997
+  },
+  "job": "seed43_fixed",
+  "seed": 43,
+  "condition": "fixed",
+  "attempt": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed43_fixed/attempt_1792974572562729486",
+  "checkpoint_sha256": "591f3714840c22a1cb23b15ce618d4bab95f2a777cd21609f40f75e377e0dff1",
+  "common_endpoint": {
+    "step": 5000,
+    "phase": "reference_native",
+    "reused": true,
+    "source": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/high_sparsity_coupling_v1/reruns/e32_seed43_final_s0.80/attempt_1792426258801444153/snapshots/step_5000.pt",
+    "ce": 1.3377270600700324,
+    "loss_sum": 658718.2080114451,
+    "target_tokens": 492416,
+    "batches": 31,
+    "precision": "FP32_TF32off"
+  },
+  "wall_seconds": 89.40607738029212,
+  "peak_allocated_bytes": 888907776,
+  "peak_reserved_bytes": 1312817152,
+  "runtime": {
+    "host": "viper.cs.kent.edu",
+    "torch": "2.7.0",
+    "cuda": "12.8",
+    "gpu": "NVIDIA H100 NVL",
+    "free_bytes": 98848210944
+  }
+}

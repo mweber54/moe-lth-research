@@ -1,0 +1,49 @@
+{
+  "analysis_id": "imp_expert_contribution_ablation_v1",
+  "baseline_reference_sha256": "2c272f65c527d45aa234a5000f154b447f76a85564278abfd327f9ec86d14a72",
+  "cache_unit": "complete checkpoint; identity includes every batch, mode and intervention",
+  "condition": "router_experts_frozen",
+  "expected_logical_cells": 240,
+  "interventions": [
+    "BASELINE",
+    "ZERO_L0",
+    "ZERO_L1",
+    "ZERO_L2",
+    "ZERO_L3",
+    "ZERO_ALL"
+  ],
+  "limitations": "This prospective diagnostic is motivated by previously examined results; it is not project-level preregistration. The validation set has been repeatedly examined and is not an independent test. Five source seeds are replication units. Complete contribution removal creates potentially out-of-distribution internal states. Lower damage does not prove dispensability; higher damage does not prove semantic specialization. Improvement under ZERO_ALL does not establish that training without experts would achieve it: experts were present throughout historical training. Shared-only recovery does not allocate causal percentages to embeddings, attention, normalization, routing or output head. The tied embedding/output matrix has both input and prediction roles. Contribution RMS alone is not functional importance. No safety of further weight pruning, mechanism of ticket formation, or explanation of four final sparse/dense matches is established. Native-minus-replay includes gates and capacity response, not isolated assignment effects. Single-layer effects must not be summed as independent contributions.",
+  "model_types": [
+    "sparse",
+    "unpruned"
+  ],
+  "modes": [
+    "NATIVE_RESPONSE",
+    "BASELINE_REPLAY"
+  ],
+  "offsets": [
+    0,
+    500
+  ],
+  "primary": "ZERO_ALL delta_A and X",
+  "replay_reference": "each exact checkpoint and complete original validation batch; never cross time or model",
+  "seeds": [
+    7,
+    17,
+    29,
+    43,
+    61
+  ],
+  "tolerances": {
+    "ce_absolute": 1e-06,
+    "logit_atol": 1e-06,
+    "logit_rtol": 1e-05
+  },
+  "validation": {
+    "batches": 31,
+    "precision": "FP32",
+    "rebatching": false,
+    "target_tokens": 492416,
+    "tf32": false
+  }
+}

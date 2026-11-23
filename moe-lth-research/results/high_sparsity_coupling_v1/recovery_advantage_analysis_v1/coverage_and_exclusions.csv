@@ -1,0 +1,11 @@
+item,status,reason
+historical CE observations,excluded from primary trajectory,historical and rerun full-validation settings differ in TF32; historical sparse/dense shared weights are duplicates
+historical missing checkpoints,excluded,model states missing at most steps; no interpolation and no surrogate checkpoint construction
+rerun 50-step validation observations,included as scalar observations only,no model checkpoint exists at each such evaluation; checkpoint_available is false except actual saved snapshots
+token-level validation results,probe-only,"only 2,048 fixed positions from validation batch 0; not full-validation token trajectories"
+domain/token subgroup results,not computed,no verified domain labels per token-position in the registered probe metadata
+independent test evaluation,not performed,no demonstrably untouched test split established by frozen cohort provenance; no test data inspected
+causal optimizer reset effect,unresolved,"all sparse and dense runs reset at 2,500; no no-reset control"
+intermediate gradient trajectories,unavailable,"gradient geometry exists only at 0/2,500/5,000; no interpolation"
+pooled time correlation/winner classifier,not performed,explicitly out of scope; seed is replication unit and sparsities within seed are dependent
+new model evaluation or tensor mutation,none,all scalar/prediction/internal measurements reused from saved artifacts; analysis reads no source checkpoint tensors

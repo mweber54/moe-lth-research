@@ -1,0 +1,68 @@
+{
+  "status": "complete",
+  "stage_a_ages": [
+    0,
+    20,
+    40,
+    60,
+    80,
+    100
+  ],
+  "stage_b_ages": [
+    10
+  ],
+  "stage_c_ages": [],
+  "ambiguity_rule": "Before outcomes: an adjacent coarse checkpoint is ambiguous if absolute mean paired gap difference <= sample SD of the three seed-paired differences. Refine one midpoint on each side of best and ambiguous adjacent coarse checkpoints; boundaries refine inward once. This is a localization heuristic, not a significance test.",
+  "stage_c_policy": "Optional Stage C omitted; report residual 10%-grid ambiguity as a basin.",
+  "primary": "native final sparse minus matched same-age dense loss at step 2500",
+  "seeds": [
+    7,
+    17,
+    29
+  ],
+  "sparsity": 0.85,
+  "stage_a_decision": {
+    "best": 0,
+    "basin_coarse": [
+      0
+    ],
+    "comparisons": []
+  },
+  "candidate_optimum": 0,
+  "basin": [
+    0
+  ],
+  "verdict": "32E BOUNDARY OPTIMUM",
+  "seed_winners": [
+    {
+      "seed": 7,
+      "best_router_age": 0,
+      "best_ticket_gap": 0.1156413725577052,
+      "second_best_router_age": 20,
+      "second_best_ticket_gap": 0.1509704731147196,
+      "difference": 0.035329100557014395
+    },
+    {
+      "seed": 17,
+      "best_router_age": 0,
+      "best_ticket_gap": 0.1490097628465279,
+      "second_best_router_age": 10,
+      "second_best_ticket_gap": 0.1560479328481754,
+      "difference": 0.007038170001647498
+    },
+    {
+      "seed": 29,
+      "best_router_age": 0,
+      "best_ticket_gap": 0.1398939016672864,
+      "second_best_router_age": 60,
+      "second_best_ticket_gap": 0.1610622792731082,
+      "difference": 0.021168377605821798
+    }
+  ],
+  "recommended_target": "No stable intermediate target recommended",
+  "developmentally_closest": {
+    "12E_R60": 80,
+    "8E_R20": 60
+  },
+  "extended_report_complete": true
+}

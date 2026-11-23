@@ -1,0 +1,33 @@
+{
+  "reason": "Pilot identity replay changes learning regime beyond registered feasibility limits",
+  "scientific_stop": true,
+  "pilot": {
+    "expand": false,
+    "rows": [
+      {
+        "sparsity": 0.0,
+        "native_ce": 1.3298474067150539,
+        "identity_ce": 4.008660688566362,
+        "shuffle_ce": 1.9421901199642269,
+        "native_improvement_retained": 0.9843042129428489,
+        "passed": false
+      },
+      {
+        "sparsity": 0.8,
+        "native_ce": 1.351046686393117,
+        "identity_ce": 6.14767225110317,
+        "shuffle_ce": 1.8053145548694314,
+        "native_improvement_retained": 0.9711028087216108,
+        "passed": false
+      }
+    ],
+    "criteria": {
+      "identity_native_improvement_retained_min": 0.9,
+      "identity_final_ce_native_ratio_max": 1.5,
+      "max_amp_skips_per5000": 500,
+      "finite_endpoints": true,
+      "penalty_sign_used": false
+    },
+    "reason": "Identity learning-regime and numerical feasibility only; shuffled penalty sign is not a criterion"
+  }
+}

@@ -1,0 +1,676 @@
+architecture,source_seed,parameter,group,shape,mean,std,rms,positive_fraction
+E16,17,token_embedding.weight,shared,"[256, 256]",-0.0018823108935734634,0.9997414500485728,0.9997432220523043,0.501373291015625
+E16,17,position_embedding.weight,shared,"[128, 256]",-0.003594086257313861,0.9986573872633073,0.9986638546536069,0.497802734375
+E16,17,blocks.0.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,17,blocks.0.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,17,blocks.0.attention.in_proj_weight,shared,"[768, 256]",0.00016500382691585647,0.04423636034693119,0.04423666808210631,0.5005594889322916
+E16,17,blocks.0.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E16,17,blocks.0.attention.out_proj.weight,shared,"[256, 256]",-9.990220860345289e-06,0.03605672844697465,0.03605672983096753,0.50042724609375
+E16,17,blocks.0.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,17,blocks.0.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,17,blocks.0.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,17,blocks.0.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E16,17,blocks.0.moe.router.projection.weight,router,"[16, 256]",0.0005008083771826932,0.035995759591153545,0.03599924329169683,0.50732421875
+E16,17,blocks.1.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,17,blocks.1.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,17,blocks.1.attention.in_proj_weight,shared,"[768, 256]",0.00011106259826263881,0.04422125367169872,0.04422139313949144,0.5019683837890625
+E16,17,blocks.1.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E16,17,blocks.1.attention.out_proj.weight,shared,"[256, 256]",-0.0001296631184004582,0.03604269016900382,0.03604292339895694,0.498931884765625
+E16,17,blocks.1.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,17,blocks.1.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,17,blocks.1.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,17,blocks.1.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E16,17,blocks.1.moe.router.projection.weight,router,"[16, 256]",-0.00014122710126684979,0.036363781464100714,0.036364055707016604,0.498291015625
+E16,17,blocks.2.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,17,blocks.2.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,17,blocks.2.attention.in_proj_weight,shared,"[768, 256]",-8.316092588951755e-05,0.04416609134025457,0.04416616963259667,0.4989725748697917
+E16,17,blocks.2.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E16,17,blocks.2.attention.out_proj.weight,shared,"[256, 256]",2.8434070713956316e-05,0.03614706268557793,0.0361470738690074,0.4987640380859375
+E16,17,blocks.2.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,17,blocks.2.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,17,blocks.2.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,17,blocks.2.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E16,17,blocks.2.moe.router.projection.weight,router,"[16, 256]",0.00027714695715985727,0.03569914455014523,0.03570022033612716,0.50341796875
+E16,17,blocks.3.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,17,blocks.3.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,17,blocks.3.attention.in_proj_weight,shared,"[768, 256]",-0.00012102782288372688,0.04416066795821927,0.04416083380383579,0.4994659423828125
+E16,17,blocks.3.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E16,17,blocks.3.attention.out_proj.weight,shared,"[256, 256]",-1.577516968609416e-06,0.03596406107704451,0.035964061111642374,0.5006561279296875
+E16,17,blocks.3.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,17,blocks.3.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,17,blocks.3.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,17,blocks.3.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E16,17,blocks.3.moe.router.projection.weight,router,"[16, 256]",0.0008462160203634994,0.03620561441652593,0.03621550216179903,0.5126953125
+E16,17,final_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,17,final_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,17,lm_head.weight,shared,"[256, 256]",-0.0018823108935734634,0.9997414500485728,0.9997432220523043,0.501373291015625
+E16,29,token_embedding.weight,shared,"[256, 256]",0.00029182042286801657,1.0004301131963396,1.000430155757612,0.4977264404296875
+E16,29,position_embedding.weight,shared,"[128, 256]",0.010048028442740636,1.0043768502378925,1.0044271104313023,0.50616455078125
+E16,29,blocks.0.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,29,blocks.0.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,29,blocks.0.attention.in_proj_weight,shared,"[768, 256]",-9.79421264978653e-05,0.04428685012633459,0.04428695842765187,0.498779296875
+E16,29,blocks.0.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E16,29,blocks.0.attention.out_proj.weight,shared,"[256, 256]",-5.309500079420104e-05,0.0361217319641605,0.036121770986065505,0.5000152587890625
+E16,29,blocks.0.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,29,blocks.0.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,29,blocks.0.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,29,blocks.0.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E16,29,blocks.0.moe.router.projection.weight,router,"[16, 256]",0.0001506023636466125,0.035891472598593634,0.03589178856462204,0.501220703125
+E16,29,blocks.1.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,29,blocks.1.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,29,blocks.1.attention.in_proj_weight,shared,"[768, 256]",1.0808599770508314e-05,0.04419626991359271,0.04419627123526338,0.4998118082682292
+E16,29,blocks.1.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E16,29,blocks.1.attention.out_proj.weight,shared,"[256, 256]",-0.00016913666581785947,0.03603446786554812,0.03603486480569816,0.5002593994140625
+E16,29,blocks.1.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,29,blocks.1.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,29,blocks.1.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,29,blocks.1.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E16,29,blocks.1.moe.router.projection.weight,router,"[16, 256]",0.00023462590797862504,0.035953079195458405,0.03595384475896283,0.50439453125
+E16,29,blocks.2.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,29,blocks.2.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,29,blocks.2.attention.in_proj_weight,shared,"[768, 256]",9.7966646854277e-05,0.044148598084075216,0.0441487067789432,0.5001678466796875
+E16,29,blocks.2.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E16,29,blocks.2.attention.out_proj.weight,shared,"[256, 256]",6.998419098636077e-05,0.03615808648060651,0.03615815420795159,0.5001220703125
+E16,29,blocks.2.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,29,blocks.2.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,29,blocks.2.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,29,blocks.2.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E16,29,blocks.2.moe.router.projection.weight,router,"[16, 256]",-1.6020239854697138e-06,0.03553155837022014,0.035531558406335643,0.5107421875
+E16,29,blocks.3.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,29,blocks.3.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,29,blocks.3.attention.in_proj_weight,shared,"[768, 256]",-1.7960620634789642e-05,0.04418198725408127,0.044181990904707924,0.4995371500651042
+E16,29,blocks.3.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E16,29,blocks.3.attention.out_proj.weight,shared,"[256, 256]",0.0001568287533473267,0.03618081857422692,0.036181158466237644,0.5016937255859375
+E16,29,blocks.3.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,29,blocks.3.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,29,blocks.3.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,29,blocks.3.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E16,29,blocks.3.moe.router.projection.weight,router,"[16, 256]",-0.0009726563548611011,0.03621896386195366,0.03623202179865425,0.485595703125
+E16,29,final_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,29,final_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,29,lm_head.weight,shared,"[256, 256]",0.00029182042286801657,1.0004301131963396,1.000430155757612,0.4977264404296875
+E16,7,token_embedding.weight,shared,"[256, 256]",-0.005727188945358508,0.9981895578292709,0.9982059877863942,0.500091552734375
+E16,7,position_embedding.weight,shared,"[128, 256]",0.0015164673121801364,1.0018019428038019,1.0018030905714859,0.49993896484375
+E16,7,blocks.0.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,7,blocks.0.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,7,blocks.0.attention.in_proj_weight,shared,"[768, 256]",0.00016428586582439784,0.04420231642024062,0.04420262171818299,0.5020904541015625
+E16,7,blocks.0.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E16,7,blocks.0.attention.out_proj.weight,shared,"[256, 256]",3.3101629924203735e-05,0.03608502220671111,0.03608503738915531,0.498504638671875
+E16,7,blocks.0.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,7,blocks.0.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,7,blocks.0.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,7,blocks.0.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E16,7,blocks.0.moe.router.projection.weight,router,"[16, 256]",0.00039278852091229055,0.03580172755211142,0.03580388217132011,0.50537109375
+E16,7,blocks.1.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,7,blocks.1.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,7,blocks.1.attention.in_proj_weight,shared,"[768, 256]",-3.259005036951428e-06,0.04428284838780098,0.044282848507724536,0.5005696614583334
+E16,7,blocks.1.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E16,7,blocks.1.attention.out_proj.weight,shared,"[256, 256]",6.717404914979852e-05,0.035962705833933704,0.03596276857043863,0.501434326171875
+E16,7,blocks.1.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,7,blocks.1.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,7,blocks.1.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,7,blocks.1.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E16,7,blocks.1.moe.router.projection.weight,router,"[16, 256]",0.0005114654941280605,0.036410924389016955,0.036414516498429486,0.504638671875
+E16,7,blocks.2.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,7,blocks.2.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,7,blocks.2.attention.in_proj_weight,shared,"[768, 256]",0.0001948030400672562,0.04422637022869798,0.04422679924921406,0.5010274251302084
+E16,7,blocks.2.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E16,7,blocks.2.attention.out_proj.weight,shared,"[256, 256]",0.00019159844248406444,0.03609920628824777,0.036099714744089455,0.501617431640625
+E16,7,blocks.2.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,7,blocks.2.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,7,blocks.2.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,7,blocks.2.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E16,7,blocks.2.moe.router.projection.weight,router,"[16, 256]",-9.129235149885062e-05,0.03651082243865089,0.03651093657303433,0.500244140625
+E16,7,blocks.3.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,7,blocks.3.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,7,blocks.3.attention.in_proj_weight,shared,"[768, 256]",0.00011422980000732655,0.04417071919779998,0.04417086690227061,0.5015716552734375
+E16,7,blocks.3.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E16,7,blocks.3.attention.out_proj.weight,shared,"[256, 256]",-3.0953249961385154e-05,0.036047472054857796,0.036047485344326544,0.5024566650390625
+E16,7,blocks.3.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,7,blocks.3.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,7,blocks.3.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,7,blocks.3.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E16,7,blocks.3.moe.router.projection.weight,router,"[16, 256]",-0.0004336572528700344,0.035903271375616476,0.03590589024218907,0.4990234375
+E16,7,final_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,7,final_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,7,lm_head.weight,shared,"[256, 256]",-0.005727188945358508,0.9981895578292709,0.9982059877863942,0.500091552734375
+E32,17,token_embedding.weight,shared,"[256, 256]",-0.0018823108935734634,0.9997414500485728,0.9997432220523043,0.501373291015625
+E32,17,position_embedding.weight,shared,"[128, 256]",-0.003594086257313861,0.9986573872633073,0.9986638546536069,0.497802734375
+E32,17,blocks.0.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,17,blocks.0.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,17,blocks.0.attention.in_proj_weight,shared,"[768, 256]",0.00016500382691585647,0.04423636034693119,0.04423666808210631,0.5005594889322916
+E32,17,blocks.0.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E32,17,blocks.0.attention.out_proj.weight,shared,"[256, 256]",-9.990220860345289e-06,0.03605672844697465,0.03605672983096753,0.50042724609375
+E32,17,blocks.0.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,17,blocks.0.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,17,blocks.0.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,17,blocks.0.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E32,17,blocks.0.moe.router.projection.weight,router,"[32, 256]",0.00024558497989346506,0.03607687876198022,0.03607771463367613,0.5068359375
+E32,17,blocks.1.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,17,blocks.1.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,17,blocks.1.attention.in_proj_weight,shared,"[768, 256]",-4.239228639445579e-05,0.04420717078310685,0.044207191109057374,0.5009206136067709
+E32,17,blocks.1.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E32,17,blocks.1.attention.out_proj.weight,shared,"[256, 256]",-9.476925890794519e-05,0.03607990852152105,0.036080032984100244,0.4981536865234375
+E32,17,blocks.1.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,17,blocks.1.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,17,blocks.1.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,17,blocks.1.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E32,17,blocks.1.moe.router.projection.weight,router,"[32, 256]",-8.886884097591974e-05,0.0361668025600506,0.03616691174386582,0.49072265625
+E32,17,blocks.2.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,17,blocks.2.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,17,blocks.2.attention.in_proj_weight,shared,"[768, 256]",-1.4562958130973658e-05,0.0442168412453847,0.04421684364356306,0.5001475016276041
+E32,17,blocks.2.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E32,17,blocks.2.attention.out_proj.weight,shared,"[256, 256]",-5.804653142149618e-06,0.03605362330519239,0.03605362377246856,0.49884033203125
+E32,17,blocks.2.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,17,blocks.2.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,17,blocks.2.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,17,blocks.2.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E32,17,blocks.2.moe.router.projection.weight,router,"[32, 256]",0.0007623039091413375,0.03602462871071736,0.036032693224278066,0.5103759765625
+E32,17,blocks.3.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,17,blocks.3.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,17,blocks.3.attention.in_proj_weight,shared,"[768, 256]",3.3034339651808776e-05,0.04422623199031521,0.044226244327647546,0.499298095703125
+E32,17,blocks.3.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E32,17,blocks.3.attention.out_proj.weight,shared,"[256, 256]",-7.647981647096458e-06,0.03609358326185577,0.036093584072133075,0.498748779296875
+E32,17,blocks.3.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,17,blocks.3.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,17,blocks.3.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,17,blocks.3.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E32,17,blocks.3.moe.router.projection.weight,router,"[32, 256]",7.429480319842696e-07,0.036247181912539735,0.03624718192015373,0.49462890625
+E32,17,final_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,17,final_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,17,lm_head.weight,shared,"[256, 256]",-0.0018823108935734634,0.9997414500485728,0.9997432220523043,0.501373291015625
+E32,29,token_embedding.weight,shared,"[256, 256]",0.00029182042286801657,1.0004301131963396,1.000430155757612,0.4977264404296875
+E32,29,position_embedding.weight,shared,"[128, 256]",0.010048028442740636,1.0043768502378925,1.0044271104313023,0.50616455078125
+E32,29,blocks.0.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,29,blocks.0.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,29,blocks.0.attention.in_proj_weight,shared,"[768, 256]",-9.79421264978653e-05,0.04428685012633459,0.04428695842765187,0.498779296875
+E32,29,blocks.0.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E32,29,blocks.0.attention.out_proj.weight,shared,"[256, 256]",-5.309500079420104e-05,0.0361217319641605,0.036121770986065505,0.5000152587890625
+E32,29,blocks.0.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,29,blocks.0.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,29,blocks.0.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,29,blocks.0.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E32,29,blocks.0.moe.router.projection.weight,router,"[32, 256]",0.00017038553596648853,0.035999299937164504,0.035999703154287244,0.5
+E32,29,blocks.1.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,29,blocks.1.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,29,blocks.1.attention.in_proj_weight,shared,"[768, 256]",8.650203250250808e-05,0.0441179049468033,0.044117989749044524,0.5015360514322916
+E32,29,blocks.1.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E32,29,blocks.1.attention.out_proj.weight,shared,"[256, 256]",4.355922908416687e-05,0.036117806031584467,0.03611783229848654,0.5028228759765625
+E32,29,blocks.1.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,29,blocks.1.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,29,blocks.1.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,29,blocks.1.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E32,29,blocks.1.moe.router.projection.weight,router,"[32, 256]",-0.0005401549415182672,0.036289472630566325,0.036293492407943724,0.494140625
+E32,29,blocks.2.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,29,blocks.2.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,29,blocks.2.attention.in_proj_weight,shared,"[768, 256]",-0.00010118266038328712,0.0441731096679949,0.04417322555204076,0.4998830159505208
+E32,29,blocks.2.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E32,29,blocks.2.attention.out_proj.weight,shared,"[256, 256]",-0.00018253635744258645,0.03611750600380135,0.036117967266395476,0.497467041015625
+E32,29,blocks.2.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,29,blocks.2.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,29,blocks.2.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,29,blocks.2.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E32,29,blocks.2.moe.router.projection.weight,router,"[32, 256]",2.3005398361419793e-05,0.036215357130849286,0.03621536443780885,0.5008544921875
+E32,29,blocks.3.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,29,blocks.3.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,29,blocks.3.attention.in_proj_weight,shared,"[768, 256]",4.8189471389278254e-05,0.04421524390704561,0.044215270167496275,0.5011189778645834
+E32,29,blocks.3.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E32,29,blocks.3.attention.out_proj.weight,shared,"[256, 256]",7.279749945610092e-05,0.03611680619804472,0.03611687956375867,0.5003204345703125
+E32,29,blocks.3.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,29,blocks.3.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,29,blocks.3.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,29,blocks.3.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E32,29,blocks.3.moe.router.projection.weight,router,"[32, 256]",-0.00016193905958061805,0.03584115552781997,0.035841521365985535,0.4937744140625
+E32,29,final_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,29,final_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,29,lm_head.weight,shared,"[256, 256]",0.00029182042286801657,1.0004301131963396,1.000430155757612,0.4977264404296875
+E32,7,token_embedding.weight,shared,"[256, 256]",-0.005727188945358508,0.9981895578292709,0.9982059877863942,0.500091552734375
+E32,7,position_embedding.weight,shared,"[128, 256]",0.0015164673121801364,1.0018019428038019,1.0018030905714859,0.49993896484375
+E32,7,blocks.0.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,7,blocks.0.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,7,blocks.0.attention.in_proj_weight,shared,"[768, 256]",0.00016428586582439784,0.04420231642024062,0.04420262171818299,0.5020904541015625
+E32,7,blocks.0.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E32,7,blocks.0.attention.out_proj.weight,shared,"[256, 256]",3.3101629924203735e-05,0.03608502220671111,0.03608503738915531,0.498504638671875
+E32,7,blocks.0.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,7,blocks.0.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,7,blocks.0.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,7,blocks.0.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E32,7,blocks.0.moe.router.projection.weight,router,"[32, 256]",3.734797974175308e-05,0.036079458360252926,0.03607947769079834,0.50341796875
+E32,7,blocks.1.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,7,blocks.1.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,7,blocks.1.attention.in_proj_weight,shared,"[768, 256]",0.00011189842958071713,0.044224122486721966,0.04422426405243088,0.5019378662109375
+E32,7,blocks.1.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E32,7,blocks.1.attention.out_proj.weight,shared,"[256, 256]",1.1572825087569072e-05,0.03613270312494414,0.0361327049782552,0.50048828125
+E32,7,blocks.1.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,7,blocks.1.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,7,blocks.1.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,7,blocks.1.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E32,7,blocks.1.moe.router.projection.weight,router,"[32, 256]",0.0002751199535850901,0.036069610423615055,0.03607065964326436,0.4998779296875
+E32,7,blocks.2.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,7,blocks.2.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,7,blocks.2.attention.in_proj_weight,shared,"[768, 256]",1.7132205466264877e-05,0.04426984361009547,0.04426984692513376,0.4995574951171875
+E32,7,blocks.2.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E32,7,blocks.2.attention.out_proj.weight,shared,"[256, 256]",-0.00012763326799358765,0.036095457459051995,0.03609568311348784,0.497283935546875
+E32,7,blocks.2.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,7,blocks.2.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,7,blocks.2.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,7,blocks.2.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E32,7,blocks.2.moe.router.projection.weight,router,"[32, 256]",0.0002800585461955052,0.036156606431023086,0.036157691040734304,0.5015869140625
+E32,7,blocks.3.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,7,blocks.3.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,7,blocks.3.attention.in_proj_weight,shared,"[768, 256]",6.846561666558279e-05,0.044200480867781514,0.04420053389365094,0.5005594889322916
+E32,7,blocks.3.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E32,7,blocks.3.attention.out_proj.weight,shared,"[256, 256]",-0.00020672926495990396,0.03599452112099031,0.035995114775736,0.497314453125
+E32,7,blocks.3.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,7,blocks.3.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,7,blocks.3.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,7,blocks.3.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E32,7,blocks.3.moe.router.projection.weight,router,"[32, 256]",0.00045511840198741993,0.03618284289596437,0.03618570508907995,0.505126953125
+E32,7,final_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,7,final_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,7,lm_head.weight,shared,"[256, 256]",-0.005727188945358508,0.9981895578292709,0.9982059877863942,0.500091552734375
+E16,43,token_embedding.weight,shared,"[256, 256]",0.007509024104773138,0.9967399384940061,0.9967682230248118,0.5033111572265625
+E16,43,position_embedding.weight,shared,"[128, 256]",-0.0034590224516538037,0.998026264218728,0.9980322584499517,0.498504638671875
+E16,43,blocks.0.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,43,blocks.0.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,43,blocks.0.attention.in_proj_weight,shared,"[768, 256]",-4.771451474967285e-05,0.04420750266092861,0.0442075284107914,0.4989573160807292
+E16,43,blocks.0.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E16,43,blocks.0.attention.out_proj.weight,shared,"[256, 256]",0.0003984685404248012,0.03622022411219526,0.03622241587629626,0.5052947998046875
+E16,43,blocks.0.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,43,blocks.0.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,43,blocks.0.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,43,blocks.0.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E16,43,blocks.0.moe.router.projection.weight,router,"[16, 256]",4.471787724469323e-05,0.036338879760556955,0.03633890727499605,0.50439453125
+E16,43,blocks.1.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,43,blocks.1.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,43,blocks.1.attention.in_proj_weight,shared,"[768, 256]",2.2349489732694948e-05,0.04419734541806749,0.0441973510688555,0.5008290608723959
+E16,43,blocks.1.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E16,43,blocks.1.attention.out_proj.weight,shared,"[256, 256]",0.0001365807927413698,0.03603660460652788,0.036036863430106855,0.5019683837890625
+E16,43,blocks.1.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,43,blocks.1.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,43,blocks.1.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,43,blocks.1.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E16,43,blocks.1.moe.router.projection.weight,router,"[16, 256]",0.0001291868720727507,0.03576999457834981,0.03577022786316982,0.50341796875
+E16,43,blocks.2.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,43,blocks.2.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,43,blocks.2.attention.in_proj_weight,shared,"[768, 256]",-2.7762494592976786e-05,0.04417020265920867,0.04417021138405012,0.4988555908203125
+E16,43,blocks.2.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E16,43,blocks.2.attention.out_proj.weight,shared,"[256, 256]",-0.00014590756507004699,0.036075218261127834,0.036075513324214194,0.499114990234375
+E16,43,blocks.2.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,43,blocks.2.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,43,blocks.2.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,43,blocks.2.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E16,43,blocks.2.moe.router.projection.weight,router,"[16, 256]",-2.6341214834246784e-05,0.03624066738508211,0.03624067695802264,0.501220703125
+E16,43,blocks.3.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,43,blocks.3.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,43,blocks.3.attention.in_proj_weight,shared,"[768, 256]",0.00018510859542464502,0.044075846182752176,0.04407623488817675,0.5010121663411459
+E16,43,blocks.3.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E16,43,blocks.3.attention.out_proj.weight,shared,"[256, 256]",-0.0002037270421624271,0.036228960882914156,0.036229533689566475,0.4979705810546875
+E16,43,blocks.3.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,43,blocks.3.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,43,blocks.3.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,43,blocks.3.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E16,43,blocks.3.moe.router.projection.weight,router,"[16, 256]",-0.001014691839372972,0.0362557919744145,0.036269988299155946,0.49267578125
+E16,43,final_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,43,final_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,43,lm_head.weight,shared,"[256, 256]",0.007509024104773138,0.9967399384940061,0.9967682230248118,0.5033111572265625
+E16,61,token_embedding.weight,shared,"[256, 256]",-0.00014685897151223148,1.0039561081923145,1.0039561189335997,0.5001220703125
+E16,61,position_embedding.weight,shared,"[128, 256]",0.0017909370945199399,1.0029537552383516,1.0029553542418463,0.50103759765625
+E16,61,blocks.0.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,61,blocks.0.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,61,blocks.0.attention.in_proj_weight,shared,"[768, 256]",-8.844177921984216e-05,0.044253988946138724,0.04425407732168054,0.49908447265625
+E16,61,blocks.0.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E16,61,blocks.0.attention.out_proj.weight,shared,"[256, 256]",0.00019394078651657765,0.03603660439489429,0.036037126263657446,0.5037078857421875
+E16,61,blocks.0.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,61,blocks.0.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,61,blocks.0.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,61,blocks.0.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E16,61,blocks.0.moe.router.projection.weight,router,"[16, 256]",-0.0006615311685891356,0.03643011137776076,0.03643611722567416,0.494873046875
+E16,61,blocks.1.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,61,blocks.1.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,61,blocks.1.attention.in_proj_weight,shared,"[768, 256]",4.664692828951327e-07,0.044257149481112326,0.04425714948357062,0.5001373291015625
+E16,61,blocks.1.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E16,61,blocks.1.attention.out_proj.weight,shared,"[256, 256]",-6.981397405070311e-06,0.036093896785953025,0.03609389746113517,0.498809814453125
+E16,61,blocks.1.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,61,blocks.1.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,61,blocks.1.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,61,blocks.1.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E16,61,blocks.1.moe.router.projection.weight,router,"[16, 256]",6.574926192115527e-05,0.0356652078794416,0.035665268484188176,0.49462890625
+E16,61,blocks.2.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,61,blocks.2.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,61,blocks.2.attention.in_proj_weight,shared,"[768, 256]",2.556798790051083e-05,0.04414654185199366,0.0441465492559932,0.4999237060546875
+E16,61,blocks.2.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E16,61,blocks.2.attention.out_proj.weight,shared,"[256, 256]",0.00010806314401179407,0.03611465386768812,0.036114815541907645,0.50164794921875
+E16,61,blocks.2.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,61,blocks.2.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,61,blocks.2.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,61,blocks.2.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E16,61,blocks.2.moe.router.projection.weight,router,"[16, 256]",0.0006891323500894941,0.03626830881235476,0.03627485530645532,0.51123046875
+E16,61,blocks.3.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,61,blocks.3.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,61,blocks.3.attention.in_proj_weight,shared,"[768, 256]",5.594714256657192e-05,0.0443015318329154,0.04430156715992763,0.5002187093098959
+E16,61,blocks.3.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E16,61,blocks.3.attention.out_proj.weight,shared,"[256, 256]",-5.449853733807686e-05,0.036050609587029575,0.03605065078035348,0.4987640380859375
+E16,61,blocks.3.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,61,blocks.3.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,61,blocks.3.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,61,blocks.3.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E16,61,blocks.3.moe.router.projection.weight,router,"[16, 256]",0.000660457353660604,0.03589449352830444,0.03590056920954727,0.515625
+E16,61,final_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E16,61,final_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E16,61,lm_head.weight,shared,"[256, 256]",-0.00014685897151223148,1.0039561081923145,1.0039561189335997,0.5001220703125
+E32,43,token_embedding.weight,shared,"[256, 256]",0.007509024104773138,0.9967399384940061,0.9967682230248118,0.5033111572265625
+E32,43,position_embedding.weight,shared,"[128, 256]",-0.0034590224516538037,0.998026264218728,0.9980322584499517,0.498504638671875
+E32,43,blocks.0.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,43,blocks.0.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,43,blocks.0.attention.in_proj_weight,shared,"[768, 256]",-4.771451474967285e-05,0.04420750266092861,0.0442075284107914,0.4989573160807292
+E32,43,blocks.0.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E32,43,blocks.0.attention.out_proj.weight,shared,"[256, 256]",0.0003984685404248012,0.03622022411219526,0.03622241587629626,0.5052947998046875
+E32,43,blocks.0.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,43,blocks.0.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,43,blocks.0.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,43,blocks.0.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E32,43,blocks.0.moe.router.projection.weight,router,"[32, 256]",0.0005831876214870135,0.03614725993895277,0.0361519641084143,0.510009765625
+E32,43,blocks.1.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,43,blocks.1.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,43,blocks.1.attention.in_proj_weight,shared,"[768, 256]",4.116525928804862e-05,0.04426644229069792,0.04426646143136202,0.499664306640625
+E32,43,blocks.1.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E32,43,blocks.1.attention.out_proj.weight,shared,"[256, 256]",-0.00020694220734185365,0.035980087351840925,0.03598068246883712,0.49932861328125
+E32,43,blocks.1.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,43,blocks.1.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,43,blocks.1.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,43,blocks.1.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E32,43,blocks.1.moe.router.projection.weight,router,"[32, 256]",-5.271847658150364e-05,0.03628591101817612,0.03628594931453177,0.501708984375
+E32,43,blocks.2.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,43,blocks.2.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,43,blocks.2.attention.in_proj_weight,shared,"[768, 256]",0.00011723013745777403,0.044248796382906436,0.04424895167392152,0.5009053548177084
+E32,43,blocks.2.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E32,43,blocks.2.attention.out_proj.weight,shared,"[256, 256]",-0.00020663185011926544,0.03612192747976117,0.0361225184832759,0.4970550537109375
+E32,43,blocks.2.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,43,blocks.2.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,43,blocks.2.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,43,blocks.2.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E32,43,blocks.2.moe.router.projection.weight,router,"[32, 256]",-0.0007384126347460551,0.035964633480259196,0.035972213089946706,0.490234375
+E32,43,blocks.3.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,43,blocks.3.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,43,blocks.3.attention.in_proj_weight,shared,"[768, 256]",-6.268692982831412e-06,0.04410974901556147,0.04410974946100168,0.4994710286458333
+E32,43,blocks.3.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E32,43,blocks.3.attention.out_proj.weight,shared,"[256, 256]",-0.00012814017782147857,0.036186149096129494,0.03618637597649819,0.498992919921875
+E32,43,blocks.3.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,43,blocks.3.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,43,blocks.3.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,43,blocks.3.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E32,43,blocks.3.moe.router.projection.weight,router,"[32, 256]",-0.00016009029604902025,0.03603053567401725,0.03603089132757498,0.5029296875
+E32,43,final_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,43,final_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,43,lm_head.weight,shared,"[256, 256]",0.007509024104773138,0.9967399384940061,0.9967682230248118,0.5033111572265625
+E32,61,token_embedding.weight,shared,"[256, 256]",-0.00014685897151223148,1.0039561081923145,1.0039561189335997,0.5001220703125
+E32,61,position_embedding.weight,shared,"[128, 256]",0.0017909370945199399,1.0029537552383516,1.0029553542418463,0.50103759765625
+E32,61,blocks.0.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,61,blocks.0.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,61,blocks.0.attention.in_proj_weight,shared,"[768, 256]",-8.844177921984216e-05,0.044253988946138724,0.04425407732168054,0.49908447265625
+E32,61,blocks.0.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E32,61,blocks.0.attention.out_proj.weight,shared,"[256, 256]",0.00019394078651657765,0.03603660439489429,0.036037126263657446,0.5037078857421875
+E32,61,blocks.0.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,61,blocks.0.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,61,blocks.0.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,61,blocks.0.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E32,61,blocks.0.moe.router.projection.weight,router,"[32, 256]",-0.00026867974702327047,0.03599829085429308,0.03599929351024463,0.498291015625
+E32,61,blocks.1.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,61,blocks.1.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,61,blocks.1.attention.in_proj_weight,shared,"[768, 256]",-4.0961413130351926e-05,0.04419155215026343,0.044191571133948365,0.4991963704427083
+E32,61,blocks.1.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E32,61,blocks.1.attention.out_proj.weight,shared,"[256, 256]",0.0001953979830204844,0.036060807052838886,0.03606133643771183,0.5006103515625
+E32,61,blocks.1.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,61,blocks.1.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,61,blocks.1.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,61,blocks.1.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E32,61,blocks.1.moe.router.projection.weight,router,"[32, 256]",0.0002619627839521854,0.035974767727171515,0.03597572150109178,0.501708984375
+E32,61,blocks.2.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,61,blocks.2.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,61,blocks.2.attention.in_proj_weight,shared,"[768, 256]",-3.9666706284391624e-05,0.04416323666068343,0.044163254474677484,0.49932861328125
+E32,61,blocks.2.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E32,61,blocks.2.attention.out_proj.weight,shared,"[256, 256]",7.593717998588545e-05,0.03606384156177133,0.03606392150956201,0.501251220703125
+E32,61,blocks.2.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,61,blocks.2.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,61,blocks.2.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,61,blocks.2.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E32,61,blocks.2.moe.router.projection.weight,router,"[32, 256]",1.359802445222158e-05,0.03609881217349897,0.03609881473461181,0.504638671875
+E32,61,blocks.3.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,61,blocks.3.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,61,blocks.3.attention.in_proj_weight,shared,"[768, 256]",-4.566802330180725e-05,0.04422962070524774,0.044229644281843734,0.4994862874348958
+E32,61,blocks.3.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E32,61,blocks.3.attention.out_proj.weight,shared,"[256, 256]",1.2039575494782184e-05,0.03599343233337343,0.03599343434695431,0.501861572265625
+E32,61,blocks.3.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,61,blocks.3.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,61,blocks.3.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,61,blocks.3.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E32,61,blocks.3.moe.router.projection.weight,router,"[32, 256]",0.0009613748097763164,0.0360797175138211,0.036092523566550475,0.5147705078125
+E32,61,final_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E32,61,final_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E32,61,lm_head.weight,shared,"[256, 256]",-0.00014685897151223148,1.0039561081923145,1.0039561189335997,0.5001220703125
+E8,17,token_embedding.weight,shared,"[256, 256]",-0.0018823108935734634,0.9997414500485728,0.9997432220523043,0.501373291015625
+E8,17,position_embedding.weight,shared,"[128, 256]",-0.003594086257313861,0.9986573872633073,0.9986638546536069,0.497802734375
+E8,17,blocks.0.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,17,blocks.0.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,17,blocks.0.attention.in_proj_weight,shared,"[768, 256]",0.00016500382691585647,0.04423636034693119,0.04423666808210631,0.5005594889322916
+E8,17,blocks.0.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E8,17,blocks.0.attention.out_proj.weight,shared,"[256, 256]",-9.990220860345289e-06,0.03605672844697465,0.03605672983096753,0.50042724609375
+E8,17,blocks.0.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,17,blocks.0.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,17,blocks.0.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,17,blocks.0.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E8,17,blocks.0.moe.router.projection.weight,router,"[8, 256]",0.0002859135674952995,0.03576264373101385,0.03576378661718446,0.50634765625
+E8,17,blocks.1.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,17,blocks.1.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,17,blocks.1.attention.in_proj_weight,shared,"[768, 256]",2.0821178819348946e-05,0.044227749144266595,0.04422775404527865,0.5012054443359375
+E8,17,blocks.1.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E8,17,blocks.1.attention.out_proj.weight,shared,"[256, 256]",-0.00013172022067919897,0.03602018948585857,0.036020430325215326,0.498291015625
+E8,17,blocks.1.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,17,blocks.1.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,17,blocks.1.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,17,blocks.1.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E8,17,blocks.1.moe.router.projection.weight,router,"[8, 256]",-0.0009161259586107917,0.03590331861852881,0.035915004866986136,0.4892578125
+E8,17,blocks.2.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,17,blocks.2.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,17,blocks.2.attention.in_proj_weight,shared,"[768, 256]",-2.845227760287644e-07,0.044264273061486746,0.044264273062401174,0.5001068115234375
+E8,17,blocks.2.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E8,17,blocks.2.attention.out_proj.weight,shared,"[256, 256]",8.84438122739084e-06,0.03608396296266139,0.03608396404656504,0.49969482421875
+E8,17,blocks.2.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,17,blocks.2.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,17,blocks.2.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,17,blocks.2.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E8,17,blocks.2.moe.router.projection.weight,router,"[8, 256]",-0.0008047021801758092,0.03567267056169779,0.03568174562156677,0.49853515625
+E8,17,blocks.3.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,17,blocks.3.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,17,blocks.3.attention.in_proj_weight,shared,"[768, 256]",3.751483742322361e-05,0.04417388879553547,0.04417390472533938,0.5000101725260416
+E8,17,blocks.3.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E8,17,blocks.3.attention.out_proj.weight,shared,"[256, 256]",-3.1424459393747384e-05,0.03613510353287516,0.03613511719682469,0.5013885498046875
+E8,17,blocks.3.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,17,blocks.3.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,17,blocks.3.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,17,blocks.3.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E8,17,blocks.3.moe.router.projection.weight,router,"[8, 256]",-0.0007657516398467124,0.03581756201572068,0.035825746668058774,0.48193359375
+E8,17,final_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,17,final_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,17,lm_head.weight,shared,"[256, 256]",-0.0018823108935734634,0.9997414500485728,0.9997432220523043,0.501373291015625
+E8,29,token_embedding.weight,shared,"[256, 256]",0.00029182042286801657,1.0004301131963396,1.000430155757612,0.4977264404296875
+E8,29,position_embedding.weight,shared,"[128, 256]",0.010048028442740636,1.0043768502378925,1.0044271104313023,0.50616455078125
+E8,29,blocks.0.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,29,blocks.0.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,29,blocks.0.attention.in_proj_weight,shared,"[768, 256]",-9.79421264978653e-05,0.04428685012633459,0.04428695842765187,0.498779296875
+E8,29,blocks.0.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E8,29,blocks.0.attention.out_proj.weight,shared,"[256, 256]",-5.309500079420104e-05,0.0361217319641605,0.036121770986065505,0.5000152587890625
+E8,29,blocks.0.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,29,blocks.0.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,29,blocks.0.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,29,blocks.0.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E8,29,blocks.0.moe.router.projection.weight,router,"[8, 256]",0.0010513843662920408,0.0357178622948966,0.035733333121930846,0.51123046875
+E8,29,blocks.1.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,29,blocks.1.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,29,blocks.1.attention.in_proj_weight,shared,"[768, 256]",-0.0001953246924884373,0.04421312244946989,0.04421355389998992,0.4974416097005208
+E8,29,blocks.1.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E8,29,blocks.1.attention.out_proj.weight,shared,"[256, 256]",1.7164575751849043e-05,0.03618791586694562,0.03618791993767803,0.50079345703125
+E8,29,blocks.1.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,29,blocks.1.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,29,blocks.1.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,29,blocks.1.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E8,29,blocks.1.moe.router.projection.weight,router,"[8, 256]",3.812087743426673e-05,0.03609584728017227,0.036095867409924036,0.49658203125
+E8,29,blocks.2.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,29,blocks.2.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,29,blocks.2.attention.in_proj_weight,shared,"[768, 256]",0.00012530348617073163,0.04419986162306495,0.044200039235975076,0.501556396484375
+E8,29,blocks.2.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E8,29,blocks.2.attention.out_proj.weight,shared,"[256, 256]",0.00017035941198173532,0.0359824811823655,0.03598288446426353,0.5010223388671875
+E8,29,blocks.2.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,29,blocks.2.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,29,blocks.2.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,29,blocks.2.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E8,29,blocks.2.moe.router.projection.weight,router,"[8, 256]",0.0005791224612039514,0.035610483588513944,0.035615192323401705,0.50048828125
+E8,29,blocks.3.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,29,blocks.3.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,29,blocks.3.attention.in_proj_weight,shared,"[768, 256]",-0.00021335495663837856,0.044191831631077746,0.04419234665920159,0.4976908365885417
+E8,29,blocks.3.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E8,29,blocks.3.attention.out_proj.weight,shared,"[256, 256]",-6.718642907799222e-05,0.036091154088591273,0.036091216624861665,0.4965972900390625
+E8,29,blocks.3.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,29,blocks.3.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,29,blocks.3.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,29,blocks.3.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E8,29,blocks.3.moe.router.projection.weight,router,"[8, 256]",-0.000864481226017233,0.036017474556114294,0.036027847579205685,0.4833984375
+E8,29,final_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,29,final_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,29,lm_head.weight,shared,"[256, 256]",0.00029182042286801657,1.0004301131963396,1.000430155757612,0.4977264404296875
+E8,43,token_embedding.weight,shared,"[256, 256]",0.007509024104773138,0.9967399384940061,0.9967682230248118,0.5033111572265625
+E8,43,position_embedding.weight,shared,"[128, 256]",-0.0034590224516538037,0.998026264218728,0.9980322584499517,0.498504638671875
+E8,43,blocks.0.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,43,blocks.0.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,43,blocks.0.attention.in_proj_weight,shared,"[768, 256]",-4.771451474967285e-05,0.04420750266092861,0.0442075284107914,0.4989573160807292
+E8,43,blocks.0.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E8,43,blocks.0.attention.out_proj.weight,shared,"[256, 256]",0.0003984685404248012,0.03622022411219526,0.03622241587629626,0.5052947998046875
+E8,43,blocks.0.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,43,blocks.0.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,43,blocks.0.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,43,blocks.0.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E8,43,blocks.0.moe.router.projection.weight,router,"[8, 256]",-1.4447090507019311e-05,0.036360899320868396,0.03636090219096264,0.49951171875
+E8,43,blocks.1.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,43,blocks.1.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,43,blocks.1.attention.in_proj_weight,shared,"[768, 256]",6.184786768891782e-05,0.04414941434577007,0.044149457666354475,0.5009002685546875
+E8,43,blocks.1.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E8,43,blocks.1.attention.out_proj.weight,shared,"[256, 256]",-0.00012170273828360223,0.03616091470118904,0.03616111950124298,0.498687744140625
+E8,43,blocks.1.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,43,blocks.1.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,43,blocks.1.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,43,blocks.1.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E8,43,blocks.1.moe.router.projection.weight,router,"[8, 256]",0.0003232987583032809,0.03624388623831325,0.03624532813678078,0.50634765625
+E8,43,blocks.2.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,43,blocks.2.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,43,blocks.2.attention.in_proj_weight,shared,"[768, 256]",-0.0001454304301302181,0.04423915705834407,0.04423939609943655,0.4991658528645833
+E8,43,blocks.2.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E8,43,blocks.2.attention.out_proj.weight,shared,"[256, 256]",-7.55896797954847e-05,0.03607136675031954,0.03607144595155218,0.499725341796875
+E8,43,blocks.2.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,43,blocks.2.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,43,blocks.2.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,43,blocks.2.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E8,43,blocks.2.moe.router.projection.weight,router,"[8, 256]",0.0004352285250206478,0.0359660525588411,0.03596868583273946,0.50048828125
+E8,43,blocks.3.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,43,blocks.3.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,43,blocks.3.attention.in_proj_weight,shared,"[768, 256]",9.434359380455955e-06,0.044199967370766494,0.04419996837763529,0.5000457763671875
+E8,43,blocks.3.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E8,43,blocks.3.attention.out_proj.weight,shared,"[256, 256]",4.313109286613326e-05,0.03613004681781952,0.03613007256218844,0.4999847412109375
+E8,43,blocks.3.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,43,blocks.3.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,43,blocks.3.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,43,blocks.3.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E8,43,blocks.3.moe.router.projection.weight,router,"[8, 256]",-0.0003168752773490269,0.036061630995565544,0.03606302316780623,0.4921875
+E8,43,final_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,43,final_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,43,lm_head.weight,shared,"[256, 256]",0.007509024104773138,0.9967399384940061,0.9967682230248118,0.5033111572265625
+E8,61,token_embedding.weight,shared,"[256, 256]",-0.00014685897151223148,1.0039561081923145,1.0039561189335997,0.5001220703125
+E8,61,position_embedding.weight,shared,"[128, 256]",0.0017909370945199399,1.0029537552383516,1.0029553542418463,0.50103759765625
+E8,61,blocks.0.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,61,blocks.0.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,61,blocks.0.attention.in_proj_weight,shared,"[768, 256]",-8.844177921984216e-05,0.044253988946138724,0.04425407732168054,0.49908447265625
+E8,61,blocks.0.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E8,61,blocks.0.attention.out_proj.weight,shared,"[256, 256]",0.00019394078651657765,0.03603660439489429,0.036037126263657446,0.5037078857421875
+E8,61,blocks.0.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,61,blocks.0.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,61,blocks.0.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,61,blocks.0.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E8,61,blocks.0.moe.router.projection.weight,router,"[8, 256]",4.659147816710174e-05,0.03624205707255424,0.036242087020701724,0.50732421875
+E8,61,blocks.1.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,61,blocks.1.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,61,blocks.1.attention.in_proj_weight,shared,"[768, 256]",3.3105980614441356e-05,0.0441058474434494,0.04410585986817154,0.5007273356119791
+E8,61,blocks.1.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E8,61,blocks.1.attention.out_proj.weight,shared,"[256, 256]",0.00010811111485509173,0.03603053524711273,0.03603069744268889,0.4990386962890625
+E8,61,blocks.1.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,61,blocks.1.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,61,blocks.1.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,61,blocks.1.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E8,61,blocks.1.moe.router.projection.weight,router,"[8, 256]",-0.00022899850227986462,0.036647707892536664,0.036648423350681004,0.49658203125
+E8,61,blocks.2.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,61,blocks.2.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,61,blocks.2.attention.in_proj_weight,shared,"[768, 256]",5.177152551178593e-06,0.044191362301874496,0.04419136260513408,0.4988352457682292
+E8,61,blocks.2.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E8,61,blocks.2.attention.out_proj.weight,shared,"[256, 256]",0.0001471089245796975,0.0360990415930221,0.03609934133707193,0.5007781982421875
+E8,61,blocks.2.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,61,blocks.2.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,61,blocks.2.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,61,blocks.2.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E8,61,blocks.2.moe.router.projection.weight,router,"[8, 256]",-0.000255242961429758,0.035936805504382184,0.03593771193091115,0.4912109375
+E8,61,blocks.3.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,61,blocks.3.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,61,blocks.3.attention.in_proj_weight,shared,"[768, 256]",9.549802655101508e-05,0.04419010859065231,0.04419021177960927,0.5010935465494791
+E8,61,blocks.3.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E8,61,blocks.3.attention.out_proj.weight,shared,"[256, 256]",-8.238350505962444e-05,0.036019796983153295,0.03601989119569193,0.498748779296875
+E8,61,blocks.3.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,61,blocks.3.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,61,blocks.3.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,61,blocks.3.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E8,61,blocks.3.moe.router.projection.weight,router,"[8, 256]",-0.0006520578208437655,0.03634045432311902,0.03634630379849405,0.486328125
+E8,61,final_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,61,final_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,61,lm_head.weight,shared,"[256, 256]",-0.00014685897151223148,1.0039561081923145,1.0039561189335997,0.5001220703125
+E8,7,token_embedding.weight,shared,"[256, 256]",-0.005727188945358508,0.9981895578292709,0.9982059877863942,0.500091552734375
+E8,7,position_embedding.weight,shared,"[128, 256]",0.0015164673121801364,1.0018019428038019,1.0018030905714859,0.49993896484375
+E8,7,blocks.0.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,7,blocks.0.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,7,blocks.0.attention.in_proj_weight,shared,"[768, 256]",0.00016428586582439784,0.04420231642024062,0.04420262171818299,0.5020904541015625
+E8,7,blocks.0.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E8,7,blocks.0.attention.out_proj.weight,shared,"[256, 256]",3.3101629924203735e-05,0.03608502220671111,0.03608503738915531,0.498504638671875
+E8,7,blocks.0.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,7,blocks.0.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,7,blocks.0.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,7,blocks.0.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E8,7,blocks.0.moe.router.projection.weight,router,"[8, 256]",0.0014027495089976583,0.035555034062010826,0.03558269457665823,0.52197265625
+E8,7,blocks.1.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,7,blocks.1.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,7,blocks.1.attention.in_proj_weight,shared,"[768, 256]",2.6246309153457197e-05,0.044187360343708175,0.044187368138569404,0.5001118977864584
+E8,7,blocks.1.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E8,7,blocks.1.attention.out_proj.weight,shared,"[256, 256]",0.00019678031924286188,0.0361272807395853,0.03612781665325006,0.50445556640625
+E8,7,blocks.1.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,7,blocks.1.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,7,blocks.1.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,7,blocks.1.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E8,7,blocks.1.moe.router.projection.weight,router,"[8, 256]",0.0009467529234825633,0.03611703321605948,0.03612943992685282,0.51416015625
+E8,7,blocks.2.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,7,blocks.2.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,7,blocks.2.attention.in_proj_weight,shared,"[768, 256]",-0.00013194190818168364,0.04411599533603703,0.04411619264121027,0.4983317057291667
+E8,7,blocks.2.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E8,7,blocks.2.attention.out_proj.weight,shared,"[256, 256]",-4.685180510932696e-05,0.036077306014738623,0.036077336436781716,0.500030517578125
+E8,7,blocks.2.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,7,blocks.2.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,7,blocks.2.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,7,blocks.2.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E8,7,blocks.2.moe.router.projection.weight,router,"[8, 256]",-8.357803744729608e-05,0.03658029277020427,0.03658038824892653,0.49755859375
+E8,7,blocks.3.attention_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,7,blocks.3.attention_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,7,blocks.3.attention.in_proj_weight,shared,"[768, 256]",9.893184486642626e-05,0.044168823041129214,0.04416893383757996,0.5012308756510416
+E8,7,blocks.3.attention.in_proj_bias,shared,[768],0.0,0.0,0.0,0.0
+E8,7,blocks.3.attention.out_proj.weight,shared,"[256, 256]",-4.647943080726691e-05,0.03597093819906429,0.035970968227980606,0.4987335205078125
+E8,7,blocks.3.attention.out_proj.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,7,blocks.3.moe_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,7,blocks.3.moe_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,7,blocks.3.moe.router.temperature,router,[],1.0,0.0,1.0,1.0
+E8,7,blocks.3.moe.router.projection.weight,router,"[8, 256]",0.0011139093439851422,0.03592374312529551,0.03594100880830745,0.5224609375
+E8,7,final_norm.weight,shared,[256],1.0,0.0,1.0,1.0
+E8,7,final_norm.bias,shared,[256],0.0,0.0,0.0,0.0
+E8,7,lm_head.weight,shared,"[256, 256]",-0.005727188945358508,0.9981895578292709,0.9982059877863942,0.500091552734375

@@ -1,0 +1,36 @@
+"""Render the completed evaluation amendment without changing historical findings."""
+import csv,json,statistics
+from pathlib import Path
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+O=Path('results/token_expert_matching_v1/evaluation_repair_v1')
+rs=list(csv.DictReader((O/'crossed_policy_summary.csv').open()));cs=list(csv.DictReader((O/'contrasts.csv').open()))
+def get(v,k,p):return next(r for r in rs if r['variant']==v and r['recipient_training_condition']==k and r['evaluation_policy']==p)
+lines=['# Post hoc evaluation amendment','', 'This amendment preserves the registered native endpoint, original reports, and pilot feasibility failure. It is not a preregistered replacement primary result.','', 'All results use existing seed-17 final step-5000 models, FP32, TF32 disabled, eval and inference mode. The same 31 complete validation batches contain 492,416 target tokens, including the original partial batch. Ten fixed validation permutations measure evaluation variability, not training replication. There is only one shuffle_101-trained recipient per variant.','']
+fig,axes=plt.subplots(1,2,figsize=(11,4))
+for ax,v in zip(axes,['e32_seed17_dense','e32_seed17_imp80']):
+ a=[[float(get(v,k,p)['mean']) for p in ('I','S')] for k in ('identity','shuffle_101')]
+ ax.imshow(a,cmap='viridis',vmin=1.3,vmax=7.2);ax.set_xticks([0,1],['Evaluation I','Evaluation S']);ax.set_yticks([0,1],['Identity trained','Shuffle 101 trained']);ax.set_title(v)
+ lines += [f'## {v}','','| Recipient | Evaluation I | Evaluation S mean (SD; range) |','|---|---:|---:|']
+ for i,k in enumerate(('identity','shuffle_101')):
+  s=get(v,k,'S');lines.append(f"| {k} | {a[i][0]:.8f} | {s['mean']} ({s['sd']}; {s['minimum']}–{s['maximum']}) |")
+  for j in range(2):ax.text(j,i,f'{a[i][j]:.6f}',ha='center',va='center',color='black' if a[i][j]>4.8 else 'white')
+ lines+=['','Contextual CE:']
+ for k in ('donor','identity','shuffle_101'):
+  for p in ('native','donor_router_weights'):
+   found=[r for r in rs if (r['variant'],r['recipient_training_condition'],r['evaluation_policy'])==(v,k,p)]
+   if found:lines.append(f"- {k}, {p}: {float(found[0]['mean']):.8f}")
+ lines+=['','Donor S is an immediate evaluation perturbation, not recovery after shuffled training.',f"Donor S mean: {float(get(v,'donor','S')['mean']):.8f}.",'','Contrasts (mean; sample SD; range):']
+ for c in cs:
+  if c['variant']==v and c['permutation_replicate']=='summary':lines.append(f"- {c['contrast']}: {c['mean']}; {c['sd']}; {c['minimum']} to {c['maximum']}")
+fig.tight_layout();fig.savefig(O/'crossed_policy_tables.png',dpi=180);fig.savefig(O/'crossed_policy_tables.pdf');plt.close(fig)
+c=next(c for c in cs if c['contrast']=='differential_penalty' and c['permutation_replicate']=='summary')
+pen={v:float(next(c for c in cs if c['variant']==v and c['contrast']=='C' and c['permutation_replicate']=='summary')['mean']) for v in ('e32_seed17_dense','e32_seed17_imp80')}
+lines+=['','## Interpretation','', '1. The identity native-endpoint anomaly is explained by policy compatibility: identity recipients recover near donor CE under donor slots, while native frozen routing performs poorly. Router weights alone only partially repair the incompatibility.',f"2. The matched-policy shuffle penalty (L_SS − L_II) is {pen['e32_seed17_dense']:.8f} for dense and {pen['e32_seed17_imp80']:.8f} for IMP80. Positive values indicate worse corresponding-policy recovery in this seed.",f"3. Sparse minus dense differential penalty: {float(c['mean']):.8f} (SD {float(c['sd']):.8f}; range {c['minimum']} to {c['maximum']}). A positive value is consistent with greater sparse sensitivity to the combined training/evaluation protocol in this seed.",'4. The crossed results warrant further investigation of this replay protocol, with any expansion decided after reviewing the interaction and compute cost. No additional recovery is authorized or launched here.','', 'These comparisons condition on each variant’s own complete donor; donor policies differ across sparsities. The complete-slot intervention jointly changes expert identity, token-specific gates, and accepted/dropped tokens. It does not isolate expert selection or the training-time assignment effect. Replay training removes the native task-gradient path through gate coefficients.','', 'Donor-generated routing requires an external complete donor. Recipient CE uses recipient embeddings, attention, normalization, experts, residuals and output head. These results establish neither standalone deployment performance nor a winning ticket. Better shuffled native endpoints do not show that random routing improves ordinary MoE recovery. They do not identify IMP specialization or a mechanism of sparse outperformance.','', 'No source-seed confidence intervals or significance claims are justified at n=1. Evaluation permutations are paired across recipients and variants. Contrasts involving shuffled policies are computed per full-validation replicate before summarizing.','', 'A = L_IS − L_II; B = L_SI − L_SS; C = L_SS − L_II; D = (L_IS − L_II) − (L_SS − L_SI). Per-batch losses and actual token counts are retained. Native router entropy, if exposed internally by replay, is not an imposed-policy statistic and is not used here.','', 'Identity contextual evaluations and L_II are reused from the completed posthoc_validation diagnostic after verifying checkpoint SHA256, validation batch hashes and target counts. Donor native and identity replay are rechecked exactly on all batches. See numerical_checks.json and checkpoint_and_batch_provenance.json for checks and budget accounting.']
+provs=json.loads((O/'checkpoint_and_batch_provenance.json').read_text())
+costs={v['variant']:sum(c['budget']['wall_seconds'] for c in v['checkpoints'])/3600 for v in provs}
+lines += ['', 'The crossed interaction is pronounced: identity-trained recipients deteriorate substantially under shuffled evaluation, while shuffle-trained recipients have very similar CE under I and S. Thus the matched-policy difference must be read together with the full crossed table.', '', f"Compute review: main evaluation took {json.loads((O/'completion.json').read_text())['wall_seconds']:.1f} seconds on the H100 NVL (additional audit/report time excluded). Historical donor plus identity plus shuffle_101 recoveries took {costs['e32_seed17_dense']:.2f} dense and {costs['e32_seed17_imp80']:.2f} IMP80 host-hours in total. These are observed historical wall times, not a guaranteed expansion estimate. Review the modified gradient path, combined slot intervention, and n=1 limitation before deciding whether more training is worth that cost. No expansion is launched."]
+(O/'corrected_interpretation.md').write_text('\n'.join(lines)+'\n')
+Path('results/token_expert_matching_v1/evaluation_amendment_v1.md').write_text('# Evaluation amendment v1\n\nThe original registered endpoint, findings, and feasibility failure remain historical records. The post hoc crossed evaluation is documented in [evaluation_repair_v1/corrected_interpretation.md](evaluation_repair_v1/corrected_interpretation.md). It does not replace the primary result.\n')
+p=O/'completion.json';x=json.loads(p.read_text());x['status']='COMPLETE';x['report_and_figures_complete']=True;p.write_text(json.dumps(x,indent=2)+'\n')

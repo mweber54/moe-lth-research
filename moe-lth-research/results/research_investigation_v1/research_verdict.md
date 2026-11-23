@@ -1,0 +1,17 @@
+# Research verdict: CONDITIONAL GO
+
+**Strongest finding:** In the existing 85%-sparse 8E/12E recoveries, router-age dependence in matched sparse-minus-dense CE nearly disappears when selected gate coefficients and their task-gradient path are clamped, beyond clamping assignments and capacity. This is a precise, reproducible **combined-intervention** finding; forward values and backward derivatives are not yet separated.
+
+**Key quantitative evidence:** All 12 age contrasts were independently reproduced from condition losses. Mean attenuation across the three seeds in each architecture/control group is 94.7–99.8%; maximum residual contrast is 0.0070142 nats/token. All 36 full-gate recipient endpoint summaries match their common-readout outcomes. The observational alternative also reproduces: fixed-source coupling differences-in-changes are +.5048/.5363 across all five 32E seeds. The embedding hypothesis is much weaker: only ~.17° excess rotation at 85%, near-identical spectra and random-like entropy rank.
+
+**Most important counterevidence:** Detachment removes an entire router/upstream task-gradient path; coefficient clamping can almost disconnect router-age identity by construction. Auxiliary gradients remain. Four baseline contrasts are already target-unfavorable. One donor/readout, only three reused seeds per architecture, and large native-readout shifts restrict generality. No saved E-gradient trajectory or causal E-mediation evidence exists. These limitations preclude a finished mechanism or novel-paper claim.
+
+**Novelty assessment:** Router-weighted pruning, gating/gradient scaling, representation drift and CKA invariance are established. A factorial separation of gate values, gate Jacobians and sparse/dense compatibility at fixed accepted assignments is plausibly more specific, but priority is unverified beyond the targeted primary-paper screen. See novelty_review.md for links, dates and comparison limits.
+
+**Decisive next experiment:** Add the two missing factorial arms: donor gate values with the native gate Jacobian, and native gate values with its task Jacobian detached. Use existing 8E R20/R100 seeds 7/17/29 and dense/sparse controls: 24 new recoveries, reuse audited A/B cells, common primary readout. Stop after this screen under the predeclared rule. If it passes, confirm on five new seeds and then donor/random-mask controls. Nothing was launched here.
+
+**Estimated research value:** Moderate potential and high immediate information value, low present paper readiness. Reserve roughly 5–25 GPU-hours for the discriminating screen, calibrated by an authorized timing pilot; a fresh-seed confirmation is a separate 20–70+ GPU-hour decision. A clear pathway result with portability could justify a paper; a generic detachment or evaluation artifact should stop the project direction.
+
+**Recommendation: CONDITIONAL GO.** Fund one bounded mechanism-discriminating screen, not more descriptive embedding plots or a large model sweep. NO-GO for a standalone claim that sparse experts produce novel low-rank or strongly rotated embeddings in this cohort.
+
+All outputs and scripts are confined to `results/research_investigation_v1/`. No training code, checkpoint weights or previous experiment outputs were changed.

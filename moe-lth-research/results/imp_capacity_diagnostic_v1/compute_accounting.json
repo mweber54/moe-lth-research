@@ -1,0 +1,36 @@
+{
+  "all_readouts_cached_atomically": true,
+  "cache_directory": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_capacity_diagnostic_v1/cache",
+  "evaluation_forwards": 3534,
+  "evaluation_seconds_excluding_profile_and_audit": 2031.7279127669754,
+  "mask_discovery_runs": 0,
+  "optimizer_updates": 0,
+  "peak_cuda_memory_bytes": 610039808,
+  "precision": "FP32_TF32off",
+  "profile": {
+    "batch_count_in_validation": 31,
+    "batch_index": 0,
+    "batch_target_tokens": 16384,
+    "checkpoint": "step1000_sparse_seed7",
+    "checkpoint_sha256": "b155728dd7734550d02f436b0bedcd477e8e8178852c0d714f853ed0e860e365",
+    "device": "cuda:0",
+    "memory_peak_bytes": 610039808,
+    "per_policy_batch_seconds": [
+      0.1322031388990581,
+      0.15207914100028574,
+      0.1623986109625548,
+      0.13146714598406106,
+      0.14451721997465938,
+      2.5675819580210373
+    ],
+    "precision": "FP32_TF32off",
+    "seed": 7,
+    "status": "PASS"
+  },
+  "profile_forward_count": 6,
+  "readout_checkpoint_count": 20,
+  "readout_policy_forward_count": 3534,
+  "status": "COMPLETE",
+  "total_forward_count_including_profile": 3540,
+  "training_updates": 0
+}

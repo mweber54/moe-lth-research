@@ -1,0 +1,55 @@
+{
+  "cache_key": "78b696013c1bd00652650f0f61bb8e1a1fb0974a75e4fa9912a34d4647546e23",
+  "meta": {
+    "condition_id": "source_age_R50",
+    "seed": 17,
+    "router_age": 50,
+    "sparsity": 0.0,
+    "mask_type": "dense",
+    "step": null,
+    "category": "source_age",
+    "dense_condition_id": null,
+    "validation_loss": null
+  },
+  "origin": {
+    "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/32e_router_age_localization/references/seed_17/checkpoints/step_1250.pt",
+    "sha256": "6c771f18ff7bf9d41779e412b22d323c4c2cd02e55befb85a98c302e0285b948",
+    "size": 274063179
+  },
+  "reference_identities": {
+    "source_final": {
+      "category": "source_final_dense",
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/32e_router_age_localization/references/seed_17/checkpoints/step_2500.pt",
+      "sha256": "be7a3a5398db62a43701a5095eb468c1cc77c2543a9583b25931fd8b94937dbc",
+      "size": 274063179
+    }
+  },
+  "probe": {
+    "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/router_expert_geometry_v1/probes/source_e32_seed17_T2500.pt",
+    "sha256": "4b5d540120bc915da38eb635656234b4eb0fce0a139795222cd315020718e925",
+    "size": 4213845
+  },
+  "model_tensor_sha256": "6d3565d7fa7ac8c6add37351d0eb05a9df86324b873fbdb97ae230de33b8524e",
+  "finite_tensors": true,
+  "mask_applied_verified": false,
+  "expected_initialization_verified": false,
+  "model_preserved": true,
+  "elapsed_seconds": 6.304069662466645,
+  "peak_cuda_allocated": 426020864,
+  "peak_cpu_rss_kib": 4692016,
+  "timing_seconds": {
+    "tensor_checks": 0.11223456542938948,
+    "load_and_hash": 1.839195023290813,
+    "gram": 0.15024184249341488,
+    "activation": 3.629584808833897,
+    "hash_and_write": 0.5731203248724341
+  },
+  "output_hashes": {
+    "activation_layer_pools.csv": "761ed91aba4ac3c4d395b41c581300f461a1747fedb917ebff90006c5feec9df",
+    "activation_within_token.csv": "53481bef12aeed7f319a1faa089a158e6a2fd970fc5429636d7b464c50e34369",
+    "activation_groups.csv": "e2873636f7bb2d68d5ecc39e5710c26aa1ca92b306c0c02e05de33d1a95d3291",
+    "gram_experts.csv": "e96bb307a6cc5fb4bce30309324a73bb42db5c96f45944c6d11f5b9aa928628c",
+    "token_pairs.npz": "4d610bc84c503aac55e189dde3352520bbff3007c07666b0b17b864da1cd0947",
+    "input_drift.csv": "083d2af3e8d0e2c6d345f3fafbecde163406ff196323a693921489cb412b836f"
+  }
+}

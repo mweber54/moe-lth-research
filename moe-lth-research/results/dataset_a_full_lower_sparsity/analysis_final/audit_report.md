@@ -1,0 +1,21 @@
+# Coverage and provenance audit
+
+Validation: **PASS**. 9657 checks; 0 failures. Exact grid: 1,100 sparse conditions, 1,040 COMPLETE + 60 REUSED; 275 unique table-backed dense references. No conditions omitted. See verification CSVs for per-condition evidence and any exceptions.
+
+All sealed code, immutable runtime inputs, source checkpoints, masks and prior reused artifacts were SHA-256 rehashed from bytes. Every sparse final checkpoint was rehashed, loaded on CPU, checked for finite tensors, step 2500, masked zeros and config. Completion/result/summary/metrics endpoints were compared. Masks were independently regenerated from source-final magnitudes without writing masks. Source R0 expert/shared hashes and requested checkpoint router hashes were independently recomputed and matched to metadata. Snapshot records confirm masked weights and optimizer moments at 0/2500; historical optimizer states are not saved and cannot be independently reconstructed. Runtime assertions are supporting evidence, not new training.
+
+The code actually ranks the concatenated weight tensors **within each expert**, rather than separately per tensor (some design prose says per-tensor magnitude). Random controls preserve each resulting tensor's retained count. Only expert `.weight` tensors are pruned; biases/shared/router parameters remain. Realized counts and retained whole-model counts are in canonical_lower_sparsity.csv.
+
+Dense endpoints and provenance rows match the SHA-256 guarded finalized dense table. Their historical checkpoint hashes are provenance only; raw dense checkpoints are not reverified. Available-file flags in dense_references.csv do not imply verification. Original higher sparsities are 70,75,80,85,90,95%; 1,650 rows, frozen PASS, guarded table hashes and row-by-row source/router/data/validation/budget/dense compatibility: True. Combined table has 2,750 unique scientific cells. Original raw sparse checkpoints were not reaudited; their prior finalized audit is the provenance basis.
+
+Applied recovery updates range 2496–2499, despite 2,500 attempts. Source applied counts are retained from finalized sources (NA remains unavailable). AMP skip counts are independently cross-checked against exposure summaries, not equated with attempted steps. Metadata uses a Dataset B protocol label for the common worker, but arm A is verified as 2500/2500.
+
+Fresh AdamW, constant LR 0.0003, weight decay 0.01, grad clip 1, fp16, batch 128, byte sequence length 128, native top-1 capacity 1.25, auxiliary weight 0.1. The same seed-indexed training/validation batch hashes are checked; evaluation is 32 materialized validation batches every 50 attempts. `_evaluate_condition_loss` in src/moe_lth/experiments/run_router_age_recovery.py uses token-normalized PyTorch cross_entropy (natural-log CE); exp(gap) is therefore the endpoint perplexity ratio. Evaluation loss excludes auxiliary optimization loss.
+
+No prospective ticket endpoint tolerance was found in the inspected extension design, runner README, protocol and finalized analysis. scripts/full_lower_sparsity/README.md states: “this package does not define a post-hoc ticket tolerance.” results/dataset_b_lower_sparsity/design.json has dense_matching_tolerance=null and says: “Do not select a matching tolerance after inspecting these results.” The existing within_5pct/within_10pct time-to-threshold metrics are recovery-progress loss thresholds, not prospective endpoint perplexity ticket criteria. Strict ≤0 is the user-requested endpoint count; 1/2/5% perplexity thresholds are exploratory.
+
+Failures: []
+
+## Final output verification
+
+All 40 existing random controls passed supplementary raw checkpoint finiteness, masked-zero, source-R0 expert/shared, optimizer and endpoint checks (random_control_verification.csv). Canonical output schema now includes explicit target/realized sparsity, source/router/R0 paths, uniform budgets, available source/sparse/dense applied-update counts, units, and reference provenance paths. Only newly created analysis outputs were normalized; experimental inputs were untouched. The combined original rows use FINALIZED_TABLE status, not a newly observed completion marker. The combined heatmap colorbar was refined after visual inspection (refine_figures.py).

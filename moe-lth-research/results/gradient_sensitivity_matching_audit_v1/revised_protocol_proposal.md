@@ -1,0 +1,5 @@
+# Proposal only — not authorized for execution
+
+The fixed-subset audit found some candidate feasibility, not cohort feasibility or pruning utility. Before proposing any intervention, separately register one scalable matcher and demonstrate all five sources meet the original dose/coverage and scientific gates using immutable existing scores. Retain every source and forbid outcome-driven tuning. If using C, explicitly test the predictive value of the compound selection rule with residual column TV<=0.05, report local count extremes and occupancy, and do not claim connectivity-independent sensitivity. Only after full-cohort feasibility and a separately authorized numerical/pilot protocol should any model-loss measurement or continuation be considered. This audit authorizes none.
+
+Coverage review: scaling B cannot rescue the original exact-column cohort under the certified bounds. Local C feasibility changes the structural interpretation but does not demonstrate the required source coverage. This is a contingency document, not a justified revised intervention registration or a recommendation to expand compute. No further constraint relaxation is proposed.

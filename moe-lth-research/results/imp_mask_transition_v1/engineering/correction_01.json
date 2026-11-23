@@ -1,0 +1,8 @@
+{
+  "unix": 1792958190.51538,
+  "type": "engineering_only",
+  "scientific_design_changed": false,
+  "issue": "Unselected historical alias checkpoint contains NumPy RNG array in native payload; weights-only loading rejected it.",
+  "correction": "Scoped allowlist of NumPy array/dtype reconstruction, retaining weights-only loading. No production training launched.",
+  "failed_attempt_log": "supplement_attempt_01.log"
+}

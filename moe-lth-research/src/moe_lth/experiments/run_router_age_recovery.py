@@ -346,11 +346,18 @@ def _run_recovery_condition(
     state_snapshot_callback: Callable | None = None,
     training_forward_callback: Callable | None = None,
     validation_forward_callback: Callable | None = None,
+    interruption_checkpoint: Path | None = None,
+    interruption_interval: int = 100,
 ) -> dict:
     if router_mode not in {"trainable", "frozen"}:
         raise ValueError(f"router_mode must be 'trainable' or 'frozen', got {router_mode!r}.")
-    if output_dir.exists() and any(output_dir.iterdir()):
+    resuming = interruption_checkpoint is not None and interruption_checkpoint.exists()
+    if output_dir.exists() and any(output_dir.iterdir()) and not resuming:
         raise FileExistsError(f"Refusing to mix or overwrite recovery artifacts in {output_dir}")
+    resume_output_dir = output_dir
+    if resuming:
+        import tempfile
+        output_dir = Path(tempfile.mkdtemp(prefix="imp-resume-", dir=output_dir.parent))
     output_dir.mkdir(parents=True, exist_ok=True)
     (output_dir / "routing_stats").mkdir(exist_ok=True)
     (output_dir / "gradient_stats").mkdir(exist_ok=True)
@@ -588,7 +595,47 @@ def _run_recovery_condition(
     amp_overflow_steps = 0
     optimizer_steps_applied = 0
     loss_scales = []
+    start_step = 0
+    resume_identity = {
+        "config": config, "seed": seed, "steps": recovery_steps,
+        "expert_hash": expert_hash, "shared_hash": shared_hash,
+        "mask_hash": mask_hash, "router_hash": initial_router_hash,
+        "train_hash": train_batch_hash, "validation_hash": validation_batch_hash,
+        "router_mode": router_mode,
+    }
+    if resuming:
+        import shutil
+        saved = torch.load(interruption_checkpoint, map_location=device, weights_only=False)
+        if saved["identity"] != resume_identity:
+            raise RuntimeError("Interruption checkpoint identity mismatch")
+        shutil.rmtree(output_dir)
+        output_dir = resume_output_dir
+        model.load_state_dict(saved["model"])
+        optimizer.load_state_dict(saved["optimizer"])
+        scaler.load_state_dict(saved["scaler"])
+        start_step = saved["step"]
+        recovery_curve = saved["recovery_curve"]
+        routing_by_step = saved["routing_by_step"]
+        loss_scales = saved["loss_scales"]
+        optimizer_steps_applied = saved["optimizer_steps_applied"]
+        amp_overflow_steps = saved["amp_overflow_steps"]
+        trainable_router_gradient_observed = saved["router_gradient_observed"]
+        for log_path in output_dir.rglob("*.jsonl"):
+            if str(log_path.relative_to(output_dir)) not in saved["log_sizes"]:
+                log_path.unlink()
+        for relative, size in saved["log_sizes"].items():
+            with (output_dir / relative).open("r+b") as stream:
+                stream.truncate(size)
+        import random
+        import numpy as np
+        random.setstate(saved["python_rng"])
+        np.random.set_state(saved["numpy_rng"])
+        torch.set_rng_state(saved["torch_rng"].cpu())
+        if device.type == "cuda":
+            torch.cuda.set_rng_state_all([v.cpu() for v in saved["cuda_rng"]])
     for step, (token_ids, targets) in enumerate(train_batches, start=1):
+        if step <= start_step:
+            continue
         current_recovery_step = step
         token_ids, targets = token_ids.to(device), targets.to(device)
         optimizer.zero_grad(set_to_none=True)
@@ -674,6 +721,8 @@ def _run_recovery_condition(
                     if bool(torch.isfinite(loss.detach()).all())
                     else None
                 ),
+                "train_cross_entropy": float(language_loss.detach().cpu()) if bool(torch.isfinite(language_loss.detach()).all()) else None,
+                "auxiliary_routing_loss": float(output.auxiliary_loss.detach().cpu()) if bool(torch.isfinite(output.auxiliary_loss.detach()).all()) else None,
                 "gradient_valid": gradient_valid,
                 "measurement_status": "finite_unscaled" if gradient_valid else "amp_overflow_skipped",
                 "optimizer_step_applied": gradient_valid,
@@ -699,6 +748,26 @@ def _run_recovery_condition(
 
         if state_snapshot_callback is not None:
             state_snapshot_callback(model, optimizer, scaler, step)
+        if interruption_checkpoint is not None and (step % interruption_interval == 0 or step == recovery_steps):
+            import random
+            import numpy as np
+            snapshot = {
+                "identity": resume_identity, "model": model.state_dict(),
+                "optimizer": optimizer.state_dict(), "scaler": scaler.state_dict(),
+                "step": step, "recovery_curve": recovery_curve,
+                "routing_by_step": routing_by_step, "loss_scales": loss_scales,
+                "optimizer_steps_applied": optimizer_steps_applied,
+                "amp_overflow_steps": amp_overflow_steps,
+                "router_gradient_observed": trainable_router_gradient_observed,
+                "python_rng": random.getstate(), "numpy_rng": np.random.get_state(),
+                "torch_rng": torch.get_rng_state(),
+                "cuda_rng": torch.cuda.get_rng_state_all() if device.type == "cuda" else [],
+                "log_sizes": {str(p.relative_to(output_dir)): p.stat().st_size
+                              for p in output_dir.rglob("*.jsonl")},
+            }
+            temporary = interruption_checkpoint.with_suffix(".tmp")
+            torch.save(snapshot, temporary)
+            temporary.replace(interruption_checkpoint)
 
     for handle in handles:
         handle.remove()

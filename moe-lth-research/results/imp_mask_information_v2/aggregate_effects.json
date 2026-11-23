@@ -1,0 +1,78 @@
+{
+  "matrix": {
+    "n": 5,
+    "mean": 0.14255689418188836,
+    "sample_sd": 0.0761563270148933,
+    "minimum": 0.0374632968510904,
+    "maximum": 0.22001609162662072,
+    "descriptive_95pct_t_lower": 0.04799632469206243,
+    "descriptive_95pct_t_upper": 0.23711746367171427,
+    "source_seeds": [
+      7,
+      17,
+      29,
+      43,
+      61
+    ],
+    "complete": true,
+    "leave_one_seed_out_means": {
+      "7": 0.15574357046658321,
+      "17": 0.12319209482070526,
+      "29": 0.13461414013151873,
+      "43": 0.1304043719760467,
+      "61": 0.16883029351458784
+    },
+    "unit": "source training seed; random masks nested",
+    "inference": "descriptive n<=5; not a proof of generality or a mechanism"
+  },
+  "degree": {
+    "n": 5,
+    "mean": 0.14588695822612383,
+    "sample_sd": 0.08334195812782483,
+    "minimum": 0.02505361816311047,
+    "maximum": 0.2220824354433042,
+    "descriptive_95pct_t_lower": 0.042404249278997955,
+    "descriptive_95pct_t_upper": 0.2493696671732497,
+    "source_seeds": [
+      7,
+      17,
+      29,
+      43,
+      61
+    ],
+    "complete": true,
+    "leave_one_seed_out_means": {
+      "7": 0.1585839974096232,
+      "17": 0.12683808892182874,
+      "29": 0.13672333532164305,
+      "43": 0.131194076235647,
+      "61": 0.17609529324187717
+    },
+    "unit": "source training seed; random masks nested",
+    "inference": "descriptive n<=5; not a proof of generality or a mechanism"
+  },
+  "matrix_minus_degree": {
+    "n": 5,
+    "mean": -0.0033300640442354814,
+    "sample_sd": 0.009750327936190323,
+    "minimum": -0.013491503182776254,
+    "maximum": 0.01240967868797993,
+    "descriptive_95pct_t_lower": -0.015436695213283436,
+    "descriptive_95pct_t_upper": 0.008776567124812472,
+    "source_seeds": [
+      7,
+      17,
+      29,
+      43,
+      61
+    ],
+    "unit": "source seed",
+    "per_seed": {
+      "7": -0.00528861244901746,
+      "17": -0.002066343816683469,
+      "29": -0.008213539460680153,
+      "43": -0.013491503182776254,
+      "61": 0.01240967868797993
+    }
+  }
+}

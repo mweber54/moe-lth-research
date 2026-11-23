@@ -1,0 +1,63 @@
+{
+  "torch_version": "2.7.0",
+  "cuda_version": "12.8",
+  "source_cohort_sha256": "d7162755c0787a3b6d545940e7129954fb8f429987619ec1a0581e8013366082",
+  "models": {
+    "sparse": {
+      "vocab_size": 256,
+      "max_seq_len": 128,
+      "num_layers": 4,
+      "num_heads": 4,
+      "d_model": 256,
+      "num_experts": 32,
+      "expert_hidden_size": 1024,
+      "dropout": 0.0,
+      "top_k": 1,
+      "capacity_factor": 1.25
+    },
+    "unpruned": {
+      "vocab_size": 256,
+      "max_seq_len": 128,
+      "num_layers": 4,
+      "num_heads": 4,
+      "d_model": 256,
+      "num_experts": 32,
+      "expert_hidden_size": 1024,
+      "dropout": 0.0,
+      "top_k": 1,
+      "capacity_factor": 1.25
+    }
+  },
+  "data_configuration": {
+    "path": null,
+    "train_path": "data/multidomain_balanced/multidomain_train.txt",
+    "validation_path": "data/multidomain_balanced/multidomain_validation.txt",
+    "seq_len": 128,
+    "train_fraction": 0.9,
+    "validation_blocks": 32,
+    "reshuffle_each_epoch": false,
+    "max_train_examples": null,
+    "max_validation_examples": null,
+    "tokenizer": "byte",
+    "tokenizer_vocab_size": 256,
+    "tokenizer_cache_path": null,
+    "tokenizer_train_bytes": null,
+    "tokenizer_max_ngram": 8,
+    "tokenizer_min_frequency": 2
+  },
+  "routing_configuration": {
+    "mode": "learned",
+    "aux_loss_weight": 0.1,
+    "replay_path": null,
+    "swap_pairs": [],
+    "corruption_fraction": 0.0
+  },
+  "numerical_contract": "eval inference FP32 TF32 disabled inside every evaluation; paired differences/sums FP64",
+  "relevant_environment": {
+    "NVIDIA_TF32_OVERRIDE": null,
+    "TORCH_ALLOW_TF32_CUBLAS_OVERRIDE": null,
+    "CUDA_LAUNCH_BLOCKING": null,
+    "CUBLAS_WORKSPACE_CONFIG": null
+  },
+  "historical_source_files_unchanged": true
+}

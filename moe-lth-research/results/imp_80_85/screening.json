@@ -1,0 +1,84 @@
+{
+  "completed": 30,
+  "expected": 50,
+  "within_relative_ce": {
+    "0.02": 7,
+    "0.05": 16,
+    "0.1": 24
+  },
+  "omp_within_relative_ce": {
+    "0.02": 0,
+    "0.05": 0,
+    "0.1": 10
+  },
+  "discovery_seconds": 212013.3741294667,
+  "paired_summary": [
+    {
+      "num_experts": 8,
+      "sparsity": 0.8,
+      "count": 5,
+      "imp_gap_mean": 0.0805444904324418,
+      "imp_gap_sd": 0.046208642580958546,
+      "omp_gap_mean": 0.166659403454647,
+      "omp_gap_sd": 0.045007811441461244,
+      "paired_improvement_mean": 0.0861149130222052,
+      "paired_improvement_sd": 0.07144937472586431
+    },
+    {
+      "num_experts": 8,
+      "sparsity": 0.85,
+      "count": 5,
+      "imp_gap_mean": 0.1329755640786005,
+      "imp_gap_sd": 0.04305847814024332,
+      "omp_gap_mean": 0.25582835547236743,
+      "omp_gap_sd": 0.02268574164775622,
+      "paired_improvement_mean": 0.12285279139376692,
+      "paired_improvement_sd": 0.04528157666788447
+    },
+    {
+      "num_experts": 16,
+      "sparsity": 0.8,
+      "count": 5,
+      "imp_gap_mean": 0.06655237278691625,
+      "imp_gap_sd": 0.06673085250653543,
+      "omp_gap_mean": 0.15463759310994787,
+      "omp_gap_sd": 0.015457072566129153,
+      "paired_improvement_mean": 0.08808522032303161,
+      "paired_improvement_sd": 0.06587968848223434
+    },
+    {
+      "num_experts": 16,
+      "sparsity": 0.85,
+      "count": 5,
+      "imp_gap_mean": 0.10056983753399687,
+      "imp_gap_sd": 0.04842686548813982,
+      "omp_gap_mean": 0.20632506237421705,
+      "omp_gap_sd": 0.014751093437869433,
+      "paired_improvement_mean": 0.10575522484022018,
+      "paired_improvement_sd": 0.04272462369755163
+    },
+    {
+      "num_experts": 32,
+      "sparsity": 0.8,
+      "count": 5,
+      "imp_gap_mean": 0.0022985997806129086,
+      "imp_gap_sd": 0.008835547859496997,
+      "omp_gap_mean": 0.11076044430198503,
+      "omp_gap_sd": 0.02110656271736847,
+      "paired_improvement_mean": 0.10846184452137213,
+      "paired_improvement_sd": 0.02492233846610366
+    },
+    {
+      "num_experts": 32,
+      "sparsity": 0.85,
+      "count": 5,
+      "imp_gap_mean": 0.051674033587153015,
+      "imp_gap_sd": 0.02833910076813094,
+      "omp_gap_mean": 0.15263192415051496,
+      "omp_gap_sd": 0.02772217967709166,
+      "paired_improvement_mean": 0.10095789056336195,
+      "paired_improvement_sd": 0.021549822499485716
+    }
+  ],
+  "interpretation": "Descriptive validation screens only; expert-only LTH adaptation. No confirmed winning-ticket or statistical equivalence claim."
+}

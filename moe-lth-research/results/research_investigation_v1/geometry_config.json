@@ -1,0 +1,38 @@
+{
+  "all_registered_rerun_steps": [
+    0,
+    25,
+    100,
+    250,
+    500,
+    1000,
+    1500,
+    2000,
+    2500,
+    2525,
+    2600,
+    3000,
+    3500,
+    4000,
+    4500,
+    5000
+  ],
+  "n_seeds": 5,
+  "dtype": "CPU float64 derived from stored float32",
+  "no_training": true,
+  "hash_verification": "Fresh E hash verified against prior audited provenance; full checkpoint file hash is reused from that audit, not freshly streamed here",
+  "spectral_rank_definition": "exp(entropy(p)); p=singular_value_squared/sum_squares; uncentered E",
+  "stable_rank": "Frobenius norm squared / spectral norm squared",
+  "principal_subspaces": [
+    8,
+    16,
+    32
+  ],
+  "close_gap_flag": "relative cutoff gap <.01; no single-vector claims",
+  "global_rotation_invariant": "token cosine Gram; centered CKA; optimally centered/scaled orthogonal Procrustes residual; left singular subspaces",
+  "coordinate_dependent": "raw row angles, right singular subspaces",
+  "nulls": "64 iid Gaussian 256x256 matrices, diagnostic random-matrix spectral baseline, not experimental evidence",
+  "inputs_sha256": {
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/high_sparsity_coupling_v1/embedding_weight_sparsity/checkpoint_provenance.csv": "9e24548cc5700e417be2093f2e399c0e228c3b3c63ae0be22fe4093fdb0eb6dd"
+  }
+}

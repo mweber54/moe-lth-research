@@ -1,0 +1,14 @@
+{
+  "cause": "FP32 captured training coefficients were silently rounded into FP16 shuffle buffers; the exact marginal assertion correctly rejected them",
+  "fix": "Infer coefficient dtype from captured arrays; preserve precision across every transformed schedule; retain exact token and temporal copy assertions",
+  "captures_reused": 18,
+  "decomposition_recoveries_before_fix": 0,
+  "failed_artifacts_preserved_at": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/gate_amplitude_pattern_decomposition/failed_builds/fp16_cast_20260907T205406Z",
+  "prior_builder_sha256": "6f14487afc389cf5908a953c4597837bae7e70ef98a78fe0e7898b940607429b",
+  "fixed_builder_sha256": "4651d03990440192e288da10172470cb8b5dab31476f6ec669cde48c0280e03b",
+  "regressions": [
+    "full compiler with FP32 training coefficients",
+    "actual first training batch from all 18 canonical sources",
+    "FP32 values not representable in FP16"
+  ]
+}

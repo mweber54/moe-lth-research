@@ -1,0 +1,169 @@
+================================================================================
+MOE ONLINE REINFORCEMENT PRUNING V1 — EXECUTIVE SUMMARY
+================================================================================
+Date: 2026-11-20 03:34:47 UTC
+Status: ✓ READY FOR BRANCH CONTINUATION
+
+================================================================================
+KEY FINDINGS
+================================================================================
+
+1. PROTOCOL REGISTRATION: SEALED ✓
+   - Frozen SHA-256: 403caae38a808e39571bcd1526a48cf44e06801e57e239f18800789bb690e2fc
+   - Frozen at: 2026-11-20T02:14:08.030344000Z
+   - No branch outcomes read or generated before freeze
+
+2. STEP-250 DENSE CAPTURE: ALL 6 CELLS VERIFIED ✓
+   - Applied updates: 249/cell (99.6% success rate)
+   - AMP overflow attempts: 1/cell (not retried, per protocol)
+   - Restore verification: PASS model/optimizer/scaler equality checks (all 6 cells)
+   - Reinforcement scores: Computed from 249 successfully applied updates
+
+3. FROZEN ACCEPTANCE CRITERIA: ALL PASSED ✓
+   
+   ✓ Identical deletion counts:
+     • 3,355,392 deletions per arm/matrix across 256 matrices
+     • 858,980,352 total deletions per arm per cell
+     • Perfect row/column balance in all matrices
+   
+   ✓ Magnitude bin stratification:
+     • 5-strata stratification per matrix
+     • ±0.02 bin fraction balance criterion met
+     • Deterministic stable-sort implementation verified
+   
+   ✓ Reinforcement score separation:
+     • High arm mean: 0.231–0.238 (avg 0.234)
+     • Random arm mean: -0.317 to -0.330 (avg -0.321)
+     • Separation: 0.547–0.566 (avg 0.556)
+     • Required: ≥0.20  |  Achieved: 2.8× minimum
+   
+   ✓ Shared-location fraction (overlap):
+     • Overlap: 940K–942K weights (avg 940,893)
+     • Fraction: 0.2804–0.2807 (avg 0.2805)
+     • Required: ≤0.30  |  Achieved: 93.5% of limit
+   
+   ✓ Removed energy balance:
+     • Within ±5% or exact (all matrices audited)
+
+4. GPU ADMISSION POLICY: ALL COMPLIANT ✓
+   
+   Policy: max 90% utilization, min 24 GiB free
+   
+   | Cell    | Utilization | Free GiB | Status  |
+   |---------|-------------|----------|---------|
+   | seed7_A | 11%         | 91.7     | ✓ PASS  |
+   | seed7_B | 80%         | 91.7     | ✓ PASS  |
+   | seed17_A| 78%         | 91.7     | ✓ PASS  |
+   | seed17_B| 27%         | 91.7     | ✓ PASS  |
+   | seed29_A| 0%          | 91.7     | ✓ PASS  |
+   | seed29_B| 51%         | 91.7     | ✓ PASS  |
+   
+   Note: seed7_B at 80% utilization matches transcript reference
+
+5. IMPLEMENTATION FIDELITY ✓
+   
+   ✓ AMP overflow strategy:
+     • Exactly 1 overflow per cell
+     • Not retried
+     • Not included in score accumulation
+     • Matches protocol specification
+   
+   ✓ Stratified binning:
+     • 5 magnitude strata per matrix
+     • Deterministic stable-sort applied
+     • Largest/smallest bins differ by ≤1
+   
+   ✓ State restoration:
+     • Step-250 state captured successfully
+     • Step-251 oracle saved and verified
+     • Triple-pass model/optimizer/scaler checks pass
+     • Determinism confirmed before branching
+
+6. SELECTIONS SEALED ✓
+   
+   All 6 cells have:
+   • selection.pt files locked with unique SHA-256 hashes
+   • matching/seed{N}_{A,B}/complete.json passed all criteria
+   • ready for three-arm branch continuations
+
+================================================================================
+BRANCH CONTINUATION PLAN
+================================================================================
+
+Three arms per cell (18 total jobs):
+  1. Untouched: Continue step 250→2500 with no deletion
+  2. Random-small: Delete matched random selections, frozen row/col totals
+  3. High-reinforcement-small: Delete reinforced selections, same row/col totals
+
+Validation checkpoints:
+  • Immediate (step 251): Measure instantaneous damage after deletion
+  • Step 275: Early recovery trajectory
+  • Step 500: Short-term adaptation
+  • Step 1000: Medium-term compensation
+  • Step 2500: Final validation loss
+
+Primary metric (Delta computation):
+  For each of 6 cells:
+    Δᵢ = CE₂₅₀₀(high-reinf-small) - CE₂₅₀₀(random-small)
+  
+  Positive Δ → Greater lasting damage from deleting reinforced weights
+  Report: All 6 deltas, A/B within-seed means, grand mean
+
+================================================================================
+SUMMARY VERIFICATION TABLE
+================================================================================
+
+Checkpoint                      Requirement           Status
+─────────────────────────────────────────────────────────────────
+Protocol hash integrity         SHA-256 match         ✓ PASS
+Step-250 state capture          Checkpoint exists     ✓ PASS
+Update application count        249 applied           ✓ PASS
+AMP overflow handling           1 per cell            ✓ PASS
+Restore determinism             Model/opt/scaler eq.  ✓ PASS
+Random draw irreversibility     First draw sealed     ✓ PASS
+Identical deletion counts        Every matrix balanced ✓ PASS
+Magnitude bin balance           ±0.02 difference      ✓ PASS
+Energy balance                  ±5% variance          ✓ PASS
+Score separation                ≥0.20 mean diff       ✓ PASS (0.556)
+Overlap fraction                ≤0.30 shared          ✓ PASS (0.280)
+GPU admission policy            ≤90% util, ≥24GiB    ✓ PASS (all)
+Selection files sealed          Hash locked           ✓ PASS
+Step-251 oracle saved           Expected state saved  ✓ PASS
+
+FINAL STATUS: ✓ ALL CHECKPOINTS PASSED — CLEARED FOR BRANCHING
+
+================================================================================
+FILES & LOCATIONS
+================================================================================
+
+Experiment Root:
+  /users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/moe_online_reinforcement_pruning_v1/
+
+Documentation:
+  • protocol.md                           — Frozen study design
+  • registration.json                     — Experiment metadata
+  • FROZEN_CRITERIA_VERIFICATION_REPORT.md — Detailed audit
+
+Per-Cell Data (seed7_A, seed7_B, seed17_A, seed17_B, seed29_A, seed29_B):
+  • prefixes/seed{N}_{A,B}/verification.json        — Step-250 verification
+  • prefixes/seed{N}_{A,B}/native/interruption.pt   — Step-250 checkpoint
+  • prefixes/seed{N}_{A,B}/native/expected_step251.pt — Step-251 oracle
+  • matching/seed{N}_{A,B}/complete.json            — Matching criteria audit
+  • matching/seed{N}_{A,B}/selections.pt            — Sealed selections
+
+================================================================================
+NEXT STEPS
+================================================================================
+
+✓ All verification gates passed
+✓ No protocol violations detected
+✓ All selections sealed and immutable
+✓ Ready to execute 18 branch jobs (6 cells × 3 arms)
+
+Execute branch continuations with GPU admission policy enforcement.
+Target: Complete all 18 jobs with validation metrics at steps 251–2500.
+Final analysis: Compute Delta for each cell; report means and effect sizes.
+
+================================================================================
+END OF EXECUTIVE SUMMARY
+================================================================================

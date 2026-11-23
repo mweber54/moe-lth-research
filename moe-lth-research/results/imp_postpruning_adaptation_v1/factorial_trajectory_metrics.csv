@@ -1,0 +1,201 @@
+seed,model_type,condition,global_step,offset,ce,loss_sum,target_tokens,batches,precision,applied_updates,amp_skips,source
+7,unpruned,full,1000,0,2.0879763307464816,1028152.9528808594,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+7,unpruned,full,1025,25,2.0731491079446958,1020851.7911376953,492416,31,FP32_TF32off,25,0,new exact continuation
+7,unpruned,full,1100,100,2.0300617765878313,999634.8997802734,492416,31,FP32_TF32off,100,0,new exact continuation
+7,unpruned,full,1250,250,1.9255503403356486,948171.7963867188,492416,31,FP32_TF32off,250,0,new exact continuation
+7,unpruned,full,1500,500,1.7804794700727669,876736.5787353516,492416,31,FP32_TF32off,500,0,new exact continuation
+7,unpruned,router_frozen,1000,0,2.0879763307464816,1028152.9528808594,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+7,unpruned,router_frozen,1025,25,2.07534256506995,1021931.8845214844,492416,31,FP32_TF32off,25,0,new exact continuation
+7,unpruned,router_frozen,1100,100,2.030154747314691,999680.6800537109,492416,31,FP32_TF32off,100,0,new exact continuation
+7,unpruned,router_frozen,1250,250,1.9337660655871223,952217.3509521484,492416,31,FP32_TF32off,250,0,new exact continuation
+7,unpruned,router_frozen,1500,500,1.810959004103936,891745.1889648438,492416,31,FP32_TF32off,500,0,new exact continuation
+7,unpruned,experts_frozen,1000,0,2.0879763307464816,1028152.9528808594,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+7,unpruned,experts_frozen,1025,25,2.0779931410771395,1023237.0705566406,492416,31,FP32_TF32off,25,0,new exact continuation
+7,unpruned,experts_frozen,1100,100,2.0550354917172737,1011932.3566894531,492416,31,FP32_TF32off,100,0,new exact continuation
+7,unpruned,experts_frozen,1250,250,2.026683064414397,997971.1678466797,492416,31,FP32_TF32off,250,0,new exact continuation
+7,unpruned,experts_frozen,1500,500,1.9830750375405082,976497.8776855469,492416,31,FP32_TF32off,500,0,new exact continuation
+7,unpruned,router_experts_frozen,1000,0,2.0879763307464816,1028152.9528808594,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+7,unpruned,router_experts_frozen,1025,25,2.076049437298538,1022279.9597167969,492416,31,FP32_TF32off,25,0,new exact continuation
+7,unpruned,router_experts_frozen,1100,100,2.0543896033294735,1011614.3109130859,492416,31,FP32_TF32off,100,0,new exact continuation
+7,unpruned,router_experts_frozen,1250,250,2.0288783874888527,999052.1800537109,492416,31,FP32_TF32off,250,0,new exact continuation
+7,unpruned,router_experts_frozen,1500,500,1.9890565522652277,979443.2712402344,492416,31,FP32_TF32off,500,0,new exact continuation
+7,sparse,full,1000,0,2.5584160046420035,1259804.9753417969,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+7,sparse,full,1025,25,2.263151186176297,1114411.8544921875,492416,31,FP32_TF32off,25,0,new exact continuation
+7,sparse,full,1100,100,2.1034999529603304,1035797.0328369141,492416,31,FP32_TF32off,100,0,new exact continuation
+7,sparse,full,1250,250,2.0011009903489567,985374.1452636719,492416,31,FP32_TF32off,250,0,new exact continuation
+7,sparse,full,1500,500,1.8617410116887323,916751.0620117188,492416,31,FP32_TF32off,500,0,new exact continuation
+7,sparse,router_frozen,1000,0,2.5584160046420035,1259804.9753417969,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+7,sparse,router_frozen,1025,25,2.2767909168732268,1121128.2761230469,492416,31,FP32_TF32off,25,0,new exact continuation
+7,sparse,router_frozen,1100,100,2.1213174197219518,1044570.6385498047,492416,31,FP32_TF32off,100,0,new exact continuation
+7,sparse,router_frozen,1250,250,2.0261039357077526,997685.9956054688,492416,31,FP32_TF32off,250,0,new exact continuation
+7,sparse,router_frozen,1500,500,1.9104867565312693,940754.2467041016,492416,31,FP32_TF32off,500,0,new exact continuation
+7,sparse,experts_frozen,1000,0,2.5584160046420035,1259804.9753417969,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+7,sparse,experts_frozen,1025,25,2.350039518062313,1157197.0593261719,492416,31,FP32_TF32off,25,0,new exact continuation
+7,sparse,experts_frozen,1100,100,2.2123923781384796,1089417.4052734375,492416,31,FP32_TF32off,100,0,new exact continuation
+7,sparse,experts_frozen,1250,250,2.117932066038611,1042903.6362304688,492416,31,FP32_TF32off,250,0,new exact continuation
+7,sparse,experts_frozen,1500,500,2.0298191075018854,999515.4056396484,492416,31,FP32_TF32off,500,0,new exact continuation
+7,sparse,router_experts_frozen,1000,0,2.5584160046420035,1259804.9753417969,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+7,sparse,router_experts_frozen,1025,25,2.3706769256552134,1167359.2490234375,492416,31,FP32_TF32off,25,0,new exact continuation
+7,sparse,router_experts_frozen,1100,100,2.2410805159058853,1103543.9033203125,492416,31,FP32_TF32off,100,0,new exact continuation
+7,sparse,router_experts_frozen,1250,250,2.1478778463789543,1057649.417602539,492416,31,FP32_TF32off,250,0,new exact continuation
+7,sparse,router_experts_frozen,1500,500,2.0570336600418426,1012916.2867431641,492416,31,FP32_TF32off,500,0,new exact continuation
+17,unpruned,full,1000,0,2.06735225848046,1017997.3297119141,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+17,unpruned,full,1025,25,2.0504174558472443,1009658.3619384766,492416,31,FP32_TF32off,25,0,new exact continuation
+17,unpruned,full,1100,100,2.007314210003743,988433.6340332031,492416,31,FP32_TF32off,100,0,new exact continuation
+17,unpruned,full,1250,250,1.917855871848574,944382.9169921875,492416,31,FP32_TF32off,250,0,new exact continuation
+17,unpruned,full,1500,500,1.7997555768672664,886228.4421386719,492416,31,FP32_TF32off,500,0,new exact continuation
+17,unpruned,router_frozen,1000,0,2.06735225848046,1017997.3297119141,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+17,unpruned,router_frozen,1025,25,2.0492374773672535,1009077.3216552734,492416,31,FP32_TF32off,25,0,new exact continuation
+17,unpruned,router_frozen,1100,100,2.0099801251198492,989746.3732910156,492416,31,FP32_TF32off,100,0,new exact continuation
+17,unpruned,router_frozen,1250,250,1.9261916244621862,948487.5749511719,492416,31,FP32_TF32off,250,0,new exact continuation
+17,unpruned,router_frozen,1500,500,1.8176254989390006,895027.8776855469,492416,31,FP32_TF32off,500,0,new exact continuation
+17,unpruned,experts_frozen,1000,0,2.06735225848046,1017997.3297119141,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+17,unpruned,experts_frozen,1025,25,2.0524641229854113,1010666.1735839844,492416,31,FP32_TF32off,25,0,new exact continuation
+17,unpruned,experts_frozen,1100,100,2.0338982752400123,1001524.0531005859,492416,31,FP32_TF32off,100,0,new exact continuation
+17,unpruned,experts_frozen,1250,250,1.9945698267830356,982158.0958251953,492416,31,FP32_TF32off,250,0,new exact continuation
+17,unpruned,experts_frozen,1500,500,1.9524920284825547,961438.3146972656,492416,31,FP32_TF32off,500,0,new exact continuation
+17,unpruned,router_experts_frozen,1000,0,2.06735225848046,1017997.3297119141,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+17,unpruned,router_experts_frozen,1025,25,2.0523417931207906,1010605.9364013672,492416,31,FP32_TF32off,25,0,new exact continuation
+17,unpruned,router_experts_frozen,1100,100,2.035324186667672,1002226.1947021484,492416,31,FP32_TF32off,100,0,new exact continuation
+17,unpruned,router_experts_frozen,1250,250,1.9985847205411684,984135.09375,492416,31,FP32_TF32off,250,0,new exact continuation
+17,unpruned,router_experts_frozen,1500,500,1.9613250207368014,965787.8214111328,492416,31,FP32_TF32off,500,0,new exact continuation
+17,sparse,full,1000,0,2.51697420100903,1239398.3681640625,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+17,sparse,full,1025,25,2.24498253076889,1105465.3178710938,492416,31,FP32_TF32off,25,0,new exact continuation
+17,sparse,full,1100,100,2.086913612312176,1027629.6533203125,492416,31,FP32_TF32off,100,0,new exact continuation
+17,sparse,full,1250,250,1.9664325647178116,968302.8577880859,492416,31,FP32_TF32off,250,0,new exact continuation
+17,sparse,full,1500,500,1.8260588436458896,899180.5915527344,492416,31,FP32_TF32off,500,0,new exact continuation
+17,sparse,router_frozen,1000,0,2.51697420100903,1239398.3681640625,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+17,sparse,router_frozen,1025,25,2.2570795282810607,1111422.0729980469,492416,31,FP32_TF32off,25,0,new exact continuation
+17,sparse,router_frozen,1100,100,2.103000195143531,1035550.9440917969,492416,31,FP32_TF32off,100,0,new exact continuation
+17,sparse,router_frozen,1250,250,1.989213295220895,979520.4539794922,492416,31,FP32_TF32off,250,0,new exact continuation
+17,sparse,router_frozen,1500,500,1.8689547078405568,920303.2014160156,492416,31,FP32_TF32off,500,0,new exact continuation
+17,sparse,experts_frozen,1000,0,2.51697420100903,1239398.3681640625,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+17,sparse,experts_frozen,1025,25,2.3467454273173307,1155574.9963378906,492416,31,FP32_TF32off,25,0,new exact continuation
+17,sparse,experts_frozen,1100,100,2.2106994242676827,1088583.7677001953,492416,31,FP32_TF32off,100,0,new exact continuation
+17,sparse,experts_frozen,1250,250,2.098767865128662,1033466.8770751953,492416,31,FP32_TF32off,250,0,new exact continuation
+17,sparse,experts_frozen,1500,500,1.9996972442262042,984682.9182128906,492416,31,FP32_TF32off,500,0,new exact continuation
+17,sparse,router_experts_frozen,1000,0,2.51697420100903,1239398.3681640625,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+17,sparse,router_experts_frozen,1025,25,2.3649420052774546,1164535.2824707031,492416,31,FP32_TF32off,25,0,new exact continuation
+17,sparse,router_experts_frozen,1100,100,2.2417553216722497,1103876.1884765625,492416,31,FP32_TF32off,100,0,new exact continuation
+17,sparse,router_experts_frozen,1250,250,2.126687161173175,1047214.78515625,492416,31,FP32_TF32off,250,0,new exact continuation
+17,sparse,router_experts_frozen,1500,500,2.0283356513610156,998784.9281005859,492416,31,FP32_TF32off,500,0,new exact continuation
+29,unpruned,full,1000,0,2.070125771709191,1019363.0520019531,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+29,unpruned,full,1025,25,2.054952479412812,1011891.4801025391,492416,31,FP32_TF32off,25,0,new exact continuation
+29,unpruned,full,1100,100,2.0144013788348705,991923.4693603516,492416,31,FP32_TF32off,100,0,new exact continuation
+29,unpruned,full,1250,250,1.9264507764712662,948615.185546875,492416,31,FP32_TF32off,250,0,new exact continuation
+29,unpruned,full,1500,500,1.7995518961292383,886128.146484375,492416,31,FP32_TF32off,500,0,new exact continuation
+29,unpruned,router_frozen,1000,0,2.070125771709191,1019363.0520019531,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+29,unpruned,router_frozen,1025,25,2.0542988889955502,1011569.6417236328,492416,31,FP32_TF32off,25,0,new exact continuation
+29,unpruned,router_frozen,1100,100,2.012110086673571,990795.2004394531,492416,31,FP32_TF32off,100,0,new exact continuation
+29,unpruned,router_frozen,1250,250,1.929567653605434,950149.9857177734,492416,31,FP32_TF32off,250,0,new exact continuation
+29,unpruned,router_frozen,1500,500,1.8117117734273935,892115.8646240234,492416,31,FP32_TF32off,500,0,new exact continuation
+29,unpruned,experts_frozen,1000,0,2.070125771709191,1019363.0520019531,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+29,unpruned,experts_frozen,1025,25,2.0563868876398463,1012597.8056640625,492416,31,FP32_TF32off,25,0,new exact continuation
+29,unpruned,experts_frozen,1100,100,2.034429561078533,1001785.6667480469,492416,31,FP32_TF32off,100,0,new exact continuation
+29,unpruned,experts_frozen,1250,250,2.0036570782285867,986632.8038330078,492416,31,FP32_TF32off,250,0,new exact continuation
+29,unpruned,experts_frozen,1500,500,1.9656841001914698,967934.3018798828,492416,31,FP32_TF32off,500,0,new exact continuation
+29,unpruned,router_experts_frozen,1000,0,2.070125771709191,1019363.0520019531,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+29,unpruned,router_experts_frozen,1025,25,2.0547086112307733,1011771.3955078125,492416,31,FP32_TF32off,25,0,new exact continuation
+29,unpruned,router_experts_frozen,1100,100,2.0341427371444287,1001644.4300537109,492416,31,FP32_TF32off,100,0,new exact continuation
+29,unpruned,router_experts_frozen,1250,250,2.005232353101373,987408.4943847656,492416,31,FP32_TF32off,250,0,new exact continuation
+29,unpruned,router_experts_frozen,1500,500,1.9675000004561374,968828.4802246094,492416,31,FP32_TF32off,500,0,new exact continuation
+29,sparse,full,1000,0,2.5361083744407042,1248820.3413085938,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+29,sparse,full,1025,25,2.253846890157249,1109830.2702636719,492416,31,FP32_TF32off,25,0,new exact continuation
+29,sparse,full,1100,100,2.082893056252234,1025649.8671875,492416,31,FP32_TF32off,100,0,new exact continuation
+29,sparse,full,1250,250,1.9892708320012797,979548.7860107422,492416,31,FP32_TF32off,250,0,new exact continuation
+29,sparse,full,1500,500,1.8719223144923924,921764.4984130859,492416,31,FP32_TF32off,500,0,new exact continuation
+29,sparse,router_frozen,1000,0,2.5361083744407042,1248820.3413085938,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+29,sparse,router_frozen,1025,25,2.2633913440273,1114530.1120605469,492416,31,FP32_TF32off,25,0,new exact continuation
+29,sparse,router_frozen,1100,100,2.1025907094056557,1035349.3067626953,492416,31,FP32_TF32off,100,0,new exact continuation
+29,sparse,router_frozen,1250,250,2.0037350412898784,986671.1940917969,492416,31,FP32_TF32off,250,0,new exact continuation
+29,sparse,router_frozen,1500,500,1.8957256215995153,933485.6276855469,492416,31,FP32_TF32off,500,0,new exact continuation
+29,sparse,experts_frozen,1000,0,2.5361083744407042,1248820.3413085938,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+29,sparse,experts_frozen,1025,25,2.34887874891828,1156625.4780273438,492416,31,FP32_TF32off,25,0,new exact continuation
+29,sparse,experts_frozen,1100,100,2.2102384371419124,1088356.7702636719,492416,31,FP32_TF32off,100,0,new exact continuation
+29,sparse,experts_frozen,1250,250,2.113248064265736,1040597.1588134766,492416,31,FP32_TF32off,250,0,new exact continuation
+29,sparse,experts_frozen,1500,500,2.0256116015278334,997443.5623779297,492416,31,FP32_TF32off,500,0,new exact continuation
+29,sparse,router_experts_frozen,1000,0,2.5361083744407042,1248820.3413085938,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+29,sparse,router_experts_frozen,1025,25,2.3624162111215417,1163291.541015625,492416,31,FP32_TF32off,25,0,new exact continuation
+29,sparse,router_experts_frozen,1100,100,2.2327316478533903,1099432.787109375,492416,31,FP32_TF32off,100,0,new exact continuation
+29,sparse,router_experts_frozen,1250,250,2.135932250800057,1051767.215209961,492416,31,FP32_TF32off,250,0,new exact continuation
+29,sparse,router_experts_frozen,1500,500,2.0492693033657168,1009092.9932861328,492416,31,FP32_TF32off,500,0,new exact continuation
+43,unpruned,full,1000,0,2.1010442311837516,1034587.7961425781,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+43,unpruned,full,1025,25,2.0833674188648104,1025883.4509277344,492416,31,FP32_TF32off,25,0,new exact continuation
+43,unpruned,full,1100,100,2.039799576460122,1004429.9482421875,492416,31,FP32_TF32off,100,0,new exact continuation
+43,unpruned,full,1250,250,1.944349403470592,957428.755859375,492416,31,FP32_TF32off,250,0,new exact continuation
+43,unpruned,full,1500,500,1.802307786834931,887485.1911621094,492416,31,FP32_TF32off,500,0,new exact continuation
+43,unpruned,router_frozen,1000,0,2.1010442311837516,1034587.7961425781,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+43,unpruned,router_frozen,1025,25,2.0854909062416547,1026929.0900878906,492416,31,FP32_TF32off,25,0,new exact continuation
+43,unpruned,router_frozen,1100,100,2.041044147968416,1005042.7951660156,492416,31,FP32_TF32off,100,0,new exact continuation
+43,unpruned,router_frozen,1250,250,1.9535996861230995,961983.7430419922,492416,31,FP32_TF32off,250,0,new exact continuation
+43,unpruned,router_frozen,1500,500,1.8269559918734077,899622.3616943359,492416,31,FP32_TF32off,499,1,new exact continuation
+43,unpruned,experts_frozen,1000,0,2.1010442311837516,1034587.7961425781,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+43,unpruned,experts_frozen,1025,25,2.094094128927256,1031165.4545898438,492416,31,FP32_TF32off,25,0,new exact continuation
+43,unpruned,experts_frozen,1100,100,2.061089940587979,1014913.6641845703,492416,31,FP32_TF32off,100,0,new exact continuation
+43,unpruned,experts_frozen,1250,250,2.0222804654812796,995803.2576904297,492416,31,FP32_TF32off,250,0,new exact continuation
+43,unpruned,experts_frozen,1500,500,1.9719061210677937,970998.1245117188,492416,31,FP32_TF32off,500,0,new exact continuation
+43,unpruned,router_experts_frozen,1000,0,2.1010442311837516,1034587.7961425781,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+43,unpruned,router_experts_frozen,1025,25,2.0880635595953803,1028195.9057617188,492416,31,FP32_TF32off,25,0,new exact continuation
+43,unpruned,router_experts_frozen,1100,100,2.062668627815058,1015691.0350341797,492416,31,FP32_TF32off,100,0,new exact continuation
+43,unpruned,router_experts_frozen,1250,250,2.0288980353612978,999061.8549804688,492416,31,FP32_TF32off,250,0,new exact continuation
+43,unpruned,router_experts_frozen,1500,500,1.9849557598938037,977423.9754638672,492416,31,FP32_TF32off,500,0,new exact continuation
+43,sparse,full,1000,0,2.595880297707185,1278252.9926757812,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+43,sparse,full,1025,25,2.290723557716411,1127988.9313964844,492416,31,FP32_TF32off,25,0,new exact continuation
+43,sparse,full,1100,100,2.1154572980447903,1041685.0208740234,492416,31,FP32_TF32off,100,0,new exact continuation
+43,sparse,full,1250,250,1.9976806918273877,983689.935546875,492416,31,FP32_TF32off,250,0,new exact continuation
+43,sparse,full,1500,500,1.851510006017365,911713.1511230469,492416,31,FP32_TF32off,500,0,new exact continuation
+43,sparse,router_frozen,1000,0,2.595880297707185,1278252.9926757812,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+43,sparse,router_frozen,1025,25,2.3068695643489194,1135939.4833984375,492416,31,FP32_TF32off,25,0,new exact continuation
+43,sparse,router_frozen,1100,100,2.1314316509852698,1049551.0478515625,492416,31,FP32_TF32off,100,0,new exact continuation
+43,sparse,router_frozen,1250,250,2.018187875155198,993788.0007324219,492416,31,FP32_TF32off,250,0,new exact continuation
+43,sparse,router_frozen,1500,500,1.8897239993942971,930530.3328857422,492416,31,FP32_TF32off,500,0,new exact continuation
+43,sparse,experts_frozen,1000,0,2.595880297707185,1278252.9926757812,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+43,sparse,experts_frozen,1025,25,2.379294121516411,1171602.494140625,492416,31,FP32_TF32off,25,0,new exact continuation
+43,sparse,experts_frozen,1100,100,2.2369072802320282,1101488.9353027344,492416,31,FP32_TF32off,100,0,new exact continuation
+43,sparse,experts_frozen,1250,250,2.1286633501184244,1048187.8922119141,492416,31,FP32_TF32off,250,0,new exact continuation
+43,sparse,experts_frozen,1500,500,2.0271420185058373,998197.1641845703,492416,31,FP32_TF32off,500,0,new exact continuation
+43,sparse,router_experts_frozen,1000,0,2.595880297707185,1278252.9926757812,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+43,sparse,router_experts_frozen,1025,25,2.400307000628502,1181949.5720214844,492416,31,FP32_TF32off,25,0,new exact continuation
+43,sparse,router_experts_frozen,1100,100,2.2673897670094365,1116498.9995117188,492416,31,FP32_TF32off,100,0,new exact continuation
+43,sparse,router_experts_frozen,1250,250,2.1622002762511143,1064702.0112304688,492416,31,FP32_TF32off,250,0,new exact continuation
+43,sparse,router_experts_frozen,1500,500,2.0608499961795514,1014795.51171875,492416,31,FP32_TF32off,500,0,new exact continuation
+61,unpruned,full,1000,0,2.108712810152439,1038363.9271240234,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+61,unpruned,full,1025,25,2.100377128686352,1034259.3041992188,492416,31,FP32_TF32off,25,0,new exact continuation
+61,unpruned,full,1100,100,2.0411127812836987,1005076.5913085938,492416,31,FP32_TF32off,100,0,new exact continuation
+61,unpruned,full,1250,250,1.95350035748483,961934.83203125,492416,31,FP32_TF32off,250,0,new exact continuation
+61,unpruned,full,1500,500,1.8233664676000894,897854.8225097656,492416,31,FP32_TF32off,500,0,new exact continuation
+61,unpruned,router_frozen,1000,0,2.108712810152439,1038363.9271240234,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+61,unpruned,router_frozen,1025,25,2.0952486157696186,1031733.9423828125,492416,31,FP32_TF32off,25,0,new exact continuation
+61,unpruned,router_frozen,1100,100,2.044719434013793,1006852.5648193359,492416,31,FP32_TF32off,100,0,new exact continuation
+61,unpruned,router_frozen,1250,250,1.9642488602573047,967227.5667724609,492416,31,FP32_TF32off,250,0,new exact continuation
+61,unpruned,router_frozen,1500,500,1.8410489937842032,906561.9813232422,492416,31,FP32_TF32off,500,0,new exact continuation
+61,unpruned,experts_frozen,1000,0,2.108712810152439,1038363.9271240234,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+61,unpruned,experts_frozen,1025,25,2.088574403783145,1028447.4536132812,492416,31,FP32_TF32off,25,0,new exact continuation
+61,unpruned,experts_frozen,1100,100,2.064724315566957,1016703.2885742188,492416,31,FP32_TF32off,100,0,new exact continuation
+61,unpruned,experts_frozen,1250,250,2.0271893420218183,998220.4670410156,492416,31,FP32_TF32off,250,0,new exact continuation
+61,unpruned,experts_frozen,1500,500,1.9728311559024154,971453.6264648438,492416,31,FP32_TF32off,500,0,new exact continuation
+61,unpruned,router_experts_frozen,1000,0,2.108712810152439,1038363.9271240234,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+61,unpruned,router_experts_frozen,1025,25,2.091355506246481,1029816.9129638672,492416,31,FP32_TF32off,25,0,new exact continuation
+61,unpruned,router_experts_frozen,1100,100,2.0662263521194952,1017442.9154052734,492416,31,FP32_TF32off,100,0,new exact continuation
+61,unpruned,router_experts_frozen,1250,250,2.028649771154655,998939.6057128906,492416,31,FP32_TF32off,250,0,new exact continuation
+61,unpruned,router_experts_frozen,1500,500,1.980972982921754,975462.7923583984,492416,31,FP32_TF32off,500,0,new exact continuation
+61,sparse,full,1000,0,2.621438286476145,1290838.1552734375,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+61,sparse,full,1025,25,2.2940935963372118,1129648.3923339844,492416,31,FP32_TF32off,25,0,new exact continuation
+61,sparse,full,1100,100,2.119779505480535,1043813.3449707031,492416,31,FP32_TF32off,100,0,new exact continuation
+61,sparse,full,1250,250,2.0081151811556595,988828.0450439453,492416,31,FP32_TF32off,250,0,new exact continuation
+61,sparse,full,1500,500,1.8741043223199332,922838.9539794922,492416,31,FP32_TF32off,500,0,new exact continuation
+61,sparse,router_frozen,1000,0,2.621438286476145,1290838.1552734375,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+61,sparse,router_frozen,1025,25,2.304759943550334,1134900.6723632812,492416,31,FP32_TF32off,25,0,new exact continuation
+61,sparse,router_frozen,1100,100,2.1333179359842593,1050479.884765625,492416,31,FP32_TF32off,100,0,new exact continuation
+61,sparse,router_frozen,1250,250,2.0253299478124824,997304.8715820312,492416,31,FP32_TF32off,250,0,new exact continuation
+61,sparse,router_frozen,1500,500,1.903887402648767,937504.6192626953,492416,31,FP32_TF32off,500,0,new exact continuation
+61,sparse,experts_frozen,1000,0,2.621438286476145,1290838.1552734375,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+61,sparse,experts_frozen,1025,25,2.381613892767688,1172744.7866210938,492416,31,FP32_TF32off,25,0,new exact continuation
+61,sparse,experts_frozen,1100,100,2.2317388508268414,1098943.91796875,492416,31,FP32_TF32off,100,0,new exact continuation
+61,sparse,experts_frozen,1250,250,2.119261759734941,1043558.3986816406,492416,31,FP32_TF32off,250,0,new exact continuation
+61,sparse,experts_frozen,1500,500,2.0209513050195365,995148.7578125,492416,31,FP32_TF32off,500,0,new exact continuation
+61,sparse,router_experts_frozen,1000,0,2.621438286476145,1290838.1552734375,492416,31,FP32_TF32off,0,0,reconstructed complete branch start
+61,sparse,router_experts_frozen,1025,25,2.396759287053528,1180202.62109375,492416,31,FP32_TF32off,25,0,new exact continuation
+61,sparse,router_experts_frozen,1100,100,2.253432348482882,1109626.1433105469,492416,31,FP32_TF32off,100,0,new exact continuation
+61,sparse,router_experts_frozen,1250,250,2.143905820863911,1055693.5286865234,492416,31,FP32_TF32off,250,0,new exact continuation
+61,sparse,router_experts_frozen,1500,500,2.04379076594528,1006395.2738037109,492416,31,FP32_TF32off,500,0,new exact continuation

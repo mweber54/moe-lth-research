@@ -1,0 +1,63 @@
+{
+  "calibration": "existing sealed four-complete-batch training probe; one FP64 RMS ratio per seed/model; no CE",
+  "cells": 160,
+  "condition": "router_experts_frozen",
+  "end_step": 1500,
+  "id": "imp_first_moe_amplitude_v1",
+  "insertion": "previously verified complete first-MoE contribution only; one global multiply or divide, recipient residual unchanged",
+  "layer": 0,
+  "limits": "The first MoE layer and this follow-up question were selected after previous diagnostics. The new amplitude intervention is sealed before its outcomes; this is not project-level preregistration. Calibration uses an already sealed four-complete-batch training probe previously used in training and diagnostics, not held-out generalization data. Validation was repeatedly examined and is not an independent test set. Source seed (n=5) is the independent replication unit; tokens, batches, recipient contexts, modes and variants are nested measurements. One training-only scalar per seed/model type changes only global contribution amplitude. Residual differences can include directions, token-specific amplitude allocation, zero support, assignments and gates; they are not an isolated direction effect. Global norms/cosines describe interventions, not why they help. Recipient context includes its own residual and subsequent computation, not downstream weights alone. Native/replay differences include downstream routing responses and do not isolate a routing mechanism. Sparse-minus-unpruned effects compare each trajectory's own intervention and are not equal absolute-amplitude perturbations. No equivalence claim, percentage of recovery explained, expert weight learning, training counterfactual, standalone sparse recoverability, online pruning criterion or generalization beyond this architecture/mask family/window is established. No follow-up is launched.",
+  "metrics": [
+    "B_original",
+    "B_scale_start",
+    "B_content_end",
+    "B_content_start",
+    "B_scale_end",
+    "I"
+  ],
+  "model_types": [
+    "sparse",
+    "unpruned"
+  ],
+  "modes": [
+    "NATIVE_DOWNSTREAM",
+    "RECIPIENT_BASELINE_REPLAY"
+  ],
+  "no_validation_refit": true,
+  "pilot_seed": 17,
+  "previous_unscaled_reuse": "exact verified prior pair caches; all pilot A/D re-evaluated plus first complete batch in every other pair",
+  "primary_mode": "NATIVE_DOWNSTREAM",
+  "recipients": [
+    "start",
+    "end"
+  ],
+  "seeds": [
+    7,
+    17,
+    29,
+    43,
+    61
+  ],
+  "start_step": 1000,
+  "tolerances": {
+    "ce_atol": 1e-06,
+    "logit_atol": 1e-06,
+    "logit_rtol": 1e-05,
+    "relative_rms_linearity": 1e-06
+  },
+  "unavailable": "explicit unavailable scaled cells and null contrasts; no epsilon",
+  "validation": {
+    "batches": 31,
+    "independent_test": false,
+    "precision": "FP32",
+    "rebatching": false,
+    "target_tokens": 492416,
+    "tf32": false
+  },
+  "variants": [
+    "START_NATIVE",
+    "START_SCALED_TO_END",
+    "END_SCALED_TO_START",
+    "END_NATIVE"
+  ]
+}

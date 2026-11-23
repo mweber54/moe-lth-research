@@ -1,0 +1,42 @@
+{
+  "experiment": "ramp_imp_correspondence_v1",
+  "calibration_sequences": 64,
+  "calibration_seed": 20261113,
+  "profiling_device": "cpu",
+  "profiling_precision": "fp32 activations / fp64 reductions",
+  "torch_version": "2.13.0+cu130",
+  "numpy_version": "2.5.2",
+  "times": [
+    0,
+    250,
+    1250,
+    2500
+  ],
+  "features": [
+    "ramp",
+    "random",
+    "utilization",
+    "activation_only",
+    "down_norm",
+    "routing_activation",
+    "initial_magnitude",
+    "checkpoint_magnitude",
+    "ramp_per_dispatch",
+    "ramp_per_route_energy"
+  ],
+  "training_enabled": false,
+  "primary_table_sha256": "7cf0db9445d5e4ea0f9318a548fcb77af33cca0ffd70db430f6a7095ed7913ce",
+  "mask_table_sha256": "bbfb31ecc377b897c332664db5d700c7bdb26b5b6ff0de9d8f66dfe351cea1a4",
+  "source_hashes": {
+    "scripts/ramp_imp_correspondence_v1/run.py": "f239fb845656cdfb44f19824018428a8a77ff7b6494b97faffe4e8c82177bd0e",
+    "src/moe_lth/analysis/ramp.py": "9b6d8ae45b466fe165d097f99a9f62f7cbbe473402e70b29f7780fcf6cedca7d",
+    "src/moe_lth/models/moe_layer.py": "7b9ca9d9c3a1020125d5d9d42f8429cbd0aea8ca42e8dcc334c1d8724465e21a",
+    "src/moe_lth/models/experts.py": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a",
+    "src/moe_lth/models/transformer.py": "12e14e68c2cd7a223173710c9fb5166823af470ceca605c1c0185063037ba9f6",
+    "src/moe_lth/models/router.py": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6"
+  },
+  "h2": "descriptive only; n=5 source seeds per architecture/sparsity; no fitted multivariable predictor",
+  "feature_timing": "checkpoint_magnitude uses current checkpoint; no later weight feature enters early profiles; mask-conditioned H2 is retrospective",
+  "h1_unit": "equal-expert or equal-layer mean per run, then seed uncertainty; no neuron p-values",
+  "h3": "prepared only, never executed"
+}

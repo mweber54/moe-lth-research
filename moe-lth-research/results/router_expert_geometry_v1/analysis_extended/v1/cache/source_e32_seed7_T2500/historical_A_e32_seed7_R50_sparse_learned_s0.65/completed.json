@@ -1,0 +1,61 @@
+{
+  "cache_key": "0ccc97d1c69e8db43ddd1cbe1517ec44841a0261620c964b58ac518b2418a719",
+  "meta": {
+    "condition_id": "historical_A_e32_seed7_R50_sparse_learned_s0.65",
+    "seed": 7,
+    "router_age": 50,
+    "sparsity": 0.65,
+    "mask_type": "learned",
+    "step": 2500,
+    "category": "historical_endpoint",
+    "dense_condition_id": null,
+    "validation_loss": 1.434101208110955
+  },
+  "origin": {
+    "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/dataset_b_lower_sparsity/recoveries/A_e32_seed7_R50_sparse_learned_s0.65/attempt_0001/checkpoints/final_recovered.pt",
+    "sha256": "f8b49ad4699b4f40ead6612fc88b1b123c9d273605c04f7b84d24f956f7ade2a",
+    "size": 274066551
+  },
+  "reference_identities": {
+    "source_final": {
+      "category": "source_final_dense",
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/32e_router_age_localization/references/seed_7/checkpoints/step_2500.pt",
+      "sha256": "20498ff8253d902d05e80b8389a76d55f803b90bd20d0eb7a994c7220712c731",
+      "size": 274063179
+    },
+    "matched_historical_dense": {
+      "category": "historical_matched_dense_endpoint",
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/router_conditioned_fixed_budget_dataset/recoveries/e32/seed_7/R50/dense/checkpoints/final_recovered.pt",
+      "sha256": "9fa7fe65af2bacb9609ba2227f34c4339df7e37da375292e442cb28e4bbb3eec",
+      "size": 274066551
+    }
+  },
+  "probe": {
+    "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/router_expert_geometry_v1/probes/source_e32_seed7_T2500.pt",
+    "sha256": "af4e02f2dc3e563131db1d20276e6dac9a3be4866032737109f8742b75e1d8a6",
+    "size": 4213833
+  },
+  "model_tensor_sha256": "963fbdd9b576a50818eff39b99d59e4a764afb6962cab6e607675994c727076c",
+  "finite_tensors": true,
+  "mask_applied_verified": true,
+  "expected_initialization_verified": false,
+  "model_preserved": true,
+  "elapsed_seconds": 6.304020281881094,
+  "peak_cuda_allocated": 426020864,
+  "peak_cpu_rss_kib": 5101688,
+  "timing_seconds": {
+    "tensor_checks": 0.4375991653650999,
+    "load_and_hash": 1.7945210244506598,
+    "gram": 0.19366310350596905,
+    "activation": 3.434906417503953,
+    "hash_and_write": 0.4435779321938753
+  },
+  "output_hashes": {
+    "activation_layer_pools.csv": "ca1b3c2220599e3dd44feac43764e3cd0f08451b13aec08951198c01c73adaac",
+    "activation_within_token.csv": "c1a67faa5e17ccf68ee0b1ed5d129d1623ef6db960817b10d580669bf1e32d0c",
+    "activation_groups.csv": "68a0bf6d2cd591816fe040930fe29af4c71665485fb4740955df76f2f9ed1655",
+    "gram_experts.csv": "0fca3655f9fc0da6b9e3042efe7e9abab6fc87c41d40b0d2499b1b5a977defba",
+    "token_pairs.npz": "356cd09c40c0095385a143bebc9daa298679db6ee5cf0c8e6a957c90e03452a9",
+    "input_drift.csv": "e77d6568d2d01dd3d613e7608c82d82490df4f081c5bc1f57c9717b96c955711"
+  }
+}

@@ -1,0 +1,7 @@
+# Retrospective expert exposure and weight development
+
+CPU-only analysis of existing original unpruned 32E source checkpoints and saved exposure/validation-assignment logs. These entrypoints never invoke model training, recovery, pruning evaluation, IMP, or model forwards.
+
+Use the repository `.venv-highres/bin/python`. Run `audit.py` first: it requires a fresh output directory and freezes cohort, checkpoint grid, ranking rules, features and prediction model after coverage inspection. `inventory_supplement.py` adds excluded-protocol metadata and data/code hashes without selecting additional trajectories. `analyze.py` performs exact coordinate ranks incrementally by expert across six mmap checkpoint handles, with four CPU workers. `summarize.py` computes stratified descriptions and a single source-seed-held-out Ridge comparison. `verify.py` validates numerical/provenance requirements including actual repository mask counts; these are hypothetical masks only and are never applied for training or task evaluation. `report.py` renders figures and findings. Review outcomes and append a candid final verdict before sealing completion.
+
+All new artifacts go under `results/expert_exposure_weight_development_v1/`. No historical input is written. Do not interpret hypothetical rank disagreements as demonstrated pruning damage, or fixed validation membership as historical accepted-token composition. No final IMP mask is used as a usefulness label. The frozen configuration is retrospective/exploratory, not a preregistration.

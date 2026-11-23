@@ -1,0 +1,66 @@
+{
+  "checks": [
+    {
+      "seed": 7,
+      "step": 1,
+      "new_train_ce": 167.48548889160156,
+      "historical_train_ce": 167.48548889160156,
+      "exact_match": true
+    },
+    {
+      "seed": 7,
+      "step": 50,
+      "new_train_ce": 7.020545959472656,
+      "historical_train_ce": 7.020545959472656,
+      "exact_match": true
+    },
+    {
+      "seed": 7,
+      "step": 100,
+      "new_train_ce": 3.18145751953125,
+      "historical_train_ce": 3.18145751953125,
+      "exact_match": true
+    },
+    {
+      "seed": 29,
+      "step": 1,
+      "new_train_ce": 164.72158813476562,
+      "historical_train_ce": 164.72158813476562,
+      "exact_match": true
+    },
+    {
+      "seed": 29,
+      "step": 50,
+      "new_train_ce": 6.857759475708008,
+      "historical_train_ce": 6.857759475708008,
+      "exact_match": true
+    },
+    {
+      "seed": 29,
+      "step": 100,
+      "new_train_ce": 3.1700761318206787,
+      "historical_train_ce": 3.1700761318206787,
+      "exact_match": true
+    }
+  ],
+  "note": "Early agreement is not a completed reproduction.",
+  "final_endpoint_checks": {
+    "7": {
+      "final_ce": 1.5910784084517398,
+      "historical_ce": 1.5910784084517398,
+      "absolute_discrepancy": 0.0,
+      "passed": true,
+      "applied_updates": 2498,
+      "amp_skips": 2
+    },
+    "29": {
+      "final_ce": 1.4886301453156319,
+      "historical_ce": 1.4886301453156319,
+      "absolute_discrepancy": 0.0,
+      "passed": true,
+      "applied_updates": 2498,
+      "amp_skips": 2
+    }
+  },
+  "updated": 1792594768.5097585
+}

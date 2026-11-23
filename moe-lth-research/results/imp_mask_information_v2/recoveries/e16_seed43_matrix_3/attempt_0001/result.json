@@ -1,0 +1,41 @@
+{
+  "job": "e16_seed43_matrix_3",
+  "seed": 43,
+  "condition": "matrix",
+  "replicate": 3,
+  "mask_seed": 9204303,
+  "mask_path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_information_v2/masks/e16_seed43_matrix_3.pt",
+  "mask_hash": "52f3beae9ed4537bf3ac41bfb527de95d4e490b154f33a530dd7bd78ea0dbe01",
+  "reused": false,
+  "host": "adder.cs.kent.edu",
+  "stage_path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_information_v2/recoveries/e16_seed43_matrix_3/attempt_0001/stage.json",
+  "curves_path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_information_v2/recoveries/e16_seed43_matrix_3/attempt_0001/metrics.jsonl",
+  "final_ce": 1.6691621133870262,
+  "initial_ce": 178.0622024555965,
+  "training_ce": 1.6354801654815674,
+  "historical_dense_ce": 1.4521619406557096,
+  "historical_imp_ce": 1.4847475391008156,
+  "attempted_updates": 2500,
+  "applied_updates": 2499,
+  "amp_skips": 1,
+  "duration_seconds": 358.36089602601714,
+  "checkpoint_sha256": "51f1aa240fb1ae2fdcfbde217d5d0a70060dbf5fe48d9b46f8e3da6bd70873c9",
+  "initialization_hashes": {
+    "expert": "f1629598de24ad48a6e0d27197b5972eaf279be4b5f452eb1df42e0374087c1f",
+    "shared": "b623e3aca2af6a707d1790ced08765da4e36886a0aa564e89dadaac57f0168ba",
+    "router": "072b3a5b8baccd346170810339ad093abf6059a61af4b9bcf127451de3ac8675"
+  },
+  "checks": {
+    "expert_initialization": true,
+    "shared_initialization": true,
+    "router_initialization": true,
+    "train_hash": true,
+    "validation_hash": true,
+    "budget": true,
+    "optimizer": true,
+    "scheduler": true,
+    "trainability": true,
+    "amp_accounting": true,
+    "endpoint_finite": true
+  }
+}

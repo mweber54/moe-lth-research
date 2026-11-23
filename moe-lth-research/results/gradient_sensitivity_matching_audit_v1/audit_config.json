@@ -1,0 +1,79 @@
+{
+  "audit": "gradient_sensitivity_matching_audit_v1",
+  "seeds": [
+    7,
+    17,
+    29,
+    43,
+    61
+  ],
+  "prohibited": [
+    "model forwards",
+    "backwards",
+    "gradient recomputation",
+    "mask application to models",
+    "optimizer updates",
+    "intervention or validation losses"
+  ],
+  "original_inputs": {
+    "results/gradient_sensitivity_pruning_v1/registration.json": "ddf95f8ed4590291054ba6626e4936114f201c0b9c0c2bf3648b12902026ed2e",
+    "results/gradient_sensitivity_pruning_v1/completion.json": "fb6d6b90af94dbdf66c68568236d84aab72541b9bafe0d8ac5ce401bf05a9a58",
+    "results/gradient_sensitivity_pruning_v1/matching_review.json": "9fbc8319e01d3336dbf0d4161e8356367755b5186eea1fd35de6c8c007c5d3d8",
+    "results/gradient_sensitivity_pruning_v1/matched_group_summary.csv": "eb7d005f58bbcb18db0eeb3b894959b62bf7c72876983d666973e63aa273825d",
+    "results/gradient_sensitivity_pruning_v1/tensor_reliability_summary.csv": "113f6bb7278a813ff64ded74c5a059af85c82c4775ee41f077305c3dd0de3312",
+    "results/gradient_sensitivity_pruning_v1/checkpoint_and_calibration_provenance.json": "1116d31f7a2ec65a234a6b726f8842c53480ddde13468c98ce7e97d4188cbeff",
+    "results/gradient_sensitivity_pruning_v1/numerical_checks.json": "7e740f82bae5189a239403fd980a3b6e0b440dbef0a30aaed199e9a75337aed0",
+    "results/gradient_sensitivity_pruning_v1/engineering_code_amendment.json": "18a6133d6f98abcdf8f4b20a472e328916b6a8d4e3f509c6627ebebd30872578",
+    "results/gradient_sensitivity_pruning_v1/matching_transport_amendment.json": "30ee72411192d19318f617a906fba3e9a185a6c236306238d1f4f8ff87f87c6f",
+    "scripts/gradient_sensitivity_pruning_v1/match.py": "6407e74c5679a299570cb281a7f907097c81b66858e9aec827bf38d1871379b4",
+    "results/magnitude_growth_pruning_v1/findings.md": "5a0a63e01cffc6b3626ac6360023021ea3cd8e22ff75d320d959804017645034"
+  },
+  "solver_subset_sha256": "7505d5af5b962330337ca92e758bd6b02f8ef3de2c6034677d100db9722c25e9",
+  "subset_rng": "numpy.default_rng(4041917), sequential seed/layer/fc1-fc2 draws, one expert per cell, all 40 retained",
+  "designs": {
+    "A": "Exact reproduction of original row-greedy and column-cycle matcher, all 1280 tensors",
+    "B": "Binary maximum-cardinality admissible edge selection on fixed 40 tensors; coordinate capacity one in either role, exact column equality, exact per-pair row/sign/stratum/calipers/A_H>=2*A_L, target cap2621; exact linear energy bound; evaluate SMD/KS afterward",
+    "C": "Same nonstructural rules and dose/coverage, exact rows; only column equality replaced by TV<=0.05. All tensors: LP on original coordinate-disjoint greedy edges plus conservative integer flooring; evaluate all gates without repair. Fixed subset: binary solver on alternative admissible edges as in B with TV bound. No additional relaxation"
+  },
+  "column_TV": "sum(abs(column_H-column_L))/(2*pairs)",
+  "column_tolerance": 0.05,
+  "column_tolerance_interpretation": "proposed design tolerance, not demonstrated harmless structural imbalance",
+  "solver": {
+    "binary_time_limit_seconds": 30,
+    "external_wall_limit_seconds": 45,
+    "address_space_limit_GiB": 8,
+    "node_limit": 20000,
+    "threads": 1,
+    "mip_relative_gap": 0.0,
+    "max_admissible_graph_edges": 300000,
+    "graph_restriction": "If complete eligible edges exceed300000 retain all original greedy pairs then lowest(feature_cost,H,L) remaining up to cap; restricted infeasibility does not certify complete graph infeasibility",
+    "C_all_tensor_LP_time_limit_seconds": 3,
+    "C_all_tensor_LP_memory": "bounded by worker address space24GiB; <=65536 original greedy edges",
+    "maximum_binary_jobs": 80,
+    "maximum_parallel_binary_jobs": 2,
+    "maximum_descriptive_workers": 4
+  },
+  "attrition": {
+    "edge_counts": "exact directed admissible pair counts from order statistics/orthogonal range counting; not attainable dose",
+    "coordinate_counts": "unique union of coordinates having any H or L partner at stage; roles can overlap until disjoint selection",
+    "stage_order": [
+      "currently_small",
+      "sensitivity",
+      "stratum",
+      "sign",
+      "magnitude_caliper",
+      "slope_caliper",
+      "variation_caliper",
+      "exact_row",
+      "disjoint_greedy",
+      "exact_column_A",
+      "aggregate_balance",
+      "sensitivity_contrast",
+      "dose_coverage"
+    ],
+    "certification": "Binary solver upper bounds only apply to stated graph and encoded constraints; SMD/KS checked separately, timeouts unresolved; LP-floor candidates have no maximum certificate"
+  },
+  "overlap_populations": "Descriptive within-stratum lower/upper quartiles of existing A on bottom half; ascending A then flat index, first/last ceil25%; not new matcher eligibility",
+  "replication_unit": "five original source seeds; tensor/edge/coordinate counts descriptive",
+  "scope": "No threshold/dose/score/architecture/checkpoint search; no intervention authorized; original stopped experiment remains unchanged"
+}

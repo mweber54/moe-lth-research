@@ -1,0 +1,38 @@
+DATASET A FINALIZATION REPORT
+
+Source trajectories: 25 / 25
+Dense recoveries: 275 / 275
+Sparse recoveries: 1650 / 1650
+
+Missing cells: 0
+Invalid cells: 0
+Duplicate cells: 0 manifest duplicates (artifact copies separately audited)
+Protocol mismatches: 0 existing cells failing validation; see audit reasons
+Comparator mismatches: 0 unavailable/invalid matched comparators
+Ticket-gap mismatches: 0
+
+Canonical dataset rows: 1650 (partial candidate while blocked)
+Aggregated summary rows: 330
+Master results rows: 30
+Seed-winner rows: 150
+
+Main descriptive findings:
+1. 30/30 architecture/sparsity curves have all five seeds and eleven ages.
+2. Among complete curves, 16 have intermediate mean winners, 10 R0 winners and 4 R100 winners.
+3. All five seed winner sets overlap the mean winner in 1/30 complete curves.
+4. At 95% pruning, complete-curve mean winners are 8E: R0, 12E: R0, 16E: R0, 24E: R0, 32E: R0.
+5. Ticket gaps independently recomputed for 1650 rows; 207 stored comparisons match and 0 mismatch.
+
+Previous interim findings confirmed: consult exact comparison table; complete architecture cells remain separately flagged.
+Previous interim findings revised: 8 available-data winner entries changed; partial cells remain provisional.
+
+Finalization status: PASS
+Canonical dataset path: /users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/final_dataset_a/canonical/dataset_a_canonical.csv
+Master results path: /users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/final_dataset_a/summaries/dataset_a_master_results.csv
+Final report path: /users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/final_dataset_a/reports/dataset_a_final_analysis.md
+Figures directory: /users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/final_dataset_a/figures
+Frozen manifest path: /users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/final_dataset_a/DATASET_A_FROZEN.json
+
+DATASET B WAS NOT STARTED.
+NO NEW TRAINING WAS STARTED.
+NO RAW EXPERIMENTAL ARTIFACTS WERE MODIFIED.

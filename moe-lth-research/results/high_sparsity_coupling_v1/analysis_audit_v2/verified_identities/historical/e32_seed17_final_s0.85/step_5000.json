@@ -1,0 +1,99 @@
+{
+  "verified_cache_key": "55acd3d5b3472a04980d26b551339c428bef90b4c5b04b7526ab094326bc42b0",
+  "identity": {
+    "schema": 2,
+    "track": "historical",
+    "condition": "e32_seed17_final_s0.85",
+    "global_recovery_step": 5000,
+    "checkpoint": {
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_extended_recovery/e32/seed_17/final_s0.85/checkpoints/step_5000.pt",
+      "sha256": "8ea3fa0d138352748856b041487730b8918dabf5cc8b7b4d754da8a576c9b004"
+    },
+    "components": {
+      "model": "59d3a5fede0faad36f88df22a6c784435836f84601c9a6efd6156f1a3e24818f",
+      "expert": "b82a6642251c78cb6808d61208597ddfdbf948bca98eb6ca28fab216418a77b5",
+      "router": "fc293e1255cd977c4b7f344f693f19583971594d970e8eef8309b568ba7ca738",
+      "shared": "5937c0eb821d7e666910c82d8a61dabb57d91ceada2ed538e72c179d04c00547"
+    },
+    "references": {
+      "source": {
+        "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/32e_router_age_localization/references/seed_17/checkpoints/step_2500.pt",
+        "sha256": "be7a3a5398db62a43701a5095eb468c1cc77c2543a9583b25931fd8b94937dbc",
+        "bytes": 274063179
+      },
+      "mask_selection": {
+        "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_80_85/trajectories/e32/seed_17/round_08/checkpoints/final_recovered.pt",
+        "sha256": "1f6e0febb4ea4b970b3bf740c56f034fd465c91835c9d8d1fef72abed20fff14",
+        "bytes": 274066551
+      },
+      "recovery_initial": {
+        "model_hash": "90135d140fbd3c5f1835b224f02d5a8e7f8e7515b26073af41ca3bc40b70744f",
+        "checkpoint": "reconstructed:/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/32e_router_age_localization/references/seed_17/checkpoints/step_0.pt",
+        "mask_sha256": "364ce1c4e7d51ec96420a26d6dab458f614a5e240c6e34a67b28b9b88ced9a1a"
+      },
+      "same_step_dense": {
+        "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_extended_recovery/e32/seed_17/dense/checkpoints/step_5000.pt",
+        "sha256": "bac7c967a1ea0f9a43f14fde4b783433a8e89c4735ccef14fd536013d43f5bce",
+        "model_hash": "108bec65dbda4c600fa5c2827102959b896054933510a1b0e1b1654f3ecd30d1"
+      },
+      "fixed_dense_final": {
+        "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_extended_recovery/e32/seed_17/dense/checkpoints/step_5000.pt",
+        "sha256": "bac7c967a1ea0f9a43f14fde4b783433a8e89c4735ccef14fd536013d43f5bce",
+        "model_hash": "108bec65dbda4c600fa5c2827102959b896054933510a1b0e1b1654f3ecd30d1"
+      }
+    },
+    "probe": {
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/high_sparsity_coupling_v1/probes/seed_17.pt",
+      "sha256": "8988fde1e4bd7b6920c7ee7671e92d13e0146d2af55f382d1717d2578479cb2e",
+      "tokens": "3c7c9248028507a52dcb260564e9a55855498f26068e2e2829a6233bfde8837f",
+      "positions": "55c6af45f87a98a77a265cbcddcccd47f7dbb98b076a8edf6656620d8efb2c39"
+    },
+    "fixed_pair_identities": {
+      "fixed_source/L0/all_expert": "6a28588788e87217dcffbed608550637a16af4d90f4dd9d12e98a02964015d62",
+      "fixed_source/L0/fixed_initial": "3518fc68cae2746aa2a5f577a35b19245c6094d28be763690db1d9f4fa3b1113",
+      "fixed_source/L0/fixed_source": "126d9dda9898baa56187f3963ea091fc9e2b22d6ed352fcc6bbe1b4706c6445b",
+      "fixed_source/L1/all_expert": "6a28588788e87217dcffbed608550637a16af4d90f4dd9d12e98a02964015d62",
+      "fixed_source/L1/fixed_initial": "76bcd381b7c0e92fb70f2ef5ea1ed164fae48934ff04b65551939b03f3a44f7b",
+      "fixed_source/L1/fixed_source": "ec13d842bd30f8fe3067f09c69b496538b0a7d9e2af170ebd126b930750aaa4d",
+      "fixed_source/L2/all_expert": "6a28588788e87217dcffbed608550637a16af4d90f4dd9d12e98a02964015d62",
+      "fixed_source/L2/fixed_initial": "66d1b5754057ad893e3bf1924f726102d5b811bf43256fdb2f78f239d419754e",
+      "fixed_source/L2/fixed_source": "b23a0db73a2bf178ec7ea05aa6b223853a9798d2f7a8795781d831cc9977db27",
+      "fixed_source/L3/all_expert": "6a28588788e87217dcffbed608550637a16af4d90f4dd9d12e98a02964015d62",
+      "fixed_source/L3/fixed_initial": "7ec789a0b084bdfcf70e8ff4134ef22d2dba145cc400b3e71e7124c3146ab3a6",
+      "fixed_source/L3/fixed_source": "52b161454e302f61ecc44f69400f44020c91421542997306cb948e910d60c69c",
+      "native/L0/all_expert": "6a28588788e87217dcffbed608550637a16af4d90f4dd9d12e98a02964015d62",
+      "native/L0/fixed_initial": "02e0f86f98ec2aa565404cc946f2a9c4983e9a6e9256f16e1bd532de548e5cca",
+      "native/L0/fixed_source": "126d9dda9898baa56187f3963ea091fc9e2b22d6ed352fcc6bbe1b4706c6445b",
+      "native/L1/all_expert": "6a28588788e87217dcffbed608550637a16af4d90f4dd9d12e98a02964015d62",
+      "native/L1/fixed_initial": "464140f6f9623cab1d3a72717dcbd699a3fcce982a5eca793daebeca39a9f12c",
+      "native/L1/fixed_source": "ec13d842bd30f8fe3067f09c69b496538b0a7d9e2af170ebd126b930750aaa4d",
+      "native/L2/all_expert": "6a28588788e87217dcffbed608550637a16af4d90f4dd9d12e98a02964015d62",
+      "native/L2/fixed_initial": "516d5098ec16a6988d1abd90dca9833fa83f14c88b335c008a30ea7fdd440247",
+      "native/L2/fixed_source": "b23a0db73a2bf178ec7ea05aa6b223853a9798d2f7a8795781d831cc9977db27",
+      "native/L3/all_expert": "6a28588788e87217dcffbed608550637a16af4d90f4dd9d12e98a02964015d62",
+      "native/L3/fixed_initial": "12e8ff4cdf10190a413d934ecb30412eb3e30a2b2ec229794c3d9ed90ee8786e",
+      "native/L3/fixed_source": "52b161454e302f61ecc44f69400f44020c91421542997306cb948e910d60c69c"
+    },
+    "implementation": "ef431ac88df6c50b69063db64f5ff2ccbc3370b41d38a667c7393c788eabab31",
+    "configuration": {
+      "schema": 2,
+      "cohort": "d7162755c0787a3b6d545940e7129954fb8f429987619ec1a0581e8013366082",
+      "protocol": "49fe4fea5da5a145d6364c5cae9a8ee63d831a52b54286f77511a8453a669bdd",
+      "probe_configuration": "4f1db0fbe0d2cdbb4f53b704b743a8a426b89e90bd9267dee25576ace90b763f",
+      "minimum_samples": 8,
+      "variance_floor": 1e-12,
+      "ranks": [
+        8,
+        16,
+        32
+      ],
+      "activation": "signed native biased GELU mean",
+      "function_precision": "FP32 TF32 disabled",
+      "validation_precision": "FP32 TF32 enabled",
+      "validation_data_hash": "09a073e9f03bbb854d3903081440b9e0869feb8e04b50b3b1be76a1d42658b22"
+    }
+  },
+  "original_cache_key": "3a90bd965eaba500858b9706f5c2c66712912d43940593d30494695a51118459",
+  "original_completed_sha256": "920befb3eae8b87793fb4b992153545de756c720bcd909d87ac9a7d44f192981",
+  "verified_without_invalidating_measurements": true
+}

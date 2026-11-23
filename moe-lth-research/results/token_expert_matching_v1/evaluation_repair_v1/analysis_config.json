@@ -1,0 +1,33 @@
+{
+  "post_hoc": true,
+  "checkpoint_step": 5000,
+  "checkpoint_local_step": 2500,
+  "training_trace_step": null,
+  "validation_permutation_seeds": [
+    91001,
+    91002,
+    91003,
+    91004,
+    91005,
+    91006,
+    91007,
+    91008,
+    91009,
+    91010
+  ],
+  "permutation_namespace": "evaluation_repair_v1/validation-only",
+  "permutation_key": [
+    "validation_replicate_seed",
+    "namespace",
+    "validation_batch_index",
+    "layer_index"
+  ],
+  "source_seed": 17,
+  "training_permutation_id": 101,
+  "precision": "FP32; TF32 disabled; eval(); inference_mode()",
+  "token_weighting": "task CE mean times actual target-token count; sum divided by total tokens",
+  "sd": "sample SD over evaluation permutations; no training replication",
+  "logit_atol": 0.0,
+  "logit_rtol": 0.0,
+  "historical_artifacts_preserved": true
+}

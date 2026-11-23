@@ -1,0 +1,52 @@
+GATE AMPLITUDE PATTERN DECOMPOSITION COMPLETE
+
+8E R20 vs R0:
+- level1_native_amplitude: -0.06549406
+- global_mean: -0.29006499
+- layer_mean: 0.38031452
+- expert_layer_mean: 0.37499641
+- token_conditioned: -5.54438316
+- temporal: 2.72292002
+- temporal_shuffle: 1.08913870
+- token_shuffle: 0.35850322
+- level2_r100_amplitude: -0.00386188
+- best retention condition: global_mean
+8E R20 vs R100:
+- level1_native_amplitude: -0.31813729
+- global_mean: 2.57996893
+- layer_mean: 0.55053108
+- expert_layer_mean: -8.32254986
+- token_conditioned: -3.50916574
+- temporal: -0.74941211
+- temporal_shuffle: -1.46701228
+- token_shuffle: -2.92833781
+- level2_r100_amplitude: -0.00105110
+- best retention condition: layer_mean
+12E R60 vs R20:
+- level1_native_amplitude: 0.93001353
+- global_mean: -0.12394736
+- layer_mean: -0.54511694
+- expert_layer_mean: 0.29167654
+- token_conditioned: 2.87442641
+- temporal: -0.45346620
+- temporal_shuffle: 0.65109573
+- token_shuffle: 0.56542715
+- level2_r100_amplitude: -0.00028083
+- best retention condition: temporal_shuffle
+12E R60 vs R100:
+- level1_native_amplitude: -0.42106602
+- global_mean: 1.11486462
+- layer_mean: 0.78141575
+- expert_layer_mean: 1.91140187
+- token_conditioned: -0.85318801
+- temporal: -4.75764499
+- temporal_shuffle: -0.16476514
+- token_shuffle: -0.30391607
+- level2_r100_amplitude: 0.00141751
+- best retention condition: temporal_shuffle
+Most informative amplitude component: not uniquely identified; closest retention: global_mean, layer_mean, temporal_shuffle
+Cross-architecture consistency: {'global_mean': False, 'layer_mean': False, 'expert_layer_mean': False, 'token_conditioned': False, 'temporal': False, 'temporal_shuffle': False, 'token_shuffle': False}
+Seed consistency: see retention_consistency.csv
+Number of invalid runs: 0
+Final verdict: GATE-PATTERN RESULT SEED-CONDITIONED
+Path to final_report.md: /users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/gate_amplitude_pattern_decomposition/final_report.md

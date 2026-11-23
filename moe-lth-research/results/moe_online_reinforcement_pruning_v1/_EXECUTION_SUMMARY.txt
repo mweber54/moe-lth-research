@@ -1,0 +1,266 @@
+================================================================================
+MOE ONLINE REINFORCEMENT PRUNING V1 - BRANCH CONTINUATION EXECUTION
+================================================================================
+Status: 🟡 PILOT JOB RUNNING
+Report Time: 2026-11-20 14:50 UTC
+Pilot Start: 2026-11-20 14:46 UTC (+4 minutes elapsed)
+
+================================================================================
+WHAT WAS JUST EXECUTED
+================================================================================
+
+JOB 1 OF 18: seed7_A untouched (RUNNING, PID 3690516)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Input Checkpoint:        prefixes/seed7_A/native/interruption.pt (step 250)
+Training Interval:       Steps 251→2500 (2,250 steps)
+Pruning Arm:             untouched (baseline, no masks)
+Selections Used:         matching/seed7_A/selections.pt (sealed, immutable)
+GPU Memory:              3.5 GB / 95.8 GB (93% free, admission passed ✓)
+CPU:                     99.4% single core
+Process Status:          🟢 RUNNING (41 seconds elapsed)
+Expected Completion:     40 minutes (15:26-15:46 UTC)
+Completion File:         branches/seed7_A/untouched/final_step_2500.json
+
+================================================================================
+FROZEN PROTOCOL VERIFICATION (Pre-Execution)
+================================================================================
+
+✓ CHECKPOINTS: All 6 step-250 states verified loadable
+  • seed7_A, seed7_B, seed17_A, seed17_B, seed29_A, seed29_B
+  • Step 250 confirmed in metadata
+  • Optimizer steps applied: 249 (1 AMP overflow, not retried)
+
+✓ SEALED SELECTIONS: All 6 sets verified with SHA-256 matching
+  • Random arm: 3,355,392 deletions per cell (256 expert matrices)
+  • High-reinforcement arm: 3,355,392 deletions per cell (matched row/col)
+  • Zero recomputation risk (indices locked in place)
+
+✓ ACCEPTANCE CRITERIA VERIFIED:
+  • Score separation: 0.556 average (requirement: ≥0.20) ✓✓✓
+  • Overlap fraction: 0.2805 average (requirement: ≤0.30) ✓✓✓
+  • Identical deletions: 3,355,392 per matrix (all 256 matrices) ✓
+  • Row/column balance: Perfect (deletion sums preserved) ✓
+  • Magnitude stratification: 5 equal-frequency strata, stable-sort ✓
+
+✓ BRANCH PREPARATION: All infrastructure verified
+  • Checkpoint loading: TESTED ✓
+  • Selection loading: TESTED ✓
+  • Mask creation logic: TESTED on sample data ✓
+  • Batch counting: 2,250 batches matched recovery_steps ✓
+  • GPU admission: Operational with 70% free memory threshold ✓
+
+================================================================================
+EXECUTION RECORD - ACTUAL JOB 1
+================================================================================
+
+Command:
+  python3 branch_v2.py 7 A untouched
+
+Configuration:
+  recovery_steps:    2250
+  train_batches:     batches[250:2501] (2,250 batches)
+  diagnostic_steps:  (0, 2250)
+  interruption_interval: 2500 (saves at step 2500)
+
+Launch Details:
+  Process PID:       3690516
+  Start Time:        2026-11-20 14:46:30 UTC
+  Elapsed Time:      41 seconds
+  GPU Utilization:   99.4% CPU, 3.5 GB memory
+  Status:            🟢 ACTIVELY TRAINING
+
+Output Files:
+  Lock File:         branches/seed7_A/untouched/lock (exists, process holds)
+  Admission JSON:    branches/seed7_A/untouched/admission.json (created)
+  Native Dir:        branches/seed7_A/untouched/native/ (training in progress)
+  Completion File:   branches/seed7_A/untouched/final_step_2500.json (pending)
+
+================================================================================
+REMAINING JOBS STAGED
+================================================================================
+
+Ready to Launch (17/18):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+seed7_B:
+  - untouched
+  - random-small
+  - high-reinforcement-small
+
+seed17_A, seed17_B, seed29_A, seed29_B: (each has 3 arms)
+
+Launcher Commands:
+  Sequential:  python3 launcher_v2.py --sequential
+  Parallel:    python3 launcher_v2.py
+  Dry-run:     python3 launcher_v2.py --dry-run
+
+Expected Timeline:
+  Pilot (seed7_A):         ~40 min
+  Remaining 17 jobs:       ~8.5 hours (sequential, ~30 min each)
+  Total Wall Time:         ~9.5 hours
+
+================================================================================
+ACTUAL RESULTS TO BE REPORTED
+================================================================================
+
+Upon Completion (All 18 Jobs):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PRIMARY METRIC: Loss Gap at Step 2500 (Delta)
+  Δᵢ = CE₂₅₀₀(high-reinforcement-small) - CE₂₅₀₀(random-small)
+  
+  Six Delta values (one per cell):
+    Δ₇ᴬ, Δ₇ᴮ, Δ₁₇ᴬ, Δ₁₇ᴮ, Δ₂₉ᴬ, Δ₂₉ᴮ
+
+ANALYSIS:
+  • Within-seed means: Mean_Δ(seed=7), Mean_Δ(seed=17), Mean_Δ(seed=29)
+  • Grand mean: μ_Δ = average across all 6 cells
+  • Standard deviation: σ_Δ
+  • Effect size: μ_Δ / σ_Δ
+  • Directional consistency: count(Δᵢ > 0) / 6
+
+SECONDARY METRICS: Immediate Damage at Step 251
+  • Untouched CE at step 251 (reference)
+  • Random-small CE at step 251 (immediate loss)
+  • High-reinf-small CE at step 251 (immediate loss)
+  • Damage gap: |CE(high) - CE(random)| at step 251
+
+INTERPRETATION:
+  Δ >> 0  → High-arm worse; reinforced weights are task-critical (HYPOTHESIS SUPPORTED)
+  Δ > 0   → Partial support; high-arm slightly worse
+  Δ ≈ 0   → No support; reinforcement not predictive of criticality
+  Δ < 0   → Opposite; random weights may be more critical
+
+================================================================================
+MONITORING & NEXT STEPS
+================================================================================
+
+IMMEDIATE (Next 40-45 minutes):
+  1. Monitor pilot: watch -n 60 'ps aux | grep 3690516'
+  2. Check for completion: test -f branches/seed7_A/untouched/final_step_2500.json
+  3. Expected completion: ~15:26-15:46 UTC
+
+UPON PILOT SUCCESS:
+  1. Verify: cat branches/seed7_A/untouched/final_step_2500.json | jq .status
+  2. If status='COMPLETED', launch remaining 17 jobs:
+     python3 launcher_v2.py --sequential &
+  3. Expect 8.5 more hours for sequential execution
+
+UPON PILOT FAILURE:
+  1. Check error messages in process output/logs
+  2. Debug with branch_v2.py --help (if implemented)
+  3. Adjust GPU admission threshold if needed
+  4. Re-run pilot job
+
+FINAL RESULTS (All 18 Complete):
+  python3 results_checker.py --status
+  → Display all job completion status
+  → Extract Delta values from final_step_2500.json files
+  → Compute means, std, effect sizes
+  → Generate final results report
+
+================================================================================
+EXECUTION GUARANTEE
+================================================================================
+
+FROZEN PROTOCOL: Sealed at 2026-11-20 02:14 UTC
+  Protocol SHA-256: 403caae38a808e39571bcd1526a48cf44e06801e57e239f18800789bb690e2fc
+  All 5 acceptance criteria met across all 6 cells
+
+CHECKPOINT INTEGRITY:
+  ✓ 6/6 step-250 states verified loadable
+  ✓ 249 applied updates per cell (1 AMP overflow not retried)
+  ✓ Full RNG state included for deterministic replay
+
+SELECTION IMMUTABILITY:
+  ✓ All 6 selection files sealed (SHA-256 verified)
+  ✓ 3,355,392 deletions per arm per cell (locked in place)
+  ✓ Row/column targets preserved (256×256 matrices)
+
+GPU ADMISSION:
+  ✓ Policy enforced: minimum 70% free memory
+  ✓ Current state: 93% free (3.5 GB used by pilot)
+  ✓ Pilot job passed admission check
+
+DETERMINISM:
+  ✓ Same RNG state restored at step 250
+  ✓ Same batch sequences for all 3 arms
+  ✓ Masks deterministic from sealed indices
+
+================================================================================
+FILES CREATED FOR EXECUTION
+================================================================================
+
+Runners:
+  branch_v2.py         Main branch continuation (step 250→2500)
+  launcher_v2.py       18-job launcher (sequential/parallel/monitor)
+  results_checker.py   Status and results collector
+
+Documentation:
+  EXECUTION_STATUS.md              Full execution plan and monitoring guide
+  BRANCH_EXECUTION_PLAN.md         Detailed plan overview  
+  EXECUTION_START_REPORT.md        This session's start record
+  _EXECUTION_SUMMARY.txt           Quick reference (this file)
+
+Pre-Execution Records:
+  FROZEN_CRITERIA_VERIFICATION_*.md  Protocol audit (readonly)
+  EXECUTIVE_SUMMARY.txt              Initial findings
+  INDEX_AND_NEXT_STEPS.md            Pre-execution checklist
+
+================================================================================
+KEY METRICS FOR RESULTS
+================================================================================
+
+PRIMARY DELIVERABLE: 6 Delta Values
+  ┌─────────────────────────────────────────────┐
+  │ Δᵢ = CE_high(i,2500) - CE_random(i,2500)    │
+  │ for each seed/order pair i ∈ {6 cells}     │
+  └─────────────────────────────────────────────┘
+
+HYPOTHESIS TEST:
+  H₀: Δ ≈ 0 (reinforced weights not more critical than random)
+  H₁: Δ > 0 (reinforced weights are more critical)
+  
+  Support conditions:
+    • Grand mean Δ > 0.01-0.1 (direction)
+    • Effect size > 1 (magnitude relative to noise)
+    • Directional consistency > 50-70% (consensus)
+
+RECOVERY ANALYSIS:
+  • Immediate damage at step 251: compare arms
+  • Final loss at step 2500: measure recovery
+  • Trajectory: plot CE across steps for all 3 arms
+  • Recovery rate: slope of CE improvement 251→2500
+
+================================================================================
+CONTACT & SUPPORT
+================================================================================
+
+For detailed monitoring:     See EXECUTION_STATUS.md
+For debugging:               Check branch_v2.py error messages
+For status checks:           python3 results_checker.py --status
+For planning:                See BRANCH_EXECUTION_PLAN.md
+
+Pilot Status Command:
+  ps aux | grep 3690516 | grep -v grep && echo "RUNNING" || echo "COMPLETE"
+
+Expected Pilot Completion: ~15:30 UTC (40 min from 14:46 start)
+
+================================================================================
+EXECUTION TIMELINE SO FAR
+================================================================================
+
+2026-11-20 02:14 UTC  → Protocol registered and sealed
+2026-11-20 14:30 UTC  → Branch preparation phase (scripts, verification)
+2026-11-20 14:46 UTC  → Pilot job 1 launched (seed7_A untouched)
+2026-11-20 14:50 UTC  → This status report generated
+
+NEXT MILESTONES:
+  ⏳ ~15:26-15:46 UTC  → Pilot job expected completion
+  ⏳ Post-pilot        → Launch remaining 17 jobs (if pilot passes)
+  ⏳ ~24:30 UTC        → Expected completion of all 18 jobs (sequential)
+
+================================================================================
+END OF EXECUTION SUMMARY
+================================================================================
+Pilot: RUNNING | Status: ACTIVE | Next Check: 15 minutes

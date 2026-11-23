@@ -1,0 +1,83 @@
+seed: 29
+device: cuda
+data:
+  path: null
+  train_path: data/multidomain_balanced/multidomain_train.txt
+  validation_path: data/multidomain_balanced/multidomain_validation.txt
+  seq_len: 128
+  train_fraction: 0.9
+  validation_blocks: 32
+  reshuffle_each_epoch: false
+  max_train_examples: null
+  max_validation_examples: null
+  tokenizer: byte
+  tokenizer_vocab_size: 256
+  tokenizer_cache_path: null
+  tokenizer_train_bytes: null
+  tokenizer_max_ngram: 8
+  tokenizer_min_frequency: 2
+model:
+  vocab_size: 256
+  max_seq_len: 128
+  num_layers: 4
+  num_heads: 4
+  d_model: 256
+  num_experts: 24
+  expert_hidden_size: 1024
+  dropout: 0.0
+  top_k: 1
+  capacity_factor: 1.25
+routing:
+  mode: learned
+  aux_loss_weight: 0.1
+  replay_path: null
+  swap_pairs: []
+  corruption_fraction: 0.0
+training:
+  steps: 2500
+  batch_size: 128
+  learning_rate: 0.0003
+  weight_decay: 0.01
+  grad_clip: 1.0
+  eval_interval: 250
+  log_interval: 25
+  checkpoint_steps:
+  - 0
+  - 500
+  - 2500
+  save_optimizer: false
+  record_train_routes: false
+  record_rich_routes: false
+  data_seed: null
+  precision: fp16
+  checkpoint_only_steps:
+  - 125
+  - 250
+  - 375
+  - 500
+  - 625
+  - 750
+  - 875
+  - 1000
+  - 1125
+  - 1250
+  - 1375
+  - 1500
+  - 1625
+  - 1750
+  - 1875
+  - 2000
+  - 2125
+  - 2250
+  - 2375
+pruning:
+  sparsities:
+  - 0.5
+  - 0.8
+  rewind_fractions:
+  - 0.0
+  - 0.01
+  - 0.05
+  - 0.1
+  rewind_protocol: full_budget_restart
+output_dir: /users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/24e_router_age_localization/references/seed_29

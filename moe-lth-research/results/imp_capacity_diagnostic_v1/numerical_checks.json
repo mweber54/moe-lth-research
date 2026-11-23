@@ -1,0 +1,166 @@
+{
+  "TF32_disabled": true,
+  "algebraic_identities": "PASS",
+  "algebraic_identity_max_abs_residuals": {
+    "J_max_abs": 0.0,
+    "K_max_abs": 0.0
+  },
+  "all_model_states_rng_gradients_modes_masks_preserved": true,
+  "disabled_intervention_identical_to_native": true,
+  "first_intervened_layer_probabilities_ids_gates_identical": true,
+  "first_intervened_layer_raw_scores_identical": true,
+  "layer_local_upstream_unchanged": true,
+  "native_accepted_contributions_equal": "PASS in synthetic overflow unit test",
+  "no_drop_zero_rejections_and_all_assignments_accepted": true,
+  "precision": "FP32",
+  "source_ce_reproduction": {
+    "17:sparse:0": {
+      "absolute_error": 2.999072945542025e-08,
+      "actual": 2.5169741710183007,
+      "pass": true,
+      "registered": 2.51697420100903,
+      "tolerance": 1e-06
+    },
+    "17:sparse:500": {
+      "absolute_error": 3.3069689209241915e-09,
+      "actual": 2.0283356480540466,
+      "pass": true,
+      "registered": 2.0283356513610156,
+      "tolerance": 1e-06
+    },
+    "17:unpruned:0": {
+      "absolute_error": 5.376042722105012e-08,
+      "actual": 2.0673522047200326,
+      "pass": true,
+      "registered": 2.06735225848046,
+      "tolerance": 1e-06
+    },
+    "17:unpruned:500": {
+      "absolute_error": 2.1340258227198206e-08,
+      "actual": 1.9613249993965431,
+      "pass": true,
+      "registered": 1.9613250207368014,
+      "tolerance": 1e-06
+    },
+    "29:sparse:0": {
+      "absolute_error": 6.220688408831165e-09,
+      "actual": 2.536108368220016,
+      "pass": true,
+      "registered": 2.5361083744407042,
+      "tolerance": 1e-06
+    },
+    "29:sparse:500": {
+      "absolute_error": 2.1873728606180975e-08,
+      "actual": 2.0492693252394454,
+      "pass": true,
+      "registered": 2.0492693033657168,
+      "tolerance": 1e-06
+    },
+    "29:unpruned:0": {
+      "absolute_error": 6.636317673169856e-08,
+      "actual": 2.0701257053460145,
+      "pass": true,
+      "registered": 2.070125771709191,
+      "tolerance": 1e-06
+    },
+    "29:unpruned:500": {
+      "absolute_error": 4.3191479282000955e-09,
+      "actual": 1.9674999961369894,
+      "pass": true,
+      "registered": 1.9675000004561374,
+      "tolerance": 1e-06
+    },
+    "43:sparse:0": {
+      "absolute_error": 7.703383708701494e-09,
+      "actual": 2.5958803054105686,
+      "pass": true,
+      "registered": 2.595880297707185,
+      "tolerance": 1e-06
+    },
+    "43:sparse:500": {
+      "absolute_error": 3.967651007741324e-08,
+      "actual": 2.0608500358560615,
+      "pass": true,
+      "registered": 2.0608499961795514,
+      "tolerance": 1e-06
+    },
+    "43:unpruned:0": {
+      "absolute_error": 3.983112106809017e-08,
+      "actual": 2.1010442710148727,
+      "pass": true,
+      "registered": 2.1010442311837516,
+      "tolerance": 1e-06
+    },
+    "43:unpruned:500": {
+      "absolute_error": 7.094528498008401e-08,
+      "actual": 1.9849556889485187,
+      "pass": true,
+      "registered": 1.9849557598938037,
+      "tolerance": 1e-06
+    },
+    "61:sparse:0": {
+      "absolute_error": 1.6172299943661983e-08,
+      "actual": 2.621438302648445,
+      "pass": true,
+      "registered": 2.621438286476145,
+      "tolerance": 1e-06
+    },
+    "61:sparse:500": {
+      "absolute_error": 3.9076167190899014e-08,
+      "actual": 2.0437908050214473,
+      "pass": true,
+      "registered": 2.04379076594528,
+      "tolerance": 1e-06
+    },
+    "61:unpruned:0": {
+      "absolute_error": 8.12471911970647e-09,
+      "actual": 2.10871280202772,
+      "pass": true,
+      "registered": 2.108712810152439,
+      "tolerance": 1e-06
+    },
+    "61:unpruned:500": {
+      "absolute_error": 3.1123734700599925e-09,
+      "actual": 1.9809729798093805,
+      "pass": true,
+      "registered": 1.980972982921754,
+      "tolerance": 1e-06
+    },
+    "7:sparse:0": {
+      "absolute_error": 6.822145115492617e-08,
+      "actual": 2.5584159364205523,
+      "pass": true,
+      "registered": 2.5584160046420035,
+      "tolerance": 1e-06
+    },
+    "7:sparse:500": {
+      "absolute_error": 4.536742492788903e-08,
+      "actual": 2.0570337054092676,
+      "pass": true,
+      "registered": 2.0570336600418426,
+      "tolerance": 1e-06
+    },
+    "7:unpruned:0": {
+      "absolute_error": 7.488660358490051e-09,
+      "actual": 2.0879763232578212,
+      "pass": true,
+      "registered": 2.0879763307464816,
+      "tolerance": 1e-06
+    },
+    "7:unpruned:500": {
+      "absolute_error": 3.8465786111885336e-10,
+      "actual": 1.9890565518805698,
+      "pass": true,
+      "registered": 1.9890565522652277,
+      "tolerance": 1e-06
+    }
+  },
+  "status": "PASS",
+  "synthetic_checks": {
+    "command": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/.venv/bin/python -m pytest tests/test_model.py tests/test_imp_capacity_diagnostic_v1.py -q",
+    "output": "................                                                         [100%]\n16 passed in 2.28s",
+    "return_code": 0,
+    "status": "PASS"
+  },
+  "top1_one_expert_per_token": true
+}

@@ -1,0 +1,5 @@
+# Implementation correction 01 — complementary pairing controls
+
+Recorded 2026-10-19 during code review, after partial historical measurements but before production recovery launch. No coupling coefficient or success-conditioned geometric outcome motivated this correction. The frozen cohort and protocol remain unchanged.
+
+The original implementation fixes expert j and its selected input tokens, then pairs its activations with router rows k. The requested complementary control fixes router j and those identical tokens, then pairs its scores with activations from experts k. Both are now exported separately, with their own all-pair valid-expert intersections and pair counts; full coefficient vectors are retained per expert. The latter directly answers the requested corresponding-versus-unmatched-expert comparison. It does not alter training, masks, input selection, correlation definitions or budgets. Earlier caches are invalidated by code hashes and recomputed. Null control Pearson-only calculations avoid computing discarded Spearman coefficients; primary expert Spearman sensitivity is unchanged.

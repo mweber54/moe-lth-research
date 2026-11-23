@@ -1,0 +1,16 @@
+{
+  "scope": "Numerical-test correction only; no change to checkpoint evaluation, grid, eligibility, losses or cache identities",
+  "incident": "Reused repository test test_top2_routes_to_two_distinct_experts_and_backpropagates executed backward on a disposable synthetic model in a subprocess. This was contrary to the user restriction. No research checkpoint/backward/optimizer operation occurred.",
+  "excluded_fixture": "tests/test_model.py::test_top2_routes_to_two_distinct_experts_and_backpropagates",
+  "future_entrypoint": "scripts/imp_first_moe_direction_v1/engineering/forward_only_entrypoint.py",
+  "fail_closed_test_plugin": "scripts/imp_first_moe_direction_v1/engineering/forward_only_plugin.py",
+  "source_hashes": {
+    "scripts/imp_first_moe_direction_v1/engineering/forward_only_plugin.py": "803732757e471e4b37eabb4ccd492c0c04dfadf7eb1af9b144776de7785f7cb5",
+    "scripts/imp_first_moe_direction_v1/engineering/forward_only_entrypoint.py": "427463beb056b61d9d172b4a91e57f70bb49cfece6b1d527a5c1fffe2c353995"
+  },
+  "forward_only_result": ".............................                                            [100%]\n29 passed, 1 deselected in 1.64s\n",
+  "cache_invalidation": "None: scientific evaluator and all checkpoint inference code unchanged; existing logs preserved",
+  "future_resource_dispatcher": "results/imp_first_moe_direction_v1/attempts/revision2_resource_dispatch.py",
+  "future_resource_dispatcher_sha256": "33a0ca5d87a63ba2e5b6e1f457ebde08a540ef7817353baf58b32d24ce40ac24",
+  "original_dispatcher_preserved": "results/imp_first_moe_direction_v1/attempts/revision2_resource_dispatch_original.py"
+}

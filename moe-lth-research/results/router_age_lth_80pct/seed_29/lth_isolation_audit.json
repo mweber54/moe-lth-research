@@ -1,0 +1,21 @@
+{
+  "reference_seed": 29,
+  "shared_checkpoint_step": 0,
+  "shared_checkpoint_path": "results/router_age_reference_seed29/checkpoints/step_0.pt",
+  "mask_derived_from_dense_reference_checkpoint": "results/router_age_reference_seed29/checkpoints/step_2500.pt",
+  "surviving_expert_values_from_rewind_checkpoint": "results/router_age_reference_seed29/checkpoints/step_0.pt",
+  "mask_hash": "ba4e6efbbd51f1e1f5482191392d53888a1f3830eb39539662715da414ab037e",
+  "expert_state_hash": "274ecabed5576725750b8ed9db89c6be7e78793443636e5c2f51eff97117027b",
+  "shared_state_hash": "75f61f06410d3ddef21be94e7dd60b5092e65d993cb34887f8921ae4ce92079a",
+  "dense_expert_state_hash": "9afe7a74e8487fd0b91605c0f8062fbf6e3bba479c435a4b8f0c641dd2a226e5",
+  "all_router_age_conditions_share_same_ticket": true,
+  "all_router_age_conditions_share_same_shared_state": true,
+  "pruned_parameters_remain_zero": true,
+  "data_schedule_hashes_are_identical_across_conditions": {
+    "train": "b9f0287fc5fe9ee8f87951575f61e25a60f2bf0f787cc30fbf86ba0afcf55bba",
+    "validation": "09a073e9f03bbb854d3903081440b9e0869feb8e04b50b3b1be76a1d42658b22"
+  },
+  "optimizer_state_reset_per_condition": true,
+  "mask_is_identical_across_conditions": true,
+  "ticket_matches_initial_expert_values_under_final_mask": true
+}

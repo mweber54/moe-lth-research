@@ -1,0 +1,1510 @@
+{
+  "event": {
+    "attempt": 1000,
+    "event_before": 5,
+    "event_after": 10,
+    "newly_removed": 408,
+    "retained_coordinates_untouched": true
+  },
+  "pre": {
+    "task_ce": 6.366596098989248,
+    "target_tokens": 32,
+    "auxiliary_layer_mean": 1.0633995532989502,
+    "routing": [
+      {
+        "batch": 0,
+        "layer": 0,
+        "expert": 0,
+        "proposed": 6,
+        "accepted": 6,
+        "selected_gate_sum": 4.010460555553436,
+        "accepted_gate_sum": 4.010460555553436,
+        "selected_gate_min": 0.5467271208763123,
+        "selected_gate_max": 0.7453783750534058,
+        "dropped_assignment_fraction": 0.0
+      },
+      {
+        "batch": 0,
+        "layer": 0,
+        "expert": 1,
+        "proposed": 10,
+        "accepted": 10,
+        "selected_gate_sum": 7.5114797949790955,
+        "accepted_gate_sum": 7.5114797949790955,
+        "selected_gate_min": 0.5795487761497498,
+        "selected_gate_max": 0.863000214099884,
+        "dropped_assignment_fraction": 0.0
+      },
+      {
+        "batch": 0,
+        "layer": 1,
+        "expert": 0,
+        "proposed": 5,
+        "accepted": 5,
+        "selected_gate_sum": 2.86043119430542,
+        "accepted_gate_sum": 2.86043119430542,
+        "selected_gate_min": 0.5174593329429626,
+        "selected_gate_max": 0.7305808663368225,
+        "dropped_assignment_fraction": 0.0625
+      },
+      {
+        "batch": 0,
+        "layer": 1,
+        "expert": 1,
+        "proposed": 11,
+        "accepted": 10,
+        "selected_gate_sum": 7.166975021362305,
+        "accepted_gate_sum": 6.642236888408661,
+        "selected_gate_min": 0.5247381329536438,
+        "selected_gate_max": 0.7471204996109009,
+        "dropped_assignment_fraction": 0.0625
+      },
+      {
+        "batch": 1,
+        "layer": 0,
+        "expert": 0,
+        "proposed": 6,
+        "accepted": 6,
+        "selected_gate_sum": 3.9139715433120728,
+        "accepted_gate_sum": 3.9139715433120728,
+        "selected_gate_min": 0.5812349915504456,
+        "selected_gate_max": 0.8551166653633118,
+        "dropped_assignment_fraction": 0.0
+      },
+      {
+        "batch": 1,
+        "layer": 0,
+        "expert": 1,
+        "proposed": 10,
+        "accepted": 10,
+        "selected_gate_sum": 7.2310885190963745,
+        "accepted_gate_sum": 7.2310885190963745,
+        "selected_gate_min": 0.5501731038093567,
+        "selected_gate_max": 0.8287343978881836,
+        "dropped_assignment_fraction": 0.0
+      },
+      {
+        "batch": 1,
+        "layer": 1,
+        "expert": 0,
+        "proposed": 3,
+        "accepted": 3,
+        "selected_gate_sum": 1.877531111240387,
+        "accepted_gate_sum": 1.877531111240387,
+        "selected_gate_min": 0.5037592649459839,
+        "selected_gate_max": 0.8013321757316589,
+        "dropped_assignment_fraction": 0.1875
+      },
+      {
+        "batch": 1,
+        "layer": 1,
+        "expert": 1,
+        "proposed": 13,
+        "accepted": 10,
+        "selected_gate_sum": 8.212410926818848,
+        "accepted_gate_sum": 6.632120966911316,
+        "selected_gate_min": 0.5155335068702698,
+        "selected_gate_max": 0.7513929009437561,
+        "dropped_assignment_fraction": 0.1875
+      }
+    ],
+    "parameter_norms": {
+      "E": 4.726143438257658,
+      "R": 1.2641957655680147,
+      "S": 19.230957789944085
+    }
+  },
+  "post": {
+    "task_ce": 6.38676917925477,
+    "target_tokens": 32,
+    "auxiliary_layer_mean": 1.0634684562683105,
+    "routing": [
+      {
+        "batch": 0,
+        "layer": 0,
+        "expert": 0,
+        "proposed": 6,
+        "accepted": 6,
+        "selected_gate_sum": 4.010460555553436,
+        "accepted_gate_sum": 4.010460555553436,
+        "selected_gate_min": 0.5467271208763123,
+        "selected_gate_max": 0.7453783750534058,
+        "dropped_assignment_fraction": 0.0
+      },
+      {
+        "batch": 0,
+        "layer": 0,
+        "expert": 1,
+        "proposed": 10,
+        "accepted": 10,
+        "selected_gate_sum": 7.5114797949790955,
+        "accepted_gate_sum": 7.5114797949790955,
+        "selected_gate_min": 0.5795487761497498,
+        "selected_gate_max": 0.863000214099884,
+        "dropped_assignment_fraction": 0.0
+      },
+      {
+        "batch": 0,
+        "layer": 1,
+        "expert": 0,
+        "proposed": 5,
+        "accepted": 5,
+        "selected_gate_sum": 2.8560315370559692,
+        "accepted_gate_sum": 2.8560315370559692,
+        "selected_gate_min": 0.5091187357902527,
+        "selected_gate_max": 0.7328191995620728,
+        "dropped_assignment_fraction": 0.0625
+      },
+      {
+        "batch": 0,
+        "layer": 1,
+        "expert": 1,
+        "proposed": 11,
+        "accepted": 10,
+        "selected_gate_sum": 7.163559436798096,
+        "accepted_gate_sum": 6.647337019443512,
+        "selected_gate_min": 0.5162224173545837,
+        "selected_gate_max": 0.7526566982269287,
+        "dropped_assignment_fraction": 0.0625
+      },
+      {
+        "batch": 1,
+        "layer": 0,
+        "expert": 0,
+        "proposed": 6,
+        "accepted": 6,
+        "selected_gate_sum": 3.9139715433120728,
+        "accepted_gate_sum": 3.9139715433120728,
+        "selected_gate_min": 0.5812349915504456,
+        "selected_gate_max": 0.8551166653633118,
+        "dropped_assignment_fraction": 0.0
+      },
+      {
+        "batch": 1,
+        "layer": 0,
+        "expert": 1,
+        "proposed": 10,
+        "accepted": 10,
+        "selected_gate_sum": 7.2310885190963745,
+        "accepted_gate_sum": 7.2310885190963745,
+        "selected_gate_min": 0.5501731038093567,
+        "selected_gate_max": 0.8287343978881836,
+        "dropped_assignment_fraction": 0.0
+      },
+      {
+        "batch": 1,
+        "layer": 1,
+        "expert": 0,
+        "proposed": 3,
+        "accepted": 3,
+        "selected_gate_sum": 1.859291434288025,
+        "accepted_gate_sum": 1.859291434288025,
+        "selected_gate_min": 0.5023040771484375,
+        "selected_gate_max": 0.8006480932235718,
+        "dropped_assignment_fraction": 0.1875
+      },
+      {
+        "batch": 1,
+        "layer": 1,
+        "expert": 1,
+        "proposed": 13,
+        "accepted": 10,
+        "selected_gate_sum": 8.19710487127304,
+        "accepted_gate_sum": 6.627598762512207,
+        "selected_gate_min": 0.5116022825241089,
+        "selected_gate_max": 0.7505883574485779,
+        "dropped_assignment_fraction": 0.1875
+      }
+    ],
+    "parameter_norms": {
+      "E": 3.0633109462636776,
+      "R": 1.2641957655680147,
+      "S": 19.230957789944085
+    }
+  },
+  "damage": 0.020173080265522003,
+  "overlap": [
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 0,
+      "proposed_set_jaccard": 1.0,
+      "accepted_set_jaccard": 1.0,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 1,
+      "proposed_set_jaccard": 1.0,
+      "accepted_set_jaccard": 1.0,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 2,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 3,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 4,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 5,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 6,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 7,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 8,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 9,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 10,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 11,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 12,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 13,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 14,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 15,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 16,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 17,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 18,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 19,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 20,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 21,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 22,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 23,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 24,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 25,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 26,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 27,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 28,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 29,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 30,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 31,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 0,
+      "proposed_set_jaccard": 1.0,
+      "accepted_set_jaccard": 1.0,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 1,
+      "proposed_set_jaccard": 1.0,
+      "accepted_set_jaccard": 1.0,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 2,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 3,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 4,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 5,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 6,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 7,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 8,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 9,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 10,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 11,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 12,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 13,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 14,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 15,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 16,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 17,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 18,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 19,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 20,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 21,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 22,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 23,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 24,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 25,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 26,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 27,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 28,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 29,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 30,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 31,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.004511683714023063
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 0,
+      "proposed_set_jaccard": 1.0,
+      "accepted_set_jaccard": 1.0,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 1,
+      "proposed_set_jaccard": 1.0,
+      "accepted_set_jaccard": 1.0,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 2,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 3,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 4,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 5,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 6,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 7,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 8,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 9,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 10,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 11,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 12,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 13,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 14,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 15,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 16,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 17,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 18,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 19,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 20,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 21,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 22,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 23,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 24,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 25,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 26,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 27,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 28,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 29,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 30,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 31,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 0,
+      "proposed_set_jaccard": 1.0,
+      "accepted_set_jaccard": 1.0,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 1,
+      "proposed_set_jaccard": 1.0,
+      "accepted_set_jaccard": 1.0,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 2,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 3,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 4,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 5,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 6,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 7,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 8,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 9,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 10,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 11,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 12,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 13,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 14,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 15,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 16,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 17,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 18,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 19,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 20,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 21,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 22,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 23,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 24,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 25,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 26,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 27,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 28,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 29,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 30,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 31,
+      "proposed_set_jaccard": null,
+      "accepted_set_jaccard": null,
+      "assignment_agreement": 1.0,
+      "acceptance_agreement": 1.0,
+      "selected_gate_rms_change": 0.0054518886455655
+    }
+  ],
+  "mask_hash": "d91ec0d14ef9d6c0f2c182d938804b44ae2c08aa92eddc03ac899fb42197815e",
+  "state_preservation_verified": true
+}

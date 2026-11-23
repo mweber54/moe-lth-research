@@ -1,0 +1,31 @@
+{
+  "status": "frozen",
+  "seed": 170625,
+  "training_only": true,
+  "training_seen_possible": true,
+  "B": "held out from selection, not independent generalization",
+  "sequence_length": 128,
+  "batch_size": 128,
+  "candidate_native_batch_indices": [
+    0,
+    1,
+    2,
+    18
+  ],
+  "window_identity": "train corpus SHA256 + sequence_id*128 byte offset; contextual identity adds token position",
+  "disjoint_including_target_overlap": true,
+  "maximum_batches_per_probe": 2,
+  "numerical_mode": "eval FP32, TF32 off, native gates/top1/capacity",
+  "clustering": {
+    "K": 16,
+    "seed": 170625,
+    "preprocessing": "per-feature standardize using A reference only; scale floor 1e-6",
+    "minimum_cluster_count": 32,
+    "small_clusters": "retain and flag; never merge/refit",
+    "minimum_expert_tokens": 32,
+    "reference": "earliest matched unpruned layer1 router inputs",
+    "shuffles": 64
+  },
+  "batches_per_probe": 2,
+  "profile_rule": "two if baseline+ablation <=2 sec, else one; upper bound two; no effect inspection"
+}

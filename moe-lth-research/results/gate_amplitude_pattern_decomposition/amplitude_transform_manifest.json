@@ -1,0 +1,39 @@
+{
+  "status": "all_transforms_validated",
+  "canonical_source": "age/seed dense Level-2 trajectory; identical for sparse/dense",
+  "conditions": [
+    "global_mean",
+    "layer_mean",
+    "expert_layer_mean",
+    "token_conditioned",
+    "temporal",
+    "temporal_shuffle",
+    "token_shuffle"
+  ],
+  "sources": 18,
+  "recipient_recoveries": 252,
+  "primary_readout": "primary_r100_common_readout",
+  "retention_denominator_tolerance": 1e-05,
+  "minimum_recurrent_edge_fraction_for_exact_token_means": 0.8,
+  "permutation_policy": "one deterministic seed-level rank permutation stratified by exact block length; token permutations are seed/step/layer/expert indexed; both model kinds and ages share indexing",
+  "source_manifests": [
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/gate_amplitude_pattern_decomposition/transformed/e8/seed7/R0/manifest.json",
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/gate_amplitude_pattern_decomposition/transformed/e8/seed7/R20/manifest.json",
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/gate_amplitude_pattern_decomposition/transformed/e8/seed7/R100/manifest.json",
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/gate_amplitude_pattern_decomposition/transformed/e8/seed17/R0/manifest.json",
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/gate_amplitude_pattern_decomposition/transformed/e8/seed17/R20/manifest.json",
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/gate_amplitude_pattern_decomposition/transformed/e8/seed17/R100/manifest.json",
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/gate_amplitude_pattern_decomposition/transformed/e8/seed29/R0/manifest.json",
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/gate_amplitude_pattern_decomposition/transformed/e8/seed29/R20/manifest.json",
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/gate_amplitude_pattern_decomposition/transformed/e8/seed29/R100/manifest.json",
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/gate_amplitude_pattern_decomposition/transformed/e12/seed7/R20/manifest.json",
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/gate_amplitude_pattern_decomposition/transformed/e12/seed7/R60/manifest.json",
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/gate_amplitude_pattern_decomposition/transformed/e12/seed7/R100/manifest.json",
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/gate_amplitude_pattern_decomposition/transformed/e12/seed17/R20/manifest.json",
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/gate_amplitude_pattern_decomposition/transformed/e12/seed17/R60/manifest.json",
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/gate_amplitude_pattern_decomposition/transformed/e12/seed17/R100/manifest.json",
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/gate_amplitude_pattern_decomposition/transformed/e12/seed29/R20/manifest.json",
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/gate_amplitude_pattern_decomposition/transformed/e12/seed29/R60/manifest.json",
+    "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/gate_amplitude_pattern_decomposition/transformed/e12/seed29/R100/manifest.json"
+  ]
+}

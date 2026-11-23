@@ -1,0 +1,24 @@
+{
+  "measured_short_run": {
+    "training_seconds": 74.57022666092962,
+    "diagnostic_seconds": 56.04667479544878,
+    "validation_seconds_by_step": {
+      "0": 40.35682052373886,
+      "12": 16.830533923581243,
+      "25": 5.200303985737264
+    },
+    "peak_reserved_bytes": 3149922304,
+    "host": "viper.cs.kent.edu",
+    "pid": 3789231,
+    "gpu": "NVIDIA H100 NVL",
+    "torch_version": "2.7.0",
+    "cuda_version": "12.8"
+  },
+  "aggregate_training_hours": 155.35463887693672,
+  "aggregate_native_validation_hours": 5.525322984845843,
+  "aggregate_diagnostic_hours": 4.086736703834807,
+  "projected_two_host_days": 3.4368062201170284,
+  "storage_model_snapshots_bytes": 164463830400,
+  "admission_margin_bytes": 4294967296,
+  "limitations": "Short-run training timing includes audit hashing, shared-GPU contention and early AMP skips; estimate is conservative and will be refined with production step-25 timing. Native validation time from step 25; startup excluded."
+}

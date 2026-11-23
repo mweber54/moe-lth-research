@@ -1,0 +1,34 @@
+{
+  "grid": 75,
+  "sparse": 60,
+  "dense": 15,
+  "verified_workers": [
+    {
+      "condition": "G_e32_seed7_R0_dense",
+      "host": "viper.cs.kent.edu",
+      "worker_pid": 3791632,
+      "heartbeat_step": 225,
+      "measured_steps": [
+        0,
+        25,
+        100
+      ],
+      "status": "RUNNING"
+    },
+    {
+      "condition": "G_e32_seed7_R50_dense",
+      "host": "adder.cs.kent.edu",
+      "worker_pid": 3943150,
+      "heartbeat_step": 250,
+      "measured_steps": [
+        0,
+        25,
+        100,
+        250
+      ],
+      "status": "RUNNING"
+    }
+  ],
+  "unix": 1791741620.2180798,
+  "checks": "both actual remote workers, advancing heartbeats, complete first geometry files, attempted/applied/AMP accounting"
+}

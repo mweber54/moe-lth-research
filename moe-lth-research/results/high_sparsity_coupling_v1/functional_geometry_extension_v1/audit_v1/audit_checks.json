@@ -1,0 +1,75 @@
+{
+  "C_to_D": {
+    "aggregate_transitions": 10,
+    "all_C_weights_zero_outside_prior_mask": true
+  },
+  "code_corrections": [
+    "mode-neutral expert-output export name",
+    "corrected coupling figure metric label",
+    "focused regression test"
+  ],
+  "coupling": {
+    "common_population_128_all_rows": true,
+    "dense_changes_all_negative": true,
+    "difference_in_changes_all_positive": true,
+    "raw_array_recomputation": {
+      "all_primary_rows_recomputed": true,
+      "common_units_128_all_rows": true,
+      "max_abs_difference_vs_paired_report": 1.1102230246251565e-16,
+      "source": "saved raw.npz fixed_source scores, activations, and all_expert selections"
+    },
+    "primary_rows": 10,
+    "sparse_changes_all_positive": true
+  },
+  "csv_rows": {
+    "claim_evidence_table.csv": 8,
+    "coupling_reconciliation.csv": 200,
+    "geometry_interval_changes.csv": 790,
+    "gradient_audit.csv": 360,
+    "mask_count_reconciliation.csv": 3990,
+    "metric_definition_and_provenance.csv": 8,
+    "pruning_transition_audit.csv": 3890
+  },
+  "historical_rerun_duplicates_independent": false,
+  "limitations": [
+    "no held-out gradients",
+    "10 random-mask draws only",
+    "no random-subspace null",
+    "no causal or beyond-cohort inference"
+  ],
+  "mask_counts": {
+    "expert_bias_unpruned": 163840,
+    "global_mask_rows": 10,
+    "keep_080": 13421824,
+    "keep_085": 10066304,
+    "other_unpruned": 1188352,
+    "prunable_weights": 67108864,
+    "unique_parameters": 68461056
+  },
+  "matched_dense_controls": 5,
+  "new_forward_backward_passes": false,
+  "original_reports_checkpoints_masks_caches_modified": false,
+  "performance_matches": [
+    {
+      "seed": 7,
+      "sparsity": 0.8
+    },
+    {
+      "seed": 7,
+      "sparsity": 0.85
+    },
+    {
+      "seed": 43,
+      "sparsity": 0.8
+    },
+    {
+      "seed": 61,
+      "sparsity": 0.8
+    }
+  ],
+  "replication_unit": "source seed",
+  "source_seeds": 5,
+  "sparse_conditions": 10,
+  "status": "complete",
+  "training_recovery_mask_search_optimizer_updates": false
+}

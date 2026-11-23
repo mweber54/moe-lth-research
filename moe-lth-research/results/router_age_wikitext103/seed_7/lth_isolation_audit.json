@@ -1,0 +1,21 @@
+{
+  "reference_seed": 7,
+  "shared_checkpoint_step": 0,
+  "shared_checkpoint_path": "results/wikitext103_gpu/checkpoints/step_0.pt",
+  "mask_derived_from_dense_reference_checkpoint": "results/wikitext103_gpu/checkpoints/step_2500.pt",
+  "surviving_expert_values_from_rewind_checkpoint": "results/wikitext103_gpu/checkpoints/step_0.pt",
+  "mask_hash": "7c679a7c017789c76122f77d7b016b70902209aa0bd0e270f58644f4016e538f",
+  "expert_state_hash": "e8f2e7cb965f220f41ac92f67701f332ddb05f3b3377380b07b4e2c490dc4eda",
+  "shared_state_hash": "f1022a5cc27ab244db6dc147544aa1e614723425bf5f3c1c7c04484268772bce",
+  "dense_expert_state_hash": "085bff85925cad60bd611ad78301104bbf9c12d47b87184b587400bb92208e35",
+  "all_router_age_conditions_share_same_ticket": true,
+  "all_router_age_conditions_share_same_shared_state": true,
+  "pruned_parameters_remain_zero": true,
+  "data_schedule_hashes_are_identical_across_conditions": {
+    "train": "d7e1e3ca23a93bea4a03fc6a0ccf0bae4f36e3d3b8dd783274db07138383bb41",
+    "validation": "c7c1af3aee7f535d94efa60e1ca4afcd1990198f3193b5016e5a5c8bcf1bcb56"
+  },
+  "optimizer_state_reset_per_condition": true,
+  "mask_is_identical_across_conditions": true,
+  "ticket_matches_initial_expert_values_under_final_mask": true
+}

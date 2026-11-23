@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "host": "adder.cs.kent.edu",
+  "gpu": "NVIDIA H100 NVL",
+  "registered_batch": 0,
+  "checkpoint": "sparse1000",
+  "baseline_losses_bitwise_equal": true,
+  "all_union_and_control_CE_statistics_equal": true,
+  "paired_sequence_sums_counts_equal": true,
+  "baseline_routing_gates_equal": true,
+  "energy_tolerance": {
+    "rtol": 1e-12,
+    "atol": 1e-12
+  },
+  "maximum_absolute_energy_roundoff": 0.0,
+  "new_contexts": 0,
+  "wall_seconds": 51.17573340795934,
+  "stats": {
+    "native_complete_batch_forwards": 63,
+    "native_evaluation_wall_seconds": 16.901190786389634,
+    "cached_batches_reused": 0
+  }
+}

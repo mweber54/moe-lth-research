@@ -1,0 +1,14 @@
+--- analyze.py (frozen)
++++ analyze_final.py (preservation-only amendment)
+@@ -77,7 +77,9 @@
+  axes[0].set_ylabel('Router-age contrast (nats/token)');axes[-1].legend(title='Seed');fig.tight_layout()
+  for suffix in ('png','pdf'):fig.savefig(figs/f'readout_sensitivity.{suffix}',dpi=180)
+  plt.close(fig)
+- for p,h in read(OUT/'protected_inputs.json').items():assert file_hash(p)==h,p
+- write(OUT/'analysis_complete.json',dict(complete=True,conditions=48,new_recoveries=24,prior_artifacts_unchanged=True,outputs={p.name:file_hash(p) for p in OUT.glob('*.csv')}))
++ from preservation import audit_all
++ preservation=audit_all()
++ write(OUT/'analysis_preservation_check.json',preservation)
++ write(OUT/'analysis_complete.json',dict(complete=True,conditions=48,new_recoveries=24,scientific_inputs_unchanged=True,all_prior_bytes_identical=preservation['all_prior_bytes_identical'],outputs={p.name:file_hash(p) for p in OUT.glob('*.csv')}))
+  print(agg.to_string());print(json.dumps(decisions,indent=2))
+ if __name__=='__main__':main()

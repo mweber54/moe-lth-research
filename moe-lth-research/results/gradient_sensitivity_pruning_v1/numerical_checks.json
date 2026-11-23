@@ -1,0 +1,740 @@
+{
+  "stage": "MEASUREMENT_AND_MATCHING_ONLY",
+  "measurement": {
+    "7": {
+      "weight_hash_preserved": true,
+      "RNG_preserved": true,
+      "module_modes_preserved": true,
+      "existing_gradients_preserved": true,
+      "TF32_flags_preserved": true,
+      "calibration_batch_token_target_hashes_verified": true,
+      "coordinate_schema_verified": true,
+      "no_intervention_loss_or_validation_or_training": true,
+      "synthetic_checks": {
+        "tiny_native_model_full_vs_streamed_gradients": true,
+        "full_vs_streamed_float64": true,
+        "mean_absolute_not_absolute_mean": true,
+        "sample_batch_variance_and_second_moment": true,
+        "undefined_constant_ranks": true,
+        "zero_sign_consistency_is_undefined": true,
+        "tolerance": 1e-14
+      }
+    },
+    "17": {
+      "weight_hash_preserved": true,
+      "RNG_preserved": true,
+      "module_modes_preserved": true,
+      "existing_gradients_preserved": true,
+      "TF32_flags_preserved": true,
+      "calibration_batch_token_target_hashes_verified": true,
+      "coordinate_schema_verified": true,
+      "no_intervention_loss_or_validation_or_training": true,
+      "synthetic_checks": {
+        "tiny_native_model_full_vs_streamed_gradients": true,
+        "full_vs_streamed_float64": true,
+        "mean_absolute_not_absolute_mean": true,
+        "sample_batch_variance_and_second_moment": true,
+        "undefined_constant_ranks": true,
+        "zero_sign_consistency_is_undefined": true,
+        "tolerance": 1e-14
+      }
+    },
+    "29": {
+      "weight_hash_preserved": true,
+      "RNG_preserved": true,
+      "module_modes_preserved": true,
+      "existing_gradients_preserved": true,
+      "TF32_flags_preserved": true,
+      "calibration_batch_token_target_hashes_verified": true,
+      "coordinate_schema_verified": true,
+      "no_intervention_loss_or_validation_or_training": true,
+      "synthetic_checks": {
+        "tiny_native_model_full_vs_streamed_gradients": true,
+        "full_vs_streamed_float64": true,
+        "mean_absolute_not_absolute_mean": true,
+        "sample_batch_variance_and_second_moment": true,
+        "undefined_constant_ranks": true,
+        "zero_sign_consistency_is_undefined": true,
+        "tolerance": 1e-14
+      }
+    },
+    "43": {
+      "weight_hash_preserved": true,
+      "RNG_preserved": true,
+      "module_modes_preserved": true,
+      "existing_gradients_preserved": true,
+      "TF32_flags_preserved": true,
+      "calibration_batch_token_target_hashes_verified": true,
+      "coordinate_schema_verified": true,
+      "no_intervention_loss_or_validation_or_training": true,
+      "synthetic_checks": {
+        "tiny_native_model_full_vs_streamed_gradients": true,
+        "full_vs_streamed_float64": true,
+        "mean_absolute_not_absolute_mean": true,
+        "sample_batch_variance_and_second_moment": true,
+        "undefined_constant_ranks": true,
+        "zero_sign_consistency_is_undefined": true,
+        "tolerance": 1e-14
+      }
+    },
+    "61": {
+      "weight_hash_preserved": true,
+      "RNG_preserved": true,
+      "module_modes_preserved": true,
+      "existing_gradients_preserved": true,
+      "TF32_flags_preserved": true,
+      "calibration_batch_token_target_hashes_verified": true,
+      "coordinate_schema_verified": true,
+      "no_intervention_loss_or_validation_or_training": true,
+      "synthetic_checks": {
+        "tiny_native_model_full_vs_streamed_gradients": true,
+        "full_vs_streamed_float64": true,
+        "mean_absolute_not_absolute_mean": true,
+        "sample_batch_variance_and_second_moment": true,
+        "undefined_constant_ranks": true,
+        "zero_sign_consistency_is_undefined": true,
+        "tolerance": 1e-14
+      }
+    }
+  },
+  "matching_coordinate_and_degree_checks": {
+    "7": {
+      "all_candidate_tensors": 256,
+      "candidate_pairs": 1547,
+      "unique_and_disjoint": true,
+      "exact_rows_and_columns": true,
+      "degree_arrays_reconstructed": true
+    },
+    "17": {
+      "all_candidate_tensors": 256,
+      "candidate_pairs": 2195,
+      "unique_and_disjoint": true,
+      "exact_rows_and_columns": true,
+      "degree_arrays_reconstructed": true
+    },
+    "29": {
+      "all_candidate_tensors": 256,
+      "candidate_pairs": 2267,
+      "unique_and_disjoint": true,
+      "exact_rows_and_columns": true,
+      "degree_arrays_reconstructed": true
+    },
+    "43": {
+      "all_candidate_tensors": 256,
+      "candidate_pairs": 3295,
+      "unique_and_disjoint": true,
+      "exact_rows_and_columns": true,
+      "degree_arrays_reconstructed": true
+    },
+    "61": {
+      "all_candidate_tensors": 256,
+      "candidate_pairs": 3055,
+      "unique_and_disjoint": true,
+      "exact_rows_and_columns": true,
+      "degree_arrays_reconstructed": true
+    }
+  },
+  "matching_algorithm_fixture_checks": {
+    "directed_cycle_equal_columns": true,
+    "acyclic_graph_yields_no_cycle_pairs": true,
+    "dead_end_backtracking_cycle_found": true,
+    "independent_Kahn_residual_DAG_check_100_random_graphs": true,
+    "registered_target_not_exceeded": true,
+    "implementation_sha256": "6407e74c5679a299570cb281a7f907097c81b66858e9aec827bf38d1871379b4",
+    "transport_amendment": "matching_transport_amendment.json",
+    "no_alternative_matcher_or_actual_coordinate_selection_in_fixture": true
+  },
+  "native_configuration_audit": {
+    "passed": true,
+    "prior_registration_sha256": "fbbc3723e04fe244594c271252bbc499ff9c3af7f1e7cce26336d49f882de891",
+    "legacy_manifest_current_sha256": "a8faac601640aeb1eed4aba7272974de6e4bafa69877038d69c9878b8ca628e6",
+    "seeds": [
+      {
+        "seed": 7,
+        "model_data_routing_training_identical_across_history_and_sealed_native_reference": true,
+        "registered_train_continuation_validation_hashes_identical_to_original_reference": true,
+        "source_config": {
+          "seed": 7,
+          "device": "cuda",
+          "data": {
+            "path": null,
+            "train_path": "data/multidomain_balanced/multidomain_train.txt",
+            "validation_path": "data/multidomain_balanced/multidomain_validation.txt",
+            "seq_len": 128,
+            "train_fraction": 0.9,
+            "validation_blocks": 32,
+            "reshuffle_each_epoch": false,
+            "max_train_examples": null,
+            "max_validation_examples": null,
+            "tokenizer": "byte",
+            "tokenizer_vocab_size": 256,
+            "tokenizer_cache_path": null,
+            "tokenizer_train_bytes": null,
+            "tokenizer_max_ngram": 8,
+            "tokenizer_min_frequency": 2
+          },
+          "model": {
+            "vocab_size": 256,
+            "max_seq_len": 128,
+            "num_layers": 4,
+            "num_heads": 4,
+            "d_model": 256,
+            "num_experts": 32,
+            "expert_hidden_size": 1024,
+            "dropout": 0.0,
+            "top_k": 1,
+            "capacity_factor": 1.25
+          },
+          "routing": {
+            "mode": "learned",
+            "aux_loss_weight": 0.1,
+            "replay_path": null,
+            "swap_pairs": [],
+            "corruption_fraction": 0.0
+          },
+          "training": {
+            "steps": 2500,
+            "batch_size": 128,
+            "learning_rate": 0.0003,
+            "weight_decay": 0.01,
+            "grad_clip": 1.0,
+            "eval_interval": 250,
+            "log_interval": 25,
+            "checkpoint_steps": [
+              0,
+              500,
+              2500
+            ],
+            "save_optimizer": false,
+            "record_train_routes": false,
+            "record_rich_routes": false,
+            "data_seed": null,
+            "precision": "fp16",
+            "record_exposure": true,
+            "checkpoint_only_steps": [
+              125,
+              250,
+              375,
+              500,
+              625,
+              750,
+              875,
+              1000,
+              1125,
+              1250,
+              1375,
+              1500,
+              1625,
+              1750,
+              1875,
+              2000,
+              2125,
+              2250,
+              2375
+            ]
+          },
+          "pruning": {
+            "sparsities": [
+              0.5,
+              0.8
+            ],
+            "rewind_fractions": [
+              0.0,
+              0.01,
+              0.05,
+              0.1
+            ],
+            "rewind_protocol": "full_budget_restart"
+          },
+          "output_dir": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/32e_router_age_localization/references/seed_7"
+        },
+        "training_text_sha256": "7aad299a6af6f1c85e6ee399ed9d83156ea54af98f1cd5d69a2bf614bde1aed3",
+        "validation_text_sha256": "5d0994ce467642951497b89dcf55e661c719aa2a626404caf7999b25a9c1a2f9"
+      },
+      {
+        "seed": 17,
+        "model_data_routing_training_identical_across_history_and_sealed_native_reference": true,
+        "registered_train_continuation_validation_hashes_identical_to_original_reference": true,
+        "source_config": {
+          "seed": 17,
+          "device": "cuda",
+          "data": {
+            "path": null,
+            "train_path": "data/multidomain_balanced/multidomain_train.txt",
+            "validation_path": "data/multidomain_balanced/multidomain_validation.txt",
+            "seq_len": 128,
+            "train_fraction": 0.9,
+            "validation_blocks": 32,
+            "reshuffle_each_epoch": false,
+            "max_train_examples": null,
+            "max_validation_examples": null,
+            "tokenizer": "byte",
+            "tokenizer_vocab_size": 256,
+            "tokenizer_cache_path": null,
+            "tokenizer_train_bytes": null,
+            "tokenizer_max_ngram": 8,
+            "tokenizer_min_frequency": 2
+          },
+          "model": {
+            "vocab_size": 256,
+            "max_seq_len": 128,
+            "num_layers": 4,
+            "num_heads": 4,
+            "d_model": 256,
+            "num_experts": 32,
+            "expert_hidden_size": 1024,
+            "dropout": 0.0,
+            "top_k": 1,
+            "capacity_factor": 1.25
+          },
+          "routing": {
+            "mode": "learned",
+            "aux_loss_weight": 0.1,
+            "replay_path": null,
+            "swap_pairs": [],
+            "corruption_fraction": 0.0
+          },
+          "training": {
+            "steps": 2500,
+            "batch_size": 128,
+            "learning_rate": 0.0003,
+            "weight_decay": 0.01,
+            "grad_clip": 1.0,
+            "eval_interval": 250,
+            "log_interval": 25,
+            "checkpoint_steps": [
+              0,
+              500,
+              2500
+            ],
+            "save_optimizer": false,
+            "record_train_routes": false,
+            "record_rich_routes": false,
+            "data_seed": null,
+            "precision": "fp16",
+            "record_exposure": true,
+            "checkpoint_only_steps": [
+              125,
+              250,
+              375,
+              500,
+              625,
+              750,
+              875,
+              1000,
+              1125,
+              1250,
+              1375,
+              1500,
+              1625,
+              1750,
+              1875,
+              2000,
+              2125,
+              2250,
+              2375
+            ]
+          },
+          "pruning": {
+            "sparsities": [
+              0.5,
+              0.8
+            ],
+            "rewind_fractions": [
+              0.0,
+              0.01,
+              0.05,
+              0.1
+            ],
+            "rewind_protocol": "full_budget_restart"
+          },
+          "output_dir": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/32e_router_age_localization/references/seed_17"
+        },
+        "training_text_sha256": "7aad299a6af6f1c85e6ee399ed9d83156ea54af98f1cd5d69a2bf614bde1aed3",
+        "validation_text_sha256": "5d0994ce467642951497b89dcf55e661c719aa2a626404caf7999b25a9c1a2f9"
+      },
+      {
+        "seed": 29,
+        "model_data_routing_training_identical_across_history_and_sealed_native_reference": true,
+        "registered_train_continuation_validation_hashes_identical_to_original_reference": true,
+        "source_config": {
+          "seed": 29,
+          "device": "cuda",
+          "data": {
+            "path": null,
+            "train_path": "data/multidomain_balanced/multidomain_train.txt",
+            "validation_path": "data/multidomain_balanced/multidomain_validation.txt",
+            "seq_len": 128,
+            "train_fraction": 0.9,
+            "validation_blocks": 32,
+            "reshuffle_each_epoch": false,
+            "max_train_examples": null,
+            "max_validation_examples": null,
+            "tokenizer": "byte",
+            "tokenizer_vocab_size": 256,
+            "tokenizer_cache_path": null,
+            "tokenizer_train_bytes": null,
+            "tokenizer_max_ngram": 8,
+            "tokenizer_min_frequency": 2
+          },
+          "model": {
+            "vocab_size": 256,
+            "max_seq_len": 128,
+            "num_layers": 4,
+            "num_heads": 4,
+            "d_model": 256,
+            "num_experts": 32,
+            "expert_hidden_size": 1024,
+            "dropout": 0.0,
+            "top_k": 1,
+            "capacity_factor": 1.25
+          },
+          "routing": {
+            "mode": "learned",
+            "aux_loss_weight": 0.1,
+            "replay_path": null,
+            "swap_pairs": [],
+            "corruption_fraction": 0.0
+          },
+          "training": {
+            "steps": 2500,
+            "batch_size": 128,
+            "learning_rate": 0.0003,
+            "weight_decay": 0.01,
+            "grad_clip": 1.0,
+            "eval_interval": 250,
+            "log_interval": 25,
+            "checkpoint_steps": [
+              0,
+              500,
+              2500
+            ],
+            "save_optimizer": false,
+            "record_train_routes": false,
+            "record_rich_routes": false,
+            "data_seed": null,
+            "precision": "fp16",
+            "record_exposure": true,
+            "checkpoint_only_steps": [
+              125,
+              250,
+              375,
+              500,
+              625,
+              750,
+              875,
+              1000,
+              1125,
+              1250,
+              1375,
+              1500,
+              1625,
+              1750,
+              1875,
+              2000,
+              2125,
+              2250,
+              2375
+            ]
+          },
+          "pruning": {
+            "sparsities": [
+              0.5,
+              0.8
+            ],
+            "rewind_fractions": [
+              0.0,
+              0.01,
+              0.05,
+              0.1
+            ],
+            "rewind_protocol": "full_budget_restart"
+          },
+          "output_dir": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/32e_router_age_localization/references/seed_29"
+        },
+        "training_text_sha256": "7aad299a6af6f1c85e6ee399ed9d83156ea54af98f1cd5d69a2bf614bde1aed3",
+        "validation_text_sha256": "5d0994ce467642951497b89dcf55e661c719aa2a626404caf7999b25a9c1a2f9"
+      },
+      {
+        "seed": 43,
+        "model_data_routing_training_identical_across_history_and_sealed_native_reference": true,
+        "registered_train_continuation_validation_hashes_identical_to_original_reference": true,
+        "source_config": {
+          "seed": 43,
+          "device": "cuda",
+          "data": {
+            "path": null,
+            "train_path": "data/multidomain_balanced/multidomain_train.txt",
+            "validation_path": "data/multidomain_balanced/multidomain_validation.txt",
+            "seq_len": 128,
+            "train_fraction": 0.9,
+            "validation_blocks": 32,
+            "reshuffle_each_epoch": false,
+            "max_train_examples": null,
+            "max_validation_examples": null,
+            "tokenizer": "byte",
+            "tokenizer_vocab_size": 256,
+            "tokenizer_cache_path": null,
+            "tokenizer_train_bytes": null,
+            "tokenizer_max_ngram": 8,
+            "tokenizer_min_frequency": 2
+          },
+          "model": {
+            "vocab_size": 256,
+            "max_seq_len": 128,
+            "num_layers": 4,
+            "num_heads": 4,
+            "d_model": 256,
+            "num_experts": 32,
+            "expert_hidden_size": 1024,
+            "dropout": 0.0,
+            "top_k": 1,
+            "capacity_factor": 1.25
+          },
+          "routing": {
+            "mode": "learned",
+            "aux_loss_weight": 0.1,
+            "replay_path": null,
+            "swap_pairs": [],
+            "corruption_fraction": 0.0
+          },
+          "training": {
+            "steps": 2500,
+            "batch_size": 128,
+            "learning_rate": 0.0003,
+            "weight_decay": 0.01,
+            "grad_clip": 1.0,
+            "eval_interval": 250,
+            "log_interval": 25,
+            "checkpoint_steps": [
+              0,
+              500,
+              2500
+            ],
+            "save_optimizer": false,
+            "record_train_routes": false,
+            "record_rich_routes": false,
+            "data_seed": null,
+            "precision": "fp16",
+            "checkpoint_only_steps": [
+              250,
+              500,
+              750,
+              1000,
+              1250,
+              1500,
+              1750,
+              2000,
+              2250
+            ],
+            "record_exposure": true
+          },
+          "pruning": {
+            "sparsities": [
+              0.5,
+              0.8
+            ],
+            "rewind_fractions": [
+              0.0,
+              0.01,
+              0.05,
+              0.1
+            ],
+            "rewind_protocol": "full_budget_restart"
+          },
+          "output_dir": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/router_conditioned_fixed_budget_dataset/sources/e32/seed_43"
+        },
+        "training_text_sha256": "7aad299a6af6f1c85e6ee399ed9d83156ea54af98f1cd5d69a2bf614bde1aed3",
+        "validation_text_sha256": "5d0994ce467642951497b89dcf55e661c719aa2a626404caf7999b25a9c1a2f9"
+      },
+      {
+        "seed": 61,
+        "model_data_routing_training_identical_across_history_and_sealed_native_reference": true,
+        "registered_train_continuation_validation_hashes_identical_to_original_reference": true,
+        "source_config": {
+          "seed": 61,
+          "device": "cuda",
+          "data": {
+            "path": null,
+            "train_path": "data/multidomain_balanced/multidomain_train.txt",
+            "validation_path": "data/multidomain_balanced/multidomain_validation.txt",
+            "seq_len": 128,
+            "train_fraction": 0.9,
+            "validation_blocks": 32,
+            "reshuffle_each_epoch": false,
+            "max_train_examples": null,
+            "max_validation_examples": null,
+            "tokenizer": "byte",
+            "tokenizer_vocab_size": 256,
+            "tokenizer_cache_path": null,
+            "tokenizer_train_bytes": null,
+            "tokenizer_max_ngram": 8,
+            "tokenizer_min_frequency": 2
+          },
+          "model": {
+            "vocab_size": 256,
+            "max_seq_len": 128,
+            "num_layers": 4,
+            "num_heads": 4,
+            "d_model": 256,
+            "num_experts": 32,
+            "expert_hidden_size": 1024,
+            "dropout": 0.0,
+            "top_k": 1,
+            "capacity_factor": 1.25
+          },
+          "routing": {
+            "mode": "learned",
+            "aux_loss_weight": 0.1,
+            "replay_path": null,
+            "swap_pairs": [],
+            "corruption_fraction": 0.0
+          },
+          "training": {
+            "steps": 2500,
+            "batch_size": 128,
+            "learning_rate": 0.0003,
+            "weight_decay": 0.01,
+            "grad_clip": 1.0,
+            "eval_interval": 250,
+            "log_interval": 25,
+            "checkpoint_steps": [
+              0,
+              500,
+              2500
+            ],
+            "save_optimizer": false,
+            "record_train_routes": false,
+            "record_rich_routes": false,
+            "data_seed": null,
+            "precision": "fp16",
+            "checkpoint_only_steps": [
+              250,
+              500,
+              750,
+              1000,
+              1250,
+              1500,
+              1750,
+              2000,
+              2250
+            ],
+            "record_exposure": true
+          },
+          "pruning": {
+            "sparsities": [
+              0.5,
+              0.8
+            ],
+            "rewind_fractions": [
+              0.0,
+              0.01,
+              0.05,
+              0.1
+            ],
+            "rewind_protocol": "full_budget_restart"
+          },
+          "output_dir": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/router_conditioned_fixed_budget_dataset/sources/e32/seed_61"
+        },
+        "training_text_sha256": "7aad299a6af6f1c85e6ee399ed9d83156ea54af98f1cd5d69a2bf614bde1aed3",
+        "validation_text_sha256": "5d0994ce467642951497b89dcf55e661c719aa2a626404caf7999b25a9c1a2f9"
+      }
+    ],
+    "control_reuse_not_assessed": true,
+    "production_updates": 0
+  },
+  "score_algebra_audit": {
+    "passed": true,
+    "seeds": [
+      {
+        "seed": 7,
+        "coordinates": 67108864,
+        "undefined_sign_coordinates": 0,
+        "max_Jensen_absolute_roundoff": 5.082197683525802e-21,
+        "max_Jensen_relative_roundoff": 9.158925207784516e-16,
+        "half_averages_exact": true,
+        "signed_score_identity_exact": true,
+        "absolute_signed_mean_identity_exact": true,
+        "second_moment_sample_variance_identity_passed": true,
+        "sign_consistency_definedness_passed": true
+      },
+      {
+        "seed": 17,
+        "coordinates": 67108864,
+        "undefined_sign_coordinates": 0,
+        "max_Jensen_absolute_roundoff": 5.082197683525802e-21,
+        "max_Jensen_relative_roundoff": 9.419369608645235e-16,
+        "half_averages_exact": true,
+        "signed_score_identity_exact": true,
+        "absolute_signed_mean_identity_exact": true,
+        "second_moment_sample_variance_identity_passed": true,
+        "sign_consistency_definedness_passed": true
+      },
+      {
+        "seed": 29,
+        "coordinates": 67108864,
+        "undefined_sign_coordinates": 0,
+        "max_Jensen_absolute_roundoff": 1.3552527156068805e-20,
+        "max_Jensen_relative_roundoff": 9.084216574389954e-16,
+        "half_averages_exact": true,
+        "signed_score_identity_exact": true,
+        "absolute_signed_mean_identity_exact": true,
+        "second_moment_sample_variance_identity_passed": true,
+        "sign_consistency_definedness_passed": true
+      },
+      {
+        "seed": 43,
+        "coordinates": 67108864,
+        "undefined_sign_coordinates": 0,
+        "max_Jensen_absolute_roundoff": 1.3552527156068805e-20,
+        "max_Jensen_relative_roundoff": 9.136093961296159e-16,
+        "half_averages_exact": true,
+        "signed_score_identity_exact": true,
+        "absolute_signed_mean_identity_exact": true,
+        "second_moment_sample_variance_identity_passed": true,
+        "sign_consistency_definedness_passed": true
+      },
+      {
+        "seed": 61,
+        "coordinates": 67108864,
+        "undefined_sign_coordinates": 0,
+        "max_Jensen_absolute_roundoff": 6.776263578034403e-21,
+        "max_Jensen_relative_roundoff": 9.465004620455753e-16,
+        "half_averages_exact": true,
+        "signed_score_identity_exact": true,
+        "absolute_signed_mean_identity_exact": true,
+        "second_moment_sample_variance_identity_passed": true,
+        "sign_consistency_definedness_passed": true
+      }
+    ],
+    "intervention_losses": 0,
+    "tolerances": {
+      "relative": 1e-12,
+      "absolute": 1e-25
+    },
+    "implementation_sha256": "b70fefb835cae35be5472595863139509a316463c1dba6f4084bef15106085b4"
+  },
+  "Jensen_comparison_tolerance": {
+    "relative": 1e-12,
+    "absolute": 1e-25,
+    "amendment": "engineering_code_amendment.json"
+  },
+  "registered_matching_checks_executed": true,
+  "all_registered_matching_checks_passed": false,
+  "downstream_checks": {
+    "native_finite_differences": "NOT_RUN_MATCHING_GATE",
+    "route_boundary_diagnostics": "NOT_RUN_MATCHING_GATE",
+    "initial_surviving_equality": "NOT_RUN_MATCHING_GATE",
+    "fresh_optimizer_scaler_RNG": "NOT_RUN_MATCHING_GATE",
+    "persistent_zero_gradient_flow": "NOT_RUN_MATCHING_GATE",
+    "continuation_batch_hashes_runtime": "NOT_RUN_MATCHING_GATE",
+    "interruption_resumption": "NOT_RUN_MATCHING_GATE",
+    "control_reuse_compatibility": "NOT_RUN_MATCHING_GATE"
+  },
+  "no_intervention_or_validation_or_production": true,
+  "engineering_failures_preserved": [
+    "engineering_history.json",
+    "matching_transport_amendment.json"
+  ],
+  "downstream_reason": "Registered matching failed before any intervention; unavailable checks are not marked passed."
+}

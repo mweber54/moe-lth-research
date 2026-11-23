@@ -1,0 +1,202 @@
+{
+  "allowed_outcome_dependent_extensions": 0,
+  "artifact_inventory_sha256": "cf21e060758d7f7af8ee0f44e8126e3ec848cad80d47606bde293b9592121284",
+  "attempted_updates_per_job": 5000,
+  "canonical_stream_manifest_sha256": "bf2357e86fe241c8ca7bd187e303c8dcdbf324630999f104593198b221827550",
+  "code_inputs": [
+    {
+      "bytes": 134721,
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/scripts/imp_recovery_order_stability_v1/run.py",
+      "sha256": "d9decbc86ac65718a261acfc45d78b6992be091888f840b2e44ba31d3dd320b4"
+    },
+    {
+      "bytes": 82469,
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/src/moe_lth/experiments/run_router_age_recovery.py",
+      "sha256": "a9b4e7a825f6d73fcd871ab73d281b8ec51dfd6ce3e07760cd38d9534176a890"
+    },
+    {
+      "bytes": 12193,
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/src/moe_lth/data.py",
+      "sha256": "df4e75c9c07cc339bd58d6029a0795b84eb7d409aef3a947c3edce0ff892cd35"
+    },
+    {
+      "bytes": 18585,
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/src/moe_lth/pruning/router_age.py",
+      "sha256": "38c746f12d6d8374f44f0939143fe267459bdf1d8a330f67bb41b3d064875681"
+    },
+    {
+      "bytes": 1357,
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/src/moe_lth/pruning/rewind.py",
+      "sha256": "cf2a71a17ff4efedd17d551e11c4fd39e8eb70896b761a968fe42bc68746aab4"
+    },
+    {
+      "bytes": 2442,
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/src/moe_lth/pruning/masks.py",
+      "sha256": "284ece2bd4ce60130f92356e6d84e6e22e06da9b2a608ee3ef9419e98934acff"
+    },
+    {
+      "bytes": 4859,
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/src/moe_lth/models/transformer.py",
+      "sha256": "12e14e68c2cd7a223173710c9fb5166823af470ceca605c1c0185063037ba9f6"
+    },
+    {
+      "bytes": 5143,
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/src/moe_lth/models/moe_layer.py",
+      "sha256": "7b9ca9d9c3a1020125d5d9d42f8429cbd0aea8ca42e8dcc334c1d8724465e21a"
+    },
+    {
+      "bytes": 522,
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/src/moe_lth/models/experts.py",
+      "sha256": "9a27db066be337c79e7b3103bf1b9af7970703fc73ac8cbb20f7430e5527a37a"
+    },
+    {
+      "bytes": 3968,
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/src/moe_lth/models/router.py",
+      "sha256": "6f0632dd89a4b3e0b6645080a859aeb2fae1e513b6b0ca6fff8a9f7c28b033e6"
+    },
+    {
+      "bytes": 2452,
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/src/moe_lth/utils.py",
+      "sha256": "a3047ce02e2ca694e467b30e9fc94a18691331a7fed72ffcd883f483c0f16da6"
+    },
+    {
+      "bytes": 17234,
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/scripts/imp_80_85/run.py",
+      "sha256": "4b06c5fa2ce864adcd8159689119e1ef90a7f550529194cebbb6b40dddb1603d"
+    },
+    {
+      "bytes": 26690,
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/scripts/imp_extended_recovery/pipeline.py",
+      "sha256": "2a943d92ea61e1bb1d8970703327f320106fb85751c227d8d3237dc257b10cd9"
+    },
+    {
+      "bytes": 13967,
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/scripts/imp_extended_recovery/run.py",
+      "sha256": "dd43a16ca7df4757c56201700f56d3c3d1ce348d0659ed732223fe5abe53e725"
+    }
+  ],
+  "created_utc": "2026-10-30T16:31:51Z",
+  "engineering_checks_sha256": "9426297807bc1af5e2ddcf7c3491baf5df8c91a6c20459467f37ee9584eed940",
+  "estimated_gpu_hours": 20.735612970828598,
+  "estimated_storage_bytes": 155937418240,
+  "evaluation": {
+    "batching": "complete contextual validation batches; native capacity",
+    "loss_weighting": "sum over target tokens divided by verified target token count",
+    "mode": "eval/inference",
+    "precision": "FP32",
+    "tf32": false
+  },
+  "evaluation_identities": {
+    "17": {
+      "target_token_count": 492416,
+      "validation_batch_count": 31,
+      "validation_stream_hash": "09a073e9f03bbb854d3903081440b9e0869feb8e04b50b3b1be76a1d42658b22"
+    },
+    "29": {
+      "target_token_count": 492416,
+      "validation_batch_count": 31,
+      "validation_stream_hash": "09a073e9f03bbb854d3903081440b9e0869feb8e04b50b3b1be76a1d42658b22"
+    },
+    "43": {
+      "target_token_count": 492416,
+      "validation_batch_count": 31,
+      "validation_stream_hash": "09a073e9f03bbb854d3903081440b9e0869feb8e04b50b3b1be76a1d42658b22"
+    },
+    "61": {
+      "target_token_count": 492416,
+      "validation_batch_count": 31,
+      "validation_stream_hash": "09a073e9f03bbb854d3903081440b9e0869feb8e04b50b3b1be76a1d42658b22"
+    },
+    "7": {
+      "target_token_count": 492416,
+      "validation_batch_count": 31,
+      "validation_stream_hash": "09a073e9f03bbb854d3903081440b9e0869feb8e04b50b3b1be76a1d42658b22"
+    }
+  },
+  "historical_common_readout_sha256": "71e1938c92f80a45c81f5d29afa5acdc78225e6474c511fb7db5d8dedf67a469",
+  "historical_compatibility_sha256": "2baf9f07ceb640ef7ebdd11592371f65a4907a3268c54cf46982c1d1f550e73e",
+  "historical_order_jobs": 0,
+  "host_input_verification": {
+    "adder.cs.kent.edu": {
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_recovery_order_stability_v1/hosts/adder.cs.kent.edu.json",
+      "sha256": "e9e8910b4ea23968a657886c0ecd20b1d424ae9d03fcd78052aa1658ef48f4e5"
+    },
+    "viper.cs.kent.edu": {
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_recovery_order_stability_v1/hosts/viper.cs.kent.edu.json",
+      "sha256": "e00e756cb9b407a27757af31bae20ddceb1abaf18e5232927cad746c60d9b0a8"
+    }
+  },
+  "job_count": 20,
+  "job_manifest_sha256": "cc1e2b9898a9665e3ee34fe50136fac94465de004721f6d63c415bacaa3dd9d7",
+  "model_types": [
+    "imp80",
+    "unpruned"
+  ],
+  "new_order_jobs": 20,
+  "numerical_environment": {
+    "cuda_runtime": "12.8",
+    "device": "NVIDIA H100 NVL",
+    "numpy": "1.26.4",
+    "python": "3.12.3",
+    "torch": "2.7.0"
+  },
+  "numerical_tolerances": {
+    "common_evaluation": "FP32 readouts are exact to accumulated float64 token-loss sum on fixed hardware; no post-hoc near-match threshold",
+    "state_reset_hash": "exact tensor-state hash equality",
+    "wrapper_equivalence": "same-host exact state equality for deterministic short CPU engineering stream"
+  },
+  "optimizer_reset": "fresh AdamW and GradScaler at 2,500; complete model state retained",
+  "orders": {
+    "A": 91001,
+    "B": 91002
+  },
+  "pilot": {
+    "jobs": 2,
+    "order": "A",
+    "outcome_independent_dispatch": true,
+    "seed": 17
+  },
+  "production_ready": true,
+  "production_sealed_at_utc": "2026-10-30T16:46:50Z",
+  "protocol_sha256": "3f813903afa6643f56ef1042662798b2e9b5abe3f16d784e00aa64c64244cb2f",
+  "recovery_order_manifest_sha256": "1b77c022ca4151132fbde5b900bc0076aa2577ac2c1a0c7eb8d42e21bb67175c",
+  "registration_scope": "prospectively specified follow-up within an exploratory project",
+  "seed_cohort": [
+    7,
+    17,
+    29,
+    43,
+    61
+  ],
+  "snapshot_steps": [
+    0,
+    250,
+    500,
+    1000,
+    1500,
+    2000,
+    2500,
+    2525,
+    3000,
+    4000,
+    5000
+  ],
+  "source_and_mask_hashes_sha256": "110ca937208bf43b6fe97dbfa68f80252da5017da59dd6ca53ab53c78756846c",
+  "stochasticity_audit": {
+    "dropout_active": false,
+    "dropout_probability_by_seed": {
+      "17": 0.0,
+      "29": 0.0,
+      "43": 0.0,
+      "61": 0.0,
+      "7": 0.0
+    },
+    "global_training_rng_reset": "Python, NumPy, CPU Torch, and all CUDA RNGs are reset to the source seed before each native segment model assembly",
+    "native_router_or_capacity_sampling": false,
+    "order_rng": "isolated NumPy SeedSequence/PCG64 generators; does not mutate global RNG state",
+    "stochastic_numerical_operations": "CUDA/AMP kernels may be numerically nondeterministic across hosts; no cross-host bitwise requirement",
+    "training_data_randomization_after_materialization": false
+  },
+  "throughput_benchmark_sha256": "4769f0c5bb897314da068ff11bf85c59614499e013aee99b105b2a93de8cdf4a",
+  "title": "32E IMP80 recovery batch-order stability"
+}

@@ -34,6 +34,9 @@ class MoETransformerBlock(nn.Module):
         inputs: torch.Tensor,
         causal_mask: torch.Tensor,
         override_ids: torch.Tensor | None = None,
+        *,
+        capacity_enabled: bool = True,
+        expert_chunk_size: int | None = None,
     ) -> tuple[torch.Tensor, torch.Tensor, RouteTrace, torch.Tensor]:
         normalized = self.attention_norm(inputs)
         attended, _ = self.attention(
@@ -44,7 +47,12 @@ class MoETransformerBlock(nn.Module):
         )
         hidden = inputs + attended
         pre_router_hidden = self.moe_norm(hidden)
-        expert_output, auxiliary_loss, trace = self.moe(pre_router_hidden, override_ids)
+        expert_output, auxiliary_loss, trace = self.moe(
+            pre_router_hidden,
+            override_ids,
+            capacity_enabled=capacity_enabled,
+            expert_chunk_size=expert_chunk_size,
+        )
         return hidden + expert_output, auxiliary_loss, trace, pre_router_hidden
 
 
@@ -80,8 +88,17 @@ class TinyMoELanguageModel(nn.Module):
         self,
         token_ids: torch.Tensor,
         route_overrides: list[torch.Tensor | None] | None = None,
+        *,
+        capacity_enabled_layers: list[bool] | None = None,
+        expert_chunk_size: int | None = None,
     ) -> LanguageModelOutput:
         batch_size, seq_len = token_ids.shape
+        if capacity_enabled_layers is None:
+            capacity_enabled_layers = [True] * len(self.blocks)
+        elif len(capacity_enabled_layers) != len(self.blocks):
+            raise ValueError(
+                "capacity_enabled_layers must contain one value per transformer block."
+            )
         positions = torch.arange(seq_len, device=token_ids.device)
         hidden = self.token_embedding(token_ids) + self.position_embedding(positions)[None, :, :]
         causal_mask = torch.full(
@@ -95,7 +112,13 @@ class TinyMoELanguageModel(nn.Module):
 
         for layer_id, block in enumerate(self.blocks):
             override = None if route_overrides is None else route_overrides[layer_id]
-            hidden, auxiliary_loss, trace, pre_router_hidden = block(hidden, causal_mask, override)
+            hidden, auxiliary_loss, trace, pre_router_hidden = block(
+                hidden,
+                causal_mask,
+                override,
+                capacity_enabled=capacity_enabled_layers[layer_id],
+                expert_chunk_size=expert_chunk_size,
+            )
             pre_router_hidden_states.append(pre_router_hidden.detach())
             auxiliary_losses.append(auxiliary_loss)
             routes.append(trace)

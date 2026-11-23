@@ -1,0 +1,421 @@
+Implement, audit, seal, and launch a controlled surviving-initial-value
+permutation experiment using the existing 32E IMP80 cohort.
+
+Research question:
+Does IMP’s recovery advantage depend on the placement of the original initial
+weight values within its surviving connectivity, beyond connectivity and the
+within-matrix distribution of retained values?
+
+Hypothesis:
+Permuting initial values among surviving coordinates harms IMP recovery more
+than it harms matched random-mask recovery.
+
+This is a hypothesis, not an established mechanism or novelty claim.
+
+Suggested directories:
+scripts/imp_initial_value_placement_v1/
+results/imp_initial_value_placement_v1/
+
+1. Audit existing artifacts and implementation
+
+Read repository instructions and inspect:
+- original 32E initialization checkpoints;
+- scripts/imp_80_85/ and the IMP80 mask provenance;
+- scripts/imp_extended_recovery/ and the native recovery trainer;
+- imp_recovery_order_stability_v1;
+- imp_mask_information_v1/v2 random-mask validation utilities;
+- existing common-readout and interruption/resumption tests.
+
+Locate exact paths from manifests. Do not infer compatibility from filenames.
+
+Use all five source seeds:
+7, 17, 29, 43, 61.
+
+For each source use:
+- its original complete step-0 model;
+- its own original IMP80 mask;
+- architecture and training configuration from the verified recovery protocol.
+
+Do not use:
+- trained expert values;
+- step-1000 pruning-event checkpoints;
+- one-shot magnitude masks;
+- masks from another initialization;
+- shared-only or frozen-router training.
+
+Verify the initializer and checkpoint schema from source code. No replacement
+initialization is generated.
+
+2. Experimental factors and bounded cohort
+
+Architecture: 32E.
+Nominal expert-weight sparsity: 80%.
+All experts, routers and shared components train.
+
+Factors:
+A. Mask family:
+   - original IMP80;
+   - random placement with exact per-matrix IMP survivor counts.
+
+B. Surviving initial-value placement:
+   - original;
+   - independently permuted within each expert projection matrix.
+
+C. Recovery order:
+   - existing registered order A;
+   - existing registered order B.
+
+Use the exact saved order A/B arrays and canonical batch streams from
+imp_recovery_order_stability_v1. No original-order production runs are added.
+
+For each source:
+- one IMP/original model;
+- two independently generated random masks, each with original values;
+- two independently shuffled-value variants of the IMP mask;
+- one shuffled-value variant for each of the two random masks.
+
+This is seven model variants per source, each trained under both orders:
+5 sources × 7 variants × 2 orders = 70 endpoint jobs.
+
+Ten IMP/original endpoints may be reused from the completed order study,
+subject to full compatibility checks.
+Therefore the intended production budget is:
+- 60 new 5,000-attempt recovery jobs;
+- 10 compatible reused controls.
+
+Random masks and value shuffles are nested realizations, not independent
+source-seed replication.
+
+Do not add sparsities, architectures, sources, orders, realizations, or discovery
+runs. If control reuse fails, report the blocker before adding replacement jobs.
+
+3. Construct immutable masks and value permutations
+
+For each source/layer/expert/projection:
+- obtain W0 from the original initialization;
+- obtain the original binary IMP mask M;
+- validate shapes, names and orientation against the native model.
+
+Random masks:
+- sample uniformly without replacement among matrix coordinates;
+- preserve the exact survivor count of the corresponding IMP matrix;
+- generate separately for fc1 and fc2;
+- preserve the resulting per-expert combined budget;
+- do not claim row/column-degree preservation.
+
+Use two predetermined independent random-mask generator seeds, 92001 and
+92002, with documented source/tensor-specific derivation.
+
+For any mask M, the original-value condition is:
+    W_original[M] = W0[M]
+    W_original[~M] = 0
+
+For the shuffled-value condition:
+- enumerate surviving coordinates in canonical flattened order;
+- randomly permute the list W0[M];
+- assign that same multiset back to those surviving coordinates;
+- leave every masked coordinate zero.
+
+Use predetermined shuffle seeds 93001 and 93002:
+- two independent IMP shuffles;
+- random-mask realization j uses shuffle realization j.
+
+Generate transformations with isolated CPU generators. They must not consume
+or alter production training RNG states.
+
+Do not shuffle:
+- values across matrices, experts or layers;
+- expert biases;
+- router parameters;
+- shared parameters.
+
+Do not reinitialize, rescale, sign-flip, sort values by importance, or fit any
+transformation to outcomes.
+
+Store actual coordinate/permutation identities and hashes. Seeds alone are
+not sufficient provenance.
+
+4. What is and is not controlled
+
+Within each original-versus-shuffled mask comparison, preserve exactly:
+- binary mask;
+- per-row and per-column survivor counts;
+- cross-projection binary connectivity;
+- structural dead-unit counts;
+- retained-value multiset within each matrix;
+- sign counts;
+- squared weight magnitude, up to declared accumulation tolerance;
+- biases and all router/shared initial tensors.
+
+Shuffling changes:
+- which coordinate receives which initial value;
+- neuron-level signed/weighted structure;
+- initial activations and model function.
+
+These are part of the treatment, not hidden controls.
+
+IMP and random masks may retain different value distributions from W0.
+Do not claim that mask families are matched on retained energy or initial
+function. The primary comparison is the difference between their respective
+within-mask shuffling effects.
+
+This experiment tests coordinate-specific value placement conditional on the
+mask and retained-value multiset. It does not cleanly separate sign, magnitude,
+weighted paths, biases, or compatibility with the surrounding network.
+
+5. Training protocol
+
+Reproduce the verified 5,000-attempt, two-segment recovery protocol:
+- start from original initialization with the assigned mask/values;
+- train all surviving expert weights, expert biases, dense routers and shared
+  parameters;
+- retain native routing, gates, capacity, auxiliary loss and model configuration;
+- maintain gradient masking and post-update zeros;
+- preserve learning rate, AdamW, clipping, precision and GradScaler behavior;
+- reset optimizer/scaler and RNG at 2,500 exactly as the audited native protocol;
+- retain complete model state across that boundary;
+- consume the correct second-segment batch stream.
+
+Orders A and B are the saved within-segment permutations of complete batches.
+Within each source/order, every variant receives identical batches and the
+same native training RNG policy.
+
+Hold each mask and value permutation fixed across the two recovery orders.
+
+Record attempted updates, applied updates, AMP skips, clipping and reset
+metadata. Do not extend training to compensate for an unfavorable outcome.
+
+6. Registration and production checks
+
+Before intervention losses or production training:
+- seal all mask/value variants;
+- seal their hashes and generator specifications;
+- seal cohort, contrasts, data orders, checkpoint schedule and code hashes.
+
+Run meaningful synthetic and short engineering tests:
+- mask counts and binary validity;
+- exact retained-value multiset preservation;
+- no masked-coordinate contamination;
+- original variant reconstructs the verified starting state;
+- unchanged biases/router/shared tensors;
+- deterministic transformation generation without global RNG effects;
+- persistent masking under AdamW;
+- identical batch streams across paired conditions;
+- reset changes optimizer state but not model parameters;
+- interruption/resumption before and after the reset;
+- evaluation preserves training state;
+- resumed execution does not repeat completed updates;
+- contrast and aggregation correctness.
+
+Use existing justified numerical tolerances. Record revisions transparently.
+Preserve failed attempts and prior code/configuration seals.
+
+Synthetic training/backward checks and production training are authorized for
+this experiment. Do not inherit no-backward restrictions from prior
+checkpoint-only studies.
+
+7. Fixed engineering pilot and launch
+
+Use source seed 17, order A as the predetermined production pilot.
+
+Run:
+- IMP shuffled realization 1;
+- random-mask realization 1, original values;
+- random-mask realization 1, shuffled values.
+
+Reuse the compatible IMP/original order-A control.
+
+These three production jobs count toward the registered 60 new jobs.
+Their scientific outcomes must not determine whether the cohort proceeds.
+
+Gate cohort dispatch only on:
+- provenance and numerical checks;
+- complete endpoints;
+- correct update/reset accounting;
+- masking integrity;
+- resource feasibility.
+
+After the pilot passes, dispatch the remaining registered jobs automatically.
+
+Profile short engineering throughput before production. Report projected GPU
+time and storage, then measured costs separately. Do not promise the runtime
+from earlier studies without measuring this implementation.
+
+Use verified Viper/Adder infrastructure:
+- one worker per available GPU initially;
+- respect external jobs;
+- no process killing;
+- input-hash verification on both hosts;
+- locks, atomic statuses and persistent heartbeats;
+- unique attempts and resumable optimizer/scaler/RNG/sampler checkpoints.
+
+8. Readouts and checkpoint preservation
+
+Evaluate at global steps:
+0, 250, 500, 1000, 1500, 2000, 2500, 2525, 3000, 4000, 5000.
+
+Use the verified common full-validation procedure:
+- FP32;
+- TF32 disabled;
+- native complete-batch capacity;
+- actual target-token weighting;
+- identical batch identities and partial-batch treatment.
+
+Verify counts from provenance.
+Do not substitute historical TF32 losses.
+
+Save model snapshots at least at:
+0, 1000, 2500, 3000, 4000, 5000.
+
+Save sufficient training state for interruption/resumption.
+Label model-only snapshots as nonresumable.
+
+Record initial function differences. A final deficit after shuffling cannot
+automatically be described as slower optimization if initial damage differs.
+
+No new expensive geometry probes are required.
+
+9. Primary estimands
+
+Let L(s,f,j,p,o,t) denote CE for:
+- source s;
+- mask family f;
+- realization j;
+- value placement p;
+- order o;
+- step t.
+
+For IMP:
+    Delta_IMP(s,o,t)
+      = mean_j L(IMP, shuffled_j)
+        - L(IMP, original)
+
+For random masks:
+    Delta_random(s,o,t)
+      = mean_j [
+          L(random_j, shuffled_j)
+          - L(random_j, original)
+        ]
+
+Primary interaction:
+    I(s,o,t) = Delta_IMP(s,o,t) - Delta_random(s,o,t)
+
+Primary endpoint: step 5000.
+Secondary: pre-reset step 2500.
+Initial and intermediate effects are reported separately.
+
+Positive I means shuffling surviving values harms IMP more than it harms
+the sampled random controls.
+
+Also report:
+    A_original = mean_j L(random_j, original) - L(IMP, original)
+    A_shuffled = mean_j L(random_j, shuffled_j)
+                 - mean_j L(IMP, shuffled_j)
+
+Verify:
+    I = A_original - A_shuffled
+
+For the primary five-source summary, average the interaction equally across
+orders A and B within source, then summarize across sources.
+
+Show every order and realization before aggregation. Shared IMP controls
+must not be counted as independent observations for each shuffle.
+
+Do not pool jobs as if there were 70 independent source models.
+
+10. Absolute performance and dense references
+
+Report absolute sparse CE as the primary performance measurement.
+
+Use compatible existing unpruned A/B controls to report:
+    sparse_minus_unpruned_CE
+
+Re-evaluate controls if necessary under the common readout; no new unpruned
+training is authorized.
+
+Keep the distinction between:
+- IMP advantage over random masks;
+- shuffling penalty;
+- sparse outperformance over unpruned controls.
+
+A variant can lose matching status because of its comparator. Do not interpret
+a binary label alone as failure to recover.
+
+No post hoc near-match or equivalence threshold.
+
+11. Analysis and interpretation
+
+Report:
+- initial CE changes caused by shuffling;
+- trajectories and final shuffling penalties;
+- IMP-versus-random advantage before and after shuffling;
+- primary interaction per source and order;
+- variability across nested shuffles/masks;
+- applied-update and numerical-accounting differences.
+
+Do not adjust away initial CE statistically and claim that doing so isolates
+a mechanism. Report initial and final effects side by side.
+
+Possible conclusions:
+
+A. IMP is harmed more than random:
+   Evidence that the placement of its retained initial values contributes
+   specifically to its recovery advantage under this protocol.
+
+B. IMP advantage persists after shuffling:
+   Exact original value placement is not necessary for the observed residual
+   advantage in these tested conditions. This does not prove arbitrary values
+   work or that binary topology alone explains it.
+
+C. Both families are similarly harmed:
+   A general placement/initial-function effect, without evidence of an
+   additional IMP-specific dependence.
+
+D. Effects differ by source or order:
+   Report conditional compatibility rather than a universal mask property.
+
+E. IMP does not outperform random in this 32E cohort:
+   Report that directly. Do not import the E16 result as a guaranteed baseline
+   or interpret the experiment as destroying an advantage that was absent.
+
+A positive interaction does not identify which property matters:
+sign placement, magnitude placement, weighted paths, initial function and
+compatibility with biases/router/shared components remain candidates.
+
+Do not claim novelty, indispensable individual connections, a routed-data
+partition encoded in the mask, or an online pruning algorithm.
+
+12. Outputs
+
+Produce:
+- protocol.md
+- registration.json
+- artifact_inventory.csv
+- control_reuse_checks.csv
+- variant_manifest.csv
+- transformation_hashes.json
+- mask_and_value_validation.csv
+- engineering_checks.json
+- endpoint_losses.csv
+- trajectory_losses.csv
+- realization_level_effects.csv
+- source_order_contrasts.csv
+- source_level_summary.csv
+- optimizer_compute_accounting.csv
+- compute_accounting.json
+- completion.json
+- findings.md
+- README.md with exact monitoring and resume commands
+
+Figures:
+1. Original versus shuffled CE within each mask family.
+2. IMP advantage before and after shuffling.
+3. Primary interaction for every source and order.
+4. Initial versus final shuffling penalties.
+5. Recovery trajectories with all realizations visible.
+
+Preserve all historical artifacts and every registered outcome.
+Missing or failed outcomes remain explicit.
+
+Complete the registered experiment and analysis. Do not launch a follow-up
+or expand the grid based on the results.

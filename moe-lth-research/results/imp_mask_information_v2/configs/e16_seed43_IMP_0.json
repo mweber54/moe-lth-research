@@ -1,0 +1,225 @@
+{
+  "job": {
+    "id": "e16_seed43_IMP_0",
+    "phase": 1,
+    "seed": 43,
+    "condition": "IMP",
+    "replicate": 0,
+    "mask_seed": null,
+    "mask_path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_80_85/trajectories/e16/seed_43/mask_08.pt",
+    "mask_hash": "8a34907fa084eea49db01b9f55da76fb85a9ebf0386d588485a4f1cc35cc32f4",
+    "dependencies": []
+  },
+  "config": {
+    "seed": 43,
+    "device": "cuda",
+    "data": {
+      "path": null,
+      "train_path": "data/multidomain_balanced/multidomain_train.txt",
+      "validation_path": "data/multidomain_balanced/multidomain_validation.txt",
+      "seq_len": 128,
+      "train_fraction": 0.9,
+      "validation_blocks": 32,
+      "reshuffle_each_epoch": false,
+      "max_train_examples": null,
+      "max_validation_examples": null,
+      "tokenizer": "byte",
+      "tokenizer_vocab_size": 256,
+      "tokenizer_cache_path": null,
+      "tokenizer_train_bytes": null,
+      "tokenizer_max_ngram": 8,
+      "tokenizer_min_frequency": 2
+    },
+    "model": {
+      "vocab_size": 256,
+      "max_seq_len": 128,
+      "num_layers": 4,
+      "num_heads": 4,
+      "d_model": 256,
+      "num_experts": 16,
+      "expert_hidden_size": 1024,
+      "dropout": 0.0,
+      "top_k": 1,
+      "capacity_factor": 1.25
+    },
+    "routing": {
+      "mode": "learned",
+      "aux_loss_weight": 0.1,
+      "replay_path": null,
+      "swap_pairs": [],
+      "corruption_fraction": 0.0
+    },
+    "training": {
+      "steps": 2500,
+      "batch_size": 128,
+      "learning_rate": 0.0003,
+      "weight_decay": 0.01,
+      "grad_clip": 1.0,
+      "eval_interval": 250,
+      "log_interval": 25,
+      "checkpoint_steps": [
+        0,
+        500,
+        2500
+      ],
+      "save_optimizer": false,
+      "record_train_routes": false,
+      "record_rich_routes": false,
+      "data_seed": null,
+      "precision": "fp16",
+      "checkpoint_only_steps": [
+        250,
+        500,
+        750,
+        1000,
+        1250,
+        1500,
+        1750,
+        2000,
+        2250
+      ],
+      "record_exposure": true
+    },
+    "pruning": {
+      "sparsities": [
+        0.5,
+        0.8
+      ],
+      "rewind_fractions": [
+        0.0,
+        0.01,
+        0.05,
+        0.1
+      ],
+      "rewind_protocol": "full_budget_restart"
+    },
+    "output_dir": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/router_conditioned_fixed_budget_dataset/sources/e16/seed_43"
+  },
+  "cohort": {
+    "configuration_id": "imp_e16_seed43_final_s0.80",
+    "family": "IMP",
+    "architecture": "{\"capacity_factor\": 1.25, \"d_model\": 256, \"dropout\": 0.0, \"expert_hidden_size\": 1024, \"max_seq_len\": 128, \"num_experts\": 16, \"num_heads\": 4, \"num_layers\": 4, \"top_k\": 1, \"vocab_size\": 256}",
+    "num_experts": "16",
+    "seed": "43",
+    "sparsity": "0.7999992370605469",
+    "mask_source": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_80_85/trajectories/e16/seed_43/mask_08.pt",
+    "mask_hash": "8a34907fa084eea49db01b9f55da76fb85a9ebf0386d588485a4f1cc35cc32f4",
+    "rewind_source": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/router_conditioned_fixed_budget_dataset/sources/e16/seed_43/checkpoints/step_0.pt",
+    "rewind_step": "0",
+    "rewind_sha256": "8bdd67ead00bfa9823040da130ad0b4970bb811e6ee9fff090a1d0505c013e7f",
+    "recovery_checkpoint": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_80_85/trajectories/e16/seed_43/final_s0.80/checkpoints/final_recovered.pt",
+    "recovery_sha256": "8f40c4a2ae131e1320b2e46fce79c1925a5c2a62849b53fec886c8f7dacd3b40",
+    "recovery_protocol": "{\"data\": {\"max_train_examples\": null, \"max_validation_examples\": null, \"path\": null, \"reshuffle_each_epoch\": false, \"seq_len\": 128, \"tokenizer\": \"byte\", \"tokenizer_cache_path\": null, \"tokenizer_max_ngram\": 8, \"tokenizer_min_frequency\": 2, \"tokenizer_train_bytes\": null, \"tokenizer_vocab_size\": 256, \"train_fraction\": 0.9, \"train_path\": \"data/multidomain_balanced/multidomain_train.txt\", \"validation_blocks\": 32, \"validation_path\": \"data/multidomain_balanced/multidomain_validation.txt\"}, \"optimizer\": \"fresh_AdamW\", \"scheduler\": \"none\", \"steps\": 2500, \"training\": {\"batch_size\": 128, \"checkpoint_only_steps\": [250, 500, 750, 1000, 1250, 1500, 1750, 2000, 2250], \"checkpoint_steps\": [0, 500, 2500], \"data_seed\": null, \"eval_interval\": 250, \"grad_clip\": 1.0, \"learning_rate\": 0.0003, \"log_interval\": 25, \"precision\": \"fp16\", \"record_exposure\": true, \"record_rich_routes\": false, \"record_train_routes\": false, \"save_optimizer\": false, \"steps\": 2500, \"weight_decay\": 0.01}}",
+    "router_protocol": "R0; trainable; shared trainable; router=/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/router_conditioned_fixed_budget_dataset/sources/e16/seed_43/checkpoints/step_0.pt",
+    "original_recovery_ce": "1.4847475391008156",
+    "dense_comparison_ce": "1.4521619406557096",
+    "dense_checkpoint": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/router_conditioned_fixed_budget_dataset.HOME_BACKUP/recoveries/e16/seed_43/R0/dense/checkpoints/final_recovered.pt",
+    "dense_sha256": "75470d6e9ef263c9f5a469a5d102e3c790c6d5fd9345176244430ff25e0cc628",
+    "ticket_status": "near_dense_within_5pct_descriptive",
+    "availability": "verified",
+    "eligible": "True",
+    "stage_metadata": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_80_85/trajectories/e16/seed_43/final_s0.80/stage.json",
+    "curves_path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_80_85/trajectories/e16/seed_43/final_s0.80/metrics.jsonl",
+    "duration_seconds": "869.2560099065304",
+    "training_batch_hash": "006a4cb519a69c112044e78ce9ea1f6666f1566c8b25b7f28ecbd0c2c6cc5aa4",
+    "validation_batch_hash": "09a073e9f03bbb854d3903081440b9e0869feb8e04b50b3b1be76a1d42658b22",
+    "config": {
+      "seed": 43,
+      "device": "cuda",
+      "data": {
+        "path": null,
+        "train_path": "data/multidomain_balanced/multidomain_train.txt",
+        "validation_path": "data/multidomain_balanced/multidomain_validation.txt",
+        "seq_len": 128,
+        "train_fraction": 0.9,
+        "validation_blocks": 32,
+        "reshuffle_each_epoch": false,
+        "max_train_examples": null,
+        "max_validation_examples": null,
+        "tokenizer": "byte",
+        "tokenizer_vocab_size": 256,
+        "tokenizer_cache_path": null,
+        "tokenizer_train_bytes": null,
+        "tokenizer_max_ngram": 8,
+        "tokenizer_min_frequency": 2
+      },
+      "model": {
+        "vocab_size": 256,
+        "max_seq_len": 128,
+        "num_layers": 4,
+        "num_heads": 4,
+        "d_model": 256,
+        "num_experts": 16,
+        "expert_hidden_size": 1024,
+        "dropout": 0.0,
+        "top_k": 1,
+        "capacity_factor": 1.25
+      },
+      "routing": {
+        "mode": "learned",
+        "aux_loss_weight": 0.1,
+        "replay_path": null,
+        "swap_pairs": [],
+        "corruption_fraction": 0.0
+      },
+      "training": {
+        "steps": 2500,
+        "batch_size": 128,
+        "learning_rate": 0.0003,
+        "weight_decay": 0.01,
+        "grad_clip": 1.0,
+        "eval_interval": 250,
+        "log_interval": 25,
+        "checkpoint_steps": [
+          0,
+          500,
+          2500
+        ],
+        "save_optimizer": false,
+        "record_train_routes": false,
+        "record_rich_routes": false,
+        "data_seed": null,
+        "precision": "fp16",
+        "checkpoint_only_steps": [
+          250,
+          500,
+          750,
+          1000,
+          1250,
+          1500,
+          1750,
+          2000,
+          2250
+        ],
+        "record_exposure": true
+      },
+      "pruning": {
+        "sparsities": [
+          0.5,
+          0.8
+        ],
+        "rewind_fractions": [
+          0.0,
+          0.01,
+          0.05,
+          0.1
+        ],
+        "rewind_protocol": "full_budget_restart"
+      },
+      "output_dir": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/router_conditioned_fixed_budget_dataset/sources/e16/seed_43"
+    },
+    "diagnostic_reference": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/router_conditioned_fixed_budget_dataset/sources/e16/seed_43/checkpoints/step_2500.pt",
+    "diagnostic_reference_sha256": "e5bfcc8ded748dd091f49c8eb8bfd179f9720be2ef08381d4fd6e2d2e7e546c4",
+    "mask_sha256": "8c721b60a202cfcc5e21de737b8187b3bdf5c86e0bf7903ff7fb17d02d825e17",
+    "initial_masked_hashes": {
+      "expert": "6e9c0ce3497eacd25fa938ec8c339263a91246061db122a9d9485a7d74294c34",
+      "shared": "b623e3aca2af6a707d1790ced08765da4e36886a0aa564e89dadaac57f0168ba",
+      "router": "072b3a5b8baccd346170810339ad093abf6059a61af4b9bcf127451de3ac8675"
+    }
+  },
+  "expected_initialization": {
+    "expert": "6e9c0ce3497eacd25fa938ec8c339263a91246061db122a9d9485a7d74294c34",
+    "shared": "b623e3aca2af6a707d1790ced08765da4e36886a0aa564e89dadaac57f0168ba",
+    "router": "072b3a5b8baccd346170810339ad093abf6059a61af4b9bcf127451de3ac8675"
+  }
+}

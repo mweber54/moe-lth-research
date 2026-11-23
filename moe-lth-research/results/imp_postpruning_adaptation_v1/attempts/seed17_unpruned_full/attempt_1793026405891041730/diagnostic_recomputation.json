@@ -1,0 +1,47 @@
+{
+  "checkpoint_global_step": 1500,
+  "diagnostic_optimizer_source": "read-only clone restored from the exact step-1000 optimizer state",
+  "diagnostic_optimizer_state_hash_after": "c19321ac6d633df504be33524aa4ec17b27b57f38d016edcd1c773d231dec493",
+  "diagnostic_optimizer_state_hash_before": "c19321ac6d633df504be33524aa4ec17b27b57f38d016edcd1c773d231dec493",
+  "diagnostic_runtime_seconds": 3.849520801566541,
+  "diagnostic_scaler_source": "restored from the exact step-1000 scaler state",
+  "diagnostic_scaler_state_hash_after": "680097d2cf36b5802e9ebda92f5d6629697c5484708440dca4a6604d308e72ef",
+  "diagnostic_scaler_state_hash_before": "680097d2cf36b5802e9ebda92f5d6629697c5484708440dca4a6604d308e72ef",
+  "fixed_token_positions": [
+    29682,
+    32324,
+    64370,
+    42689,
+    53981,
+    10868,
+    62958,
+    39806,
+    25354,
+    57494,
+    60036,
+    51235,
+    63979,
+    47815,
+    23373,
+    51098
+  ],
+  "model_forwards_on_training_batches": 0,
+  "optimizer_updates": 0,
+  "probe_identity": "85c1ca53f521ceb6113783fa518f76d70d2bff5b187a5a94a5e8d7acde327bc0",
+  "probe_indices": [
+    666,
+    1412,
+    1082,
+    326
+  ],
+  "reason": "Offset-zero diagnostic rows were held in memory and not streamed before native finalization failed.",
+  "recomputed_rows": {
+    "expert": 256,
+    "routing": 384,
+    "shared": 9
+  },
+  "source_cache": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1/prefixes/seed17/diagnostics/unpruned_start.pt",
+  "source_cache_sha256": "5d8622654bc35646002b53a1185963b14e4f0f7ead70b79ebdaccb49a45682a1",
+  "state_preservation_verified": true,
+  "training_batches_consumed": 0
+}

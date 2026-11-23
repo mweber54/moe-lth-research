@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/scripts/gradient_sensitivity_pruning_v1/measure.py", line 204, in main
+    result=run(args.seed,attempt)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/scripts/gradient_sensitivity_pruning_v1/measure.py", line 172, in run
+    assert torch.all(total+1e-25>=wgmean.abs())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

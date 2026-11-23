@@ -1,0 +1,54 @@
+# Full factorial endpoints
+
+Nats/token; each row is one trained model evaluated using three readouts. A/B are audited reuse; C/D are new. All use E8, the same donor assignments/capacity archive, ages20/100, seeds7/17/29, and matched dense/85% sparse recoveries.
+
+| arm | seed | age | kind | primary_loss | native_loss | assignment_loss | source |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| A | 7 | 20 | dense | 1.695727 | 1.531375 | 1.458961 | audited_reuse |
+| A | 7 | 20 | sparse | 1.833961 | 2.073180 | 1.697802 | audited_reuse |
+| A | 7 | 100 | dense | 1.403990 | 1.403990 | 1.403990 | audited_reuse |
+| A | 7 | 100 | sparse | 1.756023 | 2.016904 | 1.660341 | audited_reuse |
+| A | 17 | 20 | dense | 1.666262 | 1.517900 | 1.458602 | audited_reuse |
+| A | 17 | 20 | sparse | 1.733552 | 1.752773 | 1.659568 | audited_reuse |
+| A | 17 | 100 | dense | 1.435981 | 1.435981 | 1.435981 | audited_reuse |
+| A | 17 | 100 | sparse | 1.699552 | 1.753349 | 1.654489 | audited_reuse |
+| A | 29 | 20 | dense | 2.055037 | 1.600245 | 1.467252 | audited_reuse |
+| A | 29 | 20 | sparse | 1.882903 | 1.985003 | 1.690863 | audited_reuse |
+| A | 29 | 100 | dense | 1.421382 | 1.421382 | 1.421382 | audited_reuse |
+| A | 29 | 100 | sparse | 1.793579 | 1.879873 | 1.672057 | audited_reuse |
+| B | 7 | 20 | dense | 1.402299 | 9.415496 | 9.760135 | audited_reuse |
+| B | 7 | 20 | sparse | 1.659331 | 4.283368 | 3.815109 | audited_reuse |
+| B | 7 | 100 | dense | 1.402122 | 9.516200 | 9.245353 | audited_reuse |
+| B | 7 | 100 | sparse | 1.665379 | 4.278674 | 3.808213 | audited_reuse |
+| B | 17 | 20 | dense | 1.424123 | 8.657368 | 9.207974 | audited_reuse |
+| B | 17 | 20 | sparse | 1.625603 | 4.704692 | 4.645520 | audited_reuse |
+| B | 17 | 100 | dense | 1.423952 | 8.554129 | 9.127588 | audited_reuse |
+| B | 17 | 100 | sparse | 1.623852 | 4.736364 | 4.654888 | audited_reuse |
+| B | 29 | 20 | dense | 1.418799 | 8.558694 | 8.131858 | audited_reuse |
+| B | 29 | 20 | sparse | 1.645574 | 4.767582 | 4.427201 | audited_reuse |
+| B | 29 | 100 | dense | 1.419694 | 8.571065 | 8.105442 | audited_reuse |
+| B | 29 | 100 | sparse | 1.644979 | 4.802584 | 4.582666 | audited_reuse |
+| C | 7 | 20 | dense | 1.411373 | 5.067220 | 5.000462 | new_recovery |
+| C | 7 | 20 | sparse | 1.632603 | 3.351368 | 2.639942 | new_recovery |
+| C | 7 | 100 | dense | 1.403990 | 1.403990 | 1.403990 | new_recovery |
+| C | 7 | 100 | sparse | 1.627504 | 3.080903 | 2.465922 | new_recovery |
+| C | 17 | 20 | dense | 1.452803 | 5.885628 | 5.877961 | new_recovery |
+| C | 17 | 20 | sparse | 1.644028 | 2.916476 | 2.708949 | new_recovery |
+| C | 17 | 100 | dense | 1.435981 | 1.435981 | 1.435981 | new_recovery |
+| C | 17 | 100 | sparse | 1.633368 | 3.083145 | 2.763613 | new_recovery |
+| C | 29 | 20 | dense | 1.421217 | 4.883445 | 4.344692 | new_recovery |
+| C | 29 | 20 | sparse | 1.651913 | 3.227509 | 2.711008 | new_recovery |
+| C | 29 | 100 | dense | 1.421382 | 1.421382 | 1.421382 | new_recovery |
+| C | 29 | 100 | sparse | 1.647715 | 3.071127 | 2.510214 | new_recovery |
+| D | 7 | 20 | dense | 41.215162 | 2.638024 | 2.135631 | new_recovery |
+| D | 7 | 20 | sparse | 2.529889 | 2.385915 | 2.027160 | new_recovery |
+| D | 7 | 100 | dense | 39.942836 | 2.538401 | 2.125289 | new_recovery |
+| D | 7 | 100 | sparse | 2.657578 | 2.325126 | 1.999802 | new_recovery |
+| D | 17 | 20 | dense | 27.975284 | 2.694287 | 2.165275 | new_recovery |
+| D | 17 | 20 | sparse | 2.980465 | 2.340922 | 2.049587 | new_recovery |
+| D | 17 | 100 | dense | 45.825669 | 2.534625 | 2.025124 | new_recovery |
+| D | 17 | 100 | sparse | 2.832555 | 2.274146 | 2.057406 | new_recovery |
+| D | 29 | 20 | dense | 16.274729 | 2.910611 | 2.481132 | new_recovery |
+| D | 29 | 20 | sparse | 8.305664 | 2.263269 | 1.977161 | new_recovery |
+| D | 29 | 100 | dense | 12.067954 | 2.896609 | 2.233541 | new_recovery |
+| D | 29 | 100 | sparse | 9.277687 | 2.150403 | 1.994461 | new_recovery |

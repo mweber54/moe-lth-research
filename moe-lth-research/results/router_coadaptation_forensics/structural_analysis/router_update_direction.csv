@@ -1,0 +1,5 @@
+analysis,reason,status
+token_switch_analysis,"routing logs contain aggregate counts/distributions, not token IDs, per-token assignments, or confidences",unavailable
+persistent_vs_transient_switches,"requires token IDs at steps 500, 750, 1000, and 1500",unavailable
+router_update_direction,only initial/final router checkpoints are saved; no recovered checkpoints at 500/1000,unavailable
+switched_token_confidence,requires switched-token identities and per-token router probabilities,unavailable

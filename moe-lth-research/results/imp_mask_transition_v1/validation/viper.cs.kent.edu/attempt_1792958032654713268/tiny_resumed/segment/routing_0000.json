@@ -1,0 +1,109 @@
+{
+  "step": 0,
+  "task_ce": 6.454613799229264,
+  "target_tokens": 32,
+  "auxiliary_layer_mean": 1.0652881264686584,
+  "routing": [
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 0,
+      "proposed": 6,
+      "accepted": 6,
+      "selected_gate_sum": 4.005609393119812,
+      "accepted_gate_sum": 4.005609393119812,
+      "selected_gate_min": 0.5460612177848816,
+      "selected_gate_max": 0.7434217929840088,
+      "dropped_assignment_fraction": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 0,
+      "expert": 1,
+      "proposed": 10,
+      "accepted": 10,
+      "selected_gate_sum": 7.518232345581055,
+      "accepted_gate_sum": 7.518232345581055,
+      "selected_gate_min": 0.5787951350212097,
+      "selected_gate_max": 0.8630161881446838,
+      "dropped_assignment_fraction": 0.0
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 0,
+      "proposed": 5,
+      "accepted": 5,
+      "selected_gate_sum": 2.831735372543335,
+      "accepted_gate_sum": 2.831735372543335,
+      "selected_gate_min": 0.5120982527732849,
+      "selected_gate_max": 0.7129315137863159,
+      "dropped_assignment_fraction": 0.0625
+    },
+    {
+      "batch": 0,
+      "layer": 1,
+      "expert": 1,
+      "proposed": 11,
+      "accepted": 10,
+      "selected_gate_sum": 7.196291446685791,
+      "accepted_gate_sum": 6.678716719150543,
+      "selected_gate_min": 0.5175747275352478,
+      "selected_gate_max": 0.7539775371551514,
+      "dropped_assignment_fraction": 0.0625
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 0,
+      "proposed": 6,
+      "accepted": 6,
+      "selected_gate_sum": 3.9067392349243164,
+      "accepted_gate_sum": 3.9067392349243164,
+      "selected_gate_min": 0.5791857838630676,
+      "selected_gate_max": 0.8558579087257385,
+      "dropped_assignment_fraction": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 0,
+      "expert": 1,
+      "proposed": 10,
+      "accepted": 10,
+      "selected_gate_sum": 7.237228214740753,
+      "accepted_gate_sum": 7.237228214740753,
+      "selected_gate_min": 0.5503762364387512,
+      "selected_gate_max": 0.829317033290863,
+      "dropped_assignment_fraction": 0.0
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 0,
+      "proposed": 3,
+      "accepted": 3,
+      "selected_gate_sum": 1.9148290157318115,
+      "accepted_gate_sum": 1.9148290157318115,
+      "selected_gate_min": 0.5187310576438904,
+      "selected_gate_max": 0.8024573922157288,
+      "dropped_assignment_fraction": 0.1875
+    },
+    {
+      "batch": 1,
+      "layer": 1,
+      "expert": 1,
+      "proposed": 13,
+      "accepted": 10,
+      "selected_gate_sum": 8.301604390144348,
+      "accepted_gate_sum": 6.676774322986603,
+      "selected_gate_min": 0.5269693732261658,
+      "selected_gate_max": 0.7534453868865967,
+      "dropped_assignment_fraction": 0.1875
+    }
+  ],
+  "parameter_norms": {
+    "E": 5.9582518181952535,
+    "R": 1.2644586842243346,
+    "S": 19.23476290348082
+  }
+}

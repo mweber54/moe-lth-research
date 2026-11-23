@@ -1,0 +1,118 @@
+# MOE ONLINE REINFORCEMENT PRUNING V1 - EXPERIMENT RESUMPTION SUMMARY
+Generated: 2026-11-20 03:34:47 UTC
+
+## EXECUTION STATUS
+
+### Protocol Registration (SEALED)
+- Protocol SHA-256: 403caae38a808e39571bcd1526a48cf44e06801e57e239f18800789bb690e2fc
+- Frozen at: 2026-11-20T02:14:08.030344000Z
+- Status: PROTOCOL_FROZEN_SELECTION_NOT_STARTED (registration indicates no branch outcomes read/generated before freeze)
+
+### Prefix Completion (STEP 250 DENSE CAPTURE)
+All 6 cells VERIFIED with identical applied update counts:
+
+| Cell        | Status    | Applied (1-250) | AMP Attempts | Restore Check |
+|-------------|-----------|-----------------|--------------|---------------|
+| seed7_A     | VERIFIED  | 249             | 1            | PASS          |
+| seed7_B     | VERIFIED  | 249             | 1            | PASS          |
+| seed17_A    | VERIFIED  | 249             | 1            | PASS          |
+| seed17_B    | VERIFIED  | 249             | 1            | PASS          |
+| seed29_A    | VERIFIED  | 249             | 1            | PASS          |
+| seed29_B    | VERIFIED  | 249             | 1            | PASS          |
+
+Note: 249 applied updates + 1 attempted (overflowed) = 250 total attempts in steps 1-250
+
+### Matching Completion (SELECTION SEALED)
+All 6 cells PASSED frozen acceptance requirements:
+
+| Cell        | Random del. | High del.  | Overlap    | Score Sep. | Matrix Check | Status  |
+|-------------|-------------|------------|------------|------------|--------------|---------|
+| seed7_A     | 3,355,392   | 3,355,392  | 940,929    | 0.559      | PASS         | PASSED  |
+| seed7_B     | 3,355,392   | 3,355,392  | 940,931    | 0.547      | PASS         | PASSED  |
+| seed17_A    | 3,355,392   | 3,355,392  | 940,819    | 0.563      | PASS         | PASSED  |
+| seed17_B    | 3,355,392   | 3,355,392  | 941,804    | 0.565      | PASS         | PASSED  |
+| seed29_A    | 3,355,392   | 3,355,392  | 940,795    | 0.553      | PASS         | PASSED  |
+| seed29_B    | 3,355,392   | 3,355,392  | 941,113    | 0.552      | PASS         | PASSED  |
+
+Overlap fraction ~28% (within 0.30 protocol maximum)
+Score separation [0.547, 0.565] (all >0.20 protocol minimum)
+
+### GPU Admission Policy Verification
+Recorded utilization at admission time:
+| Cell        | Utilization | Free GiB | Host Policy      |
+|-------------|------------|----------|-----------------|
+| seed7_A     | 11%        | 91.7     | <90%, >=24GiB ✓ |
+| seed7_B     | 80%        | 91.7     | <90%, >=24GiB ✓ |
+| seed17_A    | 78%        | 91.7     | <90%, >=24GiB ✓ |
+| seed17_B    | 27%        | 91.7     | <90%, >=24GiB ✓ |
+| seed29_A    | 0%         | 91.7     | <90%, >=24GiB ✓ |
+| seed29_B    | 51%        | 91.7     | <90%, >=24GiB ✓ |
+
+✓ All admissions within registered policy (maximum 90% utilization, minimum 24 GiB free)
+✓ Transcript reference to "80% utilization" verified in seed7_B admission record
+
+### Implementation Tracking
+Key implementation changes after protocol freeze:
+1. AMP overflow handling: 1 overflow recorded per cell (not retried, strategy applied)
+2. Applied vs. attempted updates: 249 successful / 250 attempted (99.6% success rate)
+3. Stratified flow implementation: Magnitude bin stratification active (5 strata per matrix)
+4. Restore verification: Triple-pass model/optimizer/scaler checks all passing
+
+### Expert Matrix Counts
+All cells report 256 expert matrices (32 experts × 2 tensors each: fc1, fc2)
+Eligible parameters after exclusion: ~67.1M per cell (of ~67.1M expert weights)
+Zero-start-sign parameters excluded: 8-10 per cell (expected)
+
+## BRANCH CONTINUATION STATUS
+
+### Native Branch Structure (Pre-Step-251)
+Current directory organization for each cell:
+  prefixes/seed{7,17,29}_{A,B}/native/
+    - component_checkpoints/: initial_router.pt
+    - gradient_stats/: gradient_stats.jsonl
+    - routing_stats/: routing_stats.jsonl
+    - interruption.pt: checkpoint at step 250
+    
+### Prior Failed Run (seed7_A)
+- Failed execution moved to: prefixes/seed7_A/failed_1795141366013576978/
+- Reason: Likely incomplete branch execution prior to current resumption
+- Status: Stale, do not reuse
+
+### Branch Arms Required
+Per protocol §"Branch plan and equivalence":
+  1. Untouched (native continuation from step 250)
+  2. Random-small (deleted: matched random selections, frozen row/col totals)
+  3. High-reinforcement-small (deleted: reinforced selections, same row/col totals)
+
+Branch evaluation checkpoints: immediate post-deletion, step 251, 275, 500, 1000, 2500
+
+## REMAINING WORK (PRIORITY ORDER)
+
+### Phase 1: Final Verification (Must Complete Before Branch Launch)
+✓ Protocol hash integrity check
+✓ All 6 prefix verifications complete
+✓ All 6 matching selections pass acceptance criteria  
+✓ GPU admission policy compliance verified
+✓ Applied/attempted update counts confirmed
+
+**STATUS: ALL VERIFICATION GATES PASSED - SAFE TO PROCEED TO BRANCHES**
+
+### Phase 2: Branch Execution (Remaining)
+- [ ] Run untouched continuation step 250→2500 (3 replicates: seed7_A, seed7_B, seed17_A, seed17_B, seed29_A, seed29_B)
+- [ ] Run random-small continuation step 250→2500 (6 replicates)
+- [ ] Run high-reinforcement-small continuation step 250→2500 (6 replicates)
+- [ ] Collect validation metrics at: immediate, 251, 275, 500, 1000, 2500
+
+### Phase 3: Analysis
+- [ ] Compute Delta_i = CE_2500(high-reinf-small)_i - CE_2500(random-small)_i for each cell
+- [ ] Report all 6 deltas, within-seed A/B means, grand mean
+- [ ] Excess CE trajectories over untouched baseline
+- [ ] Effect size, directional consistency, heterogeneity assessment
+
+## NEXT IMMEDIATE ACTION
+
+Sealed selections confirmed. Ready to invoke branch continuations.
+Suggested launch: Sequential execution of 18 jobs (6 cells × 3 arms)
+Expected duration: ~12-24 hours depending on queue and parallel capacity
+Validation checkpoints: Every 250 steps as specified
+

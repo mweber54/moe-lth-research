@@ -1,0 +1,7 @@
+phase,status,reason
+0.1,audited,E32/80% full-shuffle snapshot configs and segment metadata inspected
+0.2,not_run_this_task,Stopped on provenance/design conflicts before further audits
+0.3,partial_stop,Existing full-shuffle design has 2 IMP draws and 1 draw per random mask; requested minimum is 3
+0.4,not_run,Stop rule
+1,not_run,"Actual mask selection source is a sparse discovery round, not a dense model"
+2,not_launched,User approval required; no cost estimate or preregistration finalized

@@ -1,0 +1,13 @@
+# Audit and reuse decision
+
+Read factorial implementation/registration/protocol/audit/completion, original R0 and own IMP mask paths in its manifest, native recovery callbacks/optimizer/scaler/resume code, MoE router and capacity dispatch, and prior amplitude replay/decomposition and router-gate factorial protocols. No applicable AGENTS.md was found under the repository parent.
+
+The 60-cell adaptation factorial is complete: 45 restricted recoveries plus15 reused full native controls. It varies expert/router/shared trainability; it does not exchange complete routing slots. Its five saved probe assignments are not complete training schedules. Full native controls are reused as historical context and exact passive-capture validation targets, rather than rerunning source training/discovery.
+
+Gate-amplitude replay uses 8E/12E, three seeds, R100 schedules,2500 updates and trainable recipient routers; its auxiliary usage follows replay IDs. Amplitude pattern decomposition shuffles coefficients under fixed accepted expert edges and shares matched dense amplitude sources. Router-gate factorial alters forward values and gate Jacobians, including a specified surrogate arm. These are different controls, cohorts, schedules and gradient regimes. None is a valid existing instance of the present five-seed32E own-donor complete-slot comparison. No validated result is rerun as a new scientific replicate.
+
+Native top1 chooses softmax maximum and multiplies expert outputs by its raw selected probability. Capacity accepts top coefficients within expert; preserving the Boolean mask alone loses within-expert order, so capture also saves native accepted token order on the original device. The auxiliary is E*sum(detached native proposed usage*mean native probabilities). Generic RouteOverride cannot fix accepted status and uses override IDs in auxiliary usage. Consequently the isolated replay forward explicitly dispatches donor slots and separately evaluates native router probabilities/usage. Historical and sealed source files remain unchanged.
+
+Reused displacement analysis already joins state dictionaries by parameter name. New named-displacement wrappers fail on missing parameters and explicitly list frozen tensors. Gradient result tuples are bound directly to names from the same autograd request, never matched across models by list position. No existing cross-model parameter-index join is reused.
+
+Donor inventories will be populated only after all5000 exact training traces and historical trajectory/final-state checks pass. Existing 8E/12E schedules and sparse32E diagnostic snapshots are ineligible. Missing schedules remain explicitly missing.

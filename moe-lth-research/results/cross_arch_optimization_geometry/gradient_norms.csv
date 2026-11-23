@@ -1,0 +1,9 @@
+analysis,reason,status
+gradient_alignment_native,requires matched sparse/dense model checkpoints at each diagnostic recovery step,unavailable at requested intermediate steps
+gradient_alignment_forced_sparse_routes,requires model checkpoints plus non-mutating forced-routing gradient probe,unavailable at requested intermediate steps
+gradient_alignment_forced_dense_routes,requires model checkpoints plus non-mutating forced-routing gradient probe,unavailable at requested intermediate steps
+update_alignment,requires sparse/dense expert state snapshots at consecutive diagnostic steps,unavailable
+parameter_trajectory_distance,requires sparse/dense expert state snapshots,unavailable at requested intermediate steps
+functional_expert_similarity,requires sparse/dense checkpoints and fixed forced-common inputs,unavailable at requested intermediate steps
+sparse_dense_routing_overlap,requires sparse/dense checkpoints on identical probe tokens,unavailable at requested intermediate steps
+gradient_coherence,requires per-microbatch diagnostic backward passes from saved intermediate states,unavailable

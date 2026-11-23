@@ -1,0 +1,63 @@
+{
+  "completed_pairs": 18,
+  "completed_recoveries": 36,
+  "complete_unique_snapshot_paths": 324,
+  "snapshot_mutation_audits_passed": 324,
+  "all_final_metadata_protocol_checks_passed": true,
+  "bit_identical_final_models": 36,
+  "snapshot_reloads_verified": [
+    "results/cross_arch_optimization_geometry/diagnostic_rerun/snapshots/e8/seed7/R20/sparse/step_0000.pt",
+    "results/cross_arch_optimization_geometry/diagnostic_rerun/snapshots/e8/seed7/R20/sparse/step_2500.pt",
+    "results/cross_arch_optimization_geometry/diagnostic_rerun/snapshots/e8/seed7/R20/dense/step_0000.pt",
+    "results/cross_arch_optimization_geometry/diagnostic_rerun/snapshots/e8/seed7/R20/dense/step_2500.pt",
+    "results/cross_arch_optimization_geometry/diagnostic_rerun/snapshots/e12/seed7/R60/sparse/step_0000.pt",
+    "results/cross_arch_optimization_geometry/diagnostic_rerun/snapshots/e12/seed7/R60/sparse/step_2500.pt",
+    "results/cross_arch_optimization_geometry/diagnostic_rerun/snapshots/e12/seed7/R60/dense/step_0000.pt",
+    "results/cross_arch_optimization_geometry/diagnostic_rerun/snapshots/e12/seed7/R60/dense/step_2500.pt"
+  ],
+  "all_snapshot_files_exist_and_nontrivial_size": true,
+  "figure_png_pdf_pairs": 16,
+  "diagnostic_row_checks": {
+    "gradient_alignment_native": {
+      "rows": 6480,
+      "nonfinite_rows": 0,
+      "unavailable_rows": 182
+    },
+    "gradient_alignment_forced_sparse_routes": {
+      "rows": 6480,
+      "nonfinite_rows": 0,
+      "unavailable_rows": 91
+    },
+    "functional_expert_similarity": {
+      "rows": 6480,
+      "nonfinite_rows": 0,
+      "unavailable_rows": 91
+    },
+    "update_alignment": {
+      "rows": 5760,
+      "nonfinite_rows": 0,
+      "unavailable_rows": 9
+    },
+    "parameter_trajectory_distance": {
+      "rows": 6480,
+      "nonfinite_rows": 0,
+      "unavailable_rows": 0
+    },
+    "sparse_dense_routing_overlap": {
+      "rows": 6480,
+      "nonfinite_rows": 0,
+      "unavailable_rows": 0
+    },
+    "gradient_coherence": {
+      "rows": 6480,
+      "nonfinite_rows": 0,
+      "unavailable_rows": 108
+    },
+    "gradient_norms": {
+      "rows": 12960,
+      "nonfinite_rows": 0,
+      "unavailable_rows": 273
+    }
+  },
+  "snapshot_hash_scope": "All snapshots hashed when saved; representative eight snapshots reloaded here. All 36 final model states independently compared to history."
+}

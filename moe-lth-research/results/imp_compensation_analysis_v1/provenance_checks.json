@@ -1,0 +1,468 @@
+{
+  "adaptation_cohort_status": "COMPLETE",
+  "adaptation_pilot_status": "PASS",
+  "adaptation_probe_manifest_sha256": "506f897c83f58efbd5ca5b95ff95d1990ea836333a7dce7162f6add301d0fd6b",
+  "adaptation_registered_source_hash_failures": [],
+  "adaptation_registration_revision": 6,
+  "adaptation_registration_sha256": "e025c619b4d1010fb4b3b2604975de6f5531e8b6cc5d05985687361090e188de",
+  "adaptation_source_manifest_sha256": "43a0d3dc55c54fc697a742b3c1f879b6a77876331dcd0169f86387083410faf7",
+  "analysis_config_sha256": "d2a0773d214f7f54a76ad2167b6898f5479add1b4b96568cda6e7dc7dda26b04",
+  "analysis_outputs": [
+    "absolute_losses.csv",
+    "immediate_damage.csv",
+    "gap_closure_decomposition.csv",
+    "condition_penalties.csv",
+    "factorial_interactions.csv",
+    "seed_level_metrics.csv",
+    "trajectory_integrals.csv",
+    "aggregate_summaries.csv",
+    "shared_only_diagnostics.csv",
+    "checkpoint_prediction_diagnostics.csv",
+    "update_and_freezing_verification.csv"
+  ],
+  "candidate_component_hash_checks": [
+    {
+      "condition": "router_experts_frozen",
+      "expert_hash_start": "9219564a041c737ad64e68a153c509c2db7b645b0e71e10227fdba440067de23",
+      "model_type": "unpruned",
+      "router_hash_final": "910550dcb73e0f40ca44d90d4e5aa79ffa2601fb81ed5de76a5d092358ef27d2",
+      "router_hash_start": "910550dcb73e0f40ca44d90d4e5aa79ffa2601fb81ed5de76a5d092358ef27d2",
+      "router_hash_unchanged": true,
+      "seed": 7,
+      "shared_state_hash_start": "5c392c8cdbef92293e07415b9fd1e49db46444e7b0d2b31671ec984359ca2b86"
+    },
+    {
+      "condition": "router_experts_frozen",
+      "expert_hash_start": "23478f3b93f87dcb6f4767e24ccf6d4db09b70ecf39a66809c56c9a929c4fa2e",
+      "model_type": "sparse",
+      "router_hash_final": "910550dcb73e0f40ca44d90d4e5aa79ffa2601fb81ed5de76a5d092358ef27d2",
+      "router_hash_start": "910550dcb73e0f40ca44d90d4e5aa79ffa2601fb81ed5de76a5d092358ef27d2",
+      "router_hash_unchanged": true,
+      "seed": 7,
+      "shared_state_hash_start": "5c392c8cdbef92293e07415b9fd1e49db46444e7b0d2b31671ec984359ca2b86"
+    },
+    {
+      "condition": "router_experts_frozen",
+      "expert_hash_start": "7660a76a0d91a89d5ce0aa646bcb16eb33feeabf623de74d1854aa335f0589de",
+      "model_type": "unpruned",
+      "router_hash_final": "094ff256141612f63d2806208d00f59f1508f4a028e38c18c90a5cf0bb03ce05",
+      "router_hash_start": "094ff256141612f63d2806208d00f59f1508f4a028e38c18c90a5cf0bb03ce05",
+      "router_hash_unchanged": true,
+      "seed": 17,
+      "shared_state_hash_start": "87ba0f5ddd7e70306628fbdbf16ef56eb1a36b58106db2eaded2bc008ce9fe9e"
+    },
+    {
+      "condition": "router_experts_frozen",
+      "expert_hash_start": "945ac70432719ad0db0b32a717ad3f8ad3c28d16dce209a0e8f228165a69f202",
+      "model_type": "sparse",
+      "router_hash_final": "094ff256141612f63d2806208d00f59f1508f4a028e38c18c90a5cf0bb03ce05",
+      "router_hash_start": "094ff256141612f63d2806208d00f59f1508f4a028e38c18c90a5cf0bb03ce05",
+      "router_hash_unchanged": true,
+      "seed": 17,
+      "shared_state_hash_start": "87ba0f5ddd7e70306628fbdbf16ef56eb1a36b58106db2eaded2bc008ce9fe9e"
+    },
+    {
+      "condition": "router_experts_frozen",
+      "expert_hash_start": "24fbe4704716e27a49dd4b767d9b55495e6224b86fac80efa94e18311e377d88",
+      "model_type": "unpruned",
+      "router_hash_final": "d24286a24f5cf4e48826d6c1656f8a29d11dcbb395ab6c640ca3b50a5109b675",
+      "router_hash_start": "d24286a24f5cf4e48826d6c1656f8a29d11dcbb395ab6c640ca3b50a5109b675",
+      "router_hash_unchanged": true,
+      "seed": 29,
+      "shared_state_hash_start": "2d718d0ca1f721b1afd15536ec79f46f54be535c522f856225915e5502ef59a9"
+    },
+    {
+      "condition": "router_experts_frozen",
+      "expert_hash_start": "b7cd96669e4c077b748f0f6200b91241903ca3fc64ca2ecd97adb834ddc0dfc1",
+      "model_type": "sparse",
+      "router_hash_final": "d24286a24f5cf4e48826d6c1656f8a29d11dcbb395ab6c640ca3b50a5109b675",
+      "router_hash_start": "d24286a24f5cf4e48826d6c1656f8a29d11dcbb395ab6c640ca3b50a5109b675",
+      "router_hash_unchanged": true,
+      "seed": 29,
+      "shared_state_hash_start": "2d718d0ca1f721b1afd15536ec79f46f54be535c522f856225915e5502ef59a9"
+    },
+    {
+      "condition": "router_experts_frozen",
+      "expert_hash_start": "c9cbbbf29f112e381ad8639bb219c98c5d3e314f85955422ad34be5da459b144",
+      "model_type": "unpruned",
+      "router_hash_final": "14bc9077232c846eb58b3676467614ff12e535f4ae1efcf4c5c42cd91f733ea6",
+      "router_hash_start": "14bc9077232c846eb58b3676467614ff12e535f4ae1efcf4c5c42cd91f733ea6",
+      "router_hash_unchanged": true,
+      "seed": 43,
+      "shared_state_hash_start": "7305a169d3122715d2bfe2d0228059a54a83a2752926306e2f001b9a9f6ae73b"
+    },
+    {
+      "condition": "router_experts_frozen",
+      "expert_hash_start": "d68b455f0c060be178cc057bf74cc15c5ef6fd25477abb302eca3df77a65f0a2",
+      "model_type": "sparse",
+      "router_hash_final": "14bc9077232c846eb58b3676467614ff12e535f4ae1efcf4c5c42cd91f733ea6",
+      "router_hash_start": "14bc9077232c846eb58b3676467614ff12e535f4ae1efcf4c5c42cd91f733ea6",
+      "router_hash_unchanged": true,
+      "seed": 43,
+      "shared_state_hash_start": "7305a169d3122715d2bfe2d0228059a54a83a2752926306e2f001b9a9f6ae73b"
+    },
+    {
+      "condition": "router_experts_frozen",
+      "expert_hash_start": "f667f9b6a99ee430c705ce139c0cb319c3a5d1fb97a556e9020c29d7aadcf6f2",
+      "model_type": "unpruned",
+      "router_hash_final": "35d864d994888222505526fe5adcaf82e7fb628ffd1760c35ead2119b5454377",
+      "router_hash_start": "35d864d994888222505526fe5adcaf82e7fb628ffd1760c35ead2119b5454377",
+      "router_hash_unchanged": true,
+      "seed": 61,
+      "shared_state_hash_start": "fabe6a4fdf26da35419ae32a94feba577b924edb7c458a14f682154c2fac4544"
+    },
+    {
+      "condition": "router_experts_frozen",
+      "expert_hash_start": "3ecf878d4802ddee39abe23fe4f9296900084ffd5cfbad1d00f41b683f983d06",
+      "model_type": "sparse",
+      "router_hash_final": "35d864d994888222505526fe5adcaf82e7fb628ffd1760c35ead2119b5454377",
+      "router_hash_start": "35d864d994888222505526fe5adcaf82e7fb628ffd1760c35ead2119b5454377",
+      "router_hash_unchanged": true,
+      "seed": 61,
+      "shared_state_hash_start": "fabe6a4fdf26da35419ae32a94feba577b924edb7c458a14f682154c2fac4544"
+    }
+  ],
+  "common_parent_classification": [
+    {
+      "branch_count_verified": 8,
+      "branch_start_hash_equal_across_conditions": true,
+      "classification": "A_verified_common_model_and_training_state",
+      "common_parent_verified": true,
+      "common_step1000_checkpoint": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1/prefixes/seed7/reconstruction_interruption.pt",
+      "common_step1000_checkpoint_sha256": "b155728dd7734550d02f436b0bedcd477e8e8178852c0d714f853ed0e860e365",
+      "dense_branch_start_state_hash": "2497922346f60cdd2644151b78c8eb95f5885ada2567ed2f06d9da9c95e6c59c",
+      "next_500_training_hash": "c8698f57b30afe30394e2e3caf608dfe8f9c6405df3f42ae51b102f03b8643e7",
+      "optimizer_scaler_rng_saved": true,
+      "prefix_checkpoint_additional_keys_after_verification": [
+        "source_optimizer_group_hashes"
+      ],
+      "prefix_checkpoint_hash_status": "stale_after_documented_source_optimizer_group_hashes_metadata_append",
+      "prefix_checkpoint_recorded_sha256": "da75897fb7d4bd6604ec9891483b6fb438484dcf9171973ef403d0850f8bd820",
+      "prefix_model_bitwise_equal_to_historical_dense": true,
+      "prefix_model_hash_reverified": "2497922346f60cdd2644151b78c8eb95f5885ada2567ed2f06d9da9c95e6c59c",
+      "prefix_optimizer_state_structure_hash": "9db24c8ea3e79a77718fb47b4abbdb4e1bdb54dc4621042da5e03235951cb9e9",
+      "registered_optimizer_handling": "same recovered step-1000 optimizer/scaler; zero coordinate-shaped AdamW moments at masked coordinates; optimizer not reset",
+      "seed": 7,
+      "source_event": {
+        "event_1000.json": {
+          "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed7_abrupt/attempt_1792966723037827884/segment_0/event_1000.json",
+          "sha256": "1e346b6a04a4a3d18a4ab6e69913ba39c8760b37fb62f06bbde7f4117d6451e1",
+          "verified": true
+        },
+        "grid_1000.json": {
+          "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed7_abrupt/attempt_1792966723037827884/segment_0/grid_1000.json",
+          "sha256": "72dd6ac03ef9677251db0806923b9f3b91d8d01a47eeaf6fd993e3e004febd49",
+          "verified": true
+        },
+        "grid_1000_pre.json": {
+          "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed7_abrupt/attempt_1792966723037827884/segment_0/grid_1000_pre.json",
+          "sha256": "c3ddfe2a75e0392cdac5351d767c2609c464aada3036a0bf02f0b1d95b706b6b",
+          "verified": true
+        }
+      },
+      "sparse_branch_start_state_hash": "77dd1bdaac90117959508a57ffbd098edf9aa9c799c7c33f0862f080a4d736cc",
+      "sparse_mask_hash": "6190adc6505729e4c8c4400c360f303b757ab6c3371a162b74e1e2af33379861",
+      "training_stream_hash": "7f621f2d95e48b18442a6199b31b8e1343ff25ba7b92292f4fb8522beb00f1f1",
+      "training_stream_position": 1000,
+      "unpruned_parent_model_hash": "2497922346f60cdd2644151b78c8eb95f5885ada2567ed2f06d9da9c95e6c59c",
+      "validation_hash": "09a073e9f03bbb854d3903081440b9e0869feb8e04b50b3b1be76a1d42658b22"
+    },
+    {
+      "branch_count_verified": 8,
+      "branch_start_hash_equal_across_conditions": true,
+      "classification": "A_verified_common_model_and_training_state",
+      "common_parent_verified": true,
+      "common_step1000_checkpoint": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1/prefixes/seed17/reconstruction_interruption.pt",
+      "common_step1000_checkpoint_sha256": "939555279db57d41b015eca27cd8b418cf1836a16000ce2b6adc47d1aee1cc45",
+      "dense_branch_start_state_hash": "92b99874944ec86e96c6ef8b0b5e177ad2b5b5f6475bfa75b031d4fc26c5156d",
+      "next_500_training_hash": "940f337b0e89cd1854a8861794d939f37cbbe1a36b54755a309fdfbc56911e45",
+      "optimizer_scaler_rng_saved": true,
+      "prefix_checkpoint_additional_keys_after_verification": [
+        "source_optimizer_group_hashes"
+      ],
+      "prefix_checkpoint_hash_status": "stale_after_documented_source_optimizer_group_hashes_metadata_append",
+      "prefix_checkpoint_recorded_sha256": "5ccf50a319fabaf0a6053059faeb7ed1f18820436ddf61ea2774f1fc9ef446fb",
+      "prefix_model_bitwise_equal_to_historical_dense": true,
+      "prefix_model_hash_reverified": "92b99874944ec86e96c6ef8b0b5e177ad2b5b5f6475bfa75b031d4fc26c5156d",
+      "prefix_optimizer_state_structure_hash": "c19321ac6d633df504be33524aa4ec17b27b57f38d016edcd1c773d231dec493",
+      "registered_optimizer_handling": "same recovered step-1000 optimizer/scaler; zero coordinate-shaped AdamW moments at masked coordinates; optimizer not reset",
+      "seed": 17,
+      "source_event": {
+        "event_1000.json": {
+          "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed17_abrupt/attempt_1792958884582872426/segment_0/event_1000.json",
+          "sha256": "65ecfcda8ed90d834341994209a3871f5a2dece77150090e7f1ede0326f3848d",
+          "verified": true
+        },
+        "grid_1000.json": {
+          "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed17_abrupt/attempt_1792958884582872426/segment_0/grid_1000.json",
+          "sha256": "39e1f12c20538ebf1b5786e602a73d627177e0567a831900f742113053498566",
+          "verified": true
+        },
+        "grid_1000_pre.json": {
+          "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed17_abrupt/attempt_1792958884582872426/segment_0/grid_1000_pre.json",
+          "sha256": "001a59f547bbf2d512ecb5a4726148c0a3c271d267532ffa3ba4218c1cdc9a25",
+          "verified": true
+        }
+      },
+      "sparse_branch_start_state_hash": "b29d77a0143d807aa677c2e1906208ad6651cc0aec0a5eb6e81963e81424e60b",
+      "sparse_mask_hash": "ff6e85e4e917b39b7bdaa9f887ad4147e5008e7902acb52a436c24570dc90f5a",
+      "training_stream_hash": "f4a3c0a722a8c06ba39073f0406dea8117186cdc3d2c41348474abc4b023057e",
+      "training_stream_position": 1000,
+      "unpruned_parent_model_hash": "92b99874944ec86e96c6ef8b0b5e177ad2b5b5f6475bfa75b031d4fc26c5156d",
+      "validation_hash": "09a073e9f03bbb854d3903081440b9e0869feb8e04b50b3b1be76a1d42658b22"
+    },
+    {
+      "branch_count_verified": 8,
+      "branch_start_hash_equal_across_conditions": true,
+      "classification": "A_verified_common_model_and_training_state",
+      "common_parent_verified": true,
+      "common_step1000_checkpoint": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1/prefixes/seed29/reconstruction_interruption.pt",
+      "common_step1000_checkpoint_sha256": "51699f223698c5f36559734a0ef19234d9c7eef25ed20eb7df2819bb369430c8",
+      "dense_branch_start_state_hash": "bf2c75d834f36943cbb0a3def6491a207ab696b9b70d210a0b2130eea8ad078c",
+      "next_500_training_hash": "948f6dd8ad7d98decef6e40c7c70fad0a76a239af08c11344bad197fa6a6d967",
+      "optimizer_scaler_rng_saved": true,
+      "prefix_checkpoint_additional_keys_after_verification": [
+        "source_optimizer_group_hashes"
+      ],
+      "prefix_checkpoint_hash_status": "stale_after_documented_source_optimizer_group_hashes_metadata_append",
+      "prefix_checkpoint_recorded_sha256": "8963246bae2751c4e00fd0b526e4eb0a61212f7778ab72102eb7e38417befede",
+      "prefix_model_bitwise_equal_to_historical_dense": true,
+      "prefix_model_hash_reverified": "bf2c75d834f36943cbb0a3def6491a207ab696b9b70d210a0b2130eea8ad078c",
+      "prefix_optimizer_state_structure_hash": "c9d1886b8b7822fe5ed5b4e85cb4ebbb921a1a4e7f258fd14274c8a86d189537",
+      "registered_optimizer_handling": "same recovered step-1000 optimizer/scaler; zero coordinate-shaped AdamW moments at masked coordinates; optimizer not reset",
+      "seed": 29,
+      "source_event": {
+        "event_1000.json": {
+          "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed29_abrupt/attempt_1792973181452440030/segment_0/event_1000.json",
+          "sha256": "0df528ff2f191602beb1292fb849aa4e8763c000e52fd1d3957db41208222023",
+          "verified": true
+        },
+        "grid_1000.json": {
+          "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed29_abrupt/attempt_1792973181452440030/segment_0/grid_1000.json",
+          "sha256": "f80d630d8d798f69b22f76ab94942b0a57d432befc090967bae7199eb740828f",
+          "verified": true
+        },
+        "grid_1000_pre.json": {
+          "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed29_abrupt/attempt_1792973181452440030/segment_0/grid_1000_pre.json",
+          "sha256": "f93a3d7763df5d482fda4d433f245c04b71ac8148294b3ed91d6ca1def177bf6",
+          "verified": true
+        }
+      },
+      "sparse_branch_start_state_hash": "0d15af10dc77c383c86cf0a93cab0809d0cc233796d5f0e8246b679fb7cd8bba",
+      "sparse_mask_hash": "d8774a04763e493609f288d9a984757604b631785a1e74fe1d657c1b1de834f8",
+      "training_stream_hash": "d83fbbb4b21fe058f86890f1d58caef6881d347de0db9ec084b5a160bc84d7fc",
+      "training_stream_position": 1000,
+      "unpruned_parent_model_hash": "bf2c75d834f36943cbb0a3def6491a207ab696b9b70d210a0b2130eea8ad078c",
+      "validation_hash": "09a073e9f03bbb854d3903081440b9e0869feb8e04b50b3b1be76a1d42658b22"
+    },
+    {
+      "branch_count_verified": 8,
+      "branch_start_hash_equal_across_conditions": true,
+      "classification": "A_verified_common_model_and_training_state",
+      "common_parent_verified": true,
+      "common_step1000_checkpoint": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1/prefixes/seed43/reconstruction_interruption.pt",
+      "common_step1000_checkpoint_sha256": "442683402de97719c4c668c09652d6edeba702710d8cff632ceb355055138933",
+      "dense_branch_start_state_hash": "406db6f3b0d229e0d1df84dc0f57aaae38b52694557125512e0265f7a5790749",
+      "next_500_training_hash": "37b9e3698e6e274a980c7c62f7d8a279b80582736c495d3096a574d3070d1da3",
+      "optimizer_scaler_rng_saved": true,
+      "prefix_checkpoint_additional_keys_after_verification": [
+        "source_optimizer_group_hashes"
+      ],
+      "prefix_checkpoint_hash_status": "stale_after_documented_source_optimizer_group_hashes_metadata_append",
+      "prefix_checkpoint_recorded_sha256": "1a2be9df5c80526bab1bce7599e81209bc08754757b7725500397066ae54d43b",
+      "prefix_model_bitwise_equal_to_historical_dense": true,
+      "prefix_model_hash_reverified": "406db6f3b0d229e0d1df84dc0f57aaae38b52694557125512e0265f7a5790749",
+      "prefix_optimizer_state_structure_hash": "f734a549356fc06fa18485eb5c38c9a3f3e541b51bc2b7c61322a6115c067073",
+      "registered_optimizer_handling": "same recovered step-1000 optimizer/scaler; zero coordinate-shaped AdamW moments at masked coordinates; optimizer not reset",
+      "seed": 43,
+      "source_event": {
+        "event_1000.json": {
+          "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed43_abrupt/attempt_1792974686852004491/segment_0/event_1000.json",
+          "sha256": "046dd0a1fa65940e109355b563b3934ca199dd9d26e49cc3cec70848edd1ab64",
+          "verified": true
+        },
+        "grid_1000.json": {
+          "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed43_abrupt/attempt_1792974686852004491/segment_0/grid_1000.json",
+          "sha256": "bc970441c0dc1d86904ad4186eeab0ff307dba456228e433c358c42d80490c4a",
+          "verified": true
+        },
+        "grid_1000_pre.json": {
+          "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed43_abrupt/attempt_1792974686852004491/segment_0/grid_1000_pre.json",
+          "sha256": "05f423832b36f4ece9b1f49ab8027a7e749a64721bc95801dccaafae783cbe8a",
+          "verified": true
+        }
+      },
+      "sparse_branch_start_state_hash": "6ba49064be24c8e0b617cd2008d1c728a7c058f592754d97baad48adbcbc9c6c",
+      "sparse_mask_hash": "7d663f6ebd9fcd1a206c49444e193b25af63dd83f9f6e14d80fa625d062167b2",
+      "training_stream_hash": "8ea2256f016649ff12e616cd0568cc57d83ed1a7e5c24f9f948013fbe4ac6b5f",
+      "training_stream_position": 1000,
+      "unpruned_parent_model_hash": "406db6f3b0d229e0d1df84dc0f57aaae38b52694557125512e0265f7a5790749",
+      "validation_hash": "09a073e9f03bbb854d3903081440b9e0869feb8e04b50b3b1be76a1d42658b22"
+    },
+    {
+      "branch_count_verified": 8,
+      "branch_start_hash_equal_across_conditions": true,
+      "classification": "A_verified_common_model_and_training_state",
+      "common_parent_verified": true,
+      "common_step1000_checkpoint": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1/prefixes/seed61/reconstruction_interruption.pt",
+      "common_step1000_checkpoint_sha256": "d85930ee8a6b783d56dcaeec10352db32bac4430286cbf08f7535293c0b9b184",
+      "dense_branch_start_state_hash": "6f5721e0b113520577458262b907818c67eaaf0cd2c6d020edd8d6fdfc7a3746",
+      "next_500_training_hash": "71d10603afb4a7595bbf30ba77db8f1a931ad30bbdf9007615b5dd41ef7a2864",
+      "optimizer_scaler_rng_saved": true,
+      "prefix_checkpoint_additional_keys_after_verification": [
+        "source_optimizer_group_hashes"
+      ],
+      "prefix_checkpoint_hash_status": "stale_after_documented_source_optimizer_group_hashes_metadata_append",
+      "prefix_checkpoint_recorded_sha256": "c5fb920266692c455ee63c7e15da2265c113587c0976915cebe86f6021d07bc5",
+      "prefix_model_bitwise_equal_to_historical_dense": true,
+      "prefix_model_hash_reverified": "6f5721e0b113520577458262b907818c67eaaf0cd2c6d020edd8d6fdfc7a3746",
+      "prefix_optimizer_state_structure_hash": "369e9878cb0e7f157052ec05723368d5a3c064b7d8fb98dbae87bc40c43aedfb",
+      "registered_optimizer_handling": "same recovered step-1000 optimizer/scaler; zero coordinate-shaped AdamW moments at masked coordinates; optimizer not reset",
+      "seed": 61,
+      "source_event": {
+        "event_1000.json": {
+          "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed61_abrupt/attempt_1792977615556485789/segment_0/event_1000.json",
+          "sha256": "61f21882abe3a3acfc7bd1d856382424e88317073e97deb0cb8045f920317c7a",
+          "verified": true
+        },
+        "grid_1000.json": {
+          "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed61_abrupt/attempt_1792977615556485789/segment_0/grid_1000.json",
+          "sha256": "ca44f4297cff3078d1c8eb60d3601e75f4771569f0337e82b06a00f8161820be",
+          "verified": true
+        },
+        "grid_1000_pre.json": {
+          "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed61_abrupt/attempt_1792977615556485789/segment_0/grid_1000_pre.json",
+          "sha256": "ea0b01969ef7a3306f2a171ef99596f39384bbac036c2a991fb90ed1c1c9d062",
+          "verified": true
+        }
+      },
+      "sparse_branch_start_state_hash": "c0a26ff1c338b540b9ffc65db9f95c46066aaf9a9fa4bc3f00dd1ab7395d48f6",
+      "sparse_mask_hash": "28bc74db040e9563d6c0c4d4a7a003696efa55363ccee74301e69173b8b09f0c",
+      "training_stream_hash": "35ff2515948c498f85facfea018b45d579ddfd8c21affd79f52c45f328a293ae",
+      "training_stream_position": 1000,
+      "unpruned_parent_model_hash": "6f5721e0b113520577458262b907818c67eaaf0cd2c6d020edd8d6fdfc7a3746",
+      "validation_hash": "09a073e9f03bbb854d3903081440b9e0869feb8e04b50b3b1be76a1d42658b22"
+    }
+  ],
+  "coverage": {
+    "branches": 40,
+    "checkpoint_only_pathway_deferred_rows": 0,
+    "checkpoint_only_pathway_rows": 10,
+    "gap_decomposition_rows": 100,
+    "immediate_damage_rows": 10,
+    "per_group_update_rows_total": 60000,
+    "seeds": 5,
+    "trajectory_rows": 200,
+    "update_rows_per_branch": 1500
+  },
+  "factorial_branch_metadata_gaps": [
+    {
+      "condition": "full",
+      "model_type": "unpruned",
+      "note": "Checkpoint-only finalization evidence verified; absent metadata is not reconstructed.",
+      "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1/attempts/seed17_unpruned_full/attempt_1793026405891041730/metadata.json",
+      "seed": 17,
+      "status": "missing",
+      "substitute_evidence": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1/attempts/seed17_unpruned_full/attempt_1793026405891041730/finalization_validation.json"
+    }
+  ],
+  "interpretation": "A is supported by a bitwise-equal reconstructed dense step-1000 model, saved optimizer/scaler/RNG state and sampler position, identical branch-start training/validation identities, and sparse construction from that common state via the registered IMP80 mask and masked-moment handling. This is treatment-inclusive common parenthood, not a weight-zeroing-only comparison.",
+  "registered_event_damage_table": {
+    "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/pruning_event_damage.csv",
+    "sha256": "c08e32c8b2b8dfd86e7cf565588315992e102c782deaf3a0e6adc16aa3bca18a",
+    "training_only_event_values_crosschecked": true
+  },
+  "transition_completed_jobs": 20,
+  "transition_completion_status": "COMPLETE",
+  "transition_failed_jobs": 0,
+  "transition_input_hash_manifest_sha256": "04e6f7992ddbbc67165eedcc1c94d4860f6120e88dec66b6b1e7b6bd1579ec3b",
+  "transition_registered_jobs": 20,
+  "transition_registration_sha256": "98a7f3a206671a0f789d5b4f6d3e52fe6ce27bf05fcaea0f1eb714e78cf54589",
+  "transition_used_event_files": {
+    "17": {
+      "event_1000.json": {
+        "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed17_abrupt/attempt_1792958884582872426/segment_0/event_1000.json",
+        "sha256": "65ecfcda8ed90d834341994209a3871f5a2dece77150090e7f1ede0326f3848d",
+        "verified": true
+      },
+      "grid_1000.json": {
+        "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed17_abrupt/attempt_1792958884582872426/segment_0/grid_1000.json",
+        "sha256": "39e1f12c20538ebf1b5786e602a73d627177e0567a831900f742113053498566",
+        "verified": true
+      },
+      "grid_1000_pre.json": {
+        "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed17_abrupt/attempt_1792958884582872426/segment_0/grid_1000_pre.json",
+        "sha256": "001a59f547bbf2d512ecb5a4726148c0a3c271d267532ffa3ba4218c1cdc9a25",
+        "verified": true
+      }
+    },
+    "29": {
+      "event_1000.json": {
+        "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed29_abrupt/attempt_1792973181452440030/segment_0/event_1000.json",
+        "sha256": "0df528ff2f191602beb1292fb849aa4e8763c000e52fd1d3957db41208222023",
+        "verified": true
+      },
+      "grid_1000.json": {
+        "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed29_abrupt/attempt_1792973181452440030/segment_0/grid_1000.json",
+        "sha256": "f80d630d8d798f69b22f76ab94942b0a57d432befc090967bae7199eb740828f",
+        "verified": true
+      },
+      "grid_1000_pre.json": {
+        "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed29_abrupt/attempt_1792973181452440030/segment_0/grid_1000_pre.json",
+        "sha256": "f93a3d7763df5d482fda4d433f245c04b71ac8148294b3ed91d6ca1def177bf6",
+        "verified": true
+      }
+    },
+    "43": {
+      "event_1000.json": {
+        "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed43_abrupt/attempt_1792974686852004491/segment_0/event_1000.json",
+        "sha256": "046dd0a1fa65940e109355b563b3934ca199dd9d26e49cc3cec70848edd1ab64",
+        "verified": true
+      },
+      "grid_1000.json": {
+        "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed43_abrupt/attempt_1792974686852004491/segment_0/grid_1000.json",
+        "sha256": "bc970441c0dc1d86904ad4186eeab0ff307dba456228e433c358c42d80490c4a",
+        "verified": true
+      },
+      "grid_1000_pre.json": {
+        "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed43_abrupt/attempt_1792974686852004491/segment_0/grid_1000_pre.json",
+        "sha256": "05f423832b36f4ece9b1f49ab8027a7e749a64721bc95801dccaafae783cbe8a",
+        "verified": true
+      }
+    },
+    "61": {
+      "event_1000.json": {
+        "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed61_abrupt/attempt_1792977615556485789/segment_0/event_1000.json",
+        "sha256": "61f21882abe3a3acfc7bd1d856382424e88317073e97deb0cb8045f920317c7a",
+        "verified": true
+      },
+      "grid_1000.json": {
+        "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed61_abrupt/attempt_1792977615556485789/segment_0/grid_1000.json",
+        "sha256": "ca44f4297cff3078d1c8eb60d3601e75f4771569f0337e82b06a00f8161820be",
+        "verified": true
+      },
+      "grid_1000_pre.json": {
+        "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed61_abrupt/attempt_1792977615556485789/segment_0/grid_1000_pre.json",
+        "sha256": "ea0b01969ef7a3306f2a171ef99596f39384bbac036c2a991fb90ed1c1c9d062",
+        "verified": true
+      }
+    },
+    "7": {
+      "event_1000.json": {
+        "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed7_abrupt/attempt_1792966723037827884/segment_0/event_1000.json",
+        "sha256": "1e346b6a04a4a3d18a4ab6e69913ba39c8760b37fb62f06bbde7f4117d6451e1",
+        "verified": true
+      },
+      "grid_1000.json": {
+        "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed7_abrupt/attempt_1792966723037827884/segment_0/grid_1000.json",
+        "sha256": "72dd6ac03ef9677251db0806923b9f3b91d8d01a47eeaf6fd993e3e004febd49",
+        "verified": true
+      },
+      "grid_1000_pre.json": {
+        "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/attempts/seed7_abrupt/attempt_1792966723037827884/segment_0/grid_1000_pre.json",
+        "sha256": "c3ddfe2a75e0392cdac5351d767c2609c464aada3036a0bf02f0b1d95b706b6b",
+        "verified": true
+      }
+    }
+  }
+}

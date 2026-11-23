@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "cpu_tests_passed": 25,
+  "command": "tests/test_imp_adaptation_factorial.py tests/test_router_freeze_mechanism.py tests/test_pruning.py tests/test_mask_information_v2.py",
+  "gpu_hosts": {
+    "viper.cs.kent.edu": true,
+    "adder.cs.kent.edu": true
+  },
+  "initial_equality_hosts": {
+    "viper.cs.kent.edu": true,
+    "adder.cs.kent.edu": true
+  },
+  "reuse_native_implementation_verified": true,
+  "exact_input_curve_checks": true,
+  "production_forward_and_clipping_observation_test": true,
+  "zero_norm_ratios_undefined_test": true,
+  "fixed_original_performance_level_test": true,
+  "namespace_isolation": true
+}

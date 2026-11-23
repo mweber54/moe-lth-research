@@ -1,0 +1,23 @@
+{
+  "variant": "e32_seed17_imp80",
+  "checkpoint_step": 5000,
+  "validation_batches": 31,
+  "target_tokens": 492416,
+  "precision": "FP32; TF32 disabled; eval; inference_mode",
+  "post_hoc": true,
+  "recipient_checkpoint": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/token_expert_matching_v1/attempts/e32_seed17_imp80_identity/segment_2500/checkpoints/final_recovered.pt",
+  "recipient_sha256": "b5b1cd93ab293077167d3ee406195c142d0d2453ac603b2ee50a9072fb3b0c1c",
+  "donor_checkpoint": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/token_expert_matching_v1/attempts/e32_seed17_imp80_donor/segment_2500/checkpoints/final_recovered.pt",
+  "donor_sha256": "710bbdf0a4c20dde782701144c7532086279d09ea2d1fe1e019f3f830fa69b55",
+  "router_parameter_tensors_replaced": 4,
+  "donor_forward_replay_equivalence": {
+    "passed": true,
+    "max_logit_absolute_difference": 0.0
+  },
+  "validation_ce": {
+    "donor_native": 1.3510094219472522,
+    "identity_native": 6.147542147813662,
+    "identity_donor_router_weights": 1.7945590779041978,
+    "identity_donor_generated_slots": 1.3538495508267845
+  }
+}

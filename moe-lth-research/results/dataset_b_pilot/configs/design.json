@@ -1,0 +1,69 @@
+{
+  "protocol_version": "dataset-b-nominal-exposure-v1",
+  "architectures_configured": {
+    "8": 2500,
+    "12": 3750,
+    "16": 5000,
+    "24": 7500,
+    "32": 10000
+  },
+  "launch_experts": [
+    32
+  ],
+  "arms": {
+    "A": [
+      2500,
+      2500
+    ],
+    "B": [
+      10000,
+      2500
+    ],
+    "C": [
+      2500,
+      10000
+    ],
+    "D": [
+      10000,
+      10000
+    ]
+  },
+  "seeds": [
+    7,
+    17,
+    29,
+    43,
+    61
+  ],
+  "router_ages": [
+    0,
+    50,
+    100
+  ],
+  "sparsities": [
+    0.75,
+    0.95
+  ],
+  "mask_types": {
+    "learned": "expert-local source-final magnitude",
+    "random": "exact per-tensor counts matched; one independent draw per source/seed/sparsity"
+  },
+  "recovery_eval_interval": 50,
+  "primary_early_auc_window_steps": 1250,
+  "schedule": "constant 0.0003; unchanged through 2500",
+  "continuation": "fresh initialization; no historical continuation; no short/long prefix consolidation",
+  "reuse_tolerance": 1e-10,
+  "dense_matching": "same source identity, seed, router absolute step and recovery budget; no dense matching claim based on a post-hoc loss tolerance",
+  "diagnostic_steps": [
+    0,
+    2500,
+    10000
+  ],
+  "source_extra_absolute_checkpoints": [
+    1250,
+    2500
+  ],
+  "gpu_policy": "wait until no external compute process on GPU 0; exclusive pilot flock; no process killing",
+  "minimum_free_storage_gib": 30,
+  "full_sweep_authorized": false
+}

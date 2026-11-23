@@ -1,0 +1,32 @@
+# Code-path manifest
+
+Paths below are relative to the repository root (`moe-lth-research/` inside the workspace). Audit scripts never call training, recovery, evaluation, or `_ensure_reference`; model construction is used only for parameter counting and checkpoint-mask comparison.
+
+| Quantity | Controlling file and function | Historical artifact evidence |
+|---|---|---|
+| 8E source and recovery orchestration | `src/moe_lth/experiments/run_expert_count_replication.py`: `config_for`, `run` | `results/expert_count_replication/e8/reference/seed_{7,17,29}/resolved_config.yaml`; dense and sparse metadata |
+| 12E original orchestration | same module, E=12 | `results/expert_count_replication/e12/`; R0/R20/R100 recoveries reused |
+| 12E extended age trajectory | `src/moe_lth/experiments/run_router_development_12expert.py`: `make_config`, `main` | `results/router_development_12expert_retry4_20260902/references/reference/seed_*/`; R10/R40/R60/R80 recovery directories |
+| 16E orchestration | `scripts/run_16e_router_age_localization.py`: `config_for`, `run_seed` | `results/16e_router_age_localization/{configs,references,recovery}`; saved source under `provenance/` |
+| 24E orchestration | `scripts/run_24e_router_age_localization.py`: `config_for`, `run_seed`, `refresh_tables` | `results/24e_router_age_localization/{configs,references,recovery,checkpoint_manifest.csv}` |
+| Config inheritance | `src/moe_lth/config.py`: `load_config`; `configs/expert_count_replication/e{8,12}_seed7.yaml` extends `configs/multidomain_gpu.yaml` | Saved resolved configs and checkpoint-embedded configs are stronger evidence than filenames |
+| Architecture, tied embeddings, layer count, layer-mean auxiliary loss | `src/moe_lth/models/transformer.py`: `TinyMoELanguageModel`, `MoETransformerBlock` | Checkpoint shapes; unique named parameters exclude duplicate tied LM head |
+| Router logits, initialization, top-k and gate amplitude | `src/moe_lth/models/router.py`: `TopKRouter.__init__`, `forward` | Linear projection, no bias; full-softmax selected probabilities; temperature buffer 1 |
+| Capacity, expert dispatch, dropped tokens, balancing loss | `src/moe_lth/models/moe_layer.py`: `MoEFeedForward.forward` | `ceil(capacity_factor*N*k/E)`, minimum 1; confidence-ranked retention; sampled drop fractions and recovery counts |
+| Expert initialization/shape | `src/moe_lth/models/experts.py`: `ExpertFFN` | Two default-initialized Linear layers, GELU, dropout 0 |
+| Tokenizer, samples and batches | `src/moe_lth/data.py`: `ByteTokenizer`, `TokenBlockDataset`, `build_dataloaders` | Multidomain train/validation text paths; 128-byte blocks; shuffled seeded loader, drop_last train |
+| Source loss, optimizer, loop, precision, cadence | `src/moe_lth/training/train.py`: `train_from_config` | 2500 attempts; one batch/backward per attempt; AdamW, no scheduler; `cycle(train_loader)` repeats cached first permutation |
+| Seeds, precision, GradScaler | `src/moe_lth/utils.py`: `seed_everything`, `resolve_data_seed`, `resolve_autocast_dtype`, `create_grad_scaler` | Python/NumPy/Torch seeded; separate data generator; CUDA fp16 scaler defaults; TF32 enabled |
+| Checkpoint saves and load compatibility | `src/moe_lth/training/checkpoint.py`: `save_checkpoint`, `load_checkpoint`; recovery `_checkpoint_for_percent`, `_ensure_reference` | Step, config, state and optional validation loss; source optimizer/scaler not persisted. Checkpoint-only saves do not evaluate |
+| Source route logging | `src/moe_lth/routing/log_routes.py`: `RoutingLogger.log_step` | All assignments in the logged batch, before capacity; at step 1 and multiples of 25; repeated layer drop fraction on every expert row |
+| Historical cumulative exposure | `scripts/analyze_r20_8_vs_r60_12.py`: `cumulative_exposure`; 16E/24E analysis imports it | Sum token_count for step<=age, averaged over 4E experts; NOT full source history |
+| Magnitude masks | `src/moe_lth/pruning/magnitude_prune.py`: `expert_local_magnitude_masks`; `pruning/masks.py`: `expert_weight_parameters` | R100 magnitudes, two weight matrices per expert jointly ranked; 15% rounded keep; biases excluded |
+| Rewind and router assembly | `src/moe_lth/pruning/router_age.py`: `build_fixed_pruned_base`, `assemble_router_age_model` | E0/shared0, mask from ET; router only from selected age; dense uses E0 without mask |
+| Recovery, both dense and sparse | `src/moe_lth/experiments/run_router_age_recovery.py`: `_run_recovery_condition`, `_materialize_batches`, `_expert_token_counts` | Fresh AdamW, 2500 attempts, same materialized data hash; mask hooks and reapplication only for sparse |
+| Recovery gradient diagnostics | `pruning/router_age.py`: `grad_norms_by_group`, `per_expert_grad_norms`; recovery loop | Unscaled preclip group norms each attempt, per-expert norms sampled; accepted counts and applied-update flag each attempt |
+| Evaluation | `src/moe_lth/training/evaluate.py`: `evaluate_language_model`; recovery `_evaluate_condition_loss` | Native routing, model.eval/no_grad, token-weighted cross entropy, first at most 32 deterministic validation batches; source every 250, recovery every 50 plus initial and AUC boundary |
+| Independent audit | `results/architecture_scaling_audit/audit.py`, `provenance_audit.py`, `finalize_audit.py` | CPU arithmetic; no forwards, backward, optimizer steps or experiment runners |
+
+Current working tree had pre-existing modifications. These were preserved. `code_hashes.json` captures inspected code; 16E saved provenance and checkpoint metadata provide historical corroboration. A current-code hash alone cannot prove historical execution. `12e_reference_provenance.csv` checks the original versus expanded 12E source states at reused ages. The source trainer does not log successful optimizer counts; a checkpoint's step is an attempt label.
+
+Dataset identity is captured in `dataset_audit.json`. The present training file yields 45,760 blocks, with 357 full training batches (64 remaining blocks dropped per permutation); 2500 attempts traverse the cached 357-batch order approximately 7.003 times. The validation file yields 3,847 blocks: 30 full batches and one 7-row batch, hence 31 actual validation batches / 492,416 token predictions under the configured maximum of 32. File identities are current audit evidence, not a claim that unsaved historical files can be authenticated retrospectively; persisted recovery batch hashes verify paired historical schedules.

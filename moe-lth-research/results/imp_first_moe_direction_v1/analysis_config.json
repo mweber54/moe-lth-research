@@ -1,0 +1,67 @@
+{
+  "ce_atol": 1e-06,
+  "condition": "router_experts_frozen",
+  "construction_dtype": "FP64 then cast to recipient FP32",
+  "contrasts": [
+    "D_start_norm",
+    "D_end_norm",
+    "N_start_dir",
+    "N_end_dir",
+    "B_common",
+    "I"
+  ],
+  "direction_l2_atol": 2e-06,
+  "eligibility_candidate": "exact FP64 nonzero in both native donor vectors; no epsilon or floor; abort on unusable FP32 construction before CE",
+  "eligibility_evidence": "existing sealed training-only four-complete-batch probes and dtype-aware synthetic tests; no new validation losses before rule seal",
+  "end_step": 1500,
+  "fp64_unit_norm_atol": 2e-12,
+  "full_donor_context": "reuse verified prior alpha1 cells only; no causal full-minus-common support effect",
+  "id": "imp_first_moe_direction_v1",
+  "implementation_revision": 2,
+  "limits": "This follow-up and layer 0 were chosen after prior interface/amplitude results; the new configuration and numerical eligibility rule are sealed before intervention losses. Validation has been repeatedly examined and is not an independent test set. Source seeds (n=5) are the replication unit; tokens, sequences, batches, contexts and cells are nested observations. Directions are those of the complete native gated contribution in native residual coordinates, with no learned alignment or transformation. On S only, norm and direction donors are crossed; outside S every variant equals the recipient's own native contribution. Unsupported positions are not tested and are not shown harmless. Other-diagonal hybrids are common-support substitutions, not necessarily full-donor transplants. Cross-recipient contrasts include residual context, downstream parameters and unsupported-position backgrounds; they are not downstream-weight attribution. Each sparse/unpruned trajectory uses its own norms/directions and is not an equal-sized cross-model perturbation. Downstream replay fixes each recipient's own decisions and computes experts on current inputs; mode differences do not isolate one routing mechanism. Algebraic decompositions are not percentages of training recovery. Frozen experts did not learn new weights. Direction effects may reflect changed assignments or different inputs to the same frozen experts; they do not isolate upstream cause, semantic content, all recovery, winning tickets, normal-training attainability, or an online pruning criterion. No subsequent experiment is launched.",
+  "logical_cells": 160,
+  "logit_atol": 1e-06,
+  "logit_rtol": 1e-05,
+  "loss_scope": "whole validation population; batch/sequence differences nested in seed",
+  "model_types": [
+    "sparse",
+    "unpruned"
+  ],
+  "modes": [
+    "NATIVE_DOWNSTREAM",
+    "RECIPIENT_BASELINE_REPLAY"
+  ],
+  "norm_rtol": 2e-06,
+  "outside_S": "same recipient-native contribution in all four variants",
+  "pilot_seed": 17,
+  "primary_mode": "NATIVE_DOWNSTREAM",
+  "recipients": [
+    "start",
+    "end"
+  ],
+  "replay_engine": "immutable CPU payload validation once per batch, hash checked every call, cached device indices, unchanged native-order expert dispatch",
+  "seeds": [
+    7,
+    17,
+    29,
+    43,
+    61
+  ],
+  "selected_layer": 0,
+  "selection": "post hoc follow-up to completed interface/amplitude studies",
+  "start_step": 1000,
+  "validation": {
+    "batches": 31,
+    "independent_test": false,
+    "precision": "FP32",
+    "rebatching": false,
+    "target_tokens": 492416,
+    "tf32": false
+  },
+  "variants": [
+    "V00",
+    "V01",
+    "V10",
+    "V11"
+  ]
+}

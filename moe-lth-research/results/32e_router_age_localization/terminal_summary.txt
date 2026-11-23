@@ -1,0 +1,62 @@
+32E ROUTER-AGE LOCALIZATION COMPLETE
+
+Protocol:
+- source global budget matched: YES, 40,960,000 token occurrences
+- recovery global budget matched: YES, 2500 attempts each
+- architecture: 32E, top-1, 4 layers, d_model256, hidden1024
+- seeds: 7,17,29
+- sparsity: 85% expert weights with historical rounding
+- routing: native learned trainable
+- protocol integrity: PASS
+
+Mean winner: R0
+Mean ticket gap ± SD: 0.13484835 ± 0.01724690
+Basin: [0]
+
+Seed winners:
+- 7: R0
+- 17: R0
+- 29: R0
+
+Candidate vs R0: +0.00000000; {7: 0.0, 17: 0.0, 29: 0.0}
+Candidate vs R100: -0.04055391; {7: -0.0687171635083605, 17: -0.024436413730495515, 29: -0.028508151386321484}
+Beats both boundaries all seeds?: False
+
+Pruning-shock winner: R100
+Early-recovery winner: R0
+Sparse-loss winner: R60
+Ticket-gap winner: R0
+
+Late source development:
+ seed  R80_R100_absolute_improvement  R80_R100_relative_improvement
+    7                       0.112886                       0.070706
+   17                       0.117103                       0.072561
+   29                       0.118295                       0.073571
+32E relative per-expert exposure:
+ phase  reference_experts  relative_32E_exposure                                                      coverage
+ dense                  8               0.239607                         complete recovery; common R0/R20/R100
+ dense                 24               0.736239                         complete recovery; common R0/R20/R100
+sparse                  8               0.241330                         complete recovery; common R0/R20/R100
+sparse                 24               0.739742                         complete recovery; common R0/R20/R100
+source                  8               0.239627 matched sampled batches only; complete 24E source unavailable
+source                 24               0.738496 matched sampled batches only; complete 24E source unavailable
+
+Cross-architecture winners:
+8E -> R20; basin [20, 100]
+12E -> R60; basin [60, 80, 100]
+16E -> R60; basin [60, 70, 80]
+24E -> R50; basin [40, 50, 60, 80, 100]
+32E -> R0; basin [0]
+
+Monotonic age scaling supported?: False for observed ages only
+Common developmental-state hypothesis supported?: Not established
+Seed-conditioning trend supported?: Descriptive comparison only; not established as a trend
+
+32E verdict:
+32E BOUNDARY OPTIMUM
+
+Recommended mechanism target:
+none
+
+Path to final_report.md:
+/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/32e_router_age_localization/final_report.md

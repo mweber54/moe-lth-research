@@ -1,0 +1,66 @@
+{
+  "all_tensors": 1280,
+  "all_reproduced": true,
+  "per_seed": [
+    {
+      "seed": 7,
+      "reliability_eligible": 256,
+      "tensors": 256,
+      "candidate_counts_exact": true,
+      "cycle_coordinate_order_exact": true,
+      "retained_tensors": 0,
+      "retained_dose": 0.0
+    },
+    {
+      "seed": 17,
+      "reliability_eligible": 256,
+      "tensors": 256,
+      "candidate_counts_exact": true,
+      "cycle_coordinate_order_exact": true,
+      "retained_tensors": 0,
+      "retained_dose": 0.0
+    },
+    {
+      "seed": 29,
+      "reliability_eligible": 256,
+      "tensors": 256,
+      "candidate_counts_exact": true,
+      "cycle_coordinate_order_exact": true,
+      "retained_tensors": 0,
+      "retained_dose": 0.0
+    },
+    {
+      "seed": 43,
+      "reliability_eligible": 256,
+      "tensors": 256,
+      "candidate_counts_exact": true,
+      "cycle_coordinate_order_exact": true,
+      "retained_tensors": 0,
+      "retained_dose": 0.0
+    },
+    {
+      "seed": 61,
+      "reliability_eligible": 256,
+      "tensors": 256,
+      "candidate_counts_exact": true,
+      "cycle_coordinate_order_exact": true,
+      "retained_tensors": 0,
+      "retained_dose": 0.0
+    }
+  ],
+  "units": {
+    "pairs": "k pairs remove k coordinates per branch and 2k distinct across H/L",
+    "per_tensor_denominator": 262144,
+    "whole_expert_denominator": 67108864,
+    "target_count": 2621,
+    "minimum_count": 656,
+    "bottom_half": 131072,
+    "strata": "np.array_split:22 bins2622,28 bins2621",
+    "slope": "OLS absolute magnitude times750/current tensor RMS",
+    "variation": "total absolute magnitude variation/current tensor RMS",
+    "row": "index//number_columns",
+    "column": "index%number_columns",
+    "roles": "H/L defined per admissible pair, not fixed quartile populations"
+  },
+  "original_experiment_status": "STOPPED_MATCHING_GATE"
+}

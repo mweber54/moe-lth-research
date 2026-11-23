@@ -1,0 +1,50 @@
+{
+  "recoveries_completed": 24,
+  "recovery_attempts": 60000,
+  "applied_updates": 59937,
+  "AMP_skips": 63,
+  "recovery_training_failures": 0,
+  "three_donor_self_replays_bit_exact": true,
+  "snapshots": 216,
+  "gradient_diagnostic_states": 216,
+  "local_Jacobian_checks": 864,
+  "retained_B_readout_rechecks": 36,
+  "AdamW_reconstructions": 192,
+  "all_scientific_checks_passed": true,
+  "scientific_input_preservation": {
+    "passed": true,
+    "scientific_inputs_unchanged": true,
+    "all_prior_bytes_identical": false,
+    "protected": {
+      "scientific_inputs_unchanged": true,
+      "exact_hashes": 103,
+      "all_bytes_identical": false,
+      "formatting_exceptions": [
+        {
+          "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/research_investigation_v1/research_verdict.md",
+          "expected_sha256": "aeacfbbc9d93d0e09e5e556343d33eb9a40968527e6338b0798710ab88ea89e2",
+          "observed_sha256": "76bc3a61c2bbc0369082c787a027b8a99ed09c549b7e1e700c856670b2272b04",
+          "change": "One trailing newline removed; all textual content identical",
+          "scientific_or_protocol_input": false
+        }
+      ]
+    },
+    "execution": {
+      "scientific_inputs_unchanged": true,
+      "exact_hashes": 224,
+      "all_bytes_identical": false,
+      "formatting_exceptions": [
+        {
+          "path": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/research_investigation_v1/research_verdict.md",
+          "expected_sha256": "aeacfbbc9d93d0e09e5e556343d33eb9a40968527e6338b0798710ab88ea89e2",
+          "observed_sha256": "76bc3a61c2bbc0369082c787a027b8a99ed09c549b7e1e700c856670b2272b04",
+          "change": "One trailing newline removed; all textual content identical",
+          "scientific_or_protocol_input": false
+        }
+      ]
+    }
+  },
+  "worker29_terminal_audit": "Failed only the final strict narrative-file byte check after all24 completion markers; exact one-newline proof documented; no recovery restarted.",
+  "fresh_seed_runs": 0,
+  "verdict": "NO-GO"
+}

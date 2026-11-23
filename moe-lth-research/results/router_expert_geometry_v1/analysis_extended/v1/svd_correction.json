@@ -1,0 +1,46 @@
+{
+  "original_learned_decreases": 30,
+  "endpoint_matched_learned_decreases": 28,
+  "n_learned": 30,
+  "exceptions": [
+    {
+      "condition_id": "G_e32_seed17_R0_learned_s0.50",
+      "seed": 17,
+      "router_age": 0,
+      "sparsity": 0.5,
+      "mask_type": "learned",
+      "rank": 16,
+      "layer": -1,
+      "membership": "endpoint_matched",
+      "n_experts": 124,
+      "source_subspace_overlap_change": 0.0014378565453713904,
+      "alignment_centered_change": 0.1447220086120069,
+      "alignment_above_shuffled_change": 0.0852753672950865,
+      "retained_energy_change": 0.10703531917032102,
+      "relative_cutoff_gap_change": 0.00939794385224913,
+      "source_overlap_initial": 0.6181816992259794,
+      "source_overlap_final": 0.6196195557713509,
+      "monotonic_source_overlap_decrease": null
+    },
+    {
+      "condition_id": "G_e32_seed43_R0_learned_s0.50",
+      "seed": 43,
+      "router_age": 0,
+      "sparsity": 0.5,
+      "mask_type": "learned",
+      "rank": 16,
+      "layer": -1,
+      "membership": "endpoint_matched",
+      "n_experts": 118,
+      "source_subspace_overlap_change": 0.005575228040501219,
+      "alignment_centered_change": 0.16293575128508828,
+      "alignment_above_shuffled_change": 0.09472470998508417,
+      "retained_energy_change": 0.11234723999707773,
+      "relative_cutoff_gap_change": 0.01184898723197632,
+      "source_overlap_initial": 0.6058164675862102,
+      "source_overlap_final": 0.6113916956267115,
+      "monotonic_source_overlap_decrease": null
+    }
+  ],
+  "validity": "same original current-matrix flags, with identical layer/expert membership at both endpoints; source-reference flags additionally exported for sensitivity"
+}

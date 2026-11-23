@@ -1,0 +1,7 @@
+{
+  "change": "Verifier now handles zero-variance singleton candidate groups using the original matcher SMD sentinel convention and independently computes empirical CDF KS statistic without p-values.",
+  "reason": "First audit stopped on seed43 singleton: verifier used0 for undefined unequal-mean SMD while original frozen matcher used1e99. Original selection/balance/masks/design are unchanged. Singleton already fails dose gate.",
+  "failed_log": "verification_attempt1.log",
+  "selection_or_threshold_changes": false,
+  "model_operations": 0
+}

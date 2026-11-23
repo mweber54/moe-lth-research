@@ -1,0 +1,5 @@
+# 16E seed-7 reproducibility preflight
+
+All 12 original cells, source checkpoints, initial model/component hashes, final artifacts, regenerated E_T masks, minibatch sequences and historical code hashes validated before rerunning. Original references and masks are reused; no reference training. Same seed, native trainable routing, fresh AdamW, fp16/GradScaler, 2500 attempts, clip=1, aux=0.1, lr=0.0003, wd=0.01, no scheduler/warmup, validation every 50, historical final-only full recovery checkpoint cadence.
+
+Deterministic algorithms are not forced by the historical protocol. CUDA reduction/kernel behavior may vary with hardware/software; TF32 is retained. This audit measures repeatability, not a guaranteed bitwise contract. Predeclared exact loss tolerance 1e-10; model hashes and all validation observations are compared separately. Qualitative reproduction requires R100 winner, rank correlation >=0.8 and maximum gap error <25% of original winner-to-runner-up separation. Errors at least as large as that separation are material nondeterminism if invariants pass. Rerun is never averaged into the original n=3 observations.

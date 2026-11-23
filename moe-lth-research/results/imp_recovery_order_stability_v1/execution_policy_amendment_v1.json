@@ -1,0 +1,34 @@
+{
+  "amendment_version": 1,
+  "created_utc": "2026-11-01T21:40:12Z",
+  "kind": "operational execution-policy amendment (resource scheduling only)",
+  "reason": "run.py _gpu_idle required zero external CUDA processes, which never holds on shared H100 NVL hosts; --resume also excluded PENDING jobs.",
+  "original_registration_sha256": "2d1122d9a6eb64940bbebc58271829510660b8500b7eefedac297e1722249347",
+  "original_registration_preserved_unmodified": true,
+  "sealed_runner": "scripts/imp_recovery_order_stability_v1/run.py",
+  "sealed_runner_sha256": "d9decbc86ac65718a261acfc45d78b6992be091888f840b2e44ba31d3dd320b4",
+  "sealed_runner_modified": false,
+  "shared_gpu_worker": "scripts/imp_recovery_order_stability_v1/shared_gpu_worker.py",
+  "shared_gpu_worker_sha256": "4358af61fdcda1cb5a4e17d1a8c98a4a86439e289e72ce355cfb9ce3ea61228b",
+  "completed_jobs_at_amendment": 12,
+  "completed_jobs_rerun_or_modified": false,
+  "remaining_jobs": {
+    "adder.cs.kent.edu": [
+      "e32_seed43_order_A_imp80", "e32_seed43_order_A_unpruned",
+      "e32_seed43_order_B_imp80", "e32_seed43_order_B_unpruned",
+      "e32_seed61_order_A_imp80", "e32_seed61_order_A_unpruned",
+      "e32_seed61_order_B_imp80", "e32_seed61_order_B_unpruned"
+    ],
+    "viper.cs.kent.edu": []
+  },
+  "changes_resource_scheduling_only": [
+    "GPU admission: external CUDA processes allowed; requires free memory >= job_memory_mib + safety_margin_mib across multiple samples and non-sustained utilization; nvidia-smi failure denies admission; every decision logged to workers/<host>_admission.jsonl",
+    "Scheduling: COMPLETE skipped; PENDING run; RUNNING with free lock and checkpoint resumed; RUNNING without checkpoint restarted as a new preserved attempt; FAILED retried up to --max-failed-retries (default 1); host seed assignment and per-job/per-worker flocks unchanged",
+    "Observation only: periodic GPU sampling during jobs and peak torch memory per job (workers/<host>_gpu_during_jobs.jsonl, <host>_job_memory.jsonl)"
+  ],
+  "scientific_behavior_changes": [],
+  "scientific_code_path": "all training, masks, batch orders, optimizer settings, evaluation and checkpoint semantics execute through unmodified run._run_one_job",
+  "residual_risk": "Co-tenant GPU load can change wall-clock time and, rarely, cause CUDA OOM (job marked FAILED, retried from interruption checkpoint). Co-tenancy does not change deterministic training numerics in the registered FP32/FP16 protocol beyond usual nondeterminism already present on an exclusive GPU, but this was not separately verified.",
+  "default_thresholds_note": "job_memory_mib=40960 from ~37 GB nvidia-smi reading on a production job (rounded up); verify against workers/<host>_job_memory.jsonl after the first job",
+  "launch_command": ".venv-highres/bin/python -u scripts/imp_recovery_order_stability_v1/shared_gpu_worker.py worker --idle-wait 60"
+}

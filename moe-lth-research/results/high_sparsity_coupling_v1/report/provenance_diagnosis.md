@@ -1,0 +1,15 @@
+# Provenance diagnosis
+
+315 verified logical measurements; 240 unique model states. All 75 cross-track common states have identical expert/router/shared/full-state hashes. All 870 cross-track paired family files are byte-identical. Distinct file SHA256 values encode different checkpoint containers (optimizer/RNG/configuration versus diagnostic-only payloads); they do not demonstrate different model weights.
+
+Checkpoint paths resolve to the intended frozen historical files or completed rerun attempt snapshots. Historical SHA256 checks match the immutable cohort. Model/component hashes, raw token/position identities, router scores on both input modes, embedding lookups, and every cached output-file hash were independently checked. No track join/collision or stale raw cache explains the duplication. Historical missing states remain missing.
+
+All 15 historical logged final losses are reproduced exactly with TF32 disabled and all 15 rerun losses with TF32 enabled. The historical continuation entry point does not invoke configure_device; runner.py does. Common-setting re-evaluation removes the cross-track CE discrepancy. Historical and rerun strict labels agree, and each track keeps its own logged losses. This is a numerical evaluation difference, not a training effect.
+
+The actual reporting defect was inconsistent expert populations for sparse-versus-dense changes. The old report intersected initial/final within each model separately, then contrasted different sets. Corrected contrasts intersect all four cells. Fixed-initial selections are also evaluated on identical token–expert pair intersections, separately from the registered per-condition fixed assignments. A focused synthetic regression demonstrates the error and corrected result. A second regression verifies cache-key separation across tracks, checkpoints, components, references, probes, pair selections, implementation and configuration.
+
+Affected output inventory: prior report/findings, paired_seed_coupling_changes, seed_level_uncertainty, and associated comparison/trajectory figures are superseded; the full prior report tree and source are retained in superseded/analysis_before_review_2026_10_20/. Raw measurement families (activation groups/pools/within-token, Gram/SVD/q, embeddings, representations, complete expert outputs, gradients, CE/KL) are valid and retained without recomputation or relabeling. New population-controlled summaries, coverage and exclusions are generated from them.
+
+Schema-2 provenance sidecars explicitly bind track, global step, actual checkpoint path/SHA, component hashes, every reference, fixed-pair hashes, probe identities, original implementation hash and runtime configuration. Future measurement cache code now uses those explicit identities, checks saved probe identities and freezes its implementation fingerprint at import; existing valid raw cache files are not invalidated.
+
+The old unconditional overall-complete flag has been replaced by separate execution_complete, measurement_validity and analysis_complete fields. No training, mask search or historical checkpoint modification was performed.

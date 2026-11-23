@@ -47,7 +47,12 @@ class MoEFeedForward(nn.Module):
         self,
         inputs: torch.Tensor,
         override_ids: torch.Tensor | RouteOverride | None = None,
+        *,
+        capacity_enabled: bool = True,
+        expert_chunk_size: int | None = None,
     ) -> tuple[torch.Tensor, torch.Tensor, RouteTrace]:
+        if expert_chunk_size is not None and expert_chunk_size <= 0:
+            raise ValueError("expert_chunk_size must be positive when provided.")
         batch_size, seq_len, d_model = inputs.shape
         flat_inputs = inputs.reshape(-1, d_model)
         flat_override = None
@@ -82,16 +87,20 @@ class MoEFeedForward(nn.Module):
             assignments = torch.nonzero(selected == expert_id, as_tuple=False)
             if assignments.numel() == 0:
                 continue
-            if assignments.shape[0] > capacity:
+            if capacity_enabled and assignments.shape[0] > capacity:
                 priority = selected_probability if flat_capacity_scores is None else flat_capacity_scores
                 scores = priority[assignments[:, 0], assignments[:, 1]]
                 assignments = assignments[scores.topk(capacity).indices]
             token_positions = assignments[:, 0]
             route_slots = assignments[:, 1]
             accepted[token_positions, route_slots] = True
-            expert_output = expert(flat_inputs[token_positions])
-            weights = selected_probability[token_positions, route_slots, None]
-            output = output.index_add(0, token_positions, expert_output * weights)
+            chunk_size = expert_chunk_size or max(1, token_positions.numel())
+            for start in range(0, token_positions.numel(), chunk_size):
+                positions = token_positions[start : start + chunk_size]
+                slots = route_slots[start : start + chunk_size]
+                expert_output = expert(flat_inputs[positions])
+                weights = selected_probability[positions, slots, None]
+                output = output.index_add(0, positions, expert_output * weights)
 
         usage = torch.bincount(selected.flatten(), minlength=self.num_experts).float()
         usage = usage / max(1, selected.numel())

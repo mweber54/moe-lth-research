@@ -1,0 +1,189 @@
+{
+  "profile": {
+    "profile_state_restored": true,
+    "baseline_repeat_bitwise_equal": true,
+    "zero_dose_bitwise_equal": true,
+    "fp32": true,
+    "tf32": false,
+    "production_checks": "pending"
+  },
+  "production_checks": [
+    {
+      "kind": "sparse",
+      "step": 25,
+      "probe": "A",
+      "state_restored": true,
+      "repeat_equal": true,
+      "zero_dose_equal": true,
+      "gradients_preserved": true,
+      "rng_preserved": true,
+      "mask_integrity": true
+    },
+    {
+      "kind": "sparse",
+      "step": 25,
+      "probe": "B",
+      "state_restored": true,
+      "repeat_equal": true,
+      "zero_dose_equal": true,
+      "gradients_preserved": true,
+      "rng_preserved": true,
+      "mask_integrity": true
+    },
+    {
+      "kind": "sparse",
+      "step": 250,
+      "probe": "A",
+      "state_restored": true,
+      "repeat_equal": true,
+      "zero_dose_equal": true,
+      "gradients_preserved": true,
+      "rng_preserved": true,
+      "mask_integrity": true
+    },
+    {
+      "kind": "sparse",
+      "step": 250,
+      "probe": "B",
+      "state_restored": true,
+      "repeat_equal": true,
+      "zero_dose_equal": true,
+      "gradients_preserved": true,
+      "rng_preserved": true,
+      "mask_integrity": true
+    },
+    {
+      "kind": "sparse",
+      "step": 1000,
+      "probe": "A",
+      "state_restored": true,
+      "repeat_equal": true,
+      "zero_dose_equal": true,
+      "gradients_preserved": true,
+      "rng_preserved": true,
+      "mask_integrity": true
+    },
+    {
+      "kind": "sparse",
+      "step": 1000,
+      "probe": "B",
+      "state_restored": true,
+      "repeat_equal": true,
+      "zero_dose_equal": true,
+      "gradients_preserved": true,
+      "rng_preserved": true,
+      "mask_integrity": true
+    },
+    {
+      "kind": "sparse",
+      "step": 2500,
+      "probe": "A",
+      "state_restored": true,
+      "repeat_equal": true,
+      "zero_dose_equal": true,
+      "gradients_preserved": true,
+      "rng_preserved": true,
+      "mask_integrity": true
+    },
+    {
+      "kind": "sparse",
+      "step": 2500,
+      "probe": "B",
+      "state_restored": true,
+      "repeat_equal": true,
+      "zero_dose_equal": true,
+      "gradients_preserved": true,
+      "rng_preserved": true,
+      "mask_integrity": true
+    },
+    {
+      "kind": "unpruned",
+      "step": 25,
+      "probe": "A",
+      "state_restored": true,
+      "repeat_equal": true,
+      "zero_dose_equal": true,
+      "gradients_preserved": true,
+      "rng_preserved": true,
+      "mask_integrity": true
+    },
+    {
+      "kind": "unpruned",
+      "step": 25,
+      "probe": "B",
+      "state_restored": true,
+      "repeat_equal": true,
+      "zero_dose_equal": true,
+      "gradients_preserved": true,
+      "rng_preserved": true,
+      "mask_integrity": true
+    },
+    {
+      "kind": "unpruned",
+      "step": 250,
+      "probe": "A",
+      "state_restored": true,
+      "repeat_equal": true,
+      "zero_dose_equal": true,
+      "gradients_preserved": true,
+      "rng_preserved": true,
+      "mask_integrity": true
+    },
+    {
+      "kind": "unpruned",
+      "step": 250,
+      "probe": "B",
+      "state_restored": true,
+      "repeat_equal": true,
+      "zero_dose_equal": true,
+      "gradients_preserved": true,
+      "rng_preserved": true,
+      "mask_integrity": true
+    },
+    {
+      "kind": "unpruned",
+      "step": 1000,
+      "probe": "A",
+      "state_restored": true,
+      "repeat_equal": true,
+      "zero_dose_equal": true,
+      "gradients_preserved": true,
+      "rng_preserved": true,
+      "mask_integrity": true
+    },
+    {
+      "kind": "unpruned",
+      "step": 1000,
+      "probe": "B",
+      "state_restored": true,
+      "repeat_equal": true,
+      "zero_dose_equal": true,
+      "gradients_preserved": true,
+      "rng_preserved": true,
+      "mask_integrity": true
+    },
+    {
+      "kind": "unpruned",
+      "step": 2500,
+      "probe": "A",
+      "state_restored": true,
+      "repeat_equal": true,
+      "zero_dose_equal": true,
+      "gradients_preserved": true,
+      "rng_preserved": true,
+      "mask_integrity": true
+    },
+    {
+      "kind": "unpruned",
+      "step": 2500,
+      "probe": "B",
+      "state_restored": true,
+      "repeat_equal": true,
+      "zero_dose_equal": true,
+      "gradients_preserved": true,
+      "rng_preserved": true,
+      "mask_integrity": true
+    }
+  ],
+  "training_updates": 0
+}

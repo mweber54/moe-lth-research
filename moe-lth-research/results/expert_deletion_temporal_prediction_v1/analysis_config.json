@@ -1,0 +1,126 @@
+{
+  "post_hoc": true,
+  "all_checkpoints_previously_inspected": true,
+  "seed": 17,
+  "source_case": "NONMATCHING IMP80 engineering case",
+  "trajectories": [
+    "sparse",
+    "unpruned"
+  ],
+  "experts": [
+    0,
+    8,
+    16,
+    24
+  ],
+  "layer": 1,
+  "steps": [
+    25,
+    250,
+    1000,
+    2500
+  ],
+  "step2500": "pre-reset",
+  "discovery_batches": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "confirmation_batches": [
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31
+  ],
+  "discovery_blocks": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "confirmation_blocks": [
+    5,
+    6,
+    7,
+    8
+  ],
+  "transitions": [
+    {
+      "early": 25,
+      "future": 250,
+      "previous": null,
+      "priority": "secondary"
+    },
+    {
+      "early": 250,
+      "future": 1000,
+      "previous": 25,
+      "priority": "primary"
+    },
+    {
+      "early": 1000,
+      "future": 2500,
+      "previous": 250,
+      "priority": "primary"
+    }
+  ],
+  "rules": [
+    "current",
+    "history_mean",
+    "history_max"
+  ],
+  "subsets": [
+    "whole",
+    "baseline_accepted"
+  ],
+  "doses": [
+    0,
+    1,
+    2,
+    4,
+    8
+  ],
+  "controls": "output-zero retained separately; not a weight-deletion dose",
+  "minimum_block_accepted": 32,
+  "tie_floor": 1e-12,
+  "minimum_rank_candidates": 3,
+  "tie_break": "lexicographic intervention ID; low first, high last; extreme ties unidentified",
+  "bootstrap_resamples": 2000,
+  "discovery_bootstrap_seed": 1742000,
+  "confirmation_bootstrap_seed": 1742001,
+  "bootstrap_unit": "complete batches, jointly across interventions; same discovery draws across history checkpoints",
+  "reference_tolerances": [
+    0.0001,
+    0.001
+  ],
+  "magnitude_baseline": "unavailable: exact per-union checkpoint-specific measurements not recorded; no new tensor measurements",
+  "training_updates": 0,
+  "model_executions": 0,
+  "original_configuration_sha256": "cea6a6c652b736aa8e3a00883f3a4bb7844676cba712e5f819dfb7f1ed0327a5",
+  "original_output_seal_sha256": "12d7d63fc15b0ee0b92b73367a6a63c4891cd821620655764a64b01b90e8a755"
+}

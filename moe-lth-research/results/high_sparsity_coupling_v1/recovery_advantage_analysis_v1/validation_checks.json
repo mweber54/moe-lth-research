@@ -1,0 +1,71 @@
+{
+  "condition_step_joins": {
+    "all_crosscheck_differences_zero": true,
+    "checkpoint_snapshot_rows": 160,
+    "observed_steps_per_condition": 103,
+    "primary_rows": 1030,
+    "sparse_conditions": 10,
+    "unique_dense_controls": 5,
+    "unique_dense_per_seed": true
+  },
+  "crossover": {
+    "interpolation_used": false,
+    "interval_rows": 1020,
+    "max_gap_decomposition_identity_error": 2.842170943040401e-14,
+    "strict_zero_threshold": true,
+    "summary_rows": 10
+  },
+  "endpoint_labels": {
+    "checked_against_strict_zero_from_authoritative_rerun_ce": true,
+    "matches": [
+      {
+        "seed": 7,
+        "sparsity": 0.8
+      },
+      {
+        "seed": 7,
+        "sparsity": 0.85
+      },
+      {
+        "seed": 43,
+        "sparsity": 0.8
+      },
+      {
+        "seed": 61,
+        "sparsity": 0.8
+      }
+    ]
+  },
+  "optimizer": {
+    "per_attempt_rows_checked": 75000,
+    "segment_applied_and_skip_totals_reconciled": true,
+    "step_2500_weights_same_before_after_reset": true
+  },
+  "passed": true,
+  "precision": {
+    "all_strict_endpoint_signs_agree": true,
+    "historical_not_mixed": true,
+    "intermediate_near_zero_tf32_sensitivity": "not directly measured; strict rerun curve retained with no tolerance",
+    "primary_curve_track": "rerun",
+    "tf32_off_vs_on_endpoint_gap_max_abs_difference": 0.0001406147785549816
+  },
+  "source_model_tensors": {
+    "checkpoint_file_size_mtime_inode_unchanged": true,
+    "checkpoint_files_tracked": 272,
+    "loaded": false,
+    "modified": false
+  },
+  "test_split": {
+    "data_configuration_fields_containing_test": [],
+    "not_inspected": true,
+    "untouched_split_established": false
+  },
+  "token_alignment": {
+    "all_pair_token_position_ids_match": true,
+    "all_steps_keep_same_ids_within_seed": true,
+    "max_probe_array_to_saved_probe_ce_error": 1.652538776397705e-05,
+    "max_token_to_probe_ce_reconciliation_abs_error": 3.921970304077149e-09,
+    "probe_positions": 2048,
+    "rows": 160
+  }
+}

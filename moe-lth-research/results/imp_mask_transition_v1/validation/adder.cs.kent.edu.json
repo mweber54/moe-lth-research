@@ -1,0 +1,71 @@
+{
+  "passed": true,
+  "host": "adder.cs.kent.edu",
+  "source_seed": 17,
+  "attempt": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_mask_transition_v1/validation/adder.cs.kent.edu/attempt_1792958082568952889",
+  "comparisons": [
+    {
+      "condition": "dense",
+      "max_parameter_absolute_difference": 0.0,
+      "common_ce_difference": 0.0
+    },
+    {
+      "condition": "fixed",
+      "max_parameter_absolute_difference": 0.0,
+      "common_ce_difference": 0.0
+    }
+  ],
+  "atol": 1e-06,
+  "rtol": 1e-05,
+  "ce_atol": 1e-06,
+  "exact_cuda_dropout_optimizer_scaler_rng_resume": true,
+  "event_resume_no_duplicate": true,
+  "reset_weights_unchanged": true,
+  "timing": [
+    {
+      "condition": "dense",
+      "mode": "native",
+      "attempts": 8,
+      "seconds": 28.60588654805906,
+      "peak_allocated_bytes": 2210950144,
+      "peak_reserved_bytes": 2604662784
+    },
+    {
+      "condition": "dense",
+      "mode": "adapter",
+      "attempts": 8,
+      "seconds": 42.30707718699705,
+      "peak_allocated_bytes": 3032435712,
+      "peak_reserved_bytes": 3707764736
+    },
+    {
+      "condition": "fixed",
+      "mode": "native",
+      "attempts": 8,
+      "seconds": 38.55397233692929,
+      "peak_allocated_bytes": 2473824768,
+      "peak_reserved_bytes": 2877292544
+    },
+    {
+      "condition": "fixed",
+      "mode": "adapter",
+      "attempts": 8,
+      "seconds": 61.110426642000675,
+      "peak_allocated_bytes": 2472493568,
+      "peak_reserved_bytes": 3133145088
+    },
+    {
+      "condition": "engineering_gradual_events",
+      "mode": "adapter_events",
+      "attempts": 8,
+      "seconds": 74.09532523294911,
+      "peak_allocated_bytes": 2479385600,
+      "peak_reserved_bytes": 3139436544,
+      "diagnostic_seconds": 14.37954065494705
+    }
+  ],
+  "torch": "2.7.0",
+  "cuda": "12.8",
+  "gpu": "NVIDIA H100 NVL",
+  "unix": 1792958373.394274
+}

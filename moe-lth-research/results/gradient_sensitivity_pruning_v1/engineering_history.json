@@ -1,0 +1,26 @@
+{
+  "pre_scoring_fixture_issues": [
+    "Missing math import, fixed before first registration seal",
+    "Missing tiny fixture max_seq_len, fixed before source scoring",
+    "Native FP32 additive causal attention mask incompatible with FP64 model fixture; tiny fixture now native FP32 with FP64 accumulation, preserved pre-scoring amendment"
+  ],
+  "measurement_failures": [
+    {
+      "seed": 7,
+      "attempt": "attempt_0001",
+      "reason": "Jensen diagnostic FP64 roundoff assertion",
+      "intervention_loss_evaluations": 0,
+      "production_updates": 0
+    },
+    {
+      "seed": 17,
+      "attempt": "attempt_0001",
+      "reason": "Jensen diagnostic FP64 roundoff assertion",
+      "intervention_loss_evaluations": 0,
+      "production_updates": 0
+    }
+  ],
+  "correction": "Relative 1e-12 plus absolute 1e-25 comparison tolerance only; no change to score accumulation, batches, reliability gates, matching or scientific registration",
+  "automatic_retries": false,
+  "failed_attempt_artifacts_preserved": true
+}

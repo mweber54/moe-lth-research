@@ -1,0 +1,27 @@
+{
+  "new_jobs": 180,
+  "reused_jobs": 45,
+  "new_recovery_jobs": 175,
+  "new_source_jobs": 5,
+  "total_attempts": 1312500,
+  "historical_seconds_per_attempt_median": 0.1874159137248993,
+  "historical_seconds_per_attempt_p10_p90": [
+    0.18099752416610718,
+    0.203070298471451
+  ],
+  "estimated_gpu_hours_median": 68.3287185455362,
+  "estimated_gpu_hours_p10_p90": [
+    65.98868068555991,
+    74.0360463177165
+  ],
+  "caveat": "mtime-derived on existing hardware, includes some logging and probe cost; source timing approximated by recovery. Queue waiting excluded. No runtime guarantee.",
+  "expected_storage_gib": {
+    "recovery_final_model_checkpoints": 45.5,
+    "source_checkpoints": 6.5,
+    "masks_and_components": 3,
+    "compact_per_expert_logs_and_reports": 20,
+    "reserve": 30
+  },
+  "storage_location": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/dataset_b_pilot",
+  "no_checkpoint_deletion_policy": "Keep final recoveries and all 5 source checkpoint steps; interrupted attempts preserved; investigate storage gate rather than deleting A."
+}

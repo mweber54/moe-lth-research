@@ -1,0 +1,81 @@
+{
+  "cohort_dispatch_gate": "engineering/resource validation only; no effect-size gate",
+  "conditions": [
+    "full",
+    "router_frozen",
+    "experts_frozen",
+    "router_experts_frozen"
+  ],
+  "control": "verified compatible unpruned trajectory at global step 1000",
+  "diagnostic_probe_manifest": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1/diagnostic_probe_manifest.json",
+  "diagnostic_probe_manifest_sha256": "506f897c83f58efbd5ca5b95ff95d1990ea836333a7dce7162f6add301d0fd6b",
+  "diagnostic_probe_manifest_unchanged_across_revision": true,
+  "diagnostic_probe_sealed_before_branch_outcomes": true,
+  "endpoints": 40,
+  "engineering_revision_record": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1/engineering_revision_5.json",
+  "engineering_revision_record_sha256": "c93077b40f69d9c4ecadfa8c642c75404fb8ac7a41e6bcb0a8378d380cdb1775",
+  "global_steps": [
+    1000,
+    1025,
+    1100,
+    1250,
+    1500
+  ],
+  "label": "Prospective intervention motivated by observed trajectories; not an overall preregistration.",
+  "model_types": [
+    "unpruned",
+    "sparse"
+  ],
+  "observed_window_acknowledged": true,
+  "offsets": [
+    0,
+    25,
+    100,
+    250,
+    500
+  ],
+  "pilot_seed": 17,
+  "primary_contrasts": [
+    "P_R=L_router_frozen-L_full",
+    "P_E=L_experts_frozen-L_full",
+    "P_RE=L_router_experts_frozen-L_full",
+    "E_R=P_R_sparse-P_R_unpruned",
+    "E_E=P_E_sparse-P_E_unpruned",
+    "I=L11-L10-L01+L00"
+  ],
+  "probe_identities": {
+    "17": "85c1ca53f521ceb6113783fa518f76d70d2bff5b187a5a94a5e8d7acde327bc0",
+    "29": "d8be9738a318edc111f6eab48b35d6c8555bbe25771d445558176c122f915133",
+    "43": "71c6dcbf4da0417d18ef4cd8e9ab5900d77d926ff4f37434c34c895f9d385cac",
+    "61": "571b366c640badf1a8bcd5e219e8c9aa496ae71a1d9797fc0345497b41b273fc",
+    "7": "c357ce6a192c96463264acc02488dbafdafab9fad284b50bdec83e90d43808b7"
+  },
+  "probe_reseal_reason": "Corrected the dense-prefix verification reference from the post-IMP80 readout to the historical dense step-1000 readout after a pre-outcome validation-only prefix failure.",
+  "reconstruction_required": true,
+  "registration_revision": 5,
+  "scientific_conditions_changed_across_revision": false,
+  "sealed_before_new_branch_outcomes": true,
+  "seeds": [
+    7,
+    17,
+    29,
+    43,
+    61
+  ],
+  "source_hash_manifest": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1/input_code_configuration_hashes.json",
+  "source_hash_manifest_sha256": "483b2ec65dea2c0d0d7b2d4fa00618341ac9bcebe4e07ab6bba01a3e16f90d8d",
+  "sparse_condition": "existing native 32E IMP80 abrupt event at global step 1000",
+  "status": "protocol prepared; numerical equivalence and pilot pending",
+  "supersedes_probe_manifest": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1/diagnostic_probe_manifest_revision_1.json",
+  "supersedes_registration": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1/registration_revision_4.json",
+  "supersedes_registration_sha256": "db5f214c4bf7828d83237fb621114c25530f5223683d7d0472f76df410ae772d",
+  "supersedes_source_hash_manifest": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1/input_code_configuration_hashes_revision_4.json",
+  "supersedes_source_hash_manifest_sha256": "7f6fd1a02925e97c90191559ba89977dc2212aea3ba7883171bf324f0d614e04",
+  "tolerances": {
+    "model_atol": 1e-06,
+    "model_rtol": 1e-05,
+    "validation_ce_atol": 1e-06
+  },
+  "uncertainty": "descriptive seed-level mean, median, range, sample SD, and intervals",
+  "window_selection": "1000-1500 was selected after examining previous trajectories."
+}

@@ -1,0 +1,6 @@
+{
+  "no_automatic_retry": true,
+  "reason": "Preparation/coordinator failure: CalledProcessError(1, ['/users/kent/student/mweber54/moe-lth-research/moe-lth-research/.venv-highres/bin/python', '-u', '/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_matched_sign_magnitude_recovery_v1/run.py', 'prepare'])",
+  "traceback": "Traceback (most recent call last):\n  File \"/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_matched_sign_magnitude_recovery_v1/coordinator.py\", line 23, in <module>\n    try:main()\n        ^^^^^^\n  File \"/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_matched_sign_magnitude_recovery_v1/coordinator.py\", line 19, in main\n    subprocess.run([sys.executable,'-u',str(OUT/'run.py'),'prepare'],cwd=ROOT,check=True)\n  File \"/usr/lib/python3.12/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/users/kent/student/mweber54/moe-lth-research/moe-lth-research/.venv-highres/bin/python', '-u', '/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_matched_sign_magnitude_recovery_v1/run.py', 'prepare']' returned non-zero exit status 1.\n",
+  "utc": "2026-11-12T18:02:53.621510+00:00"
+}

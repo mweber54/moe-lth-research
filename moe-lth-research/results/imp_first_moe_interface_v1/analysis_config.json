@@ -1,0 +1,65 @@
+{
+  "actual_model_chunking": false,
+  "alphas": [
+    1.0,
+    0.9,
+    0.75,
+    0.5,
+    0.0
+  ],
+  "analysis_id": "imp_first_moe_interface_v1",
+  "cache_unit": "complete seed/model pair; both checkpoint identities, every complete batch hash, donor, recipient, alpha, mode, spec and implementation",
+  "condition": "router_experts_frozen",
+  "deduplication": "within recipient/mode/batch alpha-zero donor identity; own native baseline output reused after first-batch hook equality; explicit logical coverage",
+  "diagnostic_expert_chunk_size": 1024,
+  "donors": [
+    "start",
+    "end"
+  ],
+  "limits": "Layer 0 was chosen post hoc after examining the prior contribution-ablation study. This new design and implementation were sealed before new outcomes; this is not project-level preregistration. Validation was repeatedly examined and is not an independent test. Source seeds (n=5) are replication units; batches, tokens, alphas, layers and cells are nested measurements. The recipient context includes its own pre-addition residual representation and subsequent computation, not downstream weights alone. Donor and recipient share seed/model type; no alignment, norm matching, weight transplantation or training is performed. Usefulness is confined to tested recipient contexts, not universally better semantic information. Q is an evaluation compatibility interaction that can reflect coordinate mismatch, scaling, routing and subsequent use. Reciprocal harm does not prove semantic co-specialization. Frozen expert/router weights and biases do not learn. Fractional attenuation has different absolute sizes across donors, but fixed donor/alpha perturbations are identical across recipients. Norms and cosines do not establish usefulness or explain CE causally. Sparse-versus-unpruned donor perturbations can also differ in absolute magnitude. No percentage of recovery, training counterfactual, ticket mechanism, safe pruning rule or generalization beyond this architecture/mask family/window is identified. Nonmonotone curves and negative effects are retained.",
+  "logical_cells": 400,
+  "model_types": [
+    "sparse",
+    "unpruned"
+  ],
+  "modes": [
+    "NATIVE_RESPONSE",
+    "RECIPIENT_BASELINE_REPLAY"
+  ],
+  "modest_attenuation_alpha": 0.9,
+  "post_hoc_layer_selection": true,
+  "primary_mode": "NATIVE_RESPONSE",
+  "prior_absolute_loss_sha256": "7e42bb3d845633aaee93e830d9b00aa7f9447635a07744cf02ff03963e07bace",
+  "prior_batch_loss_sha256": "835c0e180e24dc91d527ca67e2b29dac981379af4eac74f3b47f671591e7f84f",
+  "prior_temporal_contrast_sha256": "cb3d6051c0accb78a6e418fc0259099e9ae7aedf79a987de5d68d173b5434295",
+  "recipients": [
+    "start",
+    "end"
+  ],
+  "replication_unit": "source seed; n=5",
+  "seeds": [
+    7,
+    17,
+    29,
+    43,
+    61
+  ],
+  "selected_layer": 0,
+  "steps": {
+    "end": 1500,
+    "start": 1000
+  },
+  "tolerances": {
+    "ce_absolute": 1e-06,
+    "logit_atol": 1e-06,
+    "logit_rtol": 1e-05
+  },
+  "validation": {
+    "batches": 31,
+    "independent_test": false,
+    "precision": "FP32",
+    "rebatching": false,
+    "target_tokens": 492416,
+    "tf32": false
+  }
+}

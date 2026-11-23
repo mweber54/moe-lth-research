@@ -1,0 +1,21 @@
+{
+  "seed": 17,
+  "experts": 32,
+  "router_age": 100,
+  "sparsity": 0.95,
+  "cpu_reconstructed_full_validation_loss": 171.71762306286757,
+  "historical_initial_loss": 171.7182807575302,
+  "absolute_difference": 0.000657694662635322,
+  "predeclared_cpu_vs_tf32_diagnostic_tolerance": 0.02,
+  "passed": true,
+  "interpretation": "Large initial token CE is valid under the tied, unscaled random embedding/output head and R0 shared/expert rewind. No loss rescaling or initialization change. Backend tolerance is not a ticket/dense-match criterion.",
+  "validation_batch_hash": "09a073e9f03bbb854d3903081440b9e0869feb8e04b50b3b1be76a1d42658b22",
+  "logit_min": -75.29739379882812,
+  "logit_max": 221.8484649658203,
+  "mean_current_token_logit": 173.4129180908203,
+  "mean_next_token_logit": 2.1216084957122803,
+  "tied_embedding_output_head": true,
+  "manual_token_mean_nll": 171.29129028320312,
+  "independent_ce_token_mean": 171.29127502441406,
+  "reduction_difference": 1.52587890625e-05
+}

@@ -1,0 +1,126 @@
+{
+  "baseline_equivalence": {
+    "sparse": {
+      "baseline_ce_by_condition": {
+        "experts_frozen": 2.51697420100903,
+        "full": 2.51697420100903,
+        "router_experts_frozen": 2.51697420100903,
+        "router_frozen": 2.51697420100903
+      },
+      "baseline_ce_range": 0.0,
+      "branch_count": 4,
+      "branch_start_state_hashes": [
+        "b29d77a0143d807aa677c2e1906208ad6651cc0aec0a5eb6e81963e81424e60b"
+      ]
+    },
+    "unpruned": {
+      "baseline_ce_by_condition": {
+        "experts_frozen": 2.06735225848046,
+        "full": 2.06735225848046,
+        "router_experts_frozen": 2.06735225848046,
+        "router_frozen": 2.06735225848046
+      },
+      "baseline_ce_range": 0.0,
+      "branch_count": 4,
+      "branch_start_state_hashes": [
+        "92b99874944ec86e96c6ef8b0b5e177ad2b5b5f6475bfa75b031d4fc26c5156d"
+      ]
+    }
+  },
+  "branches": [
+    {
+      "amp_skips": 0,
+      "applied_updates": 500,
+      "attempt": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1/attempts/seed17_unpruned_full/attempt_1793026405891041730",
+      "attempted_updates": 500,
+      "condition": "full",
+      "endpoint_ce": 1.7997555768672664,
+      "final_checkpoint_sha256": "c4eed60c642cb1c3886086f9011efadcbe7f681758f6e4ea203d2a35f8be8571",
+      "model_type": "unpruned"
+    },
+    {
+      "amp_skips": 0,
+      "applied_updates": 500,
+      "attempt": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1/attempts/seed17_unpruned_router_frozen/attempt_1793036366390347539",
+      "attempted_updates": 500,
+      "condition": "router_frozen",
+      "endpoint_ce": 1.8176254989390006,
+      "final_checkpoint_sha256": "352da74381a8723c50520b39743a00b5c2be7ded708361b4bbf275e462202419",
+      "model_type": "unpruned"
+    },
+    {
+      "amp_skips": 0,
+      "applied_updates": 500,
+      "attempt": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1/attempts/seed17_unpruned_experts_frozen/attempt_1793036689300691723",
+      "attempted_updates": 500,
+      "condition": "experts_frozen",
+      "endpoint_ce": 1.9524920284825547,
+      "final_checkpoint_sha256": "d36eea79eb40d4798f03826d035a389a21a54eeb5745f1bb258729a7c017c229",
+      "model_type": "unpruned"
+    },
+    {
+      "amp_skips": 0,
+      "applied_updates": 500,
+      "attempt": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1/attempts/seed17_unpruned_router_experts_frozen/attempt_1793036838875302892",
+      "attempted_updates": 500,
+      "condition": "router_experts_frozen",
+      "endpoint_ce": 1.9613250207368014,
+      "final_checkpoint_sha256": "9b601524909d57c9a3d736c786530037b1ad6953926be0d51fb0409a0ea4f30c",
+      "model_type": "unpruned"
+    },
+    {
+      "amp_skips": 0,
+      "applied_updates": 500,
+      "attempt": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1/attempts/seed17_sparse_full/attempt_1793036966162126651",
+      "attempted_updates": 500,
+      "condition": "full",
+      "endpoint_ce": 1.8260588436458896,
+      "final_checkpoint_sha256": "f7e87de9faef78b9563fbc8db5506c0e25b6f06ddd9ce572f264de893db6daa0",
+      "model_type": "sparse"
+    },
+    {
+      "amp_skips": 0,
+      "applied_updates": 500,
+      "attempt": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1/attempts/seed17_sparse_router_frozen/attempt_1793037151397587978",
+      "attempted_updates": 500,
+      "condition": "router_frozen",
+      "endpoint_ce": 1.8689547078405568,
+      "final_checkpoint_sha256": "86cca19ab952ed6c3ba1d562fc897645a5484d01b9567196cd4ed5ffb9f064f9",
+      "model_type": "sparse"
+    },
+    {
+      "amp_skips": 0,
+      "applied_updates": 500,
+      "attempt": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1/attempts/seed17_sparse_experts_frozen/attempt_1793037367961354191",
+      "attempted_updates": 500,
+      "condition": "experts_frozen",
+      "endpoint_ce": 1.9996972442262042,
+      "final_checkpoint_sha256": "a072ad059bd3f717bc6c5ac0e353759a8af6a1e990540017d79ae2acafdfe1d7",
+      "model_type": "sparse"
+    },
+    {
+      "amp_skips": 0,
+      "applied_updates": 500,
+      "attempt": "/users/kent/student/mweber54/moe-lth-research/moe-lth-research/results/imp_postpruning_adaptation_v1/attempts/seed17_sparse_router_experts_frozen/attempt_1793037559923217967",
+      "attempted_updates": 500,
+      "condition": "router_experts_frozen",
+      "endpoint_ce": 2.0283356513610156,
+      "final_checkpoint_sha256": "1c5ce0810a20938a8323f43079a5a112761adf4b7c962314dcb4eaff7cac3231",
+      "model_type": "sparse"
+    }
+  ],
+  "effect_direction_used_as_gate": false,
+  "resource_admission": {
+    "free_disk_bytes": 877482999808,
+    "gpu": {
+      "free_bytes": 99947118592,
+      "utilization_percent": 0
+    },
+    "maximum_gpu_utilization_percent": 90,
+    "minimum_free_disk_bytes": 214748364800,
+    "minimum_free_gpu_bytes": 25769803776,
+    "visible_gpus": 1
+  },
+  "seed": 17,
+  "status": "PASS"
+}

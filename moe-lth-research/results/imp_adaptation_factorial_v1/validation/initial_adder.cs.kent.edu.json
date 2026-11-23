@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "identical_initial_model_hash": "c04f0f0d92a830ca9843a41a974b3ab364a50979396d38049d941b1ebad3c969",
+  "identical_forward": true,
+  "losses": [
+    {
+      "condition": "full",
+      "initial_validation_ce": 169.87539752973095
+    },
+    {
+      "condition": "expert_only",
+      "initial_validation_ce": 169.87539752973095
+    },
+    {
+      "condition": "expert_router",
+      "initial_validation_ce": 169.87539752973095
+    },
+    {
+      "condition": "expert_shared",
+      "initial_validation_ce": 169.87539752973095
+    }
+  ],
+  "tying_preserved": true,
+  "tf32_matmul": true
+}

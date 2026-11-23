@@ -1,0 +1,18 @@
+{
+  "time": 1792806396.0021899,
+  "stage": "BEFORE_ANY_SOURCE_MODEL_FORWARD_OR_GRADIENT_OR_INTERVENTION",
+  "scientific_registration_unchanged": true,
+  "original_analysis_seal_sha256": "16e7ceaa3a16b9274977962b001ca990775194b2ef575111d68f475c26ca920a",
+  "reason": "Tiny fixture lacked max_seq_len then exposed FP32 native additive attention-mask constraint. Correct fixture uses native FP32 forward with FP64 accumulation. Earlier missing math import was fixed before original seal. No source-model measurements have occurred.",
+  "FD_precision_clarification": "If reached, registered FP64 finite differences require casting only the additive attention mask to query dtype with a dtype-only pre-hook; no routing/score/matching change.",
+  "files": {
+    "scripts/gradient_sensitivity_pruning_v1/common.py": "c7a585de606a913d0043724ddd850541a141eee969b3cdd6fe240a716734ba25",
+    "scripts/gradient_sensitivity_pruning_v1/prepare.py": "de968f4d2e8294747433a18d226ae1ca3b448cc8c76ea9fd00993641bc94f30d",
+    "scripts/gradient_sensitivity_pruning_v1/measure.py": "9270900f6907b8ff6d0fed39a07e7bd2cf83e29e9b256d54c5f8df8d8688d2b2"
+  },
+  "original_code_archive": {
+    "results/gradient_sensitivity_pruning_v1/pre_scoring_archive/measure.py": "887f3e887c1a5bbf1bb9a7d2222b631b2e38a72b6ad0250df258343309dca96b",
+    "results/gradient_sensitivity_pruning_v1/pre_scoring_archive/common.py": "e5e922b6c94c8dc35f76f4ae846b74a6852b8a00eeafdf60ea52fb2bbd6006f2",
+    "results/gradient_sensitivity_pruning_v1/pre_scoring_archive/prepare.py": "272b9c6da4134f01f6c10f9f938881b36ddbf7acbcb56d46a95337be890c322e"
+  }
+}

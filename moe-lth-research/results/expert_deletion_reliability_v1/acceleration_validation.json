@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "source_sha256": "302a24bbd06c6c0c5ab2e434309daf550b63866f81e4b66fe8a87f61bb8dbcf8",
+  "frozen_sources_changed": false,
+  "registered_batch": 0,
+  "all_56_interventions_bitwise_equal": true,
+  "baseline_and_paired_sequence_statistics_bitwise_equal": true,
+  "all_CE_and_output_energies_bitwise_equal": true,
+  "extra_unique_contexts": 0,
+  "wall_seconds": 21.809893639059737,
+  "stats": {
+    "native_complete_batch_forwards": 63,
+    "native_evaluation_wall_seconds": 15.740430105826817,
+    "cached_batches_reused": 0
+  },
+  "engineering_change": "replace128 dynamic GPU nonzero synchronizations per forward with stable integer grouping; native floating-point computation unchanged"
+}
