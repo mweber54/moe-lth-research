@@ -1,0 +1,86 @@
+{
+  "experiment": "moe_routing_conditioned_gradient_dynamics_v1",
+  "status": "SINGLE_SOURCE_TEMPORAL_PILOT",
+  "cell": {
+    "seed": 7,
+    "order": "A",
+    "steps": [250, 500]
+  },
+  "probe": {
+    "source_experiment": "moe_group_gradient_consistency_v1",
+    "source_qualification": "moe_gradient_cancellation_qualification_v1",
+    "analysis": "first_180",
+    "split": "identical 90 discovery and 90 validation probes at both checkpoints",
+    "shared_forward": true,
+    "model_mode": "eval",
+    "objective": "task cross-entropy only",
+    "precision": "FP32 gradients, FP64 sufficient-statistic accumulation, TF32 disabled"
+  },
+  "domain_probabilities": {
+    "reference": "average of the two checkpoint-domain target fractions, fixed across timestamps",
+    "sensitivity": "native target-weighted fraction within each checkpoint is also reported"
+  },
+  "normalization": {
+    "domain_mean": "target-weighted mean of per-probe mean task gradients",
+    "aggregate": "fixed-reference domain probability weighted sum of domain means",
+    "activity": "fixed-reference domain probability weighted sum of absolute domain means",
+    "conditional_proxy": "domain sum gradient divided by accepted target occurrences for the same expert",
+    "acceptance_composition": "descriptive only; cross-token Transformer dependencies prevent an exact causal factorization"
+  },
+  "thresholds": {
+    "activity_floor": 1e-12,
+    "primary_activity_quantile": 0.9,
+    "primary_cancellation": 0.5,
+    "weak_aggregate_quantile": 0.2,
+    "release_cancellation_drop": 0.2,
+    "release_aggregate_increase": 1.25,
+    "release_validation_quantile": 0.5,
+    "magnitude_percentiles": [0, 10, 20, 40, 60, 80, 100]
+  },
+  "prediction": {
+    "sample_per_matrix": 10000,
+    "group_split": "hold out experts by expert_id modulo 4 within the single source; exploratory, not cross-seed",
+    "baseline_features": [
+      "magnitude_250",
+      "aggregate_abs_250",
+      "activity_250",
+      "taylor_abs_250",
+      "probe_second_moment_250",
+      "ramp_250",
+      "optimizer_movement_0_250"
+    ],
+    "domain_features": [
+      "magnitude_250",
+      "aggregate_abs_250",
+      "activity_250",
+      "taylor_abs_250",
+      "cancellation_250",
+      "cancelled_mass_250",
+      "domain_mu_abs_1_250",
+      "domain_mu_abs_2_250",
+      "domain_mu_balance_250",
+      "domain_sign_agreement_250",
+      "domain_gradient_disagreement_250",
+      "domain_mean_second_moment_250",
+      "probe_second_moment_250",
+      "ramp_250",
+      "routing_activation_250",
+      "conditional_gradient_proxy_250",
+      "optimizer_movement_0_250"
+    ]
+  },
+  "matching": {
+    "target_fraction_per_matrix": 0.01,
+    "small_magnitude_pool": "bottom 50% within matrix",
+    "weak_aggregate_pool": "bottom 20% aggregate-gradient magnitude",
+    "contrast": "low activity versus high cancellation while matching aggregate magnitude and magnitude bins",
+    "hard_constraints": ["matrix identity", "exact sign", "magnitude percentile bin", "aggregate percentile bin"],
+    "audited_constraints": ["row count", "column count", "squared magnitude", "activation score", "gradient energy"]
+  },
+  "scope_limits": [
+    "No dense training, masking, deletion, recovery, or router intervention.",
+    "Do not launch any other source seed, order, or checkpoint.",
+    "Single-source prediction and matching are exploratory.",
+    "No causal or pruning-safety claim."
+  ]
+}

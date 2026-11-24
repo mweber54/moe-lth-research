@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "coordinate_count": 67108864,
+  "nonfinite_activity_coordinates": 0,
+  "qualified_discovery_coordinates": 67108842,
+  "direct_mixed_gradient_max_absolute_error": 7.459522092362857e-11,
+  "direct_mixed_gradient_max_relative_error": 1.436451274048251e-06,
+  "direct_mixed_gradient_batch_count": 1,
+  "cancellation_range_violations": {
+    "cancellation_below_zero": 0.0,
+    "cancellation_above_one": 0.0,
+    "cancelled_mass_negative": 0.0,
+    "triangle_violation": 0.0
+  },
+  "squared_mean_vs_probe_second_moment": "kept as separate metrics; mu^2 is never substituted for mean(g_probe^2)",
+  "near_zero_classification": {
+    "activity_floor": 1e-12,
+    "excluded_from_relative_cancellation": 22
+  },
+  "state_preservation": {
+    "parameter_state_unchanged": true,
+    "optimizer_not_instantiated": true,
+    "optimizer_updates": 0,
+    "rng_unchanged": true,
+    "module_modes_unchanged": true,
+    "task_loss_only": true,
+    "single_shared_forward_per_batch": true,
+    "tf32_disabled": true,
+    "deterministic_algorithms": true
+  },
+  "checkpoint_file_unchanged": true,
+  "normalization": {
+    "domain_probe_gradient": "gradient of domain target-sum CE divided by that probe's known domain-target count",
+    "domain_mean_gradient": "target-weighted mean of domain probe gradients across a half",
+    "domain_probability": "known target count for that domain divided by total known target count in the same half",
+    "mixed_gradient": "sum over domains of domain probability times domain mean gradient; validated against directly computed known-target mean CE",
+    "conditional_gradient": "sum of domain expert-weight gradient contributions divided by accepted routed target occurrences for that expert",
+    "probe_second_moment": "target-count-weighted mean of squared domain probe gradients; this is not the square of the domain mean"
+  },
+  "capacity_attribution": "PASS: one native forward per batch supplies both domains; no separate-domain capacity competition or routing was introduced"
+}

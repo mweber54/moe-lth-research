@@ -1,0 +1,46 @@
+{
+  "status": "PASS",
+  "checkpoint_hashes": {
+    "0": "1fa0a62b5db07ff498915319529badf38183e394797d8dca0b478c899d319fa1",
+    "250": "fe26ec2f506fe392889250648c253bff1a98898771b0a8f3b2584a0042bb3abb",
+    "500": "8d19ebd582d5bf630b0c2b60c4bf89a9d5a3a919d89a8663da41ee7d7fdde557"
+  },
+  "coordinate_schema": {
+    "matrices": 256,
+    "coordinates": 67108864,
+    "identical_names_and_shapes": true,
+    "identical_probe_batch_ids": true
+  },
+  "state_preservation": {
+    "step250": {
+      "parameter_state_unchanged": true,
+      "optimizer_not_instantiated": true,
+      "optimizer_updates": 0,
+      "rng_unchanged": true,
+      "module_modes_unchanged": true,
+      "task_loss_only": true,
+      "single_shared_forward_per_batch": true
+    },
+    "step500": {
+      "parameter_state_unchanged": true,
+      "optimizer_not_instantiated": true,
+      "optimizer_updates": 0,
+      "rng_unchanged": true,
+      "module_modes_unchanged": true,
+      "task_loss_only": true,
+      "single_shared_forward_per_batch": true
+    }
+  },
+  "direct_mixed_gradient_max_absolute_error": 1.7042582736758252e-10,
+  "direct_mixed_gradient_max_relative_error": 1.4863897265684017e-06,
+  "route_content_reconstruction_max_absolute_error": 1.4551915228366852e-11,
+  "all_decomposition_reconstruction_passed": true,
+  "fixed_domain_probability": [
+    0.4996083059486626,
+    0.5003916940513373
+  ],
+  "threshold_lock": "step-250 discovery half only; validation and sensitivity checks do not retune thresholds",
+  "near_zero_activity_floor": 1e-12,
+  "squared_mean_not_confused_with_probe_moment": true,
+  "cross_token_attribution_factorization": "DESCRIPTIVE_ONLY: target-domain gradients can depend on context tokens of another domain, so acceptance probability is not an exact causal factorization"
+}

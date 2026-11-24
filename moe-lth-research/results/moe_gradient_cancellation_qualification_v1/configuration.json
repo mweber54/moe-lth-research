@@ -1,0 +1,53 @@
+{
+  "experiment": "moe_gradient_cancellation_qualification_v1",
+  "status": "PILOT_ONLY",
+  "cell": {
+    "seed": 7,
+    "order": "A",
+    "step": 250
+  },
+  "registered_population": {
+    "seeds": [7, 17, 29],
+    "orders": ["A", "B"],
+    "steps": [250, 500]
+  },
+  "probe": {
+    "source": "existing moe_group_gradient_consistency_v1 split-half study",
+    "analysis": "first_180",
+    "split": "first 90 retained archived-replay batches versus next 90",
+    "shared_forward": true,
+    "forward_count_per_batch": 1,
+    "model_mode": "eval",
+    "precision": "FP32 gradients, FP64 sufficient-statistic accumulation, TF32 disabled",
+    "objective": "task cross-entropy only; no auxiliary loss, weight decay, optimizer, or parameter update"
+  },
+  "domains": {
+    "1": "TinyStories",
+    "2": "WikiText-103",
+    "unknown": "separator bytes are excluded from domain analysis and mixed-domain reconstruction"
+  },
+  "normalization": {
+    "domain_probe_gradient": "gradient of domain target-sum CE divided by that probe's known domain-target count",
+    "domain_mean_gradient": "target-weighted mean of domain probe gradients across a half",
+    "domain_probability": "known target count for that domain divided by total known target count in the same half",
+    "mixed_gradient": "sum over domains of domain probability times domain mean gradient; validated against directly computed known-target mean CE",
+    "conditional_gradient": "sum of domain expert-weight gradient contributions divided by accepted routed target occurrences for that expert",
+    "probe_second_moment": "target-count-weighted mean of squared domain probe gradients; this is not the square of the domain mean"
+  },
+  "population_thresholds": {
+    "activity_floor": 1e-12,
+    "primary_activity_quantile": 0.9,
+    "primary_cancellation": 0.5,
+    "magnitude_bins": [[0, 10], [10, 20], [20, 40], [40, 60], [60, 80], [80, 100]]
+  },
+  "sensitivity_thresholds": {
+    "activity_quantiles": [0.75, 0.9],
+    "cancellation_thresholds": [0.25, 0.5, 0.75]
+  },
+  "replication": "Independent source cells are replication units; coordinates, experts, matrices, and probes are descriptive subpopulations only",
+  "scope_limits": [
+    "No masking, pruning, deletion, recovery, or training.",
+    "Do not launch the other eleven registered cells automatically.",
+    "Cancellation is a signal qualification measurement, not an importance or dispensability claim."
+  ]
+}

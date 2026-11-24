@@ -1,0 +1,40 @@
+{
+  "checkpoint_sha256": "8d19ebd582d5bf630b0c2b60c4bf89a9d5a3a919d89a8663da41ee7d7fdde557",
+  "checkpoint_model_hash_before": "410a75a61fe8785d3ead14820420cc9e022a5e85a9287a56d623c83b201d6c58",
+  "checkpoint_model_hash_after": "410a75a61fe8785d3ead14820420cc9e022a5e85a9287a56d623c83b201d6c58",
+  "parameter_state_unchanged": true,
+  "optimizer_not_instantiated": true,
+  "optimizer_updates": 0,
+  "rng_unchanged": true,
+  "module_modes_unchanged": true,
+  "task_loss_only": true,
+  "single_shared_forward_per_batch": true,
+  "tf32_disabled": true,
+  "deterministic_algorithms": true,
+  "halves": {
+    "1": {
+      "batch_ids_sha256": "8b250545e4d7e80e423837fbad8dd78c56f778eefd47ef1a5598fada26a7153e",
+      "domain_target_count": [
+        736605,
+        737760
+      ],
+      "unknown_target_count": 195,
+      "direct_mixed_gradient_checks": [
+        {
+          "batch_id": 0,
+          "max_absolute_error": 1.7042582736758252e-10,
+          "max_relative_error": 1.4863897265684017e-06
+        }
+      ]
+    },
+    "2": {
+      "batch_ids_sha256": "5df4e1d2c817209756b0ab30c7ed3eee22ac8da4ff1df02883881668c35f4e48",
+      "domain_target_count": [
+        727315,
+        747061
+      ],
+      "unknown_target_count": 184,
+      "direct_mixed_gradient_checks": []
+    }
+  }
+}
